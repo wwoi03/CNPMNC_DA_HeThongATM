@@ -23,10 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bnvMenu;
-
     DrawerLayout drawerLayout;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav,
-                R.string.close_nav);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -53,9 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         replaceFragment(new HomeFragment());
 
-        bnvMenu.setBackground(null);
         bnvMenu.setOnItemSelectedListener(item -> {
-
             switch (item.getItemId()) {
                 case R.id.mnuHome:
                     replaceFragment(new HomeFragment());
@@ -69,11 +63,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             return true;
         });
-
-
-
     }
-    private  void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.flContainer, fragment);
