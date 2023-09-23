@@ -16,6 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -28,6 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- FrameLayout -->
         <FrameLayout
             android:id="@+id/flContainer"
             android:layout_width="match_parent"
@@ -62,7 +64,5 @@
         app:menu="@menu/nav_menu"
         app:itemIconTint="@color/primary_blue_color"
         app:itemTextColor="@color/primary_blue_color"/>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>
 
