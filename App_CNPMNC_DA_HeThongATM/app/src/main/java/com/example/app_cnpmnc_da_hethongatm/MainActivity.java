@@ -19,26 +19,59 @@ import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    // BNV
     BottomNavigationView bnvMenu;
+
+    // Nav menu
     DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
+    ActionBarDrawerToggle toggle;
+
+    // Fragment
+    HomeFragment homeFragment;
+    TransactionFragment transactionFragment;
+    QuickAccessFragment quickAccessFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        initUI();
+        initData(savedInstanceState);
+        initListener();
+    }
+
+    // Ánh xạ View
+    private void initUI() {
         bnvMenu = findViewById(R.id.bnvMenu);
         drawerLayout = findViewById(R.id.drawer_layout);
+    }
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+    // Khởi tạo
+    private void initData(Bundle savedInstanceState) {
+        // Fragment
+        homeFragment = new HomeFragment();
+        transactionFragment = new TransactionFragment();
+        quickAccessFragment = new QuickAccessFragment();
 
+        // load giao diện mặc định
+        replaceFragment(homeFragment);
+        //getSupportActionBar().setTitle("Trang chủ");
+
+        // nav menu
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        navigationView = findViewById(R.id.nav_view);
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
@@ -47,23 +80,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_quanli);
         }
-        replaceFragment(new HomeFragment());
+    }
 
+    // Xử lý sự kiện
+    private void initListener() {
+        // xử lý sự kiện bấm vào từng item trên BNV
         bnvMenu.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.mnuHome:
-                    replaceFragment(new HomeFragment());
+                    replaceFragment(homeFragment);
                     break;
                 case R.id.mnuTransaction:
-                    replaceFragment(new TransactionFragment());
+                    replaceFragment(transactionFragment);
                     break;
                 case R.id.mnuQuickAccess:
-                    replaceFragment(new QuickAccessFragment());
+                    replaceFragment(quickAccessFragment);
                     break;
             }
             return true;
         });
     }
+
+    // load Fragment
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
