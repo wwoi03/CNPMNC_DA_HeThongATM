@@ -14,7 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.app_cnpmnc_da_hethongatm.Activities.manageActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_quanli:
-                Intent intent = new Intent(this, manageActivity.class);
+                Intent intent = new Intent(this, BeneficiaryManagementActivity.class);
                 startActivity(intent);
                 break;
         }
