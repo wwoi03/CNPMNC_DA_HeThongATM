@@ -265,6 +265,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
                     android:orientation="horizontal">
 
                     <!-- OR Code -->
@@ -272,7 +274,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:layout_margin="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
@@ -306,7 +309,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:layout_margin="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
@@ -340,7 +344,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:layout_margin="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
@@ -374,7 +379,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:layout_margin="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
@@ -405,9 +411,10 @@
                 </LinearLayout>
 
                 <!-- image slider -->
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <!-- image -->
                     <androidx.viewpager2.widget.ViewPager2
@@ -422,12 +429,10 @@
                         android:id="@+id/ci3"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="center_horizontal"
                         app:ci_drawable="@drawable/bg_indicator_3">
                     </me.relex.circleindicator.CircleIndicator3>
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
