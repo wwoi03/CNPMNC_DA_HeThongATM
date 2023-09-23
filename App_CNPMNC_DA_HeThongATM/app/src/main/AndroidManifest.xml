@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.ManageActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.manageActivity" />
     </application>
 
 </manifest>
