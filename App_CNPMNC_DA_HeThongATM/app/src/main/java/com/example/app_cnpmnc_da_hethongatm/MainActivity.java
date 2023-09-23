@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // load giao diện mặc định
         replaceFragment(homeFragment);
-        //getSupportActionBar().setTitle("Trang chủ");
 
         // nav menu
         toolbar = findViewById(R.id.toolbar);
