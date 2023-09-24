@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Web_CNPMNC_DA_HeThongATM.Models;
 
@@ -13,8 +17,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public  IActionResult Index()
+
         {
+            //IFirebaseConfig config = new FirebaseConfig
+            //{
+            //    AuthSecret = "MqtzKiskO7xnKlZgyTCwpl6sDdUSS1O5e8rixSyi",
+            //    BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
+            //};
+            //IFirebaseClient client = new FirebaseClient(config);
+
+            
+            //    FirebaseResponse response  = await client.GetAsync("KhachHang");
+            //Class a = response.ResultAs<Class>();
+            //ViewData["j"] = a;
             return View();
         }
 
