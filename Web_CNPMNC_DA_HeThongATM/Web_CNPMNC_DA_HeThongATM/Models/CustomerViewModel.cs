@@ -1,4 +1,4 @@
-﻿namespace Web_CNPMNC_DA_HeThongATM.Controllers
+﻿namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class CustomerViewModel
     {
