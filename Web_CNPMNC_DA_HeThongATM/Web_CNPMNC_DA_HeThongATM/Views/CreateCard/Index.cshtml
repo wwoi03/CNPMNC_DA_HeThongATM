@@ -1,0 +1,12 @@
+﻿
+@{
+	var ii = ViewData["j"] as List<CustommerViewModel>; 
+	Layout ="_LayoutMain";
+	}
+	<div>
+		@foreach (var item in ii)
+		{
+			<h1>@item.CCCD</h1>
+			<h1>@item.Email</h1>
+		}
+	</div>

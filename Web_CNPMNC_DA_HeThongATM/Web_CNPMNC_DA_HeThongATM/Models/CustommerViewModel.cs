@@ -1,6 +1,6 @@
 ﻿namespace Web_CNPMNC_DA_HeThongATM.Models
 {
-    public class CustomerViewModel
+    public class CustommerViewModel
     {
         public string CCCD { get; set; }
         public string Diachi { get; set; }

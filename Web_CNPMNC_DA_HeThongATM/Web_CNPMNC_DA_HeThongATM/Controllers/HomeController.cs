@@ -20,14 +20,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public  IActionResult Index()
 
         {
-            //IFirebaseConfig config = new FirebaseConfig
-            //{
-            //    AuthSecret = "MqtzKiskO7xnKlZgyTCwpl6sDdUSS1O5e8rixSyi",
-            //    BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
-            //};
-            //IFirebaseClient client = new FirebaseClient(config);
+            IFirebaseConfig config = new FirebaseConfig
+            {
+                AuthSecret = "MqtzKiskO7xnKlZgyTCwpl6sDdUSS1O5e8rixSyi",
+                BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
+            };
+            IFirebaseClient client = new FirebaseClient(config);
 
-            
+
             //    FirebaseResponse response  = await client.GetAsync("KhachHang");
             //Class a = response.ResultAs<Class>();
             //ViewData["j"] = a;
