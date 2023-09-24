@@ -19,7 +19,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
 
                 <!-- image -->
                 <androidx.viewpager2.widget.ViewPager2
@@ -313,12 +314,11 @@
                             android:text="Tên loại chức năng"
                             android:textSize="24dp"
                             android:textStyle="bold"
-                            >
+                            android:textColor="@color/primary_blue_color">
                         </TextView>
 
                         <!-- recycle view danh sách chức năng -->
                     </LinearLayout>
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
