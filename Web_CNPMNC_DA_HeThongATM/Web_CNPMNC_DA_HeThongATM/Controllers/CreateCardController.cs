@@ -14,10 +14,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateCard(CustommerViewModel customer)
+        public async Task<IActionResult> CreateCard(CustommerViewModel customer)
         {
-
-            return View();
+            //await firebaseHelper.InsertCustommer(customer);
+           await firebaseHelper.InsertCustommer(customer);
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> ActionName(string cccd)
+        {
+          
+           var a =  await  firebaseHelper.CheckCCCDExist(cccd);
+           Console.WriteLine(a);
+            return Json(a);
         }
     }
 }
