@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +36,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
         btnRestPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.child(getIntent().getStringExtra("phone")).child("password").setValue(edtPass.getText().toString());
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                databaseReference.child(currentUser.getUid()).child("password").setValue(edtPass.getText().toString());
                 Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
