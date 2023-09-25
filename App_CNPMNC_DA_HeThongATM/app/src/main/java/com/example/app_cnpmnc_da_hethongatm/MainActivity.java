@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TransactionFragment transactionFragment;
     QuickAccessFragment quickAccessFragment;
 
+    // Code moiws
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
