@@ -12,6 +12,7 @@
         // Đặt giá trị của asp-for="Diachi" thông qua thẻ input ẩn
         $("#Diachi").val(diachi);
     });
+    //kiểm tra cccd
     $("#cccd").change(function () {
         var cccdValue = $(this).val();
 
@@ -25,5 +26,12 @@
             
         });
     });
-});
+   
 
+
+
+
+
+
+
+});

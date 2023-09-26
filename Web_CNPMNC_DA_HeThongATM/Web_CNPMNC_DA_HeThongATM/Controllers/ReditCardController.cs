@@ -5,7 +5,7 @@ using Web_CNPMNC_DA_HeThongATM.Models;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
-    public class CreateCardController : Controller
+    public class ReditCardController : Controller
     {
         FirebaseHelper firebaseHelper = new FirebaseHelper();
         public async Task<IActionResult> Index()
@@ -21,6 +21,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
            await firebaseHelper.InsertCustommer(customer);
             return RedirectToAction("Index");
         }
+        //check cccd
         [HttpGet]
         public async Task<IActionResult> ActionName(string cccd)
         {
@@ -29,5 +30,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
            Console.WriteLine(a);
             return Json(a);
         }
+        [HttpGet]
+        public async Task<IActionResult> a()
+        {
+            return View();
+        }
+
     }
 }
