@@ -8,18 +8,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class FirebaseHelper
     {
-        public FirebaseHelper() { }
+        public static IFirebaseClient client;
+
         private IFirebaseConfig config = new FirebaseConfig
         {
             AuthSecret = "086JcgQrRLjvg3lubA1YY9GlAvks4VrYTCeWJJy6",
             BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
         };
 
+        public FirebaseHelper()
+        {
+            client = new FirebaseClient(config);
+        }
+
         public async Task<List<CustommerViewModel>> GetCustommers()
         {
             try
             {
-                IFirebaseClient client = new FirebaseClient(config);
                 FirebaseResponse response = await client.GetAsync("KhachHang");
                 if (response != null)
                 {
@@ -43,7 +48,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             try
             {
-                IFirebaseClient client = new FirebaseClient(config);
                 FirebaseResponse response = await client.PushAsync("KhachHang", custommer);
                 if (response != null)
                 {
@@ -65,7 +69,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
         public void ins(CustommerViewModel custommer)
         {
-            IFirebaseClient client = new FirebaseClient(config);
             FirebaseResponse response = client.PushAsync("KhachHang", custommer).Result;
         }
 
@@ -73,7 +76,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             try
             {
-                IFirebaseClient client = new FirebaseClient(config);
                 FirebaseResponse response = await client.GetAsync("KhachHang");
 
                 if (response == null || response.Body == "null")
