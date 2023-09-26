@@ -18,112 +18,112 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         public FirebaseHelper() {
             client = new FirebaseClient(config);
         }
-        public static async Task WriteLog(string name , string Ds)
+        public static async Task WriteLog(string name, string Ds)
         {
             LogSystem logSystem = new LogSystem
             {
                 Name = name,
-                Description =Ds
+                Description = Ds
             };
-            FirebaseResponse response = await client.PushAsync("LogDebug",logSystem);
+            FirebaseResponse response = await client.PushAsync("LogDebug", logSystem);
 
-        public async Task<List<CustommerViewModel>> GetCustommers()
-        {
-            try
+            public async Task<List<CustommerViewModel>> GetCustommers()
             {
-                FirebaseResponse response = await client.GetAsync("KhachHang");
-                if (response != null)
+                try
                 {
-                    Dictionary<string, CustommerViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CustommerViewModel>>(response.Body);
-                    List<CustommerViewModel> peopleList = new List<CustommerViewModel>(data.Values);
-                    return peopleList;
+                    FirebaseResponse response = await client.GetAsync("KhachHang");
+                    if (response != null)
+                    {
+                        Dictionary<string, CustommerViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CustommerViewModel>>(response.Body);
+                        List<CustommerViewModel> peopleList = new List<CustommerViewModel>(data.Values);
+                        return peopleList;
+                    }
+                    else
+                    {
+                        Console.WriteLine(response.StatusCode);
+                        return null;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(ex.Message);
                     return null;
                 }
             }
-            catch (Exception ex)
+            public async Task InsertCustommer(CustommerViewModel custommer)
             {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-        public async Task InsertCustommer(CustommerViewModel custommer)
-        {
-            try
-            {
-                FirebaseResponse response = await client.PushAsync("KhachHang", custommer);
-               if(response != null)
+                try
                 {
-                    
+                    FirebaseResponse response = await client.PushAsync("KhachHang", custommer);
+                    if (response != null)
+                    {
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+
                 }
             }
-            catch (Exception ex)
+            public async Task<string> CreateidCus(string idcus)
             {
-                Console.WriteLine(ex.Message);
-              
-            }
-        }
-        public async Task<string> CreateidCus(string idcus)
-        {
-            try
-            {
-
-                FirebaseResponse response = await client.GetAsync("KhachHang");
-
-                if (response == null || response.Body == "null")
+                try
                 {
-                    return "" ; // Node không tồn tại hoặc trống
-                  await  WriteLog("CreateidCus", "data null");
+
+                    FirebaseResponse response = await client.GetAsync("KhachHang");
+
+                    if (response == null || response.Body == "null")
+                    {
+                        return ""; // Node không tồn tại hoặc trống
+                        await WriteLog("CreateidCus", "data null");
+                    }
+
+                    Dictionary<string, CustommerViewModel> data = response.ResultAs<Dictionary<string, CustommerViewModel>>();
+
+
+                    return; // CCCD không tồn tại trong danh sách
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi nếu có
+                    Console.WriteLine(ex.Message);
+
                 }
 
-                Dictionary<string, CustommerViewModel> data = response.ResultAs<Dictionary<string, CustommerViewModel>>();
+            }
 
-                
-                return ; // CCCD không tồn tại trong danh sách
-            }
-            catch (Exception ex)
+            public async Task<bool> CheckCCCDExist(string cccdToCheck)
             {
-                // Xử lý lỗi nếu có
-                Console.WriteLine(ex.Message);
-                
+                try
+                {
+
+                    FirebaseResponse response = await client.GetAsync("KhachHang");
+
+                    if (response == null || response.Body == "null")
+                    {
+                        return false; // Node không tồn tại hoặc trống
+                    }
+
+                    Dictionary<string, CustommerViewModel> data = response.ResultAs<Dictionary<string, CustommerViewModel>>();
+
+                    if (data != null && data.Values.Any(item => item.CCCD == cccdToCheck))//Any() để kiểm tra xem có bất kỳ phần tử nào trong danh sách có trường CCCD bằng với giá trị cccdToCheck hay không.
+                    {
+                        return true; // CCCD tồn tại trong danh sách
+                    }
+
+                    return false; // CCCD không tồn tại trong danh sách
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi nếu có
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
             }
+
+
 
         }
-
-        public async Task<bool> CheckCCCDExist(string cccdToCheck)
-        {
-            try
-            {
-               
-                FirebaseResponse response = await client.GetAsync("KhachHang");
-
-                if (response == null || response.Body == "null")
-                {
-                    return false; // Node không tồn tại hoặc trống
-                }
-
-                Dictionary<string, CustommerViewModel> data = response.ResultAs<Dictionary<string, CustommerViewModel>>();
-
-                if (data != null && data.Values.Any(item => item.CCCD == cccdToCheck))//Any() để kiểm tra xem có bất kỳ phần tử nào trong danh sách có trường CCCD bằng với giá trị cccdToCheck hay không.
-                {
-                    return true; // CCCD tồn tại trong danh sách
-                }
-
-                return false; // CCCD không tồn tại trong danh sách
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi nếu có
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-        }
-
-
-
-    }
-}
+    } }
 
