@@ -1,5 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class BeneficiaryManagementAdapter extends FirebaseRecyclerAdapter<Benefi
         holder.tv_tengnthuhuong.setText(model.getTenNguoiThuHuong());
         holder.tv_tkthuhuong.setText(model.getTkThuHuong());
         holder.tv_sotaikhoan.setText("Sacombank");
-
+        Log.d("BeneficiaryAdapter", "Card Number: " + model.getTkThuHuong());
 
     }
 

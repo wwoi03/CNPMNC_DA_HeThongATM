@@ -1,7 +1,7 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class Beneficiary {
-    String TkThuHuong;
+    String TKThuHuong;
     String TenNguoiThuHuong;
     String maSoThe;
 
@@ -10,17 +10,17 @@ public class Beneficiary {
     }
 
     public Beneficiary(String tkThuHuong, String tenNguoiThuHuong, String maSoThe) {
-        TkThuHuong = tkThuHuong;
+        TKThuHuong = tkThuHuong;
         TenNguoiThuHuong = tenNguoiThuHuong;
         this.maSoThe = maSoThe;
     }
 
     public String getTkThuHuong() {
-        return TkThuHuong;
+        return TKThuHuong;
     }
 
     public void setTkThuHuong(String tkThuHuong) {
-        TkThuHuong = tkThuHuong;
+        TKThuHuong = tkThuHuong;
     }
 
     public String getTenNguoiThuHuong() {
