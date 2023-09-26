@@ -1,48 +1,41 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class Beneficiary {
-    int Id;
-    String soThe;
-    String name;
+    String TkThuHuong;
+    String TenNguoiThuHuong;
+    String maSoThe;
 
-    String bankName;
+    public Beneficiary() {
 
-    public Beneficiary(int id, String soThe, String name, String bankName) {
-        Id = id;
-        this.soThe = soThe;
-        this.name = name;
-        this.bankName = bankName;
     }
 
-    public int getId() {
-        return Id;
+    public Beneficiary(String tkThuHuong, String tenNguoiThuHuong, String maSoThe) {
+        TkThuHuong = tkThuHuong;
+        TenNguoiThuHuong = tenNguoiThuHuong;
+        this.maSoThe = maSoThe;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public String getTkThuHuong() {
+        return TkThuHuong;
     }
 
-    public String getSoThe() {
-        return soThe;
+    public void setTkThuHuong(String tkThuHuong) {
+        TkThuHuong = tkThuHuong;
     }
 
-    public void setSoThe(String soThe) {
-        this.soThe = soThe;
+    public String getTenNguoiThuHuong() {
+        return TenNguoiThuHuong;
     }
 
-    public String getName() {
-        return name;
+    public void setTenNguoiThuHuong(String tenNguoiThuHuong) {
+        TenNguoiThuHuong = tenNguoiThuHuong;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getMaSoThe() {
+        return maSoThe;
     }
 
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public void setMaSoThe(String maSoThe) {
+        this.maSoThe = maSoThe;
     }
 }

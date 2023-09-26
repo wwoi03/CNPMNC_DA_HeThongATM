@@ -15,13 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryManagementAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.Beneficiary;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class BeneficiaryManagementActivity extends AppCompatActivity {
 
     RecyclerView rc;
-    ArrayList<Beneficiary> beneficiaryArrayList;
     BeneficiaryManagementAdapter beneficiaryManagementAdapter;
 
     ImageView img_Add;
@@ -33,18 +34,17 @@ public class BeneficiaryManagementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_showlist_nguoithuhuong);
         rc = findViewById(R.id.rc_thuhuong);
 
-        // Khởi tạo danh sách beneficiaryArrayList và thêm dữ liệu
-        beneficiaryArrayList = new ArrayList<>();
-        beneficiaryArrayList.add(new Beneficiary(1, "101987654321", "Tran Phuong Nam", "Sacombank"));
-        beneficiaryArrayList.add(new Beneficiary(2, "123456789101", "Nguyen Van A", "Sacombank"));
 
-        // Khởi tạo adapter sau khi có dữ liệu
-        beneficiaryManagementAdapter = new BeneficiaryManagementAdapter(this, beneficiaryArrayList);
-
-        rc.setAdapter(beneficiaryManagementAdapter);
         rc.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rc.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
+        FirebaseRecyclerOptions<Beneficiary> options =
+                new FirebaseRecyclerOptions.Builder<Beneficiary>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("ThuHuong"), Beneficiary.class)
+                        .build();
+
+        beneficiaryManagementAdapter = new BeneficiaryManagementAdapter(options);
+        rc.setAdapter(beneficiaryManagementAdapter);
         //Ánh xạ
         img_Add = findViewById(R.id.img_Add);
         //Xử lý sự kiện
@@ -55,5 +55,17 @@ public class BeneficiaryManagementActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        beneficiaryManagementAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        beneficiaryManagementAdapter.stopListening();
     }
 }
