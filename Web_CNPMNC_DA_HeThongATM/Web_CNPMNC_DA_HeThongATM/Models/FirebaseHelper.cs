@@ -9,6 +9,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
     public class FirebaseHelper
     {
         public static IFirebaseClient client;
+
         private IFirebaseConfig config = new FirebaseConfig
         {
             AuthSecret = "086JcgQrRLjvg3lubA1YY9GlAvks4VrYTCeWJJy6",
@@ -26,12 +27,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             };
             FirebaseResponse response = await client.PushAsync("LogDebug",logSystem);
 
-        }
         public async Task<List<CustommerViewModel>> GetCustommers()
         {
             try
             {
-               
                 FirebaseResponse response = await client.GetAsync("KhachHang");
                 if (response != null)
                 {
@@ -55,7 +54,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             try
             {
-               
                 FirebaseResponse response = await client.PushAsync("KhachHang", custommer);
                if(response != null)
                 {
