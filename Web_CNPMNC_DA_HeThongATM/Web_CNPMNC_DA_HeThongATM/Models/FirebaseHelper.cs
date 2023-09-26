@@ -26,7 +26,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 Description = Ds
             };
             FirebaseResponse response = await client.PushAsync("LogDebug", logSystem);
-
+        }
             public async Task<List<CustommerViewModel>> GetCustommers()
             {
                 try
@@ -124,6 +124,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
 
-        }
-    } }
+        } } 
+   
 
