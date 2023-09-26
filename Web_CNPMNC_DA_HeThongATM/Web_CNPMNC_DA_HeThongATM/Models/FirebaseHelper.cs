@@ -67,31 +67,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             }
         }
-        public async Task<string> CreateidCus(string idcus)
+        public async Task<string> CreateidCus()
         {
-            try
-            {
+           
 
                 FirebaseResponse response = await client.GetAsync("KhachHang");
 
                 if (response == null || response.Body == "null")
                 {
                     return ""; // Node không tồn tại hoặc trống
-                    await WriteLog("CreateidCus", "data null");
+                   await  WriteLog("CreateidCus", "data null");
                 }
 
                 Dictionary<string, CustommerViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CustommerViewModel>>(response.Body);
                 List<CustommerViewModel> peopleList = new List<CustommerViewModel>(data.Values);
 
-                return "CTM194500"+(peopleList.Count + 1).ToString(); 
+                return "CTM194"+(peopleList.Count + 501).ToString(); 
 
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi nếu có
-                Console.WriteLine(ex.Message);
-
-            }
 
         }
 

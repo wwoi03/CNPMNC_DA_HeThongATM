@@ -16,6 +16,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCard(CustommerViewModel customer)
         {
+            customer.Makh = await firebaseHelper.CreateidCus();
             //await firebaseHelper.InsertCustommer(customer);
            await firebaseHelper.InsertCustommer(customer);
             return RedirectToAction("Index");
