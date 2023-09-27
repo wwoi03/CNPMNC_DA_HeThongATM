@@ -62,7 +62,6 @@ public class AddBeneficiaryManagementActivity extends AppCompatActivity {
         map.put("TenNguoiThuHuong", edtName.getText().toString());
         map.put("TKThuHuong", edtAccountNumber.getText().toString());
 
-
         FirebaseDatabase.getInstance().getReference().child("ThuHuong").push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {

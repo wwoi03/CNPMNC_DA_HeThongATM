@@ -1,26 +1,39 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class Beneficiary {
+
+    int IdThuHuong;
     String TKThuHuong;
     String TenNguoiThuHuong;
-    String maSoThe;
+    long MaSoThe;
+
+
 
     public Beneficiary() {
 
     }
 
-    public Beneficiary(String tkThuHuong, String tenNguoiThuHuong, String maSoThe) {
-        TKThuHuong = tkThuHuong;
+    public Beneficiary(int idThuHuong, String TKThuHuong, String tenNguoiThuHuong, long maSoThe) {
+        IdThuHuong = idThuHuong;
+        this.TKThuHuong = TKThuHuong;
         TenNguoiThuHuong = tenNguoiThuHuong;
-        this.maSoThe = maSoThe;
+        MaSoThe = maSoThe;
     }
 
-    public String getTkThuHuong() {
+    public int getIdThuHuong() {
+        return IdThuHuong;
+    }
+
+    public void setIdThuHuong(int idThuHuong) {
+        IdThuHuong = idThuHuong;
+    }
+
+    public String getTKThuHuong() {
         return TKThuHuong;
     }
 
-    public void setTkThuHuong(String tkThuHuong) {
-        TKThuHuong = tkThuHuong;
+    public void setTKThuHuong(String TKThuHuong) {
+        this.TKThuHuong = TKThuHuong;
     }
 
     public String getTenNguoiThuHuong() {
@@ -31,11 +44,11 @@ public class Beneficiary {
         TenNguoiThuHuong = tenNguoiThuHuong;
     }
 
-    public String getMaSoThe() {
-        return maSoThe;
+    public long getMaSoThe() {
+        return MaSoThe;
     }
 
-    public void setMaSoThe(String maSoThe) {
-        this.maSoThe = maSoThe;
+    public void setMaSoThe(long maSoThe) {
+        MaSoThe = maSoThe;
     }
 }
