@@ -1,25 +1,33 @@
 ﻿main();
 
 function main() {
+    console.log(@Json.Serialize(totalTransaction));
     customerStatistics();
     cardTypeStatistics();
 }
 
 // Thống kê khách hàng
 function customerStatistics() {
+    // Lấy ngày hiện tại
+    var today = new Date();
+    var date = today.getFullYear();
+
+    // init data
+    const data = {
+        labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+        datasets: [
+            {
+                label: "Số lượng khách hàng năm " + date,
+                data: [12, 19, 3, 5, 2, 3, 5, 12, 1, 20, 5, 8],
+            },
+        ],
+    }
+
+    // render
     const ctx = document.getElementById('traffic-chart');
     new Chart(ctx, {
         type: "bar",
-        data: {
-            labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
-            datasets: [
-                {
-                    label: "Số lượng khách hàng",
-                    data: [12, 19, 3, 5, 2, 3, 5, 12, 1, 20, 5, 8],
-                    borderWidth: 1,
-                },
-            ],
-        },
+        data,
         options: {
             scales: {
                 y: {
@@ -30,8 +38,9 @@ function customerStatistics() {
     });
 }
 
-// Thống kê loại tài thẻ
+// Thống kê loại thẻ
 function cardTypeStatistics() {
+    // init data
     const data = {
         labels: ['Thẻ ATM', 'Thẻ VISA'],
         datasets: [
@@ -44,6 +53,7 @@ function cardTypeStatistics() {
         ]
     };
 
+    // render
     const doughnutCardType = document.getElementById('card-type');
     new Chart(doughnutCardType, {
         type: 'doughnut',

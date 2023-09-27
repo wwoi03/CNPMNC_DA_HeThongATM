@@ -1,5 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var countKhachHang = ViewBag.customers.Count;
+    var totalAssets = ViewBag.totalAssets;
+    var totalTransaction = ViewBag.totalTransaction;
 }
 
 <!-- Content -->
@@ -8,24 +11,7 @@
     <div class="animated fadeIn">
         <!-- Widgets  -->
         <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-five">
-                            <div class="stat-icon dib flat-color-4">
-                                <i class="pe-7s-users"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">2986</span></div>
-                                    <div class="stat-heading">Khách hàng</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Tổng tài sản -->
             <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -35,7 +21,7 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text">$<span class="count">23569</span></div>
+                                    <div class="stat-text"><span class="count">@totalAssets</span>VNĐ</div>
                                     <div class="stat-heading">Tổng tài sản</div>
                                 </div>
                             </div>
@@ -44,16 +30,36 @@
                 </div>
             </div>
 
+            <!-- Khách hàng -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="stat-widget-five">
+                            <div class="stat-icon dib flat-color-4">
+                                <i class="pe-7s-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="text-left dib">
+                                    <div class="stat-text"><span class="count">@countKhachHang</span></div>
+                                    <div class="stat-heading">Khách hàng</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Giao dịch -->
             <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="stat-widget-five">
                             <div class="stat-icon dib flat-color-2">
-                                <i class="pe-7s-cart"></i>
+                                <i class="menu-icon fa fa-retweet"></i>
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">3435</span></div>
+                                    <div class="stat-text"><span class="count">@totalTransaction</span></div>
                                     <div class="stat-heading">Giao dịch</div>
                                 </div>
                             </div>
@@ -62,12 +68,13 @@
                 </div>
             </div>
 
+            <!-- Nhân viên -->
             <div class="col-lg-3 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="stat-widget-five">
                             <div class="stat-icon dib flat-color-3">
-                                <i class="pe-7s-browser"></i>
+                                <i class="menu-icon fa fa-user-md" style="color: #FFC03B !important"></i>
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
