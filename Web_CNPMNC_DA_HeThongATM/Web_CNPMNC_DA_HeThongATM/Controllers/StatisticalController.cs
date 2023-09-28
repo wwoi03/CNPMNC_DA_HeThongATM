@@ -13,11 +13,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
 
+        // Trang chính
         public IActionResult Index()
         {
+            // Lấy danh sách khách hàng
             ViewBag.customers = firebaseHelper.GetCustomers();
+
+            // Tính tiền ngân hàng
             ViewBag.totalAssets = firebaseHelper.GetTotalAssets();
+
+            // Tính tổng số lượng giao dịch
             ViewBag.totalTransaction = firebaseHelper.GetTotalTransaction();
+
+            // Lấy danh sách nhân viên
+            ViewBag.staffs = firebaseHelper.GetStaffs();
+
             return View();
         }
     }

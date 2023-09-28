@@ -1,7 +1,6 @@
 ﻿main();
 
 function main() {
-    console.log(@Json.Serialize(totalTransaction));
     customerStatistics();
     cardTypeStatistics();
 }

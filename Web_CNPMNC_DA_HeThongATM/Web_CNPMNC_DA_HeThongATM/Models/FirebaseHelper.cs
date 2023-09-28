@@ -137,6 +137,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return totalTransaction;
         }
+
+        // Lấy danh sách nhân viên
+        public List<NhanVien> GetStaffs()
+		{
+            FirebaseResponse response = client.Get("NhanVien");
+            Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
+
+            List<NhanVien> staffs = data.Values.ToList();
+
+            return staffs;
+        }
     }
 }
 
