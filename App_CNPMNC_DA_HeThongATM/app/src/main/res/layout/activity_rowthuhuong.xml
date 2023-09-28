@@ -30,17 +30,8 @@
         app:layout_constraintStart_toEndOf="@+id/imgngthuhuong"
         app:layout_constraintTop_toTopOf="@+id/imgngthuhuong" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@+id/imgngthuhuong"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
-
     <TextView
-        android:id="@+id/tv_cardnumber"
+        android:id="@+id/tv_tkthuhuong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
@@ -50,13 +41,23 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_ngthuhuong" />
 
     <TextView
-        android:id="@+id/tv_bankname"
+        android:id="@+id/tv_sotaikhoan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textColor="@android:color/black"
         android:text="Ngân hàng: Sacombank"
-        app:layout_constraintStart_toStartOf="@+id/tv_cardnumber"
-        app:layout_constraintTop_toBottomOf="@+id/tv_cardnumber" />
+        app:layout_constraintStart_toStartOf="@+id/tv_tkthuhuong"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tkthuhuong" />
+
+    <ImageView
+        android:id="@+id/img_Popup"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="-16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_more_vert_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
