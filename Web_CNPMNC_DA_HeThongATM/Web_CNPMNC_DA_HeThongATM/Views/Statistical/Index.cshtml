@@ -4,10 +4,11 @@
     var totalAssets = ViewBag.totalAssets;
     var totalTransaction = ViewBag.totalTransaction;
     var countStaff = ViewBag.Staffs.Count;
+    var quantityCustomerByMonth = ViewBag.quantityCustomerByMonth;
 }
 
 <!-- Content -->
-<div class="content" style="background: #F1F2F7">
+<div class="content" style="background: #F1F2F7; height: calc(100vh - 55px)">
     <!-- Animated -->
     <div class="animated fadeIn">
         <!-- Widgets  -->
@@ -22,7 +23,7 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">@totalAssets</span>VNĐ</div>
+                                    <div class="stat-text"><span class="count">@totalAssets</span> VNĐ</div>
                                     <div class="stat-heading">Tổng tài sản</div>
                                 </div>
                             </div>
@@ -37,7 +38,7 @@
                     <div class="card-body">
                         <div class="stat-widget-five">
                             <div class="stat-icon dib flat-color-4">
-                                <i class="pe-7s-users"></i>
+                                <i class="menu-icon fa fa-users"></i>
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
@@ -89,6 +90,7 @@
             </div>
         </div>
         <!-- /Widgets -->
+
         <!--  Traffic  -->
         <div class="row">
             <div class="col-lg-12">
@@ -115,7 +117,7 @@
         </div>
         <!--  /Traffic -->
         <div class="clearfix"></div>
-        <!-- Orders -->
+        @*<!-- Orders -->
         <div class="orders">
             <div class="row">
                 <div class="col-xl-8">
@@ -245,84 +247,101 @@
                     </div>
                 </div> <!-- /.col-md-4 -->
             </div>
-        </div>
+        </div>*@
     <!-- /#add-category -->
     </div>
     <!-- .animated -->
 </div>
 
 <script>
-    main();
+    document.addEventListener('DOMContentLoaded', function () {
+        main();
 
-    function main() {
-        customerStatistics();
-        cardTypeStatistics();
-    }
-
-    // Thống kê khách hàng
-    function customerStatistics() {
-        // Lấy ngày hiện tại
-        var today = new Date();
-        var date = today.getFullYear();
-
-        // init data
-        const data = {
-            labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
-            datasets: [
-                {
-                    label: "Số lượng khách hàng năm " + date,
-                    data: [12, 19, 3, 5, 2, 3, 5, 12, 1, 20, 5, 8],
-                },
-            ],
+        function main() {
+            customerStatistics();
+            cardTypeStatistics();
         }
 
-        // render
-        const ctx = document.getElementById('traffic-chart');
-        new Chart(ctx, {
-            type: "bar",
-            data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
+        // Thống kê khách hàng
+        function customerStatistics() {
+            // Lấy ngày hiện tại
+            var today = new Date();
+            var date = today.getFullYear();
+
+            $.ajax({
+                type: "GET",
+                url: "../../Statistical/GetQuantityCustomerByMonth",
+                success: function (data) {
+                    var listMonth = [Object.keys(data)][0];
+                    var listQuantity = [Object.values(data)][0];
+
+                    // render
+                    const customerChart = document.getElementById('traffic-chart');
+                    new Chart(customerChart, {
+                        type: "bar",
+                        data: {
+                            labels: listMonth,
+                            datasets: [
+                                {
+                                    label: "Số lượng khách hàng năm " + date,
+                                    data: listQuantity,
+                                },
+                            ],
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function (value, index, values) {
+                                            // Định dạng giá trị là số nguyên
+                                            return parseInt(value);
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    });
                 },
-            },
-        });
-    }
-
-    // Thống kê loại thẻ
-    function cardTypeStatistics() {
-        // init data
-        const data = {
-            labels: ['Thẻ ATM', 'Thẻ VISA'],
-            datasets: [
-                {
-                    label: 'Số lượng thẻ',
-                    data: [14, 34],
-                    fill: true,
-                    backgroundColor: ['#00C294', '#FF957D'],
+                error: function () {
+                    alert("Đã xảy ra lỗi khi lấy thông tin");
                 }
-            ]
-        };
+            });
+        }
 
-        // render
-        const doughnutCardType = document.getElementById('card-type');
-        new Chart(doughnutCardType, {
-            type: 'doughnut',
-            data,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Loại thẻ'
+        // Thống kê loại thẻ
+        function cardTypeStatistics() {
+            // init data
+            const data = {
+                labels: ['Thẻ ATM', 'Thẻ VISA'],
+                datasets: [
+                    {
+                        label: 'Số lượng thẻ',
+                        data: [14, 34],
+                        fill: true,
+                        backgroundColor: ['#00C294', '#FF957D'],
+                    }
+                ]
+            };
+
+            // render
+            const doughnutCardType = document.getElementById('card-type');
+            new Chart(doughnutCardType, {
+                type: 'doughnut',
+                data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Loại thẻ'
+                        }
                     }
                 }
-            }
-        });
-    }
+            });
+        }
+    })
 </script>

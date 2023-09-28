@@ -130,8 +130,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             long totalTransaction = 0;
             
-            FirebaseResponse response = client.Get("TaiKhoanLienKet");
-            Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
+            FirebaseResponse response = client.Get("LichSuGiaoDich");
+            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
            
             totalTransaction = data.Values.Count;
 
@@ -148,6 +148,27 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return staffs;
         }
+
+        // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
+        public Dictionary<string, int> GetQuantityCustomerByMonth(int year)
+        {
+            Dictionary<string, int> quantityCustomerByMonth = new Dictionary<string, int>();
+
+            FirebaseResponse response = client.Get("KhachHang");
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+            for (int i = 1; i <= 12; i++)
+            {
+                int count = data.Values.Count(item => int.Parse(item.NgayTao.Split("/")[1]) == i && int.Parse(item.NgayTao.Split("/")[2]) == year);
+                quantityCustomerByMonth.Add("Tháng " + i.ToString(), count);
+            }
+
+            return quantityCustomerByMonth;
+        }
+
+        // Lấy số lượng thẻ VISA và ATM
+        
     }
 }
 

@@ -28,7 +28,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             // Lấy danh sách nhân viên
             ViewBag.staffs = firebaseHelper.GetStaffs();
 
+            GetQuantityCustomerByMonth();
+
             return View();
+        }
+
+        // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
+        public IActionResult GetQuantityCustomerByMonth()
+        {
+            int year = DateTime.Now.Year;
+
+            var quantityCustomerByMonth = firebaseHelper.GetQuantityCustomerByMonth(year);
+
+            return Json(quantityCustomerByMonth);
         }
     }
 }
