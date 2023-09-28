@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Reditcard}/{action=Index}/{id?}");
+    pattern: "{controller=Statistical}/{action=Index}/{id?}");
 
 app.Run();

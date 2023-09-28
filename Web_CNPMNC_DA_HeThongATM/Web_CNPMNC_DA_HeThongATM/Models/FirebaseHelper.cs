@@ -3,6 +3,7 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
@@ -132,12 +133,60 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                     }
                     
                 }
+        }
+
+
+        // Lấy danh sách khách hàng
+        public List<KhachHang> GetCustomers()
+        {
+            List<KhachHang> dsKhachHang = new List<KhachHang>();
+            FirebaseResponse response = client.Get("KhachHang");
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            dsKhachHang = new List<KhachHang>(data.Values);
+            return dsKhachHang;
+        }
+
+        // Tính tổng tài sản ngân hàng
+        public double GetTotalAssets()
+        {
+            double totalAssets = 0;
+            
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
+            
+            totalAssets = data.Values.Sum(item => item.SoDu);
+           
+            return totalAssets;
+        }
+
+        // Tính tổng giao dịch
+        public long GetTotalTransaction()
+        {
+            long totalTransaction = 0;
+            
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
+           
+            totalTransaction = data.Values.Count;
+
+            return totalTransaction;
+        }
 
             return null;
                 
             }
+        // Lấy danh sách nhân viên
+        public List<NhanVien> GetStaffs()
+		{
+            FirebaseResponse response = client.Get("NhanVien");
+            Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
+
+            List<NhanVien> staffs = data.Values.ToList();
 
         }
+            return staffs;
+        }
+    }
 }
 
 

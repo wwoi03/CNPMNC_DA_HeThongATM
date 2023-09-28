@@ -2,13 +2,23 @@ package com.example.app_cnpmnc_da_hethongatm.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
+
+import java.util.ArrayList;
+
+import me.relex.circleindicator.CircleIndicator3;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,21 +71,79 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_home, container, false);
+        return rootView;
+    }
+
+    // Biến toàn cục
+    ViewPager2 vp2Images;
+    CircleIndicator3 ci3;
+    ImageSlideAdapter imageSlideAdapter;
+    ArrayList<ImageSlide> imageSlides;
+    Handler handler = new Handler();
+    Runnable runnable;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initUI(view);
+        initData();
+        initListener();
     }
 
     // Ánh xạ view
-    private void init(View view) {
-
+    private void initUI(View view) {
+        vp2Images = view.findViewById(R.id.vp2Images);
+        ci3 = view.findViewById(R.id.ci3);
     }
 
     // Khởi tạo
     private void initData() {
+        imageSlides = getImageSlides();
+        imageSlideAdapter = new ImageSlideAdapter(imageSlides);
+        vp2Images.setAdapter(imageSlideAdapter);
 
+        // Liên kết circleIndicator3 với ViewPager2
+        ci3.setViewPager(vp2Images);
+
+        // Auto chuyển slide
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                // kiểm tra hết slide
+                if (vp2Images.getCurrentItem() == imageSlides.size() - 1)
+                    vp2Images.setCurrentItem(0);
+                else
+                    vp2Images.setCurrentItem(vp2Images.getCurrentItem() + 1);
+            }
+        };
     }
 
     // Xử lý sự kiện
     private void initListener() {
+        // Xử lý lắng nghe sự kiện thay đổi viewpager2
+        vp2Images.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
 
+                handler.removeCallbacks(runnable);
+
+                // khoảng thời giản chuyển slide
+                handler.postDelayed(runnable, 3000);
+            }
+        });
+    }
+
+    // lấy danh sách image slide
+    private ArrayList<ImageSlide> getImageSlides() {
+        ArrayList<ImageSlide> list = new ArrayList<>();
+
+        list.add(new ImageSlide(R.drawable.slide1));
+        list.add(new ImageSlide(R.drawable.slide2));
+        list.add(new ImageSlide(R.drawable.slide3));
+
+        return list;
     }
 }
