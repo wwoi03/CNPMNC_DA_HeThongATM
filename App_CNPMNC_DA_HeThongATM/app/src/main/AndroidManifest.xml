@@ -18,13 +18,13 @@
             android:name=".Activities.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.ForgetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
             <intent-filter>

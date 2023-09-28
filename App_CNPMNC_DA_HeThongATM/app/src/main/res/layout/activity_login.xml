@@ -69,10 +69,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/kkk"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                app:boxBackgroundColor="@color/white"
                 android:hint="Nhập SDT">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -94,10 +94,10 @@
                 android:text="Nhập Mật Khẩu"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordLogIn"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                app:boxBackgroundColor="@color/white"
                 android:hint="Nhập Pass">
 
                 <com.google.android.material.textfield.TextInputEditText
