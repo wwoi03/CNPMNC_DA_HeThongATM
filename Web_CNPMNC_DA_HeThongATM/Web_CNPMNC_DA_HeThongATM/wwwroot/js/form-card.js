@@ -33,20 +33,20 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('.exp-year').innerText = document.querySelector('.year-input').value;
         }
 
-        document.querySelector('.cvv-input').onmouseenter = () => {
+        document.querySelector('.year-input').onmouseenter = () => {
             document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
             document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
         }
 
-        document.querySelector('.cvv-input').onmouseleave = () => {
+        document.querySelector('.year-input').onmouseleave = () => {
             document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
             document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
         }
 
-        document.querySelector('.cvv-input').oninput = () => {
-            document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
+        //document.querySelector('.cvv-input').oninput = () => {
+        //    document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
         }
-    }
+    
 
     //
     function getTodayPlusFiveYears() {
@@ -76,16 +76,18 @@ document.addEventListener('DOMContentLoaded', function () {
                
                 $.get("/ReditCard/GetNameCus", { codeToFind: idcusValue }, function (data) {
                     console.log(data);
+                    console.log(data.tenkh);
                     if (data == null) {
                         alert("mã khách hàng không tồn tại");
                         document.querySelector('.card-holder-name').innerText =
                             document.querySelector('.tenkhachhang').value = "";
-                    } else {          
-                        document.querySelector('.card-holder-name').innerText =
-                            document.querySelector('.tenkhachhang').value = data.tenkh;
+                    } else {
+                        
+                        document.querySelector('.tenkhachhang').value = document.querySelector('.card-name-customer').innerText = data.tenkh;
                         document.querySelector('.sdt').value = data.sdt;
                         document.querySelector('.card-number-input').value = document.querySelector('.card-number-box').innerText = "2134567234567";
                         document.querySelector('.card-holder-input').value = document.querySelector('.card-holder-name').innerText = "2134567234567";
+                       
                     }
                 });
             });

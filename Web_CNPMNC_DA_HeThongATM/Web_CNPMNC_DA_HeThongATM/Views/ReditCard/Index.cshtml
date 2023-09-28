@@ -84,10 +84,15 @@
                 <img src="/images/visa.png" alt="">
             </div>
             <div class="card-number-box">################</div>
+              
             <div class="flexbox">
                 <div class="box">
-                    <span>card holder</span>
-                    <div class="card-holder-name"></div>
+                      <div class="card-name-customer">
+                      
+                   </div>
+                    <div class="card-holder-name">
+
+                    </div>
                 </div>
                 <div class="box">
                     <span>expires</span>
@@ -138,7 +143,7 @@
         <div class="flexbox">
             <div class="inputBox">
                 <span>Tháng hết hạn</span>
-                <input type="text" disabled class="month-input" value="1">
+                <input type="text" disabled class="month-input">
                @* <select name="" id="" class="month-input">
                     <option value="month" selected disabled>month</option>
                     <option value="01">01</option>
@@ -174,8 +179,14 @@
                 <input type="hidden" asp-for="NgayHetHan" />
             </div>
             <div class="inputBox">
-                <span>cvv</span>
-                <input type="text" maxlength="4" class="cvv-input">
+                <span>Loại Thẻ</span>
+                <input type="text" maxlength="4" hidden class="type-card" >
+                <select class="type-card">
+                   <option value="Loại" selected disabled>Loại</option>
+                    <option value="2021">Redit</option>
+                    <option value="2022">Visa</option>
+                    <option value="2023">Non</option>
+                </select>
             </div>
         </div>
         <input type="submit" value="submit" class="submit-btn">
