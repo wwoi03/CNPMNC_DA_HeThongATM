@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_chuyentien"
+        android:icon="@drawable/baseline_currency_exchange_24"
+        android:title="Chuyển tiền" />
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/baseline_currency_exchange_24"
+        android:title="Chỉnh sửa" />
+    <item
+        android:id="@+id/action_delete"
+        android:icon="@drawable/baseline_currency_exchange_24"
+        android:title="Xóa người thụ hưởng" />
+</menu>
