@@ -34,8 +34,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.AddBeneficiaryManagementActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.EditBeneficiaryManagementActivity" />
     </application>
 
 </manifest>
