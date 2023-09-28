@@ -44,7 +44,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:22.1.2'
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+<<<<<<< HEAD
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
+=======
+    implementation 'com.firebaseui:firebase-ui-database:7.1.1'
+>>>>>>> s1-nam-luu-nguoi-thu-huong
 
     // Viewpager2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
