@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ktx.Firebase;
 
@@ -58,21 +59,26 @@ public class AddBeneficiaryManagementActivity extends AppCompatActivity {
     }
 
     public void insertData(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("ThuHuong");
+        String newKey = reference.push().getKey();
+
         Map<String, Object> map = new HashMap<>();
+        map.put("IdThuHuong", newKey);
         map.put("TenNguoiThuHuong", edtName.getText().toString());
         map.put("TKThuHuong", edtAccountNumber.getText().toString());
 
-        FirebaseDatabase.getInstance().getReference().child("ThuHuong").push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(AddBeneficiaryManagementActivity.this, "Đã thêm thành công", Toast.LENGTH_SHORT).show();
-            }
-        })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddBeneficiaryManagementActivity.this, "Thêm thất bại. Vui lòng thử lại", Toast.LENGTH_SHORT).show();
-            }
-        });
+        reference.child(newKey).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(AddBeneficiaryManagementActivity.this, "Đã thêm thành công", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AddBeneficiaryManagementActivity.this, "Thêm thất bại. Vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 }

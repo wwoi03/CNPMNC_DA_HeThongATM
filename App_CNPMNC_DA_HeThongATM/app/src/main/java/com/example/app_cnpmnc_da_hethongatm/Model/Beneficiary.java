@@ -2,10 +2,10 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class Beneficiary {
 
-    int IdThuHuong;
+    String IdThuHuong;
     String TKThuHuong;
     String TenNguoiThuHuong;
-    long MaSoThe;
+    String MaSoThe;
 
 
 
@@ -13,18 +13,18 @@ public class Beneficiary {
 
     }
 
-    public Beneficiary(int idThuHuong, String TKThuHuong, String tenNguoiThuHuong, long maSoThe) {
+    public Beneficiary(String idThuHuong, String TKThuHuong, String tenNguoiThuHuong, String maSoThe) {
         IdThuHuong = idThuHuong;
         this.TKThuHuong = TKThuHuong;
         TenNguoiThuHuong = tenNguoiThuHuong;
         MaSoThe = maSoThe;
     }
 
-    public int getIdThuHuong() {
+    public String getIdThuHuong() {
         return IdThuHuong;
     }
 
-    public void setIdThuHuong(int idThuHuong) {
+    public void setIdThuHuong(String idThuHuong) {
         IdThuHuong = idThuHuong;
     }
 
@@ -44,11 +44,11 @@ public class Beneficiary {
         TenNguoiThuHuong = tenNguoiThuHuong;
     }
 
-    public long getMaSoThe() {
+    public String getMaSoThe() {
         return MaSoThe;
     }
 
-    public void setMaSoThe(long maSoThe) {
+    public void setMaSoThe(String maSoThe) {
         MaSoThe = maSoThe;
     }
 }

@@ -54,6 +54,8 @@ public class BeneficiaryManagementAdapter extends FirebaseRecyclerAdapter<Benefi
     class myViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
         TextView tv_tengnthuhuong, tv_tkthuhuong, tv_sotaikhoan;
         ImageView img_Popup;
+
+        Beneficiary beneficiary;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_tengnthuhuong = itemView.findViewById(R.id.tv_ngthuhuong);
@@ -83,7 +85,9 @@ public class BeneficiaryManagementAdapter extends FirebaseRecyclerAdapter<Benefi
                     Toast.makeText(itemView.getContext(), "Nội dung thông báo", Toast.LENGTH_SHORT).show();
                     return true;
                 case R.id.action_edit:
+                    beneficiary = new Beneficiary();
                     Intent intent = new Intent(itemView.getContext(), EditBeneficiaryManagementActivity.class);
+                    intent.putExtra("ID", beneficiary.getIdThuHuong());
                     itemView.getContext().startActivity(intent);
 
                     return true;

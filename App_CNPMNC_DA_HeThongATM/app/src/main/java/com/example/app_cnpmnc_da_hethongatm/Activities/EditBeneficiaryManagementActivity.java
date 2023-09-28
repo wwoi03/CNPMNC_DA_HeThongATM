@@ -28,12 +28,17 @@ public class EditBeneficiaryManagementActivity extends AppCompatActivity {
     Button buttonSubmit, buttonBack;
 
     Beneficiary beneficiary;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editthuhuong);
         InitUI();
         InitData();
+
+        beneficiary = new Beneficiary();
+        String id = beneficiary.getIdThuHuong();
+        beneficiary.setIdThuHuong(id);
     }
 
     public void InitUI(){
@@ -44,57 +49,48 @@ public class EditBeneficiaryManagementActivity extends AppCompatActivity {
     }
 
     public void InitData(){
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("ThuHuong");
+
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                String tkThuHuong = editTextAccountNumber.getText().toString();
-                String tenNguoiThuHuong = editTextBeneficiaryName.getText().toString();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    // Get the Beneficiary object from the snapshot
+                    Beneficiary beneficiary = snapshot.getValue(Beneficiary.class);
 
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("ThuHuong");
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Beneficiary beneficiary = snapshot.getValue(Beneficiary.class);
-                            if (beneficiary != null && beneficiary.getTKThuHuong().equals(tkThuHuong) && beneficiary.getTenNguoiThuHuong().equals(tenNguoiThuHuong)) {
-                                String key = snapshot.getKey(); // Get the key of the child node
+                    // Get the IdThuHuong
+                    String id = beneficiary.getIdThuHuong();
 
-                                // Set id to key
-                                beneficiary.setIdThuHuong(Integer.parseInt(key));
+                    buttonSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("TKThuHuong", editTextAccountNumber.getText().toString());
+                            map.put("TenNguoiThuHuong", editTextBeneficiaryName.getText().toString());
 
-                                Map<String, Object> map = new HashMap<>();
-                                map.put("TKThuHuong", tkThuHuong);
-                                map.put("TenNguoiThuHuong", tenNguoiThuHuong);
-
-                                // Update Beneficiary object with new id and data
-                                reference.child(key).setValue(beneficiary)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                Toast.makeText(EditBeneficiaryManagementActivity.this, "Đã chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
-                                                finish();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(EditBeneficiaryManagementActivity.this, "Chỉnh sửa thất bại", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                            }
+                            FirebaseDatabase.getInstance().getReference().child("ThuHuong").child(id).updateChildren(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(EditBeneficiaryManagementActivity.this, "Đã chỉnh sửa thành công", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(EditBeneficiaryManagementActivity.this, "Chỉnh sửa thất bại. Vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                         }
-                    }
+                    });
+                }
+            }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // Handle error
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle possible errors.
             }
         });
-
-
-
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
