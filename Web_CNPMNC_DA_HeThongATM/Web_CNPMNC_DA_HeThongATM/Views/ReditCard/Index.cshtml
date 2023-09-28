@@ -1,12 +1,12 @@
 ﻿@using Web_CNPMNC_DA_HeThongATM.Controllers
 
-@model CustommerViewModel
+@model CardViewModel
+
 @{
     Layout = "_LayoutMain";
-    var custommerList = ViewData["j"] as List<CustommerViewModel>;
 }
 <body>
-	<form method="post" asp-controller="CreateCard" asp-action="CreateCard" class="col-md-12">
+@*	<form method="post" asp-controller="CreateCard" asp-action="CreateCard" class="col-md-12">
 		<div class="col-lg-8">
 		<div class="card">
 			<div class="card-header"><strong>CusTomer</strong></div>
@@ -72,7 +72,7 @@
 			</div>
 		</div>
 		</div>
-	</form>
+	</form>*@
 
 	<div class="container">
 
@@ -87,7 +87,7 @@
             <div class="flexbox">
                 <div class="box">
                     <span>card holder</span>
-                    <div class="card-holder-name">Nguyễn Thành An</div>
+                    <div class="card-holder-name"></div>
                 </div>
                 <div class="box">
                     <span>expires</span>
@@ -113,23 +113,27 @@
     <form action="">
         <div class="inputBox">
             <span>Mã Khách Hàng</span>
-            <input type="text" maxlength="16" id="makhachhang" class="card-number-input">
+            <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH" >
         </div>
          <div class="inputBox">
             <span>Tên Khách Hàng</span>
-            <input type="text" disabled maxlength="16">
+            <input type="text" disabled maxlength="16" class ="tenkhachhang" >
+        </div>
+        <div class="inputBox">
+            <span>Số Điện Thoại</span>
+            <input type="text" disabled maxlength="16" class="sdt" asp-for="SDTDangKy">
         </div>
         <div class="inputBox">
             <span>Ngày Mở Thẻ</span>
-            <input type="text" disabled maxlength="16" id="ngaymothe">
+            <input type="text" disabled maxlength="16" id="ngaymothe" asp-for="NgayMoThe">
         </div>
         <div class="inputBox">
             <span>số thẻ</span>
-            <input type="text" disabled maxlength="16" class="card-number-input">
+            <input type="text"  maxlength="16" class="card-number-input"  asp-for="MaPIN">
         </div>
         <div class="inputBox">
             <span>số tài khoản</span>
-            <input type="text" disabled class="card-holder-input">
+            <input type="text" disabled class="card-holder-input"   asp-for="MaSoThe">
         </div>
         <div class="flexbox">
             <div class="inputBox">
@@ -167,6 +171,7 @@
                     <option value="2029">2029</option>
                     <option value="2030">2030</option>
                 </select>*@
+                <input type="hidden" asp-for="NgayHetHan" />
             </div>
             <div class="inputBox">
                 <span>cvv</span>
@@ -181,7 +186,7 @@
       
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="/js/form-crad.js">
+<script src="/js/form-card.js">
 </script>
 </body>
 

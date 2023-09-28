@@ -117,8 +117,27 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
 
+        public async Task<CustommerViewModel> Get(string values)
+        {
+           
+                FirebaseResponse response = await client.GetAsync("KhachHang");
+                if (response != null)
+                {
+                    Dictionary<string, CustommerViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CustommerViewModel>>(response.Body);
+                   
+                        var a = data.Values.FirstOrDefault(c => c.Makh == values);
+                    if (a != null)
+                    {
+                        return a;
+                    }
+                    
+                }
 
-        
-    }
+            return null;
+                
+            }
+
+        }
 }
+
 

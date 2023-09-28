@@ -31,9 +31,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return Json(a);
         }
         [HttpGet]
-        public async Task<IActionResult> a()
+        public async Task<IActionResult> GetNameCus(string codeToFind)
         {
-            return View();
+            
+            CustommerViewModel custommer = await firebaseHelper.Get(codeToFind);
+           
+            return Json(custommer);
         }
 
     }

@@ -69,15 +69,29 @@ document.addEventListener('DOMContentLoaded', function () {
         
     }
     function getNameCus() {
-        (document).ready(function () {
+        $(document).ready(function () {
             $("#makhachhang").change(function () {
                 var idcusValue = $(this).val();
-                $get(), { makhachhang: idcusValue }, function (data) {
 
-                }
+               
+                $.get("/ReditCard/GetNameCus", { codeToFind: idcusValue }, function (data) {
+                    console.log(data);
+                    if (data == null) {
+                        alert("mã khách hàng không tồn tại");
+                        document.querySelector('.card-holder-name').innerText =
+                            document.querySelector('.tenkhachhang').value = "";
+                    } else {          
+                        document.querySelector('.card-holder-name').innerText =
+                            document.querySelector('.tenkhachhang').value = data.tenkh;
+                        document.querySelector('.sdt').value = data.sdt;
+                        document.querySelector('.card-number-input').value = document.querySelector('.card-number-box').innerText = "2134567234567";
+                        document.querySelector('.card-holder-input').value = document.querySelector('.card-holder-name').innerText = "2134567234567";
+                    }
+                });
             });
         });
     }
+
    
 
 })
