@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mnuHome"
+        android:title="Trang chủ"
+        android:icon="@drawable/baseline_home_24">
+    </item>
+
+    <item
+        android:id="@+id/mnuQuickAccess"
+        android:title="Truy cập nhanh"
+        android:icon="@drawable/baseline_qr_code_scanner_24">
+    </item>
+
+    <item
+        android:id="@+id/mnuTransaction"
+        android:title="Giao dịch"
+        android:icon="@drawable/baseline_currency_exchange_24">
+    </item>
+</menu>
