@@ -1,0 +1,67 @@
+data cecret: MqtzKiskO7xnKlZgyTCwpl6sDdUSS1O5e8rixSyi
+data link: https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/
+
+[HttpPost]
+
+        public IActionResult Employeeinfo() // Nhận dữ liệu nhập vào
+        {
+
+            String name = Request.Form["name"];
+            String birth = Request.Form["birth"];
+            String street = Request.Form["street"];
+            String email = Request.Form["email"];
+            String branch = Request.Form["branch"];
+            String position = Request.Form["positon"];
+            String password = Request.Form["password"];
+            NhanVien e = new NhanVien(name, birth, street, email, branch, position, password);
+            return View(e);
+        }
+
+
+<form action="Employeeinfo" method="post">
+                        <div class="form-group">
+                            <label for="name" class="form-control-label">Họ tên nhân viên</label>
+                            <input type="text" id="name" name="name" placeholder="Nhập họ tên nhân viên" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="birth" class="form-control-label">Năm sinh nhân viên</label>
+                            <input type="text" id="birth" name="birth" placeholder="năm sinh nhân viên" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="street" class="form-control-label">Địa chỉ nhân viên</label>
+                            <input type="text" id="street" name="street" placeholder="Nhập địa chỉ nhân viên" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-control-label">Email nhân viên</label>
+                            <input type="email" id="email" name="email" placeholder="Nhập Email nhân viên" class="form-control">
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="Branch" class="form-control-label">Chi nhánh làm việc</label>
+                                    <select id="branch" name="branch" class="form-control custom-select">
+                                        <option value="branch1">Chi nhánh 1</option>
+                                        <option value="branch2">Chi nhánh 2</option>
+                                        <option value="branch3">Chi nhánh 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="position" class="form-control-label">Chức vụ</label>
+                                    <select id="position" name="position" class="form-control custom-select">
+                                        <option value="position1">Chức vụ 1</option>
+                                        <option value="position2">Chức vụ 2</option>
+                                        <option value="position3">Chức vụ 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-control-label">Mật khẩu nhân viên</label>
+                            <input type="password" id="password" name="password" placeholder="Nhập mật khẩu nhân viên" class="form-control">
+                        </div>
+                        <div class="text-center"> 
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
