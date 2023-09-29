@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     inputanimate();
     getTodayPlusFiveYears();
     getNameCus();
+    NgayHetHan();
     //list funtion
     function inputtimes() {
         var inputNgayThangNam = document.getElementById("ngaymothe");
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 $.get("/CreditCard/GetNameCus", { codeToFind: idcusValue }, function (data) {
                     console.log(data);
                   
-                    if (data == null) {
+                    if (data.tenkh == null) {
                         alert("mã khách hàng không tồn tại");
                         document.querySelector('.card-holder-name').innerText =
                             document.querySelector('.tenkhachhang').value = "";
@@ -85,13 +86,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         
                         document.querySelector('.tenkhachhang').value = document.querySelector('.card-name-customer').innerText = data.tenkh;
                         document.querySelector('.sdt').value = data.sdt;
-                        document.querySelector('.card-number-input').value = document.querySelector('.card-number-box').innerText = "2134567234567";
-                        document.querySelector('.card-holder-input').value = document.querySelector('.card-holder-name').innerText = "2134567234567";
+                        document.querySelector('.card-number-input').value = document.querySelector('.card-number-box').innerText = data.pin;
+                        document.querySelector('.card-holder-input').value = document.querySelector('.card-holder-name').innerText = data.stk;
                        
                     }
                 });
             });
         });
+    }
+    function NgayHetHan(){
+        var NgayHetHan = $('#thanghethan').val()+"/"+ $('#namhethan').val();
+        $('#ngayhethan').val(NgayHetHan);
     }
 
    

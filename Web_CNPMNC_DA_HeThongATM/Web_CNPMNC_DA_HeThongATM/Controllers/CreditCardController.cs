@@ -12,23 +12,32 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {   
             return View();
         }
-       
-        //check cccd
         [HttpGet]
-        public async Task<IActionResult> ActionName(string cccd)
+        public IActionResult GetNameCus(string codeToFind)
         {
-          
-           var idcccd =  await  firebaseHelper.CheckCCCDExist(cccd);
-           Console.WriteLine(idcccd);
-            return Json(idcccd);
+            string PIN = firebaseHelper.CreatePIN();
+            string Stk = firebaseHelper.CreateAccountNumbet();
+            KhachHangViewModel custommer =  firebaseHelper.GetCustomerbyid(codeToFind);
+            if(custommer == null)
+            {
+                return NotFound();
+            }
+            var data = new
+            {
+                Tenkh = custommer.Tenkh,
+                Sdt = custommer.Sdt,
+                PIN = PIN,
+                Stk = Stk
+            };
+            return Json(data);
         }
-        [HttpGet]
-        public async Task<IActionResult> GetNameCus(string codeToFind)
+
+        [HttpPost] 
+        public IActionResult CreateCard(CardViewModel cardViewModel)
         {
-            
-            KhachHangViewModel custommer = await firebaseHelper.GetCustomerbyid(codeToFind);
-           
-            return Json(custommer);
+            cardViewModel.MaDangNhap = "Nguyễn Lê Quốc Thuận";
+           firebaseHelper.CreateCard(cardViewModel);
+            return RedirectToAction("Index");
         }
 
     }

@@ -115,22 +115,22 @@
 
     </div>
 
-    <form action="">
+    <form method="post" asp-controller="CreditCard" asp-action="CreateCard">
         <div class="inputBox">
             <span>Mã Khách Hàng</span>
             <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH" >
         </div>
          <div class="inputBox">
             <span>Tên Khách Hàng</span>
-            <input type="text" disabled maxlength="16" class ="tenkhachhang" >
+            <input type="text"  maxlength="16" class ="tenkhachhang" >
         </div>
         <div class="inputBox">
             <span>Số Điện Thoại</span>
-            <input type="text" disabled maxlength="16" class="sdt" asp-for="SDTDangKy">
+            <input type="text"  maxlength="16" class="sdt" asp-for="SDTDangKy">
         </div>
         <div class="inputBox">
             <span>Ngày Mở Thẻ</span>
-            <input type="text" disabled maxlength="16" id="ngaymothe" asp-for="NgayMoThe">
+            <input type="text"  maxlength="16" id="ngaymothe" asp-for="NgayMoThe">
         </div>
         <div class="inputBox">
             <span>số thẻ</span>
@@ -138,31 +138,16 @@
         </div>
         <div class="inputBox">
             <span>số tài khoản</span>
-            <input type="text" disabled class="card-holder-input"   asp-for="MaSoThe">
+            <input type="text"  class="card-holder-input"   asp-for="MaSoThe">
         </div>
         <div class="flexbox">
             <div class="inputBox">
                 <span>Tháng hết hạn</span>
-                <input type="text" disabled class="month-input">
-               @* <select name="" id="" class="month-input">
-                    <option value="month" selected disabled>month</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select>*@
+                <input type="text" id="thanghethan"  class="month-input">         
             </div>
             <div class="inputBox">
                 <span>Năm hết hạn</span>
-                 <input type="text" disabled class="year-input">
+                 <input type="text" id="namhethan"  class="year-input">
                @* <select name="" id="" class="year-input">
                     <option value="year" selected disabled>year</option>
                     <option value="2021">2021</option>
@@ -176,15 +161,15 @@
                     <option value="2029">2029</option>
                     <option value="2030">2030</option>
                 </select>*@
-                <input type="hidden" asp-for="NgayHetHan" />
+                <input type="hidden" id="ngayhethan" asp-for="NgayHetHan" />
             </div>
             <div class="inputBox">
                 <span>Loại Thẻ</span>          
                 <select asp-for="Loaithe" class="type-card">
                    <option value="Loại" selected disabled>Loại</option>
-                    <option value="2021">Redit</option>
-                    <option value="2022">Visa</option>
-                    <option value="2023">Non</option>
+                    <option value="Redit">Redit</option>
+                    <option value="Visa">Visa</option>
+                    <option value="Non">Non</option>
                 </select>
             </div>
         </div>

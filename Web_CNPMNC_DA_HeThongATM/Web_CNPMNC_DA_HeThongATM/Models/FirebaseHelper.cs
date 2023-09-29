@@ -22,7 +22,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             client = new FirebaseClient(config);
         }
-       
+       //-------------------------------------------------------------------------KHÁCH HÀNG--------------------------------------------------------------------------------------
         //lấy danh sách khách hàng
         public async Task<List<KhachHangViewModel>> GetCustommers()
         {
@@ -55,7 +55,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 FirebaseResponse response = await client.PushAsync("KhachHang", custommer);
                 if (response != null)
                 {
-
+                    
                 }
             }
             catch (Exception ex)
@@ -70,14 +70,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // Tạo một Guid mới
             Guid uniqueGuid = Guid.NewGuid();
 
-            // Chuyển Guid thành byte array
-            byte[] bytes = uniqueGuid.ToByteArray();
+            //// Chuyển Guid thành byte array
+            //byte[] bytes = uniqueGuid.ToByteArray();
 
-            // Chuyển byte array thành một chuỗi hexa
-            string hexString = BitConverter.ToString(bytes).Replace("-", "");
+            //// Chuyển byte array thành một chuỗi hexa
+            //string hexString = BitConverter.ToString(bytes).Replace("-", "");
 
-            // Lấy 10 ký tự đầu tiên từ chuỗi hexa
-            string shortId = hexString.Substring(0, 10);
+            //// Lấy 10 ký tự đầu tiên từ chuỗi hexa
+            //string shortId = hexString.Substring(0, 10);
+            string shortId = BitConverter.ToString(uniqueGuid.ToByteArray()).Replace("-", "").Substring(0, 10);
 
             return shortId;
         }
@@ -88,7 +89,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             FirebaseResponse response = await client.GetAsync("KhachHang");
 
-            if (response == null || response.Body == "null")
+            if (response != null || response.Body != "null")
             {
                 Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
                 if (data.ContainsKey(Makh.ToString()))
@@ -134,10 +135,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         //lây dữ liệu khách hàng theo id
-        public async Task<KhachHangViewModel> GetCustomerbyid(string values)
+        public KhachHangViewModel GetCustomerbyid(string values)
         {
 
-            FirebaseResponse response = await client.GetAsync("KhachHang");
+            FirebaseResponse response = client.Get("KhachHang");
             if (response != null)
             {
                 Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
@@ -203,6 +204,96 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return staffs;
         }
+        //--------------------------------------------------------------------------THẺ NGÂN HÀNG ----------------------------------------------------------------------------------
+        //tạo số thẻ ngân hàng
+        private string GenerateCIF()
+        {         
+            DateTime now = DateTime.Now;
+            Random random = new Random();
+            int r = random.Next(0, 99);
+            // Tạo số CIF sử dụng thời gian và GUID ngẫu nhiên
+            string cif = $"{now:HHmmss}{r.ToString("D2")}{r.ToString("D2")}";
+
+            return "909090"+cif;
+        }
+        private string AccountNumber()
+        {
+            Random random = new Random();
+            string digits = "";
+
+            for (int i = 0; i < 10; i++)
+            {
+                int randomNumber = random.Next(0, 10); // Số ngẫu nhiên từ 0 đến 9
+                digits += randomNumber.ToString();
+            }
+
+            return digits;
+        }
+        public string CreatePIN()
+        {
+            string MaPIN = GenerateCIF();
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null || response.Body != "null")
+            {
+                Dictionary<string, CardViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CardViewModel>>(response.Body);
+                if (data.ContainsKey(MaPIN))
+                {
+                    return CreatePIN();
+                }
+            }
+            return MaPIN;
+        }
+        public string CreateAccountNumbet()
+        {
+            string MaSoThe = AccountNumber();
+            FirebaseResponse response = client.Get("TheNganHang");
+            if(response != null || response.Body != "null")
+            {
+                Dictionary<string,CardViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CardViewModel>>(response.Body);
+                if (data.ContainsKey(MaSoThe))
+                {
+                    return CreateAccountNumbet();
+                }
+            }
+            return MaSoThe;
+        }
+      public void CreateCard(CardViewModel card)
+        {
+            FirebaseResponse firebaseResponse = client.Push("TheNganHang", card);
+            if(firebaseResponse != null)
+            {
+                Console.WriteLine("thanh công");
+            }
+            else
+            {
+                Console.WriteLine(firebaseResponse.StatusCode);
+            }
+        }
+        //đừng xóa em đang sửa
+        //public string GetAccount(string Value)
+        //{
+        //    FirebaseResponse response = client.Get("TaiKhoanLienKet");
+        //    if (response != null)
+        //    {
+        //        Dictionary<string, AccountViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, AccountViewModel>>(response.Body);
+
+        //        // Sử dụng LINQ để lấy keys của các bản ghi có SoTaiKhoan trùng với Value
+        //        var matchingKeys = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
+
+        //        if (matchingKeys.Count > 0)
+        //        {
+        //            // matchingKeys là một danh sách các keys có SoTaiKhoan trùng với Value
+        //            // Ở đây, bạn có thể làm gì đó với danh sách này
+        //            return string.Join(", ", matchingKeys);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine(response.StatusCode);
+        //    }
+        //    return null;
+        //}
+
     }
 
 }

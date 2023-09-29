@@ -36,5 +36,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View("Index",customer);
            
         }
+        //check cccd
+        [HttpGet]
+        public async Task<IActionResult> CheckCanCuoc(string cccd)
+        {
+
+            var idcccd = await firebaseHelper.CheckCCCDExist(cccd);
+            Console.WriteLine(idcccd);
+            return Json(idcccd);
+        }
     }
 }
