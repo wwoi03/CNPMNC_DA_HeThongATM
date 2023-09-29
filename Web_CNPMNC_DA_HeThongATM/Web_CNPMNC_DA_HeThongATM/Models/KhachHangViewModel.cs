@@ -9,6 +9,7 @@
         public string Makh { get; set; }
         public string Sdt { get; set; }
         public string Tenkh { get; set; }
+        public string NgayTao { get; set; }
        
     }
 }

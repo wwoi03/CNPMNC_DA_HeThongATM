@@ -26,8 +26,9 @@
             
         });
     });
-   
-
+    
+    
+    
 
 
 
@@ -35,3 +36,17 @@
 
 
 });
+document.addEventListener("DOMContentLoaded",function(){
+    InsertDay();
+    //nhận ngày tạo khách hàng vào form
+    function InsertDay(){
+        var today = new Date();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+        var ngayThangNam =day+"/"+ month + "/" + year;
+        console.log(ngayThangNam);
+        $('#NgayTao').val(ngayThangNam);
+
+    }
+})
