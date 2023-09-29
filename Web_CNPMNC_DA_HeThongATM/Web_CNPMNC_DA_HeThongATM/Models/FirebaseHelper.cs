@@ -20,6 +20,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             client = new FirebaseClient(config);
         }
+        //ghi log
         public static async Task WriteLog(string name, string Ds)
         {
             LogSystem logSystem = new LogSystem
@@ -29,15 +30,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             };
             FirebaseResponse response = await client.PushAsync("LogDebug", logSystem);
         }
-        public async Task<List<CustommerViewModel>> GetCustommers()
+        //lấy danh sách khách hàng
+        public async Task<List<KhachHangViewModel>> GetCustommers()
         {
             try
             {
                 FirebaseResponse response = await client.GetAsync("KhachHang");
                 if (response != null)
                 {
-                    Dictionary<string, CustommerViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CustommerViewModel>>(response.Body);
-                    List<CustommerViewModel> peopleList = new List<CustommerViewModel>(data.Values);
+                    Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
+                    List<KhachHangViewModel> peopleList = new List<KhachHangViewModel>(data.Values);
                     return peopleList;
                 }
                 else
@@ -52,7 +54,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return null;
             }
         }
-        public async Task InsertCustommer(CustommerViewModel custommer)
+        //tạo khách hàng
+        public async Task InsertCustommer(KhachHangViewModel custommer)
         {
             try
             {
@@ -68,26 +71,27 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             }
         }
+        //tạo id khách hàng
         public async Task<string> CreateidCus()
         {
-           
 
-                FirebaseResponse response = await client.GetAsync("KhachHang");
 
-                if (response == null || response.Body == "null")
-                {
-                    return ""; // Node không tồn tại hoặc trống
-                   await  WriteLog("CreateidCus", "data null");
-                }
+            FirebaseResponse response = await client.GetAsync("KhachHang");
 
-                Dictionary<string, CustommerViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CustommerViewModel>>(response.Body);
-                List<CustommerViewModel> peopleList = new List<CustommerViewModel>(data.Values);
+            if (response == null || response.Body == "null")
+            {
+                return ""; // Node không tồn tại hoặc trống
+                await WriteLog("CreateidCus", "data null");
+            }
 
-                return "CTM194"+(peopleList.Count + 501).ToString(); 
+            Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
+            List<KhachHangViewModel> peopleList = new List<KhachHangViewModel>(data.Values);
+
+            return "CTM194" + (peopleList.Count + 501).ToString();
 
 
         }
-
+        //check cccd
         public async Task<bool> CheckCCCDExist(string cccdToCheck)
         {
             try
@@ -100,7 +104,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                     return false; // Node không tồn tại hoặc trống
                 }
 
-                Dictionary<string, CustommerViewModel> data = response.ResultAs<Dictionary<string, CustommerViewModel>>();
+                Dictionary<string, KhachHangViewModel> data = response.ResultAs<Dictionary<string, KhachHangViewModel>>();
 
                 if (data != null && data.Values.Any(item => item.CCCD == cccdToCheck))//Any() để kiểm tra xem có bất kỳ phần tử nào trong danh sách có trường CCCD bằng với giá trị cccdToCheck hay không.
                 {
@@ -117,22 +121,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
         }
 
-
-        public async Task<CustommerViewModel> Get(string values)
+        //lây dữ liệu khách hàng theo id
+        public async Task<KhachHangViewModel> GetCustomerbyid(string values)
         {
-           
-                FirebaseResponse response = await client.GetAsync("KhachHang");
-                if (response != null)
+
+            FirebaseResponse response = await client.GetAsync("KhachHang");
+            if (response != null)
+            {
+                Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.Makh == values);
+                if (a != null)
                 {
-                    Dictionary<string, CustommerViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, CustommerViewModel>>(response.Body);
-                   
-                        var a = data.Values.FirstOrDefault(c => c.Makh == values);
-                    if (a != null)
-                    {
-                        return a;
-                    }
-                    
+                    return a;
                 }
+
+            }
+            return null;
         }
 
 
@@ -150,12 +155,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         public double GetTotalAssets()
         {
             double totalAssets = 0;
-            
+
             FirebaseResponse response = client.Get("TaiKhoanLienKet");
             Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
-            
+
             totalAssets = data.Values.Sum(item => item.SoDu);
-           
+
             return totalAssets;
         }
 
@@ -163,30 +168,30 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         public long GetTotalTransaction()
         {
             long totalTransaction = 0;
-            
+
             FirebaseResponse response = client.Get("TaiKhoanLienKet");
             Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
-           
+
             totalTransaction = data.Values.Count;
 
             return totalTransaction;
         }
 
-            return null;
-                
-            }
+
+
+
         // Lấy danh sách nhân viên
         public List<NhanVien> GetStaffs()
-		{
+        {
             FirebaseResponse response = client.Get("NhanVien");
             Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
 
             List<NhanVien> staffs = data.Values.ToList();
 
-        }
+
             return staffs;
         }
     }
-}
 
+}
 

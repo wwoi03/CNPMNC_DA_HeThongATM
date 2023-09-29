@@ -74,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 var idcusValue = $(this).val();
 
                
-                $.get("/ReditCard/GetNameCus", { codeToFind: idcusValue }, function (data) {
+                $.get("/CreditCard/GetNameCus", { codeToFind: idcusValue }, function (data) {
                     console.log(data);
-                    console.log(data.tenkh);
+                  
                     if (data == null) {
                         alert("mã khách hàng không tồn tại");
                         document.querySelector('.card-holder-name').innerText =

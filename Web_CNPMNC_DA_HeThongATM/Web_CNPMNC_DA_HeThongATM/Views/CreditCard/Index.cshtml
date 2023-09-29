@@ -179,9 +179,8 @@
                 <input type="hidden" asp-for="NgayHetHan" />
             </div>
             <div class="inputBox">
-                <span>Loại Thẻ</span>
-                <input type="text" maxlength="4" hidden class="type-card" >
-                <select class="type-card">
+                <span>Loại Thẻ</span>          
+                <select asp-for="Loaithe" class="type-card">
                    <option value="Loại" selected disabled>Loại</option>
                     <option value="2021">Redit</option>
                     <option value="2022">Visa</option>
@@ -192,12 +191,9 @@
         <input type="submit" value="submit" class="submit-btn">
     </form>
 
-</div>    
-    
-      
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-<script src="/js/form-card.js">
+</div>        
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/js/form-card.js">   
 </script>
 </body>
 
