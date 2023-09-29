@@ -35,6 +35,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         public string Tenkh { get; set; }
        
         public string NgayTao { get; set; }
+
+        public string MatKhau { get; set; }
     }
 
 }

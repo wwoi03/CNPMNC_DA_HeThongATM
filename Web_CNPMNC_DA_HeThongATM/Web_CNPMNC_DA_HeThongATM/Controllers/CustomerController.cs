@@ -21,14 +21,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         }
         //tạo khách hàng
         [HttpPost]
-        public async Task<IActionResult> CreateCustommer(KhachHangViewModel customer)
+        public IActionResult CreateCustommer(KhachHangViewModel customer)
         {
-            customer.Makh = await firebaseHelper.CreateidCus();
+
+            customer.Makh = firebaseHelper.CreateidCus();
+            customer.MatKhau =  firebaseHelper.CreateidCus();
             ModelState.Remove("Makh");
+            ModelState.Remove("MatKhau");
             if (ModelState.IsValid)
             {
                 
-                await firebaseHelper.InsertCustommer(customer);
+                 firebaseHelper.InsertCustommer(customer);
                 
                 return RedirectToAction("Index");
             }

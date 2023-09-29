@@ -82,12 +82,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return shortId;
         }
-        public async Task<string> CreateidCus()
+        public  string CreateidCus()
         {
             string Makh = GuidSystem();
 
 
-            FirebaseResponse response = await client.GetAsync("KhachHang");
+            FirebaseResponse response = client.Get("KhachHang");
 
             if (response != null || response.Body != "null")
             {
@@ -95,7 +95,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 if (data.ContainsKey(Makh.ToString()))
                 {
                     // Nếu ID đã tồn tại, thử tạo lại một ID mới
-                    return await CreateidCus();
+                    return  CreateidCus();
                 }
 
             }
