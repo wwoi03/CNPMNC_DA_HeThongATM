@@ -1,9 +1,11 @@
 package com.example.app_cnpmnc_da_hethongatm.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -12,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
+import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
 
@@ -82,7 +86,7 @@ public class HomeFragment extends Fragment {
     ArrayList<ImageSlide> imageSlides;
     Handler handler = new Handler();
     Runnable runnable;
-
+    CardView cv_chuyenTien;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,12 +94,24 @@ public class HomeFragment extends Fragment {
         initUI(view);
         initData();
         initListener();
+        ClickChuyenTien();
+    }
+
+    private void ClickChuyenTien(){
+        cv_chuyenTien.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),ListStkActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // Ánh xạ view
     private void initUI(View view) {
         vp2Images = view.findViewById(R.id.vp2Images);
         ci3 = view.findViewById(R.id.ci3);
+        cv_chuyenTien = view.findViewById(R.id.cv_chuyenTien);
     }
 
     // Khởi tạo
