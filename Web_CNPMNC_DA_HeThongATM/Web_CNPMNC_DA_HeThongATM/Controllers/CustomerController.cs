@@ -24,6 +24,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public async Task<IActionResult> CreateCustommer(KhachHangViewModel customer)
         {
             customer.Makh = await firebaseHelper.CreateidCus();
+            ModelState.Remove("Makh");
             if (ModelState.IsValid)
             {
                 

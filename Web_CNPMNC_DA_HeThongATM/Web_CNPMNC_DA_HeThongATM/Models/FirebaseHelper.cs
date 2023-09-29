@@ -4,6 +4,8 @@ using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
+using UniqueIdGenerator;
+
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
@@ -62,23 +64,42 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             }
         }
-        //tạo id khách hàng
+        //tạo id khách hàng bằng GUID (Globally Unique Identifier)
+        private string GuidSystem()
+        {
+            // Tạo một Guid mới
+            Guid uniqueGuid = Guid.NewGuid();
+
+            // Chuyển Guid thành byte array
+            byte[] bytes = uniqueGuid.ToByteArray();
+
+            // Chuyển byte array thành một chuỗi hexa
+            string hexString = BitConverter.ToString(bytes).Replace("-", "");
+
+            // Lấy 10 ký tự đầu tiên từ chuỗi hexa
+            string shortId = hexString.Substring(0, 10);
+
+            return shortId;
+        }
         public async Task<string> CreateidCus()
         {
+            string Makh = GuidSystem();
 
 
             FirebaseResponse response = await client.GetAsync("KhachHang");
 
             if (response == null || response.Body == "null")
             {
-                return ""; // Node không tồn tại hoặc trống
-               
+                Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
+                if (data.ContainsKey(Makh.ToString()))
+                {
+                    // Nếu ID đã tồn tại, thử tạo lại một ID mới
+                    return await CreateidCus();
+                }
+
             }
 
-            Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
-            List<KhachHangViewModel> peopleList = new List<KhachHangViewModel>(data.Values);
-
-            return "CTM194" + (peopleList.Count + 501).ToString();
+            return Makh.ToString();
 
 
         }
