@@ -10,6 +10,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
     public class FirebaseHelper
     {
         public static IFirebaseClient client;
+        public static IFirebaseClient clientAuth;
 
         private IFirebaseConfig config = new FirebaseConfig
         {
@@ -17,9 +18,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
         };
 
+        private IFirebaseConfig configAuth = new FirebaseConfig
+        {
+            AuthSecret = "8obrEcqOIAxjs7tLlUKLxXbqgq0ODi+0LziWdELDG7WxeFFAzY1cnKmRwCvcp1pPyR0Qx+1ar+qfp42KmyFC7w==",
+            BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        };
+
         public FirebaseHelper()
         {
             client = new FirebaseClient(config);
+            clientAuth = new FirebaseClient(configAuth);
         }
 
         public async Task<List<CustommerViewModel>> GetCustommers()
@@ -169,6 +177,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         // Lấy số lượng thẻ VISA và ATM
         
+        // Tạo tài khoản nhân viên
+        public void CreateStaff(NhanVien nhanVien)
+        {
+            var newUser = new
+            {
+                phoneNumber = "+937164534",  // Thay thế bằng số điện thoại thực tế
+                password = "88268826",
+                returnSecureToken = true
+            };
+
+            FirebaseResponse res = clientAuth.Set("signUp", newUser);
+            FirebaseResponse response = client.Push("NhanVien", nhanVien);
+        }
     }
 }
 

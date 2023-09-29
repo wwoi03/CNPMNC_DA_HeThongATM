@@ -1,6 +1,6 @@
-﻿namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+﻿namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 {
-    public class NhanVien
+    public class NhanVienViewModel
     {
         public string ChiNhanh { get; set; }
         public string ChucVu { get; set; }
