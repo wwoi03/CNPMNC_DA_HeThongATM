@@ -20,16 +20,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             client = new FirebaseClient(config);
         }
-        //ghi log
-        public static async Task WriteLog(string name, string Ds)
-        {
-            LogSystem logSystem = new LogSystem
-            {
-                Name = name,
-                Description = Ds
-            };
-            FirebaseResponse response = await client.PushAsync("LogDebug", logSystem);
-        }
+       
         //lấy danh sách khách hàng
         public async Task<List<KhachHangViewModel>> GetCustommers()
         {
@@ -81,7 +72,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             if (response == null || response.Body == "null")
             {
                 return ""; // Node không tồn tại hoặc trống
-                await WriteLog("CreateidCus", "data null");
+               
             }
 
             Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);

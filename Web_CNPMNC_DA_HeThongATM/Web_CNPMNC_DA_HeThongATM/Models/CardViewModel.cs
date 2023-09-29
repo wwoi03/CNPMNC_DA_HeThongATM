@@ -1,7 +1,10 @@
-﻿namespace Web_CNPMNC_DA_HeThongATM.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class CardViewModel
     {
+        [Required]
         public string MaKH { get; set; }
         public string MaPIN { get; set; }
         public string MaSoThe { get; set; }

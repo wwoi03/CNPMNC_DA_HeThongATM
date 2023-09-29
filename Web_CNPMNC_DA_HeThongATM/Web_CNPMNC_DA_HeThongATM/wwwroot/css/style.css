@@ -1,4 +1,4 @@
-/* This css file is to over write bootstarp css
+﻿/* This css file is to over write bootstarp css
 --------------------------------------------------------- /
 * Theme Name: Ela Admin Template
 * Theme URI: http://demos.jeweltheme.com/
@@ -2505,7 +2505,7 @@ footer.site-footer {
 
 /*# sourceMappingURL=style.css.map */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
-
+              /*  form tạo thẻ*/
 * {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -2678,3 +2678,7 @@ footer.site-footer {
                     margin-top: 30px;
                     height: 30px;
                 }
+             /*   //thẻ span validate*/
+.text-validation{
+    font-size:15px;
+}
