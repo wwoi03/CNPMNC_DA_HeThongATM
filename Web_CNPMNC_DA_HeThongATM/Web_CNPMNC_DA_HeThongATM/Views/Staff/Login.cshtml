@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Web_CNPMNC_DA_HeThongATM.Controllers
+@model NhanVienViewModel
+
+@{
     ViewData["Title"] = "Employee login";
 }
  <!doctype html>
@@ -41,14 +44,14 @@
                     </div>
                 </div>
                 <div class="card-body card-block">
-                    <form action="" method="">
-                        <div class="form-group">
+                    <form asp-controller="Staff" method="post" asp-action="CheckLogin">
+                        <div class="form-group">B
                             <label for="name" class="form-control-label">Email nhân viên</label>
-                            <input type="email" id="email" name="email" placeholder="Nhập email nhân viên" class="form-control">
+                            <input type="email" id="email" name="Email" placeholder="Nhập email nhân viên" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="birth" class="form-control-label">Mật khẩu nhân viên</label>
-                            <input type="password" id="password" name="password" placeholder="Nhập mật khẩu nhân viên" class="form-control">
+                            <input type="password" id="password" name="MatKhau" placeholder="Nhập mật khẩu nhân viên" class="form-control">
                         </div>
                         <div class="text-center"> 
                             <button type="submit" class="btn btn-primary">Submit</button>

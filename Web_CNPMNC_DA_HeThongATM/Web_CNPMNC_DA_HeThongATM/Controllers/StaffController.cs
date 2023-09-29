@@ -31,55 +31,66 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
 
-        
-        public IActionResult Login() //TRANG ĐĂNG NHẬP
-        {
-            return View();
-        }
-
-
-
         [HttpGet]
         public IActionResult EmployeeSignUp() //EmployeeSignUp view
         {
             return View();
         }
 
-
         [HttpPost]
         public IActionResult EmployeeCreate(NhanVienViewModel nhanVienViewModel) //EmployeeSignUp view
         {
             client = new FirebaseClient(config);
-            //  String path = "NhanVien";
-
             FirebaseResponse response =  client.Push("NhanVien", nhanVienViewModel);
+            return RedirectToAction("Index");
+        }
+//-------------------------------------------------------------------------------------------------------------------
+
+        [HttpGet]
+        public IActionResult Login() //Login view
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CheckLogin(NhanVienViewModel nhanVienViewModel) 
+        {
+            client = new FirebaseClient(config);
+
+            // Sử dụng FirebaseClient để lấy dữ liệu từ Firebase
+            FirebaseResponse response = client.Get("NhanVien");
+
+            // Kiểm tra xem có lỗi hay không khi tải dữ liệu
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                
+                Dictionary<string, NhanVienViewModel> firebaseData = response.ResultAs<Dictionary<string, NhanVienViewModel>>();
+
+                // LẤY DỮ LIỆU TỪ NGƯỜI DÙNG
+                String enteredEmail = nhanVienViewModel.Email;
+                String enteredPass = nhanVienViewModel.MatKhau;
+
+                if (firebaseData != null && firebaseData.Count > 0)
+                {
+                    foreach (var entry in firebaseData)
+                    {
+                        // LẤY DỮ LIỆU TỪ FIREBASE
+                        string userEmailFromFirebase = entry.Value.Email;
+                        string userPasswordFromFirebase = entry.Value.MatKhau;
+
+                        if (enteredEmail == userEmailFromFirebase && enteredPass == userPasswordFromFirebase)
+                        {
+                            return View("Login");
+                        }
+                    }
+                }
+            }
+          
             return RedirectToAction("Index");
         }
 
 
-        [HttpPost]
-        public IActionResult Employeeinfo(NhanVien nhanVien) // Nhận dữ liệu nhập vào
-        {
-            try
-            {
-                AddNhanVienToFireBase(nhanVien);
-                ModelState.AddModelError(String.Empty,"Added Successfully");
-            }
-            catch(Exception ex)
-            {
-                ModelState.AddModelError(String.Empty, ex.Message);
-            }
-            return View(nhanVien);
-        }
 
-
-        private void AddNhanVienToFireBase(NhanVien nhanVien) //Thêm NhanVien vào firebase
-        {
-            client = new FireSharp.FirebaseClient(config);
-          //  String path = "NhanVien";
-            
-            PushResponse response = client.Push("NhanVien",nhanVien);
-        }
 
 
 
