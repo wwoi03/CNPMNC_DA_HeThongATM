@@ -180,14 +180,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         // Tạo tài khoản nhân viên
         public void CreateStaff(NhanVien nhanVien)
         {
-            var newUser = new
+            /*var newUser = new
             {
                 phoneNumber = "+937164534",  // Thay thế bằng số điện thoại thực tế
                 password = "88268826",
                 returnSecureToken = true
             };
 
-            FirebaseResponse res = clientAuth.Set("signUp", newUser);
+            FirebaseResponse res = clientAuth.Push("user", newUser);*/
+
             FirebaseResponse response = client.Push("NhanVien", nhanVien);
         }
     }
