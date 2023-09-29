@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ConfirmLockCardActiviti">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+        <!--Hinh anh the-->
+        <View
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/rectangle_8"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="#0066ff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rectangle_2" />
+
+        <!--Thong tin the-->
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:padding="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_marginBottom="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quý khách vui lòng kiểm tra thông tin giao dịch đã khởi tạo"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                >
+            </TextView>
+
+            <!--Loai-->
+
+
+            <!--So the-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loại thẻ"
+                    android:textSize="20sp"></TextView>
+
+                <!-- Loai the-->
+                <TextView
+                    android:id="@+id/tvLoaiThe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Thẻ ghi nợ"
+                    android:textSize="20sp"
+                    android:textStyle="bold"></TextView>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số thẻ"
+                    android:textSize="20sp">
+                </TextView>
+
+                <!-- So the-->
+                <TextView
+                    android:id="@+id/tvSoThe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="08956411023"
+                    android:textStyle="bold"
+                    android:textSize="20sp">
+                </TextView>
+
+            </RelativeLayout>
+
+
+            <!--Tinh trang the-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tình trạng"
+                    android:textSize="20sp">
+                </TextView>
+
+                <!-- TinhTrang the-->
+                <TextView
+                    android:id="@+id/tvTinhTrang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Hoạt động"
+                    android:textStyle="bold"
+                    android:textSize="20sp">
+                </TextView>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btKhoaThe"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="XÁC NHẬN">
+
+        </Button>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

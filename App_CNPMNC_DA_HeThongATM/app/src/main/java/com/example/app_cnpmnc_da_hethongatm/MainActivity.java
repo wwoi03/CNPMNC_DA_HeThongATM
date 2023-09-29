@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.LockCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_quanli);
+
+
         }
     }
 
@@ -114,6 +117,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_quanli:
                 Intent intent = new Intent(this, BeneficiaryManagementActivity.class);
                 startActivity(intent);
+                break;
+                //Haooooooooooooooooooooooooooooooooooooooooooooooo
+            case R.id.nav_khoathe:
+                Intent intent2 = new Intent(this, LockCardActivity.class);
+                startActivity(intent2);
                 break;
         }
 
