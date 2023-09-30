@@ -237,7 +237,7 @@ public class LockCardActivity extends AppCompatActivity  {
         //So theeeeee :{}
       for(int i=0;i<cards.size();i++){
             //cardids[i]=""+cards.size();
-            cardids[i].valueOf(cards.get(i).getMasothe());
+            cardids[i].valueOf(cards.get(i).getMaSoThe());
        }
         ArrayAdapter<String>adapter=new ArrayAdapter<String>(LockCardActivity.this, android.R.layout.simple_spinner_item,cardids);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),ListStkActivity.class);
-//                Intent intent = new Intent(getActivity(), TransferMoneyActivity.class);
+                // Intent intent = new Intent(getActivity(), TransferMoneyActivity.class);
                 startActivity(intent);
             }
         });

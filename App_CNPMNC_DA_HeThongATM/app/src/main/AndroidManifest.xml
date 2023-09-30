@@ -42,6 +42,9 @@
             android:name=".Activities.ForgetPasswordActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.ListStkActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -51,16 +54,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.BillActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
->>>>>>> s1_hung_giaodichATM
     </application>
 </manifest>

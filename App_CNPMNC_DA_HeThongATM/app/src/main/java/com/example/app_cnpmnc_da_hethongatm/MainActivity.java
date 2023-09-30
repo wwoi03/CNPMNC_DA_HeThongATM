@@ -18,11 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
-<<<<<<< HEAD
 import com.example.app_cnpmnc_da_hethongatm.Activities.LockCardActivity;
-=======
 import com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity;
->>>>>>> s1_hung_giaodichATM
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
