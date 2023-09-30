@@ -16,19 +16,19 @@
             android:exported="false" />
         <activity
             android:name=".Activities.BeneficiaryManagementActivity"
-            android:exported="false" /> <!-- Haoooooooooo -->
+            android:exported="false" />
         <activity
             android:name=".Activities.AddBeneficiaryManagementActivity"
-            android:exported="false" /> <!-- Haoooooooooo -->
+            android:exported="false" />
         <activity
             android:name=".Activities.EditBeneficiaryManagementActivity"
-            android:exported="false" /> <!-- Haoooooooooo -->
+            android:exported="false" />
         <activity
             android:name=".Activities.ConfirmLockCardActiviti"
             android:exported="false" />
         <activity
             android:name=".Activities.LockCardActivity"
-            android:exported="false" /> <!-- Haoooooooooo -->
+            android:exported="false" />
         <activity
             android:name=".Activities.OTPVerificationActivity"
             android:exported="false" />
