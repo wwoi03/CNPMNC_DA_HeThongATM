@@ -1,5 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ServiceFuntionAdapter;
@@ -87,6 +89,7 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
     // View
     ViewPager2 vp2Images;
     CircleIndicator3 ci3;
+    SearchView svSearchServiceFunction;
 
     // Adapter
     ImageSlideAdapter imageSlideAdapter;
@@ -117,6 +120,7 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
         vp2Images = view.findViewById(R.id.vp2Images);
         ci3 = view.findViewById(R.id.ci3);
         rvServiceFunctions = view.findViewById(R.id.rvServiceFunctions);
+        svSearchServiceFunction = view.findViewById(R.id.svSearchServiceFunction);
     }
 
     // Khởi tạo
@@ -140,12 +144,23 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
             }
         };
 
-        // chức năng
+        // render chức năng
         FirebaseRecyclerOptions<ChucNang> optionsServiceFunctions = DbHelper.getServiceFunctions();
         Log.d("firebase", optionsServiceFunctions.toString());
         serviceFuntionAdapter = new ServiceFuntionAdapter(optionsServiceFunctions, TransactionFragment.this);
         rvServiceFunctions.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvServiceFunctions.setAdapter(serviceFuntionAdapter);
+
+        // tìm kiếm chức năng
+        CharSequence query = svSearchServiceFunction.getQuery();
+        svSearchServiceFunction.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    svSearchServiceFunction.requestFocus();
+                }
+            }
+        });
     }
 
     // Xử lý sự kiện
@@ -176,7 +191,15 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
     // Xử lý sự kiện khi ấn vào một chức năng bất kỳ
     @Override
     public void setOnClickItemListener(ChucNang serviceFunction, DatabaseReference databaseReference) {
-        Log.d("firebase", databaseReference.getKey() + " : Key");
+        String className = "com.example.app_cnpmnc_da_hethongatm" + serviceFunction.getMaChucNang();
+
+        try {
+            Class<?> myClass = Class.forName(className);
+            Intent intent = new Intent(getContext(), myClass);
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

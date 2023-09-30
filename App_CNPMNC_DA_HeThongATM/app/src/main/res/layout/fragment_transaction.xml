@@ -290,9 +290,11 @@
                     android:layout_margin="1dp">
 
                     <SearchView
+                        android:id="@+id/svSearchServiceFunction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#F7F8FA"
+                        android:inputType="text"
                         android:queryHint="Chuyển tiền, thanh toán,...">
                     </SearchView>
                 </androidx.cardview.widget.CardView>
