@@ -1,11 +1,16 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
-public class TransferMoney {
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class TransferMoney implements Serializable {
     private long HanMucThe;
+    private String keySTK;
     private long MaSoThe;
     private String NgayGD;
     private long SoDu;
-    private long SoTaiKhoan;
+    private long soTaiKhoan;
     private String TenTK;
     private long TienDaGD;
     private long TienGD1Lan;
@@ -15,12 +20,13 @@ public class TransferMoney {
 
     }
 
-    public TransferMoney(long hanMucThe, long maSoThe, String ngayGD, long soDu, long soTaiKhoan, String tenTK, long tienDaGD, long tienGD1Lan, long tinhTrangTK) {
+    public TransferMoney(long hanMucThe, String keySTK, long maSoThe, String ngayGD, long soDu, long soTaiKhoan, String tenTK, long tienDaGD, long tienGD1Lan, long tinhTrangTK) {
         HanMucThe = hanMucThe;
+        this.keySTK = keySTK;
         MaSoThe = maSoThe;
         NgayGD = ngayGD;
         SoDu = soDu;
-        SoTaiKhoan = soTaiKhoan;
+        this.soTaiKhoan = soTaiKhoan;
         TenTK = tenTK;
         TienDaGD = tienDaGD;
         TienGD1Lan = tienGD1Lan;
@@ -33,6 +39,14 @@ public class TransferMoney {
 
     public void setHanMucThe(long hanMucThe) {
         HanMucThe = hanMucThe;
+    }
+
+    public String getKeySTK() {
+        return keySTK;
+    }
+
+    public void setKeySTK(String keySTK) {
+        this.keySTK = keySTK;
     }
 
     public long getMaSoThe() {
@@ -60,11 +74,11 @@ public class TransferMoney {
     }
 
     public long getSoTaiKhoan() {
-        return SoTaiKhoan;
+        return soTaiKhoan;
     }
 
     public void setSoTaiKhoan(long soTaiKhoan) {
-        SoTaiKhoan = soTaiKhoan;
+        this.soTaiKhoan = soTaiKhoan;
     }
 
     public String getTenTK() {
@@ -97,20 +111,5 @@ public class TransferMoney {
 
     public void setTinhTrangTK(long tinhTrangTK) {
         TinhTrangTK = tinhTrangTK;
-    }
-
-    @Override
-    public String toString() {
-        return "TransferMoney{" +
-                "HanMucThe=" + HanMucThe +
-                ", MaSoThe=" + MaSoThe +
-                ", NgayGD='" + NgayGD + '\'' +
-                ", SoDu=" + SoDu +
-                ", SoTaiKhoan=" + SoTaiKhoan +
-                ", TenTK='" + TenTK + '\'' +
-                ", TienDaGD=" + TienDaGD +
-                ", TienGD1Lan=" + TienGD1Lan +
-                ", TinhTrangTK=" + TinhTrangTK +
-                '}';
     }
 }

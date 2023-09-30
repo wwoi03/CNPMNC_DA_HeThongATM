@@ -57,16 +57,22 @@ public class ListStkActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<TransferMoney> tempTransferMonies = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Lấy dữ liệu của mỗi đối tượng thỏa mãn điều kiện
                     TransferMoney transferMoney = snapshot.getValue(TransferMoney.class);
 //                    Log.d(transferMoney.toString(), "onDataChange: ");
                     if(transferMoney!= null && transferMoney.getMaSoThe()== 1451344235){
-                        transferMonies.add(transferMoney);
+                        tempTransferMonies.add(transferMoney);
                     }
                     // Thực hiện xử lý với đối tượng taiKhoan ở đây
                 }
-                stkAdapter.notifyDataSetChanged();
+                if (!transferMonies.equals(tempTransferMonies)) {
+                    transferMonies.clear();
+                    transferMonies.addAll(tempTransferMonies);
+                    stkAdapter.notifyDataSetChanged();
+                }
+//                stkAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -74,7 +80,5 @@ public class ListStkActivity extends AppCompatActivity {
                 Toast.makeText(ListStkActivity.this,"Get List false",Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 }

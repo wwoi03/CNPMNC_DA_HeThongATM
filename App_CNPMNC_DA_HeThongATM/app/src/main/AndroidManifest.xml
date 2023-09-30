@@ -35,6 +35,8 @@
         </activity>
         <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity" />
         <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.BillActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

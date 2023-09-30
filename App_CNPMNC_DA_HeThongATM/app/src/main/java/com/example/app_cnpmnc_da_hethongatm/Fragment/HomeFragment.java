@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
@@ -102,6 +103,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),ListStkActivity.class);
+//                Intent intent = new Intent(getActivity(), TransferMoneyActivity.class);
                 startActivity(intent);
             }
         });
