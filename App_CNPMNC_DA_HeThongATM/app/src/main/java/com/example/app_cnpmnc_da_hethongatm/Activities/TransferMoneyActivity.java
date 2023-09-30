@@ -135,41 +135,48 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference("TaiKhoanLienKet");
+
                     String stkText = input_stk.getText().toString().trim();
-                    long stk = Long.parseLong(stkText);
+                    if(stkText.isEmpty()){
+                        BuildAlertDialog("Không được để trống");
+                    }
+                    else {
+                        long stk = Long.parseLong(stkText);
+                        // Sử dụng query để lọc kết quả
+                        Query query = myRef.orderByChild("soTaiKhoan").equalTo(stk);
 
-                    // Sử dụng query để lọc kết quả
-                    Query query = myRef.orderByChild("soTaiKhoan").equalTo(stk);
-
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                // Do bạn đang truy vấn dựa trên một giá trị duy nhất, nên chỉ cần lấy đối tượng đầu tiên
-                                TransferMoney abc = dataSnapshot.getChildren().iterator().next().getValue(TransferMoney.class);
-                                if(transferMoney.getTenTK() == abc.getTenTK()){
-                                    BuildAlertDialog("Không thể tự giao dịch với bản thân");
-                                }
-                                else if (abc != null) {
-                                    nguoiThuHuong = abc;
-                                    input_NguoiThuHuong.setText(nguoiThuHuong.getTenTK());
-                                } else{
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    // Do bạn đang truy vấn dựa trên một giá trị duy nhất, nên chỉ cần lấy đối tượng đầu tiên
+                                    TransferMoney abc = dataSnapshot.getChildren().iterator().next().getValue(TransferMoney.class);
+                                    if(transferMoney.getTenTK() == abc.getTenTK()){
+                                        BuildAlertDialog("Không thể tự giao dịch với bản thân");
+                                    }
+                                    else if (abc != null) {
+                                        nguoiThuHuong = abc;
+                                        input_NguoiThuHuong.setText(nguoiThuHuong.getTenTK());
+                                    } else{
+                                        BuildAlertDialog("Không tìm thấy người thụ hưởng");
+                                    }
+                                } else {
                                     BuildAlertDialog("Không tìm thấy người thụ hưởng");
                                 }
-                            } else {
-                                BuildAlertDialog("Không tìm thấy người thụ hưởng");
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("FirebaseError", error.getMessage());
-                        }
-                    });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("FirebaseError", error.getMessage());
+                            }
+                        });
+                    }
+
                 }
             }
         });
     }
+
     private void BuildAlertDialog(String TenLoi){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Có Lỗi");
