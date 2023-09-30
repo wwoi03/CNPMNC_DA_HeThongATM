@@ -4,107 +4,101 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Card {
+    public String LoaiThe;
+    public String MaDangNhap;
+    public String MaKH;
+    public int MaPin;
+    public int MaSoThe;
+    public String NgayHetHan;
+    public String NgayMoThe;
+    public String SDTDangKy;
+    public int TinhTrangThe;
 
-    public String loaithe;
-   public String madangnhap;
-   public String makh;
-   public int mapin;
-   public int masothe;
-   public String ngayhethan;
-   public String ngaymothe;
-   public String sdtdangky;
-   public int tinhtrangthe;
-
-
-   public Card(){}
-    public Card(String loaithe, String madangnhap, String makh, int mapin, int masothe, String ngayhethan, String ngaymothe, String sdtdangky, int tinhtrangthe) {
-        this.loaithe = loaithe;
-        this.madangnhap = madangnhap;
-        this.makh = makh;
-        this.mapin = mapin;
-        this.masothe = masothe;
-        this.ngayhethan = ngayhethan;
-        this.ngaymothe = ngaymothe;
-        this.sdtdangky = sdtdangky;
-        this.tinhtrangthe = tinhtrangthe;
+    public Card() {
     }
 
-    public String getLoaithe() {
-        return loaithe;
+    public String getLoaiThe() {
+        return LoaiThe;
     }
 
-    public void setLoaithe(String loaithe) {
-        this.loaithe = loaithe;
+    public void setLoaiThe(String loaiThe) {
+        LoaiThe = loaiThe;
     }
 
-    public String getMadangnhap() {
-        return madangnhap;
+    public String getMaDangNhap() {
+        return MaDangNhap;
     }
 
-    public void setMadangnhap(String madangnhap) {
-        this.madangnhap = madangnhap;
+    public void setMaDangNhap(String maDangNhap) {
+        MaDangNhap = maDangNhap;
     }
 
-    public String getMakh() {
-        return makh;
+    public String getMaKH() {
+        return MaKH;
     }
 
-    public void setMakh(String makh) {
-        this.makh = makh;
+    public void setMaKH(String maKH) {
+        MaKH = maKH;
     }
 
-    public int getMapin() {
-        return mapin;
+    public int getMaPin() {
+        return MaPin;
     }
 
-    public void setMapin(int mapin) {
-        this.mapin = mapin;
+    public void setMaPin(int maPin) {
+        MaPin = maPin;
     }
 
-    public int getMasothe() {
-        return masothe;
+    public int getMaSoThe() {
+        return MaSoThe;
     }
 
-    public void setMasothe(int masothe) {
-        this.masothe = masothe;
+    public void setMaSoThe(int maSoThe) {
+        MaSoThe = maSoThe;
     }
 
-    public String getNgayhethan() {
-        return ngayhethan;
+    public String getNgayHetHan() {
+        return NgayHetHan;
     }
 
-    public void setNgayhethan(String ngayhethan) {
-        this.ngayhethan = ngayhethan;
+    public void setNgayHetHan(String ngayHetHan) {
+        NgayHetHan = ngayHetHan;
     }
 
-    public String getNgaymothe() {
-        return ngaymothe;
+    public String getNgayMoThe() {
+        return NgayMoThe;
     }
 
-    public void setNgaymothe(String ngaymothe) {
-        this.ngaymothe = ngaymothe;
+    public void setNgayMoThe(String ngayMoThe) {
+        NgayMoThe = ngayMoThe;
     }
 
-    public String getSdtdangky() {
-        return sdtdangky;
+    public String getSDTDangKy() {
+        return SDTDangKy;
     }
 
-    public void setSdtdangky(String sdtdangky) {
-        this.sdtdangky = sdtdangky;
+    public void setSDTDangKy(String SDTDangKy) {
+        this.SDTDangKy = SDTDangKy;
     }
 
-    public int getTinhtrangthe() {
-        return tinhtrangthe;
+    public int getTinhTrangThe() {
+        return TinhTrangThe;
     }
 
-    public void setTinhtrangthe(int tinhtrangthe) {
-        this.tinhtrangthe = tinhtrangthe;
+    public void setTinhTrangThe(int tinhTrangThe) {
+        TinhTrangThe = tinhTrangThe;
     }
 
-    public Map<String,Object>toMap(){
-        HashMap<String,Object> result=new HashMap<>();
-        result.put("tinhtrangthe",tinhtrangthe);
-        return result;
+    public Card(String loaiThe, String maDangNhap, String maKH, int maPin, int maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
+        LoaiThe = loaiThe;
+        MaDangNhap = maDangNhap;
+        MaKH = maKH;
+        MaPin = maPin;
+        MaSoThe = maSoThe;
+        NgayHetHan = ngayHetHan;
+        NgayMoThe = ngayMoThe;
+        this.SDTDangKy = SDTDangKy;
+        TinhTrangThe = tinhTrangThe;
     }
 }
 
