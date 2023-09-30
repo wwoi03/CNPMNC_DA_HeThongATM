@@ -145,5 +145,34 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return false; // Cập nhật thất bại
             }
         }
-    }
+
+
+        //Chức năng Rút tiền
+		public bool RutTien(double soTien, string value)
+		{
+			string info = GetAccount(value);
+			try
+			{
+				FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+				// Lấy dữ liệu tài khoản từ Firebase
+				var accountData = response.ResultAs<AccountViewModel>();
+
+				//// Trừ số tiền vào số dư
+				//accountData.SoDu - soTien;
+				Double SoDuHientai = accountData.SoDu - soTien;
+
+
+				// Cập nhật số dư trên Firebase
+				client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuHientai);
+
+				return true; // Cập nhật thành công
+			}
+			catch (Exception ex)
+			{
+				// Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+				return false; // Cập nhật thất bại
+			}
+		}
+	}
 }
