@@ -3,11 +3,11 @@
 @model AccountViewModel
 @{
     Layout = "_LayoutMain";
-    var  accounts = ViewData["j"] as List<AccountViewModel>;
+    var accounts = ViewData["j"] as List<AccountViewModel>;
 }
 
 
-    <body>
+<body>
     <form method="post" asp-controller="Account" asp-action="NapTien" style="margin-left:20%">
         <div class="col-lg-8">
             <div class="card">
@@ -30,4 +30,4 @@
             </div>
         </div>
     </form>
-    </body>
+</body>
