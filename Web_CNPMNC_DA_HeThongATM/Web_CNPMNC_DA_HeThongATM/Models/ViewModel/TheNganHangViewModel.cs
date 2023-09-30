@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web_CNPMNC_DA_HeThongATM.Models
+namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 {
-    public class CardViewModel
+    public class TheNganHangViewModel
     {
         [Required(ErrorMessage = "Mã KH không được để trống.")]
-        public string MaKH { get; set; }
+        public string CCCD { get; set; }
 
         [Required(ErrorMessage = "Mã PIN không được để trống.")]
         public string MaPIN { get; set; }

@@ -2,12 +2,14 @@
 {
     public class KhachHang
     {
-        public string Diachi { get; set; }
+        public string DiaChi { get; set; }
         public string Email { get; set; }
-        public string Gioitinh { get; set; }
-        public string Makh { get; set; }
+        public string GioiTinh { get; set; }
         public int Sdt { get; set; }
-        public string Tenkh { get; set; }
+        public string TenKh { get; set; }
         public string CCCD { get; set; }
+        public string NgayTao { get; set; }
+
+        public string MatKhau { get; set; }
     }
 }

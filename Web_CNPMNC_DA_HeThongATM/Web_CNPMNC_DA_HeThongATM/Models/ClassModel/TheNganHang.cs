@@ -10,5 +10,6 @@
         public string SDTDangKy { get; set; }
         public string TinhTrangThe { get; set; }
         public string LoaiThe { get; set; }
+        public string MaDangNhap { get; set; }
     }
 }

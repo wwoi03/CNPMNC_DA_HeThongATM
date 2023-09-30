@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
+using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -13,18 +15,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult GetNameCus(string codeToFind)
+        public IActionResult GetNameCus(string cccd)
         {
             string PIN = firebaseHelper.CreatePIN();
             string Stk = firebaseHelper.CreateAccountNumbet();
-            KhachHangViewModel custommer =  firebaseHelper.GetCustomerbyid(codeToFind);
+            KhachHang custommer =  firebaseHelper.GetCustomerbyid(cccd);
             if(custommer == null)
             {
-                return NotFound();
+                return Json("null");
             }
             var data = new
             {
-                Tenkh = custommer.Tenkh,
+                Tenkh = custommer.TenKh,
                 Sdt = custommer.Sdt,
                 PIN = PIN,
                 Stk = Stk
@@ -32,11 +34,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return Json(data);
         }
 
-        [HttpPost] 
-        public IActionResult CreateCard(CardViewModel cardViewModel)
+        [HttpPost]
+        public IActionResult CreateCard(TheNganHangViewModel cardViewModel)
         {
             cardViewModel.MaDangNhap = "Nguyễn Lê Quốc Thuận";
-           firebaseHelper.CreateCard(cardViewModel);
+            firebaseHelper.CreateCard(cardViewModel,cardViewModel.CCCD);
             return RedirectToAction("Index");
         }
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using UniqueIdGenerator;
 
 
-namespace Web_CNPMNC_DA_HeThongATM.Models
+namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 {
     public class KhachHangViewModel
     {
@@ -11,8 +11,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         public string CCCD { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập địa chỉ.")]
-        [RegularExpression(@"^[^,]+, [^,]+, [^,]+, [^,]+$" , ErrorMessage = "Địa chỉ phải chứa đủ thông tin Số nhà, Phường/Xã, Quận/Huyện, Tỉnh/Thành phố.")]
-        public string Diachi { get; set; }
+        [RegularExpression(@"^[^,]+, [^,]+, [^,]+, [^,]+$", ErrorMessage = "Địa chỉ phải chứa đủ thông tin Số nhà, Phường/Xã, Quận/Huyện, Tỉnh/Thành phố.")]
+        public string DiaChi { get; set; }
 
 
         // Kiểm tra không được để trống (null)
@@ -21,9 +21,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập giới tính.")]
-        public string Gioitinh { get; set; }
-        
-        public string Makh { get; set; } 
+        public string GioiTinh { get; set; }
 
         // Kiểm tra không được để trống (null) và có ít nhất một số
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
@@ -32,8 +30,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập tên khách hàng.")]
-        public string Tenkh { get; set; }
-       
+        public string TenKh { get; set; }
+
         public string NgayTao { get; set; }
 
         public string MatKhau { get; set; }

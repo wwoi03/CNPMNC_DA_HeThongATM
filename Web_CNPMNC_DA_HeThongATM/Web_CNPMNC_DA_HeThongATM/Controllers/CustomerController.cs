@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -16,16 +17,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult Index()
         {
            
-            ViewData["j"] =  firebaseHelper.GetCustommers();
+           
             return View();
         }
         //tạo khách hàng
         [HttpPost]
         public IActionResult CreateCustommer(KhachHangViewModel customer)
-        {
-
-            customer.Makh = firebaseHelper.CreateidCus();
-            customer.MatKhau =  firebaseHelper.CreateidCus();
+        { 
+            customer.MatKhau =  firebaseHelper.PassRandom();
             ModelState.Remove("Makh");
             ModelState.Remove("MatKhau");
             if (ModelState.IsValid)

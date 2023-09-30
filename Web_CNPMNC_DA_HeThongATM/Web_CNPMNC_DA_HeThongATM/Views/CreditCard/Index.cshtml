@@ -1,6 +1,6 @@
-﻿@using Web_CNPMNC_DA_HeThongATM.Controllers
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
-@model CardViewModel
+@model TheNganHangViewModel
 
 @{
     Layout = "_LayoutMain";
@@ -115,8 +115,8 @@
 
         <form method="post" asp-controller="CreditCard" asp-action="CreateCard">
             <div class="inputBox">
-                <span>Mã Khách Hàng</span>
-                <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
+                <span>Căn cước công dân</span>
+                <input type="text" maxlength="16" id="makhachhang" asp-for="CCCD">
             </div>
             <div class="inputBox">
                 <span>Tên Khách Hàng</span>
