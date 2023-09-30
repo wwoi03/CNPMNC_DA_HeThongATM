@@ -5,17 +5,26 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Adapter.ServiceFuntionAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import me.relex.circleindicator.CircleIndicator3;
@@ -25,7 +34,7 @@ import me.relex.circleindicator.CircleIndicator3;
  * Use the {@link TransactionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TransactionFragment extends Fragment {
+public class TransactionFragment extends Fragment implements ServiceFuntionAdapter.Listener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,13 +83,25 @@ public class TransactionFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_transaction, container, false);
     }
 
-    // Biến toàn cục
+    /*--------------------------- Biến toàn cục ---------------------------*/
+    // View
     ViewPager2 vp2Images;
     CircleIndicator3 ci3;
+
+    // Adapter
     ImageSlideAdapter imageSlideAdapter;
+    ServiceFuntionAdapter serviceFuntionAdapter;
+
+    // RecycleView
+    RecyclerView rvServiceFunctions;
+
+    // ArrayList
     ArrayList<ImageSlide> imageSlides;
+
+    // ...
     Handler handler = new Handler();
     Runnable runnable;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -95,6 +116,7 @@ public class TransactionFragment extends Fragment {
     private void initUI(View view) {
         vp2Images = view.findViewById(R.id.vp2Images);
         ci3 = view.findViewById(R.id.ci3);
+        rvServiceFunctions = view.findViewById(R.id.rvServiceFunctions);
     }
 
     // Khởi tạo
@@ -117,6 +139,13 @@ public class TransactionFragment extends Fragment {
                     vp2Images.setCurrentItem(vp2Images.getCurrentItem() + 1);
             }
         };
+
+        // chức năng
+        FirebaseRecyclerOptions<ChucNang> optionsServiceFunctions = DbHelper.getServiceFunctions();
+        Log.d("firebase", optionsServiceFunctions.toString());
+        serviceFuntionAdapter = new ServiceFuntionAdapter(optionsServiceFunctions, TransactionFragment.this);
+        rvServiceFunctions.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvServiceFunctions.setAdapter(serviceFuntionAdapter);
     }
 
     // Xử lý sự kiện
@@ -126,9 +155,7 @@ public class TransactionFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-
                 handler.removeCallbacks(runnable);
-
                 // khoảng thời giản chuyển slide
                 handler.postDelayed(runnable, 3000);
             }
@@ -144,5 +171,23 @@ public class TransactionFragment extends Fragment {
         list.add(new ImageSlide(R.drawable.slide3));
 
         return list;
+    }
+
+    // Xử lý sự kiện khi ấn vào một chức năng bất kỳ
+    @Override
+    public void setOnClickItemListener(ChucNang serviceFunction, DatabaseReference databaseReference) {
+        Log.d("firebase", databaseReference.getKey() + " : Key");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        serviceFuntionAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        serviceFuntionAdapter.stopListening();
     }
 }

@@ -16,16 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.BillActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
-import com.example.app_cnpmnc_da_hethongatm.Model.TransferMoney;
+import com.example.app_cnpmnc_da_hethongatm.Model.LichSuGiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 
 import java.util.List;
 
 public class listStkAdapter extends RecyclerView.Adapter<listStkAdapter.listStkViewHolder> {
 
-    public List<TransferMoney> transferMonies;
+    public List<TaiKhoanLienKet> transferMonies;
 
-    public listStkAdapter(List<TransferMoney> transferMonies) {
+    public listStkAdapter(List<TaiKhoanLienKet> transferMonies) {
         this.transferMonies = transferMonies;
     }
 
@@ -38,13 +39,15 @@ public class listStkAdapter extends RecyclerView.Adapter<listStkAdapter.listStkV
 
     @Override
     public void onBindViewHolder(@NonNull listStkViewHolder holder, int position) {
-        TransferMoney transferMoney = transferMonies.get(position);
+        TaiKhoanLienKet transferMoney = transferMonies.get(position);
+
         if(transferMoney ==null){
             return;
         }
+
         holder.stk.setText("So Tai Khoan: "+transferMoney.getSoTaiKhoan());
         holder.soDu.setText("So Du: "+transferMoney.getSoDu());
-        if(transferMoney.getTinhTrangTK() != 1){
+        if(transferMoney.getTinhTrangTaiKhoan() != 1){
             holder.cv_STK.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,7 +85,7 @@ public class listStkAdapter extends RecyclerView.Adapter<listStkAdapter.listStkV
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, TransferMoneyActivity.class);
-                    intent.putExtra("transferMoney",transferMoney);
+                    intent.putExtra("transferMoney", transferMoney);
                     context.startActivity(intent);
                 }
             });
@@ -90,7 +93,7 @@ public class listStkAdapter extends RecyclerView.Adapter<listStkAdapter.listStkV
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), BillActivity.class);
-                    intent.putExtra("transferMoney",transferMoney);
+                    intent.putExtra("transferMoney", transferMoney);
                     v.getContext().startActivity(intent);
                 }
             });

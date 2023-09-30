@@ -1,8 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,13 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.listStkAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
-import com.example.app_cnpmnc_da_hethongatm.Model.TransferMoney;
+import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ import java.util.List;
 public class ListStkActivity extends AppCompatActivity {
     private RecyclerView rv_listStk;
     private listStkAdapter stkAdapter;
-    private List<TransferMoney> transferMonies;
+    private List<TaiKhoanLienKet> transferMonies;
     private Config config;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,10 +114,10 @@ public class ListStkActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<TransferMoney> tempTransferMonies = new ArrayList<>();
+                List<TaiKhoanLienKet> tempTransferMonies = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Lấy dữ liệu của mỗi đối tượng thỏa mãn điều kiện
-                    TransferMoney transferMoney = snapshot.getValue(TransferMoney.class);
+                    TaiKhoanLienKet transferMoney = snapshot.getValue(TaiKhoanLienKet.class);
 //                    Log.d(transferMoney.toString(), "onDataChange: ");
                     if(transferMoney!= null && transferMoney.getMaSoThe() == 1451344235){
                         tempTransferMonies.add(transferMoney);

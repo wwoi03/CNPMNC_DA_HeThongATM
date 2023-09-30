@@ -2,7 +2,6 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,15 +9,14 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.app_cnpmnc_da_hethongatm.Model.Bill;
-import com.example.app_cnpmnc_da_hethongatm.Model.TransferMoney;
+import com.example.app_cnpmnc_da_hethongatm.Model.LichSuGiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +27,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -39,11 +34,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     TextInputEditText input_NguoiThuHuong,input_stk,input_LoiNhan,input_NhapTien;
     TextView tv_stk,tv_sd;
-    TransferMoney transferMoney,nguoiThuHuong;
+    TaiKhoanLienKet transferMoney, nguoiThuHuong;
     Button btn_submit;
-    int TienGd1Lan;
+    long TienGd1Lan;
     String NgayGDHomNay;
-    Bill bill = new Bill();
+    LichSuGiaoDich bill = new LichSuGiaoDich();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,14 +59,14 @@ public class TransferMoneyActivity extends AppCompatActivity {
         btn_submit = findViewById(R.id.btn_submit);
     }
     private void GetIntent(){
-        transferMoney = (TransferMoney) getIntent().getSerializableExtra("transferMoney");
+        transferMoney = (TaiKhoanLienKet) getIntent().getSerializableExtra("transferMoney");
         setTextForm();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("TaiKhoanLienKet/"+transferMoney.getKeySTK());
+        DatabaseReference myRef = database.getReference("TaiKhoanLienKet/" + transferMoney.getKeySTK());
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                TransferMoney tamthoi = snapshot.getValue(TransferMoney.class);
+                TaiKhoanLienKet tamthoi = snapshot.getValue(TaiKhoanLienKet.class);
                 if(tamthoi !=null){
                     transferMoney = tamthoi;
                     setTextForm();
@@ -88,7 +83,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private void setTextForm(){
         tv_stk.setText(String.valueOf(transferMoney.getSoTaiKhoan()));
         tv_sd.setText(String.valueOf(transferMoney.getSoDu()));
-        input_LoiNhan.setText(transferMoney.getTenTK()+" Chuyen tien");
+        input_LoiNhan.setText(transferMoney.getTenTaiKhoan()+" Chuyen tien");
     }
     private void XacNhanChuyenTien(){
         btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -150,13 +145,13 @@ public class TransferMoneyActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (dataSnapshot.exists()) {
                                     // Do bạn đang truy vấn dựa trên một giá trị duy nhất, nên chỉ cần lấy đối tượng đầu tiên
-                                    TransferMoney abc = dataSnapshot.getChildren().iterator().next().getValue(TransferMoney.class);
-                                    if(transferMoney.getTenTK() == abc.getTenTK()){
+                                    TaiKhoanLienKet abc = dataSnapshot.getChildren().iterator().next().getValue(TaiKhoanLienKet.class);
+                                    if(transferMoney.getTenTaiKhoan() == abc.getTenTaiKhoan()){
                                         BuildAlertDialog("Không thể tự giao dịch với bản thân");
                                     }
                                     else if (abc != null) {
                                         nguoiThuHuong = abc;
-                                        input_NguoiThuHuong.setText(nguoiThuHuong.getTenTK());
+                                        input_NguoiThuHuong.setText(nguoiThuHuong.getTenTaiKhoan());
                                     } else{
                                         BuildAlertDialog("Không tìm thấy người thụ hưởng");
                                     }

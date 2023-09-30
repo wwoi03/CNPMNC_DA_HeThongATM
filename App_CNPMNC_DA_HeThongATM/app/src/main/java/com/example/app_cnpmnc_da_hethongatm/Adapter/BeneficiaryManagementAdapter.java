@@ -38,10 +38,8 @@ public class BeneficiaryManagementAdapter extends FirebaseRecyclerAdapter<Benefi
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull Beneficiary model) {
         holder.tv_tengnthuhuong.setText(model.getTenNguoiThuHuong());
-        holder.tv_tkthuhuong.setText(model.getTKThuHuong());
+        holder.tv_tkthuhuong.setText(String.valueOf(model.getTKThuHuong()));
         holder.tv_sotaikhoan.setText("Sacombank");
-
-
     }
 
     @NonNull

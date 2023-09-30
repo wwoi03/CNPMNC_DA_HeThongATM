@@ -1,7 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.listbillAdapter;
-import com.example.app_cnpmnc_da_hethongatm.Model.Bill;
-import com.example.app_cnpmnc_da_hethongatm.Model.TransferMoney;
+import com.example.app_cnpmnc_da_hethongatm.Model.LichSuGiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +25,8 @@ import java.util.List;
 public class BillActivity extends AppCompatActivity {
     private RecyclerView rc_listbill;
     private listbillAdapter listbillAdapter;
-    private List<Bill> bills;
-    private TransferMoney transferMoney;
+    private List<LichSuGiaoDich> bills;
+    private TaiKhoanLienKet transferMoney;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +52,10 @@ public class BillActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Bill> bill= new ArrayList<>();
+                List<LichSuGiaoDich> bill= new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     // Lấy dữ liệu của mỗi đối tượng thỏa mãn điều kiện
-                    Bill billtamthoi = snapshot.getValue(Bill.class);
+                    LichSuGiaoDich billtamthoi = snapshot.getValue(LichSuGiaoDich.class);
 //                    Log.d(transferMoney.toString(), "onDataChange: ");
                     if(billtamthoi!= null){
                         if(transferMoney.getSoTaiKhoan() == billtamthoi.getTaiKhoanNhan() || transferMoney.getSoTaiKhoan() == billtamthoi.getSoTaiKhoan())
@@ -81,7 +80,7 @@ public class BillActivity extends AppCompatActivity {
         });
     }
     private void laythongtin(){
-        transferMoney = (TransferMoney) getIntent().getSerializableExtra("transferMoney");
+        transferMoney = (TaiKhoanLienKet) getIntent().getSerializableExtra("transferMoney");
     }
 }
 

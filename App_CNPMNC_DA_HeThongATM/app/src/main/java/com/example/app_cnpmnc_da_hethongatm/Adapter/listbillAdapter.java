@@ -8,15 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_cnpmnc_da_hethongatm.Model.Bill;
+import com.example.app_cnpmnc_da_hethongatm.Model.LichSuGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.R;
 
 import java.util.List;
 
 public class listbillAdapter extends RecyclerView.Adapter<listbillAdapter.listbillHolder>{
-    private List<Bill> bills;
+    private List<LichSuGiaoDich> bills;
 
-    public listbillAdapter(List<Bill> bills) {
+    public listbillAdapter(List<LichSuGiaoDich> bills) {
         this.bills = bills;
     }
 
@@ -29,7 +29,7 @@ public class listbillAdapter extends RecyclerView.Adapter<listbillAdapter.listbi
 
     @Override
     public void onBindViewHolder(@NonNull listbillHolder holder, int position) {
-            Bill bill= bills.get(position);
+            LichSuGiaoDich bill= bills.get(position);
             if(bill==null){
                 return;
             }
