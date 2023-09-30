@@ -182,8 +182,7 @@ public class LockCardActivity extends AppCompatActivity  {
         btKhoaThe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(LockCardActivity.this,ConfirmLockCardActiviti.class));
-                ReadData();
+
             }
         });
 
@@ -233,9 +232,10 @@ public class LockCardActivity extends AppCompatActivity  {
 
 
         //So theeeeee :{}
+        cardids=new String[cards.size()];
       for(int i=0;i<cards.size();i++){
-            //cardids[i]=""+cards.size();
-            cardids[i].valueOf(cards.get(i).getMasothe());
+            cardids[i]=""+cards.size();
+            //cardids[i].valueOf(cards.get(i).getMasothe());
        }
         ArrayAdapter<String>adapter=new ArrayAdapter<String>(LockCardActivity.this, android.R.layout.simple_spinner_item,cardids);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
