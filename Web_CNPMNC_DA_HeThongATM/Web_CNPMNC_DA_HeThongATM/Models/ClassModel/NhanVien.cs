@@ -8,6 +8,6 @@
         public string Email { get; set; }
         public string MatKhau { get; set; }
         public string NamSinh { get; set; }
-        public string TenNhanVien { get; set; }
+        public string Ten { get; set; }
     }
 }

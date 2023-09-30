@@ -310,7 +310,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/people_alt/baseline_people_alt_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/credit_card/baseline_credit_card_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -320,7 +320,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_people_alt_24" />
+                            <entry key="outputName" value="baseline_credit_card_24" />
                             <entry key="sourceFile" value="C:\Users\tuand\Downloads\sack-dollar-solid.svg" />
                           </map>
                         </option>

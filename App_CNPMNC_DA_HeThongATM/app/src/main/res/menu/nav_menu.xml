@@ -11,6 +11,11 @@
             android:id="@+id/nav_quanli"
             android:icon="@drawable/baseline_people_alt_24"
             android:title="QUẢN LÝ NGƯỜI THỤ HƯỞNG" />
+
+        <item
+            android:id="@+id/nav_khoathe"
+            android:icon="@drawable/baseline_lock_person_24"
+            android:title="KHÓA THẺ/TÀI KHOẢN"></item>
     </group>
     <item
         android:title="">
