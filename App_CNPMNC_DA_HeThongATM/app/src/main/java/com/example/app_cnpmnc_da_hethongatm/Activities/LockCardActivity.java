@@ -233,6 +233,8 @@ public class LockCardActivity extends AppCompatActivity  {
 
 
         //So theeeeee :{}
+        cardids=new String[cards.size()];
+        //So theeeeee :{}
       for(int i=0;i<cards.size();i++){
             //cardids[i]=""+cards.size();
             cardids[i].valueOf(cards.get(i).getMasothe());
