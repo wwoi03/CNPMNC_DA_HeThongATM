@@ -12,10 +12,16 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
-            android:name=".UnlockCardActivity"
+            android:name=".Activities.UnlockCardActivity"
             android:exported="false" />
         <activity
-            android:name=".LockCardSuccessedActivity"
+            android:name=".Activities.BeneficiaryManagementActivity"
+            android:exported="false" /> <!-- Haoooooooooo -->
+        <activity
+            android:name=".Activities.AddBeneficiaryManagementActivity"
+            android:exported="false" /> <!-- Haoooooooooo -->
+        <activity
+            android:name=".Activities.EditBeneficiaryManagementActivity"
             android:exported="false" /> <!-- Haoooooooooo -->
         <activity
             android:name=".Activities.ConfirmLockCardActiviti"
@@ -45,13 +51,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.AddBeneficiaryManagementActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.EditBeneficiaryManagementActivity" />
-=======
-        <activity android:name=".BeneficiaryManagementActivity" />
->>>>>>> s1-Hao-MoKhoaTK
     </application>
-
 </manifest>
