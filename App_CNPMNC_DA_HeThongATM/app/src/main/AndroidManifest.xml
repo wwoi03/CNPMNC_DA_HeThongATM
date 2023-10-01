@@ -24,9 +24,6 @@
             android:name=".Activities.EditBeneficiaryManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.ConfirmLockCardActiviti"
-            android:exported="false" />
-        <activity
             android:name=".Activities.LockCardActivity"
             android:exported="false" />
         <activity
@@ -54,6 +51,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.BillActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

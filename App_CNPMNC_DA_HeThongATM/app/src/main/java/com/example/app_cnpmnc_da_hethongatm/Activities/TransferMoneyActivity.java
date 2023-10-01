@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.LichSuGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class TransferMoneyActivity extends AppCompatActivity {
 
@@ -39,6 +43,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     long TienGd1Lan;
     String NgayGDHomNay;
     LichSuGiaoDich bill = new LichSuGiaoDich();
+    Map<String, Object> updates = new HashMap<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,17 +108,34 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         BuildAlertDialog("Vượt quá số dư hiện tại");
                     } else if(TienGd1Lan > transferMoney.getTienGD1Lan()) {
                         BuildAlertDialog("Số tiền gd lớn nhất là"+String.valueOf(transferMoney.getTienGD1Lan()));
-                    } else if (transferMoney.getTienDaGD() > transferMoney.getHanMucThe()) {
+                    } else if (transferMoney.getTienDaGD()+TienGd1Lan > transferMoney.getHanMucThe()) {
                         BuildAlertDialog("Hôm nay đã đạt hạn mức tối đa giao dịch vui lòng quay lại sau");
                     }else if(NgayGDHomNay != transferMoney.getNgayGD()){
                         transferMoney.setNgayGD(NgayGDHomNay);
+                        updates.put("NgayGD", transferMoney.getNgayGD());
                         transferMoney.setTienDaGD(0);
+                        updates.put("TienDaGD", transferMoney.getTienDaGD());
                         transferMoney.setSoDu(transferMoney.getSoDu()-TienGd1Lan);
+                        updates.put("SoDu", transferMoney.getSoDu());
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("TaiKhoanLienKet");
-                        myRef.child(transferMoney.getKeySTK()).setValue(transferMoney);
+                        myRef.child(transferMoney.getKeySTK()).updateChildren(updates);
                         nguoiThuHuong.setSoDu(nguoiThuHuong.getSoDu()+TienGd1Lan);
-                        myRef.child(nguoiThuHuong.getKeySTK()).setValue(nguoiThuHuong);
+                        updates.put("SoDu", nguoiThuHuong.getSoDu());
+                        myRef.child(nguoiThuHuong.getKeySTK()).updateChildren(updates);
+                        SaveBill();
+                        BuildAlertDialogSucess();
+                    } else if (NgayGDHomNay == transferMoney.getNgayGD()) {
+                        transferMoney.setTienDaGD(TienGd1Lan+transferMoney.getTienDaGD());
+                        updates.put("TienDaGD", transferMoney.getTienDaGD());
+                        transferMoney.setSoDu(transferMoney.getSoDu()-TienGd1Lan);
+                        updates.put("SoDu", transferMoney.getSoDu());
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference("TaiKhoanLienKet");
+                        myRef.child(transferMoney.getKeySTK()).updateChildren(updates);
+                        nguoiThuHuong.setSoDu(nguoiThuHuong.getSoDu()+TienGd1Lan);
+                        updates.put("SoDu", nguoiThuHuong.getSoDu());
+                        myRef.child(nguoiThuHuong.getKeySTK()).updateChildren(updates);
                         SaveBill();
                         BuildAlertDialogSucess();
                     }
@@ -130,7 +152,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference("TaiKhoanLienKet");
-
                     String stkText = input_stk.getText().toString().trim();
                     if(stkText.isEmpty()){
                         BuildAlertDialog("Không được để trống");
@@ -138,7 +159,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     else {
                         long stk = Long.parseLong(stkText);
                         // Sử dụng query để lọc kết quả
-                        Query query = myRef.orderByChild("soTaiKhoan").equalTo(stk);
+                        Query query = myRef.orderByChild("SoTaiKhoan").equalTo(stk);
 
                         query.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -146,6 +167,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                 if (dataSnapshot.exists()) {
                                     // Do bạn đang truy vấn dựa trên một giá trị duy nhất, nên chỉ cần lấy đối tượng đầu tiên
                                     TaiKhoanLienKet abc = dataSnapshot.getChildren().iterator().next().getValue(TaiKhoanLienKet.class);
+                                    Log.d(abc.toString(), "onDataChange: ");
                                     if(transferMoney.getTenTaiKhoan() == abc.getTenTaiKhoan()){
                                         BuildAlertDialog("Không thể tự giao dịch với bản thân");
                                     }
@@ -222,14 +244,20 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
 //        input_LoiNhan.setText(timeString);
         bill.setGioGiaoDich(timeString);
+        updates.put("GioGiaoDich", bill.getGioGiaoDich());
         bill.setMaGiaoDich(newref.getKey());
+        updates.put("MaGiaoDich", bill.getMaGiaoDich());
         bill.setNgayGiaoDich(NgayGDHomNay);
+        updates.put("NgayGiaoDich", bill.getNgayGiaoDich());
         bill.setNoiDungChuyenKhoan(input_LoiNhan.getText().toString().trim());
+        updates.put("NoiDungChuyenKhoan", bill.getNoiDungChuyenKhoan());
         bill.setSoTaiKhoan(transferMoney.getSoTaiKhoan());
+        updates.put("SoTaiKhoan", bill.getNoiDungChuyenKhoan());
         bill.setSoTienGiaoDich(Integer.parseInt(input_NhapTien.getText().toString().trim()));
+        updates.put("SoTienGiaoDich", bill.getSoTienGiaoDich());
         bill.setTaiKhoanNhan(nguoiThuHuong.getSoTaiKhoan());
-
-        newref.setValue(bill);
+        updates.put("TaiKhoanNhan", bill.getTaiKhoanNhan());
+        newref.setValue(updates);
     }
 
 }
