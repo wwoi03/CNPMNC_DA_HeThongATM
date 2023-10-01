@@ -27,6 +27,8 @@ public class ServiceFuntionAdapter extends FirebaseRecyclerAdapter<ChucNang, Ser
     @Override
     protected void onBindViewHolder(@NonNull ServiceFuntionAdapterVH holder, int position, @NonNull ChucNang model) {
         holder.tvServiceFunctionName.setText(model.getTenChucNang());
+
+        customItemDecoration(holder, position);
         initListener(holder, position, model);
     }
 
@@ -45,6 +47,19 @@ public class ServiceFuntionAdapter extends FirebaseRecyclerAdapter<ChucNang, Ser
                 listener.setOnClickItemListener(model, getRef(position));
             }
         });
+    }
+
+    // custom item
+    private void customItemDecoration(ServiceFuntionAdapterVH holder, int position) {
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+
+        if (position % 3 == 0 || position % 3 == 2) {
+            layoutParams.bottomMargin = holder.itemView.getResources().getDimensionPixelOffset(R.dimen.dp_1);
+        } else {
+            layoutParams.leftMargin = holder.itemView.getResources().getDimensionPixelOffset(R.dimen.dp_1);
+            layoutParams.rightMargin = holder.itemView.getResources().getDimensionPixelOffset(R.dimen.dp_1);
+            layoutParams.bottomMargin = holder.itemView.getResources().getDimensionPixelOffset(R.dimen.dp_1);
+        }
     }
 
     class ServiceFuntionAdapterVH extends RecyclerView.ViewHolder {
