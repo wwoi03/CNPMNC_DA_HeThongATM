@@ -1,9 +1,16 @@
 package com.example.app_cnpmnc_da_hethongatm.Extend;
 
+import androidx.annotation.NonNull;
+
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
+import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class DbHelper {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -29,14 +36,15 @@ public class DbHelper {
         return options;
     }
 
-    /*// Lấy thông tin thẻ của khách hàng
-    public static TheNganHang getCard(String maKhachHang) {
-        Query query = firebaseDatabase.getReference("TheNganHang").child("MaKH").equalTo(maKhachHang);
+    // Lấy khách hàng
+    public static KhachHang getCustomer(String phone) {
+        KhachHang khachHang = new KhachHang();
+
+        Query query = firebaseDatabase.getReference("KhachHang").child("SoDienThoai").equalTo(phone);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
             }
 
             @Override
@@ -45,7 +53,6 @@ public class DbHelper {
             }
         })
 
-        TheNganHang theNganHang = new TheNganHang();
-        return theNganHang;
-    }*/
+        return khachHang;
+    }
 }
