@@ -44,6 +44,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
     String NgayGDHomNay;
     LichSuGiaoDich bill = new LichSuGiaoDich();
     Map<String, Object> updates = new HashMap<>();
+    Map<String, Object> billss = new HashMap<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +112,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         BuildAlertDialog("Số tiền gd lớn nhất là"+String.valueOf(transferMoney.getTienGD1Lan()));
                     } else if (transferMoney.getTienDaGD()+TienGd1Lan > transferMoney.getHanMucThe()) {
                         BuildAlertDialog("Hôm nay đã đạt hạn mức tối đa giao dịch vui lòng quay lại sau");
-                    }else if(NgayGDHomNay != transferMoney.getNgayGD()){
+                    }else if(!NgayGDHomNay.equals(transferMoney.getNgayGD())){
+                        Toast.makeText(TransferMoneyActivity.this,"KHONG TRUNG NGAY",Toast.LENGTH_SHORT).show();
                         transferMoney.setNgayGD(NgayGDHomNay);
                         updates.put("NgayGD", transferMoney.getNgayGD());
                         transferMoney.setTienDaGD(0);
@@ -120,12 +123,13 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("TaiKhoanLienKet");
                         myRef.child(transferMoney.getKeySTK()).updateChildren(updates);
+                        updates = new HashMap<>();
                         nguoiThuHuong.setSoDu(nguoiThuHuong.getSoDu()+TienGd1Lan);
                         updates.put("SoDu", nguoiThuHuong.getSoDu());
                         myRef.child(nguoiThuHuong.getKeySTK()).updateChildren(updates);
                         SaveBill();
                         BuildAlertDialogSucess();
-                    } else if (NgayGDHomNay == transferMoney.getNgayGD()) {
+                    } else if (NgayGDHomNay.equals(transferMoney.getNgayGD())) {
                         transferMoney.setTienDaGD(TienGd1Lan+transferMoney.getTienDaGD());
                         updates.put("TienDaGD", transferMoney.getTienDaGD());
                         transferMoney.setSoDu(transferMoney.getSoDu()-TienGd1Lan);
@@ -224,7 +228,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         TienGd1Lan = Integer.parseInt(input_NhapTien.getText().toString().trim());
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        NgayGDHomNay = sdf.format(calendar.getTime());
+        NgayGDHomNay =(sdf.format(calendar.getTime()));
     }
     private void SaveBill(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -244,20 +248,20 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
 //        input_LoiNhan.setText(timeString);
         bill.setGioGiaoDich(timeString);
-        updates.put("GioGiaoDich", bill.getGioGiaoDich());
+        billss.put("GioGiaoDich", bill.getGioGiaoDich());
         bill.setMaGiaoDich(newref.getKey());
-        updates.put("MaGiaoDich", bill.getMaGiaoDich());
+        billss.put("MaGiaoDich", bill.getMaGiaoDich());
         bill.setNgayGiaoDich(NgayGDHomNay);
-        updates.put("NgayGiaoDich", bill.getNgayGiaoDich());
+        billss.put("NgayGiaoDich", bill.getNgayGiaoDich());
         bill.setNoiDungChuyenKhoan(input_LoiNhan.getText().toString().trim());
-        updates.put("NoiDungChuyenKhoan", bill.getNoiDungChuyenKhoan());
+        billss.put("NoiDungChuyenKhoan", bill.getNoiDungChuyenKhoan());
         bill.setSoTaiKhoan(transferMoney.getSoTaiKhoan());
-        updates.put("SoTaiKhoan", bill.getSoTaiKhoan());
+        billss.put("SoTaiKhoan", bill.getSoTaiKhoan());
         bill.setSoTienGiaoDich(Integer.parseInt(input_NhapTien.getText().toString().trim()));
-        updates.put("SoTienGiaoDich", bill.getSoTienGiaoDich());
+        billss.put("SoTienGiaoDich", bill.getSoTienGiaoDich());
         bill.setTaiKhoanNhan(nguoiThuHuong.getSoTaiKhoan());
-        updates.put("TaiKhoanNhan", bill.getTaiKhoanNhan());
-        newref.setValue(updates);
+        billss.put("TaiKhoanNhan", bill.getTaiKhoanNhan());
+        newref.setValue(billss);
     }
 
 }
