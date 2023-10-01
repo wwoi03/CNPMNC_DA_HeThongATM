@@ -4,7 +4,7 @@
     {
         public string MaSoThe { get; set; }
         public string SoTaiKhoan { get; set; }
-        public double SoDu { get; set;  }
+        public double soDu { get; set;  }
         public string TinhTrangTK { get; set;}
 
         public string TenTk { get; set; }

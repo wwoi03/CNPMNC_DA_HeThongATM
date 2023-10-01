@@ -131,11 +131,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
                 //// Cộng số tiền vào số dư
                 //accountData.SoDu += soTien;
-                Double SoDuHientai = accountData.SoDu + soTien;
+                Double SoDuHientai = accountData.soDu + soTien;
                 
 
                 // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuHientai );
+                client.Set("TaiKhoanLienKet/" + info + "/soDu", SoDuHientai );
 
                 return true; // Cập nhật thành công
             }
