@@ -125,8 +125,6 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
         initUI(view);
         initData();
         initListener();
-
-        demoCURDServiceFunction();
     }
 
     // Ánh xạ view
@@ -160,7 +158,6 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
 
         // render chức năng
         FirebaseRecyclerOptions<ChucNang> optionsServiceFunctions = DbHelper.getServiceFunctions();
-        Log.d("firebase", optionsServiceFunctions.toString());
         serviceFuntionAdapter = new ServiceFuntionAdapter(optionsServiceFunctions, TransactionFragment.this);
         rvServiceFunctions.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvServiceFunctions.setAdapter(serviceFuntionAdapter);
@@ -262,10 +259,10 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
             }
         });
 
-        // Lấy danh sách chức năng: dùng Firebase UI
+        /*// Lấy danh sách chức năng: dùng Firebase UI
         FirebaseRecyclerOptions<ChucNang> options = new FirebaseRecyclerOptions.Builder<ChucNang>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("ChucNang"), ChucNang.class)
-                .build();
+                .build();*/
 
         // Thêm chức năng
         ChucNang chucNang = new ChucNang("Không cần nhiều lời", "Chỉ cần một câu", "Helllloooo");
