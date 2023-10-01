@@ -4,18 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.LockCardActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     HomeFragment homeFragment;
     TransactionFragment transactionFragment;
     QuickAccessFragment quickAccessFragment;
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

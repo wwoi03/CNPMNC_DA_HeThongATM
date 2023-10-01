@@ -12,17 +12,23 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
-            android:name=".UnlockCardActivity"
+            android:name=".Activities.UnlockCardActivity"
             android:exported="false" />
         <activity
-            android:name=".LockCardSuccessedActivity"
-            android:exported="false" /> <!-- Haoooooooooo -->
+            android:name=".Activities.BeneficiaryManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddBeneficiaryManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.EditBeneficiaryManagementActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.ConfirmLockCardActiviti"
             android:exported="false" />
         <activity
             android:name=".Activities.LockCardActivity"
-            android:exported="false" /> <!-- Haoooooooooo -->
+            android:exported="false" />
         <activity
             android:name=".Activities.OTPVerificationActivity"
             android:exported="false" />
@@ -36,6 +42,9 @@
             android:name=".Activities.ForgetPasswordActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.ListStkActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -45,7 +54,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BeneficiaryManagementActivity" />
-    </application>
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
 </manifest>

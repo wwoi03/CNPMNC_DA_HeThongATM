@@ -1,3 +1,4 @@
+/*
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import android.content.Intent;
@@ -88,4 +89,4 @@ public class ConfirmLockCardActiviti extends AppCompatActivity {
             }
         });
     }
-}
+}*/

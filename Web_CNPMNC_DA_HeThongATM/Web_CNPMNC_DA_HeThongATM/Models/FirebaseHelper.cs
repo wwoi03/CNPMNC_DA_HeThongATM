@@ -3,12 +3,14 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class FirebaseHelper
     {
         public static IFirebaseClient client;
+        public static IFirebaseClient clientAuth;
 
         private IFirebaseConfig config = new FirebaseConfig
         {
@@ -16,9 +18,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
         };
 
+        private IFirebaseConfig configAuth = new FirebaseConfig
+        {
+            AuthSecret = "8obrEcqOIAxjs7tLlUKLxXbqgq0ODi+0LziWdELDG7WxeFFAzY1cnKmRwCvcp1pPyR0Qx+1ar+qfp42KmyFC7w==",
+            BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        };
+
         public FirebaseHelper()
         {
             client = new FirebaseClient(config);
+            clientAuth = new FirebaseClient(configAuth);
         }
 
         public async Task<List<CustommerViewModel>> GetCustommers()
@@ -101,7 +110,86 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
 
+        // Lấy danh sách khách hàng
+        public List<KhachHang> GetCustomers()
+        {
+            List<KhachHang> dsKhachHang = new List<KhachHang>();
+            FirebaseResponse response = client.Get("KhachHang");
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            dsKhachHang = new List<KhachHang>(data.Values);
+            return dsKhachHang;
+        }
 
+        // Tính tổng tài sản ngân hàng
+        public double GetTotalAssets()
+        {
+            double totalAssets = 0;
+            
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
+            
+            totalAssets = data.Values.Sum(item => item.SoDu);
+           
+            return totalAssets;
+        }
+
+        // Tính tổng giao dịch
+        public long GetTotalTransaction()
+        {
+            long totalTransaction = 0;
+            
+            FirebaseResponse response = client.Get("LichSuGiaoDich");
+            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
+           
+            totalTransaction = data.Values.Count;
+
+            return totalTransaction;
+        }
+
+        // Lấy danh sách nhân viên
+        public List<NhanVien> GetStaffs()
+		{
+            FirebaseResponse response = client.Get("NhanVien");
+            Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
+
+            List<NhanVien> staffs = data.Values.ToList();
+
+            return staffs;
+        }
+
+        // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
+        public Dictionary<string, int> GetQuantityCustomerByMonth(int year)
+        {
+            Dictionary<string, int> quantityCustomerByMonth = new Dictionary<string, int>();
+
+            FirebaseResponse response = client.Get("KhachHang");
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+            for (int i = 1; i <= 12; i++)
+            {
+                int count = data.Values.Count(item => int.Parse(item.NgayTao.Split("/")[1]) == i && int.Parse(item.NgayTao.Split("/")[2]) == year);
+                quantityCustomerByMonth.Add("Tháng " + i.ToString(), count);
+            }
+
+            return quantityCustomerByMonth;
+        }
+
+        // Lấy số lượng thẻ VISA và ATM
+        
+        // Tạo tài khoản nhân viên
+        public void CreateStaff(NhanVien nhanVien)
+        {
+            var newUser = new
+            {
+                phoneNumber = "+937164534",  // Thay thế bằng số điện thoại thực tế
+                password = "88268826",
+                returnSecureToken = true
+            };
+
+            FirebaseResponse res = clientAuth.Set("signUp", newUser);
+            FirebaseResponse response = client.Push("NhanVien", nhanVien);
+        }
     }
 }
 

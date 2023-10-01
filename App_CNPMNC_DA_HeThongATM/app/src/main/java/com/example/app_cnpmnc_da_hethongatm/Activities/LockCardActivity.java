@@ -1,11 +1,9 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -14,16 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.app_cnpmnc_da_hethongatm.Model.Card;
+import com.example.app_cnpmnc_da_hethongatm.Model.TheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.R;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +30,7 @@ public class LockCardActivity extends AppCompatActivity  {
 
     Spinner spLoaiThe,spSoThe;
     Button btKhoaThe;
-    List<Card> cards;
+    List<TheNganHang> cards;
     String [] cardids;
 
     FirebaseDatabase firebaseDatabase;
@@ -48,11 +44,11 @@ public class LockCardActivity extends AppCompatActivity  {
         spLoaiThe=findViewById(R.id.spLoaiThe);
         spSoThe=findViewById(R.id.spSoThe);
         btKhoaThe=findViewById(R.id.btKhoaThe);
-        firebaseDatabase=FirebaseDatabase.getInstance("https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        firebaseDatabase = FirebaseDatabase.getInstance("https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseReference=firebaseDatabase.getReference();
 
 
-        cards=new List<Card>() {
+        cards=new List<TheNganHang>() {
             @Override
             public int size() {
                 return 0;
@@ -70,7 +66,7 @@ public class LockCardActivity extends AppCompatActivity  {
 
             @NonNull
             @Override
-            public Iterator<Card> iterator() {
+            public Iterator<TheNganHang> iterator() {
                 return null;
             }
 
@@ -87,7 +83,7 @@ public class LockCardActivity extends AppCompatActivity  {
             }
 
             @Override
-            public boolean add(Card card) {
+            public boolean add(TheNganHang card) {
                 return false;
             }
 
@@ -102,12 +98,12 @@ public class LockCardActivity extends AppCompatActivity  {
             }
 
             @Override
-            public boolean addAll(@NonNull Collection<? extends Card> collection) {
+            public boolean addAll(@NonNull Collection<? extends TheNganHang> collection) {
                 return false;
             }
 
             @Override
-            public boolean addAll(int i, @NonNull Collection<? extends Card> collection) {
+            public boolean addAll(int i, @NonNull Collection<? extends TheNganHang> collection) {
                 return false;
             }
 
@@ -127,22 +123,22 @@ public class LockCardActivity extends AppCompatActivity  {
             }
 
             @Override
-            public Card get(int i) {
+            public TheNganHang get(int i) {
                 return null;
             }
 
             @Override
-            public Card set(int i, Card card) {
+            public TheNganHang set(int i, TheNganHang card) {
                 return null;
             }
 
             @Override
-            public void add(int i, Card card) {
+            public void add(int i, TheNganHang card) {
 
             }
 
             @Override
-            public Card remove(int i) {
+            public TheNganHang remove(int i) {
                 return null;
             }
 
@@ -158,19 +154,19 @@ public class LockCardActivity extends AppCompatActivity  {
 
             @NonNull
             @Override
-            public ListIterator<Card> listIterator() {
+            public ListIterator<TheNganHang> listIterator() {
                 return null;
             }
 
             @NonNull
             @Override
-            public ListIterator<Card> listIterator(int i) {
+            public ListIterator<TheNganHang> listIterator(int i) {
                 return null;
             }
 
             @NonNull
             @Override
-            public List<Card> subList(int i, int i1) {
+            public List<TheNganHang> subList(int i, int i1) {
                 return null;
             }
         };
@@ -196,7 +192,7 @@ public class LockCardActivity extends AppCompatActivity  {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 cards.clear();
                 for (DataSnapshot snap : snapshot.getChildren()){
-                    Card card=snap.getValue(Card.class);
+                    TheNganHang card = snap.getValue(TheNganHang.class);
                     cards.add(card);
                 }
 
@@ -233,9 +229,16 @@ public class LockCardActivity extends AppCompatActivity  {
 
         //So theeeeee :{}
         cardids=new String[cards.size()];
+<<<<<<< HEAD
       for(int i=0;i<cards.size();i++){
             cardids[i]=""+cards.size();
             //cardids[i].valueOf(cards.get(i).getMasothe());
+=======
+        //So theeeeee :{}
+      for(int i=0;i<cards.size();i++){
+            //cardids[i]=""+cards.size();
+            cardids[i].valueOf(cards.get(i).getMaSoThe());
+>>>>>>> dev-sprint1
        }
         ArrayAdapter<String>adapter=new ArrayAdapter<String>(LockCardActivity.this, android.R.layout.simple_spinner_item,cardids);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

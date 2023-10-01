@@ -1,11 +1,14 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     String vertifycationID;
 
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference useRef;
+    DatabaseReference useRef, passRef;
 
     int count=0;
 
@@ -55,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance("https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app");
         useRef = firebaseDatabase.getReference("User");
+        passRef = firebaseDatabase.getReference("UserPassword");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,14 +73,14 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"GG",Toast.LENGTH_SHORT).show();
                 } else
                 {
-                    useRef.child(phone.getText().toString()).addValueEventListener(new ValueEventListener() {
+                    passRef.child(phone.getText().toString()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String pass = snapshot.child("password").getValue().toString();
                             if (pass.equals(edtPass.getText().toString())){
                                 String number = phone.getText().toString();
                                 Sendverificationcode(number);
-
+                                savePhoneNumberPref(number);
                                 Toast.makeText(LoginActivity.this, "Mk dung", Toast.LENGTH_SHORT).show();
                             }
                             else {
@@ -99,17 +103,22 @@ public class LoginActivity extends AppCompatActivity {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                Intent intent   = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(intent);
             }
         });
 
     }
 
+    public void savePhoneNumberPref(String phoneNumber){
+        SharedPreferences sharedPreferences = getSharedPreferences("Database", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("PhoneNumber", phoneNumber);
+        editor.apply();
+    }
+
     private void verificationcode()
     {
-        //PhoneAuthCredential credential = PhoneAuthProvider.getCredential(vertifycationID,Code);
-        //signinbyCredentials(credential);
         Intent intent = new Intent(LoginActivity.this, OTPVerificationActivity.class);
         intent.putExtra("vertifycationID", vertifycationID);
         intent.putExtra("phoneNumber", phone.getText().toString());
@@ -177,12 +186,60 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-//         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//         if(currentUser!=null)
-//         {
-//            startActivity(new Intent(LoginActivity.this,MainActivity.class));
-//            finish();
-//         }
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser!=null)
+        {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final View dialogView = getLayoutInflater().inflate(R.layout.login_pin_dialog, null);
+
+            builder.setView(dialogView);
+
+            // Get references to dialog elements
+            EditText codeEditText = dialogView.findViewById(R.id.edtPin);
+            Button submitButton = dialogView.findViewById(R.id.btnSubmit);
+            Button cancelButton = dialogView.findViewById(R.id.btnCancel);
+
+            // Create and show the dialog
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
+            // Set a listener for the Submit button
+            submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String enteredCode = codeEditText.getText().toString();
+                    useRef.child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(enteredCode.equals(snapshot.child("pin").getValue().toString())){
+                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                finish();
+                            }else {
+                                Toast.makeText(LoginActivity.this, "Sai ma pin", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            });
+
+            // Set a listener for the Cancel button
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Close the dialog
+                    dialog.dismiss();
+                }
+            });
+
+        }
+
     }
+
 
 }
