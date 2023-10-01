@@ -9,6 +9,7 @@ import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -158,8 +159,31 @@ public class DbHelper {
 
         return options;
     }
-    //Lấy danh sách GiaoDich
+    //Lấy danh sách LoaiGiaoDic
+    public static String getLoaiGiaoDich(String keygiaodich){
+        String abc = "";
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("LoaiGiaoDich/"+keygiaodich);
+        Log.d("LoaiGiaoDich/"+keygiaodich, "getLoaiGiaoDich: ");
+        myRef.addValueEventListener(new ValueEventListener() {
 
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    LoaiGiaoDich loaiGiaoDich = dataSnapshot.getValue(LoaiGiaoDich.class);
+                    if (loaiGiaoDich != null) {
+                        abc = loaiGiaoDich.getTenLoai();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return abc;
+    }
     // cập nhật số dư
     public static void updateSurplus(String taiKhoanKey, double soDuMoi) {
         Map<String, Object> map = new HashMap<>();

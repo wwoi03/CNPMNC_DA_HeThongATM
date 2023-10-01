@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -40,6 +41,8 @@ public class GiaoDichAdapter extends  RecyclerView.Adapter<GiaoDichAdapter.GiaoD
         String ngaythang = giaoDich.getNgayGiaoDich();
         String thoigian = giaoDich.getGioGiaoDich();
         holder.gd_time.setText(ngaythang + " "+thoigian);
+        holder.gd_sodu.setText(String.valueOf(giaoDich.getSoDuLucGui()));
+        holder.gd_loaigd.setText(DbHelper.getLoaiGiaoDich(giaoDich.getLoaiGiaoDichKey()));
     }
 
     @Override
@@ -51,12 +54,14 @@ public class GiaoDichAdapter extends  RecyclerView.Adapter<GiaoDichAdapter.GiaoD
     }
 
     public class GiaoDichViewHolder extends RecyclerView.ViewHolder{
-        TextView gd_soTien,gd_nd,gd_time;
+        TextView gd_soTien,gd_nd,gd_time,gd_sodu,gd_loaigd;
         public GiaoDichViewHolder(@NonNull View itemView) {
             super(itemView);
             gd_soTien = itemView.findViewById(R.id.gd_soTien);
             gd_nd = itemView.findViewById(R.id.gd_nd);
             gd_time = itemView.findViewById(R.id.gd_time);
+            gd_sodu = itemView.findViewById(R.id.gd_sodu);
+            gd_loaigd = itemView.findViewById(R.id.gd_loaigd);
         }
     }
 }

@@ -65,6 +65,9 @@ public class ActivityListGD extends AppCompatActivity {
                         if(stk == giaoDich.getTaiKhoanNguon()){
                             giaoDich.setSoTienGiaoDich(giaoDich.getSoTienGiaoDich()*-1);
                         }
+                        else if(stk == giaoDich.getTaiKhoanNhan()){
+                            giaoDich.setSoDuLucGui(giaoDich.getSoDuLucNhan());
+                        }
                         gd1.add(giaoDich);
                     }
                 }
@@ -80,6 +83,5 @@ public class ActivityListGD extends AppCompatActivity {
 
             }
         });
-
     }
 }
