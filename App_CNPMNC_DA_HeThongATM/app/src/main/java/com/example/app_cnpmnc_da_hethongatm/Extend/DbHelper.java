@@ -160,30 +160,31 @@ public class DbHelper {
         return options;
     }
     //Lấy danh sách LoaiGiaoDic
-    public static String getLoaiGiaoDich(String keygiaodich){
-        String abc = "";
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("LoaiGiaoDich/"+keygiaodich);
-        Log.d("LoaiGiaoDich/"+keygiaodich, "getLoaiGiaoDich: ");
-        myRef.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    LoaiGiaoDich loaiGiaoDich = dataSnapshot.getValue(LoaiGiaoDich.class);
-                    if (loaiGiaoDich != null) {
-                        abc = loaiGiaoDich.getTenLoai();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return abc;
-    }
+//    public static String getLoaiGiaoDich(String keygiaodich){
+//        String abc = "";
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("LoaiGiaoDich/"+keygiaodich);
+//        Log.d("LoaiGiaoDich/"+keygiaodich, "getLoaiGiaoDich: ");
+//        myRef.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+//                    LoaiGiaoDich loaiGiaoDich = dataSnapshot.getValue(LoaiGiaoDich.class);
+//                    Log.d(loaiGiaoDich.getTenLoai(), "onDataChange: ");
+//                    if (loaiGiaoDich != null) {
+//                        abc = loaiGiaoDich.getTenLoai();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return abc;
+//    }
     // cập nhật số dư
     public static void updateSurplus(String taiKhoanKey, double soDuMoi) {
         Map<String, Object> map = new HashMap<>();

@@ -10,9 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -42,7 +48,23 @@ public class GiaoDichAdapter extends  RecyclerView.Adapter<GiaoDichAdapter.GiaoD
         String thoigian = giaoDich.getGioGiaoDich();
         holder.gd_time.setText(ngaythang + " "+thoigian);
         holder.gd_sodu.setText(String.valueOf(giaoDich.getSoDuLucGui()));
-        holder.gd_loaigd.setText(DbHelper.getLoaiGiaoDich(giaoDich.getLoaiGiaoDichKey()));
+//        holder.gd_loaigd.setText(DbHelper.getLoaiGiaoDich(giaoDich.getLoaiGiaoDichKey()));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("LoaiGiaoDich/"+giaoDich.getLoaiGiaoDichKey());
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    LoaiGiaoDich loaiGiaoDich = snapshot.getValue(LoaiGiaoDich.class);
+                    holder.gd_loaigd.setText(loaiGiaoDich.getTenLoai());
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
