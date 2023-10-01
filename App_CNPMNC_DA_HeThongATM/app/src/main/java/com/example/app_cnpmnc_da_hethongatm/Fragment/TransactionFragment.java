@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ServiceFuntionAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
@@ -228,6 +229,12 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
     }
 
     public void demoCURDServiceFunction() {
+        Config config = new Config(getContext());
+
+        String phoneCustomer = config.getCustomerPhone();
+
+
+
         /*
         * getInstance(): là để có được đối tượng FirebaseDatabase (để tương tác với firebase)
         * DatabaseReference: là một tham chiếu đến một vị trí cụ thể trong cơ sở dữ liệu Firebase

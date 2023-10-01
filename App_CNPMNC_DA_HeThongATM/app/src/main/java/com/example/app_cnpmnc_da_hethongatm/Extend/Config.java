@@ -28,4 +28,7 @@ public class Config {
     public String getCustomerPhone() {
         return sharedPreferences.getString("customerPhone", "");
     }
+    public String getCustomerId() {
+        return sharedPreferences.getString("customerId", "");
+    }
 }
