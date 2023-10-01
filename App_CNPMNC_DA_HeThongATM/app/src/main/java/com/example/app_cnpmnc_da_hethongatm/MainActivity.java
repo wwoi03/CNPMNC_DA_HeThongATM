@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(this, BeneficiaryManagementActivity.class);
                 startActivity(intent);
                 break;
-                //Haooooooooooooooooooooooooooooooooooooooooooooooo
             case R.id.nav_khoathe:
                 Intent intent2 = new Intent(this, LookCardActivity.class);
                 startActivity(intent2);

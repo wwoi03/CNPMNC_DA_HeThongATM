@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
+import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,35 +25,12 @@ public class DbHelper {
         return options;
     }
 
-    // Lấy danh sách tài khoản liên kết
-    public static FirebaseRecyclerOptions<TaiKhoanLienKet> getAffiliateAccount() {
-
-        String maSoThe = "";
-
-        FirebaseRecyclerOptions<TaiKhoanLienKet> options = new FirebaseRecyclerOptions.Builder<TaiKhoanLienKet>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("TaiKhoanLienKet").child("MaSoThe").equalTo(maSoThe), TaiKhoanLienKet.class)
+    // Lấy danh sách người thụ hưởng
+    public static FirebaseRecyclerOptions<ThuHuong> getBeneficiaries(long maSoThe) {
+        FirebaseRecyclerOptions<ThuHuong> options = new FirebaseRecyclerOptions.Builder<ThuHuong>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().orderByChild("ThuHuong").equalTo(maSoThe), ThuHuong.class)
                 .build();
 
         return options;
-    }
-
-    // Lấy khách hàng
-    public static KhachHang getCustomer(String phone) {
-        KhachHang khachHang = new KhachHang();
-
-        Query query = firebaseDatabase.getReference("KhachHang").child("SoDienThoai").equalTo(phone);
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        })
-
-        return khachHang;
     }
 }

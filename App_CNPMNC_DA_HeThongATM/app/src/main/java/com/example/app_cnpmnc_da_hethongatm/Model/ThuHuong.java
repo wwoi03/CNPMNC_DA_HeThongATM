@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class ThuHuong implements Serializable {
 
-    private String IdThuHuong;
     private long MaSoThe;
     private long TKThuHuong;
     private String TenNguoiThuHuong;
@@ -13,19 +12,10 @@ public class ThuHuong implements Serializable {
 
     }
 
-    public ThuHuong(String idThuHuong, long maSoThe, long TKThuHuong, String tenNguoiThuHuong) {
-        IdThuHuong = idThuHuong;
+    public ThuHuong(long maSoThe, long TKThuHuong, String tenNguoiThuHuong) {
         MaSoThe = maSoThe;
         this.TKThuHuong = TKThuHuong;
         TenNguoiThuHuong = tenNguoiThuHuong;
-    }
-
-    public String getIdThuHuong() {
-        return IdThuHuong;
-    }
-
-    public void setIdThuHuong(String idThuHuong) {
-        IdThuHuong = idThuHuong;
     }
 
     public long getMaSoThe() {
