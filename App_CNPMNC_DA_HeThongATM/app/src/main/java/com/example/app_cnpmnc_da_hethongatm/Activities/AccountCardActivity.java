@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -24,12 +25,11 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     AccountCardAdapter accountCardAdapter;
 
     Config config;
-
+    int flag =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_card);
-
         initUI();
         initData();
         initListener();
@@ -42,8 +42,9 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
 
     // khởi tạo dữ liệu
     public void initData() {
+        Intent intent = getIntent();
         config = new Config(this);
-
+        flag = intent.getIntExtra("flag",0);
         FirebaseRecyclerOptions<TaiKhoanLienKet> affiliateAccountOptions = DbHelper.getAffiliateAccounts(config.getCustomerKey());
         accountCardAdapter = new AccountCardAdapter(affiliateAccountOptions, this);
         rvAccountCard.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -66,14 +67,20 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
         super.onStop();
         accountCardAdapter.stopListening();
     }
-
     // Xử lý sự kiện bấm vào từng thẻ
     @Override
     public void setOnClickItemListener(TaiKhoanLienKet model, DatabaseReference databaseReference) {
-        Intent intent = getIntent();
-        intent.putExtra("taiKhoanNguon", model);
-        intent.putExtra("taiKhoanNguonKey", databaseReference.getKey());
-        setResult(TransferMoneyActivity.CHOOSE_SOURCE_ACCOUNT, intent);
-        finish();
+        if(flag ==10){
+            Intent intent = new Intent(AccountCardActivity.this, ActivityListGD.class);
+            intent.putExtra("taiKhoanNguon", model.getSoTaiKhoan());
+            startActivity(intent);
+        }
+        else {
+            Intent intent = getIntent();
+            intent.putExtra("taiKhoanNguon", model);
+            intent.putExtra("taiKhoanNguonKey", databaseReference.getKey());
+            setResult(TransferMoneyActivity.CHOOSE_SOURCE_ACCOUNT, intent);
+            finish();
+        }
     }
 }

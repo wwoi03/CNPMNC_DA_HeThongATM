@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
+import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
@@ -157,6 +158,7 @@ public class DbHelper {
 
         return options;
     }
+    //Lấy danh sách GiaoDich
 
     // cập nhật số dư
     public static void updateSurplus(String taiKhoanKey, double soDuMoi) {

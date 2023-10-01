@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.AccountCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountSettingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.SearchServiceFunctionActivity;
@@ -167,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onCreateOptionsMenu(menu);
     }
 
+
     // tương tác với các item trong menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -174,6 +176,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.mnuSearch:
                 Intent cart = new Intent(MainActivity.this, SearchServiceFunctionActivity.class);
                 startActivity(cart);
+                break;
+            case R.id.mnuNotification:
+                Intent intent1 = new Intent(MainActivity.this, AccountCardActivity.class);
+                intent1.putExtra("flag", 10);
+                startActivity(intent1);
                 break;
         }
 
