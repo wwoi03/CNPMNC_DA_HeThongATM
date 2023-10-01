@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("customerKey", khachHang.getCCCD());
                             editor.putString("customerName", khachHang.getTenKhachHang());
                             editor.commit();
-
+                            DbHelper.getCardNumber(khachHang.getCCCD());
                             homePage();
                         } else {
                             toastMessage("Mật khẩu không chính xác");
