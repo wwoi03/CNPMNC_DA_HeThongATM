@@ -252,7 +252,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         bill.setNoiDungChuyenKhoan(input_LoiNhan.getText().toString().trim());
         updates.put("NoiDungChuyenKhoan", bill.getNoiDungChuyenKhoan());
         bill.setSoTaiKhoan(transferMoney.getSoTaiKhoan());
-        updates.put("SoTaiKhoan", bill.getNoiDungChuyenKhoan());
+        updates.put("SoTaiKhoan", bill.getSoTaiKhoan());
         bill.setSoTienGiaoDich(Integer.parseInt(input_NhapTien.getText().toString().trim()));
         updates.put("SoTienGiaoDich", bill.getSoTienGiaoDich());
         bill.setTaiKhoanNhan(nguoiThuHuong.getSoTaiKhoan());
