@@ -1,23 +1,23 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
-public class Beneficiary {
+import java.io.Serializable;
 
-    String IdThuHuong;
-    String TKThuHuong;
-    String TenNguoiThuHuong;
-    String MaSoThe;
+public class Beneficiary implements Serializable {
 
-
+    private String IdThuHuong;
+    private long MaSoThe;
+    private long TKThuHuong;
+    private String TenNguoiThuHuong;
 
     public Beneficiary() {
 
     }
 
-    public Beneficiary(String idThuHuong, String TKThuHuong, String tenNguoiThuHuong, String maSoThe) {
+    public Beneficiary(String idThuHuong, long maSoThe, long TKThuHuong, String tenNguoiThuHuong) {
         IdThuHuong = idThuHuong;
+        MaSoThe = maSoThe;
         this.TKThuHuong = TKThuHuong;
         TenNguoiThuHuong = tenNguoiThuHuong;
-        MaSoThe = maSoThe;
     }
 
     public String getIdThuHuong() {
@@ -28,11 +28,19 @@ public class Beneficiary {
         IdThuHuong = idThuHuong;
     }
 
-    public String getTKThuHuong() {
+    public long getMaSoThe() {
+        return MaSoThe;
+    }
+
+    public void setMaSoThe(long maSoThe) {
+        MaSoThe = maSoThe;
+    }
+
+    public long getTKThuHuong() {
         return TKThuHuong;
     }
 
-    public void setTKThuHuong(String TKThuHuong) {
+    public void setTKThuHuong(long TKThuHuong) {
         this.TKThuHuong = TKThuHuong;
     }
 
@@ -42,13 +50,5 @@ public class Beneficiary {
 
     public void setTenNguoiThuHuong(String tenNguoiThuHuong) {
         TenNguoiThuHuong = tenNguoiThuHuong;
-    }
-
-    public String getMaSoThe() {
-        return MaSoThe;
-    }
-
-    public void setMaSoThe(String maSoThe) {
-        MaSoThe = maSoThe;
     }
 }

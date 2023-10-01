@@ -1,0 +1,62 @@
+package com.example.app_cnpmnc_da_hethongatm.Extend;
+
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.example.app_cnpmnc_da_hethongatm.Model.Beneficiary;
+import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
+import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
+import com.example.app_cnpmnc_da_hethongatm.Model.TheNganHang;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+public class DbHelper {
+    public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+    // Lấy danh sách chức năng
+    public static FirebaseRecyclerOptions<ChucNang> getServiceFunctions() {
+        FirebaseRecyclerOptions<ChucNang> options = new FirebaseRecyclerOptions.Builder<ChucNang>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("ChucNang"), ChucNang.class)
+                .build();
+
+        return options;
+    }
+
+    // Lấy danh sách tài khoản liên kết
+    public static FirebaseRecyclerOptions<TaiKhoanLienKet> getAffiliateAccount() {
+
+        String maSoThe = "";
+
+        FirebaseRecyclerOptions<TaiKhoanLienKet> options = new FirebaseRecyclerOptions.Builder<TaiKhoanLienKet>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("TaiKhoanLienKet").child("MaSoThe").equalTo(maSoThe), TaiKhoanLienKet.class)
+                .build();
+
+        return options;
+    }
+
+    /*// Lấy thông tin thẻ của khách hàng
+    public static TheNganHang getCard(String maKhachHang) {
+        Query query = firebaseDatabase.getReference("TheNganHang").child("MaKH").equalTo(maKhachHang);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        })
+
+        TheNganHang theNganHang = new TheNganHang();
+        return theNganHang;
+    }*/
+}

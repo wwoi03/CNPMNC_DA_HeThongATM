@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
     public void savePhoneNumberPref(String phoneNumber){
         SharedPreferences sharedPreferences = getSharedPreferences("Database", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("PhoneNumber", phoneNumber);
+        editor.putString("customerPhone", phoneNumber);
         editor.apply();
     }
 
