@@ -16,18 +16,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ServiceFuntionAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.ktx.Firebase;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -113,6 +124,8 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
         initUI(view);
         initData();
         initListener();
+
+        demoCURDServiceFunction();
     }
 
     // Ánh xạ view
@@ -212,5 +225,66 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
     public void onStop() {
         super.onStop();
         serviceFuntionAdapter.stopListening();
+    }
+
+    public void demoCURDServiceFunction() {
+        /*
+        * getInstance(): là để có được đối tượng FirebaseDatabase (để tương tác với firebase)
+        * DatabaseReference: là một tham chiếu đến một vị trí cụ thể trong cơ sở dữ liệu Firebase
+        * DataSnapshot: được sử dụng để đọc dữ liệu từ một DatabaseReference
+        * getReference(): là để tạo DatabaseReference
+        * child: là để tạo một DatabaseReference mới từ một đối tượng DatabaseReference đã có, trỏ đến một nút con cụ thể.
+        * setValue(): được sử dụng để ghi dữ liệu mới vào một nút cơ sở dữ liệu.
+        * updateChildren(): để cập nhật một số lượng trường dữ liệu trong một nút mà không làm thay đổi các trường khác
+        * */
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference serviceFunctionRef = firebaseDatabase.getReference("ChucNang");
+
+        // Lấy danh sách chức năng: bình thường
+        serviceFunctionRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot DataSnapshot) {
+                    ChucNang chucNang = DataSnapshot.getValue(ChucNang.class);
+
+                    Log.d("firebase", "Ten: " + chucNang.getTenChucNang());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // Lấy danh sách chức năng: dùng Firebase UI
+        FirebaseRecyclerOptions<ChucNang> options = new FirebaseRecyclerOptions.Builder<ChucNang>()
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("ChucNang"), ChucNang.class)
+                .build();
+
+        // Thêm chức năng
+        ChucNang chucNang = new ChucNang("Không cần nhiều lời", "Chỉ cần một câu", "Helllloooo");
+        String userId = serviceFunctionRef.push().getKey(); // tạo key cho ChucNang
+        serviceFunctionRef.child(userId).setValue(chucNang);
+
+        // Chỉnh sửa chức năng
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("TenChucNang", "Số 1 VN");
+
+        serviceFunctionRef.child("<nhét_key_vào_đây").updateChildren(updates)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "Thông tin đã được cập nhật", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Lỗi khi cập nhật thông tin", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // Xóa chức năng
+        String keyChucNangDelete = "<nhét_key_vào_đây>";
+        serviceFunctionRef.child(keyChucNangDelete).removeValue();
     }
 }
