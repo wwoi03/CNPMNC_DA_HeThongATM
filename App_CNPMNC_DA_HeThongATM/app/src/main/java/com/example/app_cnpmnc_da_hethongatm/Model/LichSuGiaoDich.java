@@ -7,20 +7,24 @@ public class LichSuGiaoDich implements Serializable {
     private String NgayGiaoDich;
     private String NoiDungChuyenKhoan;
     private long SoTaiKhoan;
-    private long SoTienGiaoDich;
+    private double SoTienGiaoDich;
     private long TaiKhoanNhan;
+    private double SoDuHienTai;
 
     public LichSuGiaoDich(){
 
     }
-    public LichSuGiaoDich(String gioGiaoDich, String ngayGiaoDich, String noiDungChuyenKhoan, long soTaiKhoan, long soTienGiaoDich, long taiKhoanNhan) {
+
+    public LichSuGiaoDich(String gioGiaoDich, String ngayGiaoDich, String noiDungChuyenKhoan, long soTaiKhoan, double soTienGiaoDich, long taiKhoanNhan, double soDuHienTai) {
         GioGiaoDich = gioGiaoDich;
         NgayGiaoDich = ngayGiaoDich;
         NoiDungChuyenKhoan = noiDungChuyenKhoan;
         SoTaiKhoan = soTaiKhoan;
         SoTienGiaoDich = soTienGiaoDich;
         TaiKhoanNhan = taiKhoanNhan;
+        SoDuHienTai = soDuHienTai;
     }
+
     public String getGioGiaoDich() {
         return GioGiaoDich;
     }
@@ -53,11 +57,11 @@ public class LichSuGiaoDich implements Serializable {
         SoTaiKhoan = soTaiKhoan;
     }
 
-    public long getSoTienGiaoDich() {
+    public double getSoTienGiaoDich() {
         return SoTienGiaoDich;
     }
 
-    public void setSoTienGiaoDich(long soTienGiaoDich) {
+    public void setSoTienGiaoDich(double soTienGiaoDich) {
         SoTienGiaoDich = soTienGiaoDich;
     }
 
@@ -67,5 +71,13 @@ public class LichSuGiaoDich implements Serializable {
 
     public void setTaiKhoanNhan(long taiKhoanNhan) {
         TaiKhoanNhan = taiKhoanNhan;
+    }
+
+    public double getSoDuHienTai() {
+        return SoDuHienTai;
+    }
+
+    public void setSoDuHienTai(double soDuHienTai) {
+        SoDuHienTai = soDuHienTai;
     }
 }

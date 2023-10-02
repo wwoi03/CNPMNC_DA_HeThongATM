@@ -174,7 +174,7 @@ public class DbHelper {
     }*/
 
     // cập nhật số dư
-    public static void updateSurplus(String taiKhoanKey, long soDuMoi) {
+    public static void updateSurplus(String taiKhoanKey, double soDuMoi) {
         Map<String, Object> map = new HashMap<>();
         map.put("SoDu", soDuMoi);
 
@@ -194,7 +194,7 @@ public class DbHelper {
     }
 
     // Tạo lịch sử giao dịch
-    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet TaiKhoanNhan, long soTienGiaoDich, String noiDungChuyenKhoan) {
+    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan) {
         LocalTime now = null;
         String timeString="";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -214,7 +214,8 @@ public class DbHelper {
         map.put("SoTaiKhoan", taiKhoanNguon.getSoTaiKhoan());
         map.put("NoiDungChuyenKhoan", noiDungChuyenKhoan);
         map.put("SoTienGiaoDich", soTienGiaoDich);
-        map.put("TaiKhoanNhan", TaiKhoanNhan.getSoTaiKhoan());
+        map.put("TaiKhoanNhan", taiKhoanNhan.getSoTaiKhoan());
+        map.put("SoDuHienTai", taiKhoanNguon.getSoDu());
 
         String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
 

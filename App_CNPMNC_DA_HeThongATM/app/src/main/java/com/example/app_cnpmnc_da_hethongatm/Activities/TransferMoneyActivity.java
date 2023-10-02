@@ -151,7 +151,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 } else if (moneyString.isEmpty()) { // rỗng
                     BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
                 } else { // không rỗng
-                    long money = Long.parseLong(moneyString);
+                    double money = Double.parseDouble(moneyString);
 
                     // kiểm tra số tiền phải >= 1k
                     if (money >= 1000) {
@@ -165,7 +165,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     }
 
     // chuyển tiền
-    private void transferMoney(long money, String noiDungChuyenKhoan) {
+    private void transferMoney(double money, String noiDungChuyenKhoan) {
         DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money); // tài khoản nguồn
         DbHelper.updateSurplus(taiKhoanHuongKey, taiKhoanHuong.getSoDu() + money); // tài khoản hưởng
 
