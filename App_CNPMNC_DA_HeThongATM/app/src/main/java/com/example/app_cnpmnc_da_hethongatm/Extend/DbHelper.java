@@ -193,6 +193,26 @@ public class DbHelper {
                 });
     }
 
+    public static void updateSurplus(String taiKhoanKey, double soDuMoi,String NgayGD,double TienDaGD) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("SoDu", soDuMoi);
+        map.put("NgayGD",NgayGD);
+        map.put("TienDaGD",TienDaGD);
+
+        firebaseDatabase.getReference("TaiKhoanLienKet").child(taiKhoanKey).updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
     // Tạo lịch sử giao dịch
     public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan) {
         LocalTime now = null;
