@@ -3,7 +3,6 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 import java.io.Serializable;
 
 public class TaiKhoanLienKet implements Serializable {
-    private String KeySTK;
     private long HanMucThe;
     private long MaSoThe;
     private String NgayGD;
@@ -15,27 +14,6 @@ public class TaiKhoanLienKet implements Serializable {
     private int TinhTrangTaiKhoan;
 
     public TaiKhoanLienKet() {
-    }
-
-    public TaiKhoanLienKet(String KeySTK, long hanMucThe, long maSoThe, String ngayGD, long soDu, long soTaiKhoan, String tenTaiKhoan, long tienDaGD, long tienGD1Lan, int tinhTrangTaiKhoan) {
-        KeySTK = KeySTK;
-        HanMucThe = hanMucThe;
-        MaSoThe = maSoThe;
-        NgayGD = ngayGD;
-        SoDu = soDu;
-        SoTaiKhoan = soTaiKhoan;
-        TenTaiKhoan = tenTaiKhoan;
-        TienDaGD = tienDaGD;
-        TienGD1Lan = tienGD1Lan;
-        TinhTrangTaiKhoan = tinhTrangTaiKhoan;
-    }
-
-    public String getKeySTK() {
-        return KeySTK;
-    }
-
-    public void setKeySTK(String keySTK) {
-        KeySTK = keySTK;
     }
 
     public long getHanMucThe() {
@@ -107,6 +85,18 @@ public class TaiKhoanLienKet implements Serializable {
     }
 
     public void setTinhTrangTaiKhoan(int tinhTrangTaiKhoan) {
+        TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+    }
+
+    public TaiKhoanLienKet(long hanMucThe, long maSoThe, String ngayGD, long soDu, long soTaiKhoan, String tenTaiKhoan, long tienDaGD, long tienGD1Lan, int tinhTrangTaiKhoan) {
+        HanMucThe = hanMucThe;
+        MaSoThe = maSoThe;
+        NgayGD = ngayGD;
+        SoDu = soDu;
+        SoTaiKhoan = soTaiKhoan;
+        TenTaiKhoan = tenTaiKhoan;
+        TienDaGD = tienDaGD;
+        TienGD1Lan = tienGD1Lan;
         TinhTrangTaiKhoan = tinhTrangTaiKhoan;
     }
 }

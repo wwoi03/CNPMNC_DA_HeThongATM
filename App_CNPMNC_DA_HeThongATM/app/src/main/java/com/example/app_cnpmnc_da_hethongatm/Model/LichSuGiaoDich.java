@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class LichSuGiaoDich implements Serializable {
     private String GioGiaoDich;
-    private String MaGiaoDich;
     private String NgayGiaoDich;
     private String NoiDungChuyenKhoan;
     private long SoTaiKhoan;
@@ -14,9 +13,8 @@ public class LichSuGiaoDich implements Serializable {
     public LichSuGiaoDich(){
 
     }
-    public LichSuGiaoDich(String gioGiaoDich, String maGiaoDich, String ngayGiaoDich, String noiDungChuyenKhoan, long soTaiKhoan, long soTienGiaoDich, long taiKhoanNhan) {
+    public LichSuGiaoDich(String gioGiaoDich, String ngayGiaoDich, String noiDungChuyenKhoan, long soTaiKhoan, long soTienGiaoDich, long taiKhoanNhan) {
         GioGiaoDich = gioGiaoDich;
-        MaGiaoDich = maGiaoDich;
         NgayGiaoDich = ngayGiaoDich;
         NoiDungChuyenKhoan = noiDungChuyenKhoan;
         SoTaiKhoan = soTaiKhoan;
@@ -29,14 +27,6 @@ public class LichSuGiaoDich implements Serializable {
 
     public void setGioGiaoDich(String gioGiaoDich) {
         GioGiaoDich = gioGiaoDich;
-    }
-
-    public String getMaGiaoDich() {
-        return MaGiaoDich;
-    }
-
-    public void setMaGiaoDich(String maGiaoDich) {
-        MaGiaoDich = maGiaoDich;
     }
 
     public String getNgayGiaoDich() {

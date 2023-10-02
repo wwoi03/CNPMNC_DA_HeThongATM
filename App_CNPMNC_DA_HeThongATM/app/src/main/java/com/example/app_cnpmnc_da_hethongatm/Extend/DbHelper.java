@@ -20,7 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class DbHelper {
@@ -137,5 +142,90 @@ public class DbHelper {
                             firebaseListener.onFailureListener(e);
                     }
                 });
+    }
+
+    // Lấy danh sách tài khoản liên kết
+    public static FirebaseRecyclerOptions<TaiKhoanLienKet> getAffiliateAccounts() {
+        FirebaseRecyclerOptions<TaiKhoanLienKet> options = new FirebaseRecyclerOptions.Builder<TaiKhoanLienKet>()
+                .setQuery(firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("MaSoThe").equalTo(MY_CARD), TaiKhoanLienKet.class)
+                .build();
+
+        return options;
+    }
+
+    // tìm tài khoản theo số tài khoản
+    /*public static TaiKhoanLienKet getAffiliateAccountByAccountNumber(long soTaiKhoan) {
+        firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(soTaiKhoan)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }*/
+
+    // cập nhật số dư
+    public static void updateSurplus(String taiKhoanKey, long soDuMoi) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("SoDu", soDuMoi);
+
+        firebaseDatabase.getReference("TaiKhoanLienKet").child(taiKhoanKey).updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    // Tạo lịch sử giao dịch
+    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet TaiKhoanNhan, long soTienGiaoDich, String noiDungChuyenKhoan) {
+        LocalTime now = null;
+        String timeString="";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            now = LocalTime.now();
+        }
+        DateTimeFormatter formatter = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            timeString = now.format(formatter);
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("GioGiaoDich", timeString);
+        map.put("NgayGiaoDich", GetDataForm());
+        map.put("SoTaiKhoan", taiKhoanNguon.getSoTaiKhoan());
+        map.put("NoiDungChuyenKhoan", noiDungChuyenKhoan);
+        map.put("SoTienGiaoDich", soTienGiaoDich);
+        map.put("TaiKhoanNhan", TaiKhoanNhan.getSoTaiKhoan());
+
+        String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
+
+        firebaseDatabase.getReference("LichSuGiaoDich").child(newKey).setValue(map);
+    }
+
+    public static String GetDataForm(){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String NgayGDHomNay = sdf.format(calendar.getTime());
+
+        return NgayGDHomNay;
     }
 }

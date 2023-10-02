@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddEditBeneficiaryActivity"
+    android:orientation="vertical"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="42dp"
+    android:layout_marginTop="42dp">
+
+    <!-- Tiêu đề -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_account_box_24"
+            android:layout_marginEnd="10dp">
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thông tin người thụ hưởng"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold">
+        </TextView>
+    </LinearLayout>
+
+    <!-- Tên người thụ hưởng -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        app:cardCornerRadius="14dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNameBeneficiary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:textSize="20dp"
+            android:hint="Tên người thụ hưởng"
+            android:layout_marginStart="16dp"
+            android:background="@color/white">
+        </com.google.android.material.textfield.TextInputEditText>
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- Tài khoản thụ hưởng -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        app:cardCornerRadius="14dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAccountBeneficiary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:textSize="20dp"
+            android:hint="Tài khoản thụ hưởng"
+            android:layout_marginStart="16dp"
+            android:background="@color/white">
+        </com.google.android.material.textfield.TextInputEditText>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Đăng nhập -->
+    <Button
+        android:id="@+id/btEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:padding="4dp"
+        android:text="Thêm mới"
+        android:background="@drawable/coner_radius_button">
+    </Button>
+</LinearLayout>

@@ -25,7 +25,7 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_beneficiary);
+        setContentView(R.layout.activity_add_edit_beneficiary);
 
         initUI();
         initData();
