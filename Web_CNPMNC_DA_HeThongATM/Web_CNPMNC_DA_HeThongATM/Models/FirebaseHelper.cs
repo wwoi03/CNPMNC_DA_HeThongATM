@@ -12,6 +12,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class FirebaseHelper
     {
+        //-----------------------------------------------------------------------SetupFireBase-----------------------------------------------------------
         public static IFirebaseClient client;
 
         private IFirebaseConfig config = new FirebaseConfig
@@ -48,13 +49,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return null;
             }
         }
+
+
         //tạo khách hàng
         public void InsertCustommer (KhachHangViewModel custommer)
         {
             try
             {
                 string macuabomay = "autothention";
-                FirebaseResponse response =  client.Push("KhachHang", custommer);
+                FirebaseResponse response =  client.Set("KhachHang/"+custommer.CCCD, custommer);
                 if (response != null)
                 {
 
@@ -66,6 +69,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             }
         }
+
+
         //tạo id khách hàng bằng GUID (Globally Unique Identifier)
         private string GuidSystem()
         {
@@ -84,6 +89,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return shortId;
         }
+
+
+        //tạo pass ngẫu nhiên
         public string PassRandom()
         {
             string Makh = GuidSystem();
@@ -106,6 +114,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
         }
+
+
         //check cccd
         public async Task<bool> CheckCCCDExist(string cccdToCheck)
         {
@@ -135,6 +145,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return false;
             }
         }
+
 
         //lây dữ liệu khách hàng theo id
         public KhachHang GetCustomerbyid(string values)
@@ -166,6 +177,24 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return dsKhachHang;
         }
 
+
+        //Kiểm tra Sdt nhập vào form
+        public bool CheckSdt(string values)
+        {
+            
+            FirebaseResponse response = client.Get("KhachHang");
+            if (response != null && response.Body != null)
+            {
+                Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();           
+                if ( data.Values.Any(c => c.Sdt == values))
+                    return true;
+                return false;
+                
+            }
+           return false;
+        }
+        //-------------------------------------------------------------------------------Nhân Viên---------------------------------------------------
+
         // Tính tổng tài sản ngân hàng
         public double GetTotalAssets()
         {
@@ -179,6 +208,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return totalAssets;
         }
 
+
         // Tính tổng giao dịch
         public long GetTotalTransaction()
         {
@@ -191,8 +221,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return totalTransaction;
         }
-
-
 
 
         // Lấy danh sách nhân viên
@@ -218,6 +246,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return "909090" + cif;
         }
+
+        //tự động tạo mã số thẻ
         private string AccountNumber()
         {
             Random random = new Random();
@@ -231,6 +261,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return digits;
         }
+
+
+        //tạo mã PIN
         public string CreatePIN()
         {
             string MaPIN = GenerateCIF();
@@ -246,6 +279,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return MaPIN;
         }
+
+
+        //tạo mã số thẻ trên database
         public string CreateAccountNumbet()
         {
             string MaSoThe = AccountNumber();
@@ -260,6 +296,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return MaSoThe;
         }
+
+
+        //lấy key bằng cccd
         public string GetKeysBycccd(string values)
         {
             FirebaseResponse response = client.Get("KhachHang");
@@ -278,6 +317,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return "null";
         }
+
+
+        //tạo thẻ ngân hàng
         public void CreateCard(TheNganHangViewModel card, string keys)
         {
             if (keys == null)
@@ -298,6 +340,38 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
         }
         
+
+        //tạo thẻ liên kết
+        public void CreateCardLink(TaiKhoanLienKet taiKhoanLienKet)
+        {
+            FirebaseResponse response = client.Push("TaiKhoanLienKet",taiKhoanLienKet);
+            if (response != null)
+            {
+                Console.WriteLine("thành công");
+
+            }
+            else { Console.WriteLine("thất bại"); }
+        }
+
+
+        //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------
+        //Chuyển tiền
+
+
+        public void SendMoney(string numberSend)
+        {
+            // lấy thông tin khách hàng chuyển
+            FirebaseResponse responseSend = client.Get("KhachHang"+numberSend);
+            if (responseSend != null)
+            {
+                
+            }
+            //lấy thông tin khách hàng gửi
+            FirebaseResponse responseGet = client.Get("KhachHang");
+        }
+
+
+
         //đừng xóa em đang sửa
         //public string GetAccount(string Value)
         //{

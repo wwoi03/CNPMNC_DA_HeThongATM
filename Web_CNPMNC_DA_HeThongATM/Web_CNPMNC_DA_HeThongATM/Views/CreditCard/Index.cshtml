@@ -116,7 +116,7 @@
         <form method="post" asp-controller="CreditCard" asp-action="CreateCard">
             <div class="inputBox">
                 <span>Căn cước công dân</span>
-                <input type="text" maxlength="16" id="makhachhang" asp-for="CCCD">
+                <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
             </div>
             <div class="inputBox">
                 <span>Tên Khách Hàng</span>
@@ -163,7 +163,7 @@
                 </div>
                 <div class="inputBox">
                     <span>Loại Thẻ</span>
-                    <select asp-for="Loaithe" class="type-card">
+                    <select asp-for="LoaiThe" class="type-card">
                         <option value="Loại" selected disabled>Loại</option>
                         <option value="Redit">Redit</option>
                         <option value="Visa">Visa</option>

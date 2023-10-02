@@ -37,9 +37,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult CreateCard(TheNganHangViewModel cardViewModel)
         {
+            //lấy khách hàng
+            KhachHang custommer = firebaseHelper.GetCustomerbyid(cardViewModel.MaKH);
+            if (cardViewModel == null || custommer == null) return RedirectToAction("Index");
+            //đẩy lên database
             cardViewModel.MaDangNhap = "Nguyễn Lê Quốc Thuận";
-            firebaseHelper.CreateCard(cardViewModel,cardViewModel.CCCD);
+            firebaseHelper.CreateCard(cardViewModel, cardViewModel.MaKH);
+            firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPIN, custommer.TenKh, cardViewModel.MaSoThe));
+
             return RedirectToAction("Index");
+
         }
 
     }

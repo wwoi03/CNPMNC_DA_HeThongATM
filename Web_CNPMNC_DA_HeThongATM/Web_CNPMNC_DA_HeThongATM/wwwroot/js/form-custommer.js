@@ -26,8 +26,19 @@
             
         });
     });
-    
-    
+
+    $("#Sdt").change(function () {
+        var sdt = $(this).val();
+        console.log(sdt);
+        
+        $.get("/Customer/CheckSdt", { Sdt: sdt }, function (data) {
+            console.log(data + "    hetcuu");
+            if (data == true) {
+                alert("SDT DÃ CÓ NGƯỜI ĐĂNG KÝ");
+                document.getElementById('Sdt').value = "";
+            }
+        });
+    });
     
 
 

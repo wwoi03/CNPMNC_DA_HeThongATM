@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
                
                 $.get("/CreditCard/GetNameCus", { cccd: idcusValue }, function (data) {
                     console.log(data);
-                  
+
                     if (data.tenkh == null) {
                         alert(" khách hàng không tồn tại");
                         document.querySelector('.card-holder-name').innerText =

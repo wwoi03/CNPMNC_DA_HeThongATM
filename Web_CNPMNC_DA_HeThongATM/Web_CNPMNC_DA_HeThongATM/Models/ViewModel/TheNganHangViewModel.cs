@@ -5,7 +5,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
     public class TheNganHangViewModel
     {
         [Required(ErrorMessage = "Mã KH không được để trống.")]
-        public string CCCD { get; set; }
+        // mã khách hàng tại đây là căn cước công dân bên bảng khách hàng
+        public string MaKH { get; set; }
 
         [Required(ErrorMessage = "Mã PIN không được để trống.")]
         public string MaPIN { get; set; }
@@ -26,7 +27,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         public string TinhTrangThe { get; set; }
 
         [Required(ErrorMessage = "Loại thẻ không được để trống.")]
-        public string Loaithe { get; set; }
+        public string LoaiThe { get; set; }
         public string MaDangNhap { get; set; }
     }
 }

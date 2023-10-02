@@ -43,9 +43,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public async Task<IActionResult> CheckCanCuoc(string cccd)
         {
 
-            var idcccd = await firebaseHelper.CheckCCCDExist(cccd);
-            Console.WriteLine(idcccd);
+            var idcccd = await firebaseHelper.CheckCCCDExist(cccd);        
             return Json(idcccd);
+        }
+        //check sdt
+        [HttpGet]
+        public IActionResult CheckSdt(string Sdt)
+        {
+          bool CheckSdt =  firebaseHelper.CheckSdt(Sdt);
+
+            return Json(CheckSdt);
         }
     }
 }
