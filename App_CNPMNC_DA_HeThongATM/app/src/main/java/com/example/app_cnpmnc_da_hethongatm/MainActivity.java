@@ -3,6 +3,7 @@ package com.example.app_cnpmnc_da_hethongatm;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
@@ -14,8 +15,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.LockCardActivity;
@@ -50,6 +53,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initUI();
         initData(savedInstanceState);
         initListener();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Tìm kiếm ...");
+        // Xử lý sự kiện khi submit tìm kiếm
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Xử lý tìm kiếm ở đây
+                performSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
+    }
+    private void performSearch(String query) {
+        // xử lý tìm kiếm ở đây
+        Toast.makeText(this, "Searching: " + query, Toast.LENGTH_SHORT).show();
+        //ví dụ : mở một trang web liên quan đến Sacombank
     }
 
     // Ánh xạ View
