@@ -29,6 +29,7 @@ import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class TransferMoneyActivity extends AppCompatActivity {
@@ -69,6 +70,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
         initUI();
         initData();
         initListener();
+    }
+    private void UpdateTaiKhoanNguon(){
+
     }
 
     // ánh xạ view
@@ -152,7 +156,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
                 } else { // không rỗng
                     double money = Double.parseDouble(moneyString);
-
                     // kiểm tra số tiền phải >= 1k
                     if (money >= 1000) {
                         transferMoney(money, etContent.getText().toString().trim());
