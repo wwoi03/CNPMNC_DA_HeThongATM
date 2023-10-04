@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FireSharp;
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Web_CNPMNC_DA_HeThongATM.Models;
 
@@ -6,27 +10,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
-        {
-            return View();
-        }
 
-        public IActionResult Privacy()
         {
-            return View();
-        }
+            
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            //    FirebaseResponse response  = await client.GetAsync("KhachHang");
+            //Class a = response.ResultAs<Class>();
+            //ViewData["j"] = a;
+            return View();
         }
     }
 }

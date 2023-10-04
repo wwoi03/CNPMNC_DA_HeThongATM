@@ -12,14 +12,40 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.AccountCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.TransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddEditBeneficiaryActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" />
+        <activity
+            android:name=".Activities.LookCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.BeneficiaryManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ManageAccountAndCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
