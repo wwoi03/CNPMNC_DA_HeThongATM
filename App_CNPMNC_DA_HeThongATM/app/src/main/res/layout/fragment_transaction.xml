@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.TransactionFragment"
+    android:background="@color/white">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- image slider -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
+
+                <!-- image -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp2Images"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                </androidx.viewpager2.widget.ViewPager2>
+
+                <!-- circle indicator -->
+                <me.relex.circleindicator.CircleIndicator3
+                    android:id="@+id/ci3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    app:ci_drawable="@drawable/bg_indicator_3">
+                </me.relex.circleindicator.CircleIndicator3>
+            </LinearLayout>
+
+            <!--Large Button  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp">
+
+                <!-- ô 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardBackgroundColor="@color/primary_blue_color"
+                    android:layout_marginEnd="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:padding="12dp"
+                        android:gravity="center_horizontal|center_vertical">
+
+                        <!-- icon -->
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/sack_dollar_solid"
+                            android:layout_marginEnd="12dp">
+                        </ImageView>
+
+                        <!-- tiêu đề -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp"
+                            android:textColor="@color/white"
+                            android:text="Vay tiêu dùng">
+                        </TextView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- ô 1 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardBackgroundColor="@color/primary_blue_color"
+                    android:layout_marginStart="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:padding="12dp"
+                        android:gravity="center_horizontal|center_vertical">
+
+                        <!-- icon -->
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/sack_dollar_solid"
+                            android:layout_marginEnd="12dp">
+                        </ImageView>
+
+                        <!-- tiêu đề -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp"
+                            android:textColor="@color/white"
+                            android:text="Vay tiêu dùng">
+                        </TextView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- Chức năng nổi bật -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="horizontal">
+
+                <!-- OR Code -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        app:cardCornerRadius="8dp"
+                        android:layout_margin="1dp">
+
+                        <!-- hình ảnh -->
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/baseline_qr_code_scanner_24">
+                        </ImageView>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Tiêu đề -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:text="QR Code"
+                        android:paddingTop="4dp">
+                    </TextView>
+                </LinearLayout>
+
+                <!-- OR Code -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        app:cardCornerRadius="8dp"
+                        android:layout_margin="1dp">
+
+                        <!-- hình ảnh -->
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/baseline_qr_code_scanner_24">
+                        </ImageView>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Tiêu đề -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:text="QR Code"
+                        android:paddingTop="4dp">
+                    </TextView>
+                </LinearLayout>
+
+                <!-- OR Code -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        app:cardCornerRadius="8dp"
+                        android:layout_margin="1dp">
+
+                        <!-- hình ảnh -->
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/baseline_qr_code_scanner_24">
+                        </ImageView>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Tiêu đề -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:text="QR Code"
+                        android:paddingTop="4dp">
+                    </TextView>
+                </LinearLayout>
+
+                <!-- OR Code -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="65dp"
+                        app:cardCornerRadius="8dp"
+                        android:layout_margin="1dp">
+
+                        <!-- hình ảnh -->
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/baseline_qr_code_scanner_24">
+                        </ImageView>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Tiêu đề -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:text="QR Code"
+                        android:paddingTop="4dp">
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tìm kiếm chức năng -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp">
+
+                <!-- Tìm kiếm -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    android:layout_margin="1dp">
+
+                    <SearchView
+                        android:id="@+id/svSearchServiceFunction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#F7F8FA"
+                        android:inputType="text"
+                        android:queryHint="Chuyển tiền, thanh toán,...">
+                    </SearchView>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Render danh sách chức năng -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="32dp">
+
+                    <!-- Loại chức năng -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Tên loại chức năng -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tiện ích"
+                            android:textSize="24dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary_blue_color"
+                            android:layout_marginBottom="10dp">
+                        </TextView>
+
+                        <!-- recycle view danh sách chức năng -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvServiceFunctions"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:spanCount="3">
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

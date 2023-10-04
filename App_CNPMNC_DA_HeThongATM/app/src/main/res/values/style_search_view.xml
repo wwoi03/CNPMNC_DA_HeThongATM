@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Đặt màu chữ cho nội dung đã nhập -->
+        <item name="android:textColor">#FF0000</item> <!-- Ví dụ: Màu đỏ -->
+        <!-- Đặt kích thước chữ cho nội dung đã nhập -->
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>
