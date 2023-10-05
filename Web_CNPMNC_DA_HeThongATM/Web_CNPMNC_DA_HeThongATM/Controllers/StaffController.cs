@@ -38,7 +38,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 Email = nhanVienViewModel.Email,
                 MatKhau = nhanVienViewModel.MatKhau,
                 NamSinh = nhanVienViewModel.NamSinh,
-                Ten = nhanVienViewModel.Ten
+                TenNhanVien = nhanVienViewModel.Ten
             };
 
             firebaseHelper.CreateStaff(nhanVien);

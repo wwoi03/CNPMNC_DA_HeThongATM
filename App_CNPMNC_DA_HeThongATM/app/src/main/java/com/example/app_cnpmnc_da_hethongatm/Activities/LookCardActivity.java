@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.app_cnpmnc_da_hethongatm.R;
 
-public class UnlockCardActivity extends AppCompatActivity {
+public class LookCardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_unlock_card);
+        setContentView(R.layout.activity_look_card);
     }
 }

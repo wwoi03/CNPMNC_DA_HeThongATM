@@ -9,18 +9,20 @@ public class KhachHang implements Serializable {
     private String GioiTinh;
     private String NgayTao;
     private String SoDienThoai;
+    private String MatKhau;
     private String TenKhachHang;
 
     public KhachHang() {
     }
 
-    public KhachHang(String CCCD, String diaChi, String email, String gioiTinh, String ngayTao, String soDienThoai, String tenKhachHang) {
+    public KhachHang(String CCCD, String diaChi, String email, String gioiTinh, String ngayTao, String soDienThoai, String matKhau, String tenKhachHang) {
         this.CCCD = CCCD;
         DiaChi = diaChi;
         Email = email;
         GioiTinh = gioiTinh;
         NgayTao = ngayTao;
         SoDienThoai = soDienThoai;
+        MatKhau = matKhau;
         TenKhachHang = tenKhachHang;
     }
 
@@ -70,6 +72,14 @@ public class KhachHang implements Serializable {
 
     public void setSoDienThoai(String soDienThoai) {
         SoDienThoai = soDienThoai;
+    }
+
+    public String getMatKhau() {
+        return MatKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        MatKhau = matKhau;
     }
 
     public String getTenKhachHang() {

@@ -1,6 +1,5 @@
 package com.example.app_cnpmnc_da_hethongatm.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class ServiceFuntionAdapter extends FirebaseRecyclerAdapter<ChucNang, Ser
     @NonNull
     @Override
     public ServiceFuntionAdapterVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_transaction_service_function_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fragment_transaction_service_function, parent, false);
         return new ServiceFuntionAdapterVH(view);
     }
 
