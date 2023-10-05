@@ -2,30 +2,20 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 
 import java.io.Serializable;
 
-public class Beneficiary implements Serializable {
+public class ThuHuong implements Serializable {
 
-    private String IdThuHuong;
     private long MaSoThe;
     private long TKThuHuong;
     private String TenNguoiThuHuong;
 
-    public Beneficiary() {
+    public ThuHuong() {
 
     }
 
-    public Beneficiary(String idThuHuong, long maSoThe, long TKThuHuong, String tenNguoiThuHuong) {
-        IdThuHuong = idThuHuong;
+    public ThuHuong(long maSoThe, long TKThuHuong, String tenNguoiThuHuong) {
         MaSoThe = maSoThe;
         this.TKThuHuong = TKThuHuong;
         TenNguoiThuHuong = tenNguoiThuHuong;
-    }
-
-    public String getIdThuHuong() {
-        return IdThuHuong;
-    }
-
-    public void setIdThuHuong(String idThuHuong) {
-        IdThuHuong = idThuHuong;
     }
 
     public long getMaSoThe() {

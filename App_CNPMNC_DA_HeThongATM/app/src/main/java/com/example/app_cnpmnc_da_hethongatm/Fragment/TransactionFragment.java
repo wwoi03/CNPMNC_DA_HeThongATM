@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ServiceFuntionAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
@@ -124,8 +125,6 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
         initUI(view);
         initData();
         initListener();
-
-        demoCURDServiceFunction();
     }
 
     // Ánh xạ view
@@ -159,7 +158,6 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
 
         // render chức năng
         FirebaseRecyclerOptions<ChucNang> optionsServiceFunctions = DbHelper.getServiceFunctions();
-        Log.d("firebase", optionsServiceFunctions.toString());
         serviceFuntionAdapter = new ServiceFuntionAdapter(optionsServiceFunctions, TransactionFragment.this);
         rvServiceFunctions.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvServiceFunctions.setAdapter(serviceFuntionAdapter);
@@ -228,6 +226,12 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
     }
 
     public void demoCURDServiceFunction() {
+        Config config = new Config(getContext());
+
+        String phoneCustomer = config.getCustomerPhone();
+
+
+
         /*
         * getInstance(): là để có được đối tượng FirebaseDatabase (để tương tác với firebase)
         * DatabaseReference: là một tham chiếu đến một vị trí cụ thể trong cơ sở dữ liệu Firebase
@@ -255,10 +259,10 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
             }
         });
 
-        // Lấy danh sách chức năng: dùng Firebase UI
+        /*// Lấy danh sách chức năng: dùng Firebase UI
         FirebaseRecyclerOptions<ChucNang> options = new FirebaseRecyclerOptions.Builder<ChucNang>()
                 .setQuery(FirebaseDatabase.getInstance().getReference().child("ChucNang"), ChucNang.class)
-                .build();
+                .build();*/
 
         // Thêm chức năng
         ChucNang chucNang = new ChucNang("Không cần nhiều lời", "Chỉ cần một câu", "Helllloooo");

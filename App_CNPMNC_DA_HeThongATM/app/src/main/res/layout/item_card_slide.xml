@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="40dp"
+    android:layout_marginEnd="40dp"
+    android:orientation="vertical">
+
+    <!-- Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="2dp">
+
+        <ImageView
+            android:id="@+id/ivImageCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@color/black"
+            android:scaleType="centerCrop">
+        </ImageView>
+
+        <!-- Tên ngân hàng -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DCTBank"
+            android:textColor="@color/white"
+            android:textStyle="italic|bold"
+            android:textSize="14dp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp">
+        </TextView>
+
+        <!-- Số thẻ/tài khoản -->
+        <TextView
+            android:id="@+id/tvAccountNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1234 123* **** 1234"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center">
+        </TextView>
+
+        <!-- loại thẻ/tài khoản -->
+        <TextView
+            android:id="@+id/tvAccountType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tài khoản thanh toán"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:layout_gravity="bottom|right"
+            android:gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="8dp">
+        </TextView>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Tiêu đề số dư -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số dư/HM khả dụng"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold">
+        </TextView>
+
+        <!-- icon ẩn hiện -->
+        <ImageView
+            android:id="@+id/ivIconSurplus"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/baseline_remove_red_eye_24"
+            android:layout_marginStart="10dp">
+        </ImageView>
+    </LinearLayout>
+
+    <!-- Số dư -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/tvSurplus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*********đ"
+            android:textColor="@color/primary_blue_color"
+            android:textStyle="bold"
+            android:textSize="16dp">
+        </TextView>
+    </LinearLayout>
+</LinearLayout>
