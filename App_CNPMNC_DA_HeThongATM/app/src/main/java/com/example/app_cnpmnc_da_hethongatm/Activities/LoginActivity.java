@@ -3,13 +3,16 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
@@ -31,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     String fileName = "config"; // dùng để lưu shared_preferences
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         etPassword = findViewById(R.id.etPassword);
         btLogin = findViewById(R.id.btLogin);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     // Khởi tạo dữ liệu
@@ -112,14 +117,14 @@ public class LoginActivity extends AppCompatActivity {
                         // Kiểm tra mật khẩu
                         if (password.equals(khachHang.getMatKhau())) {
                             // lưu dữ liệu vào Shareference
-
-                                editor.putString("customerPhone", phone);
-                                editor.putString("customerKey", khachHang.getCCCD());
-                                editor.putString("customerName", khachHang.getTenKhachHang());
-                                editor.commit();
+                            editor.putString("customerPhone", phone);
+                            editor.putString("customerKey", khachHang.getCCCD());
+                            editor.putString("customerName", khachHang.getTenKhachHang());
+                            editor.commit();
 
                             DbHelper.getCardNumber(khachHang.getCCCD());
-                            homePage();
+
+                            startProgressBar(1500);
                         } else {
                             toastMessage("Mật khẩu không chính xác");
                         }
@@ -141,5 +146,30 @@ public class LoginActivity extends AppCompatActivity {
     private void homePage() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    // chạy ProgressBar
+    private void startProgressBar(long delayTime) {
+        showProgressBar();
+
+        // Sử dụng Handler để đóng vòng quay sau 1 giây
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Đóng vòng quay sau 1 giây
+                hideProgressBar();
+                homePage();
+            }
+        }, delayTime);
+    }
+
+    // hiển thị ProgressBar
+    private void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    // ẩn ProgressBar
+    private void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }
