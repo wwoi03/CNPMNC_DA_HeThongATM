@@ -13,14 +13,20 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountSettingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.LookCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.SearchServiceFunctionActivity;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
+import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
@@ -41,6 +47,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     HomeFragment homeFragment;
     TransactionFragment transactionFragment;
     QuickAccessFragment quickAccessFragment;
+
+    // View
+    TextView tv_username, tv_cardid;
+
+    // Confix
+    Config config;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +69,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initUI() {
         bnvMenu = findViewById(R.id.bnvMenu);
         drawerLayout = findViewById(R.id.drawer_layout);
+
+
     }
 
     // Khởi tạo
     private void initData(Bundle savedInstanceState) {
+        config = new Config(MainActivity.this);
+
         // Fragment
         homeFragment = new HomeFragment();
         transactionFragment = new TransactionFragment();
@@ -70,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // nav menu
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Sacombank");
         setSupportActionBar(toolbar);
 
         navigationView = findViewById(R.id.nav_view);
@@ -79,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        showInfoAccount();
 
         /*if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
@@ -135,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    /*// khởi tạo menu
+    // khởi tạo menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -154,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     @Override
     public void onBackPressed() {
@@ -163,5 +183,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    // hiển thị thông tin tài khoản
+    private void showInfoAccount() {
+        View headerView = navigationView.getHeaderView(0);
+        tv_username = headerView.findViewById(R.id.tv_username);
+        tv_cardid = headerView.findViewById(R.id.tv_cardid);
+
+        tv_username.setText(config.getCustomerName());
+        Log.d("firebase", String.valueOf(DbHelper.MY_CARD) + " test");
+
+        tv_cardid.setText(String.valueOf(DbHelper.MY_CARD));
     }
 }

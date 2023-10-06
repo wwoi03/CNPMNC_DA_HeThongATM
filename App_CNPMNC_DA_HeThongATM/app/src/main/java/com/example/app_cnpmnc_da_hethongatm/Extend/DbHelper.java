@@ -47,6 +47,8 @@ public class DbHelper {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         MY_CARD = (long) dataSnapshot.child("MaSoThe").getValue();
+
+                        Log.d("firebase", String.valueOf(MY_CARD));
                     }
                 }
             }

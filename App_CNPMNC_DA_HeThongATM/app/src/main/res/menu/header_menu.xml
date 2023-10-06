@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Tìm kiếm chức năng -->
     <item
         android:id="@+id/mnuSearch"
         android:title="Search"
         android:icon="@drawable/baseline_search_24"
+        android:iconTint="@color/white"
+        app:showAsAction="always">
+    </item>
+
+    <!-- Thông báo -->
+    <item
+        android:id="@+id/mnuNotification"
+        android:title="Search"
+        android:icon="@drawable/baseline_notifications_24"
         android:iconTint="@color/white"
         app:showAsAction="always">
     </item>
