@@ -16,5 +16,13 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="Theme.App_CNPMNC_DA_HeThongATM.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.App_CNPMNC_DA_HeThongATM.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.App_CNPMNC_DA_HeThongATM.PopupOverlay"
+        parent="ThemeOverlay.AppCompat.Light" />
 </resources>
 

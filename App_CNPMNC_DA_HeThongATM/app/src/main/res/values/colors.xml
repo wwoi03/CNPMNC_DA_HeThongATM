@@ -12,4 +12,10 @@
     <color name="primary_orange_color">#F48220</color>
     <!-- màu xanh chính -->
     <color name="primary_blue_color">#0058A0</color>
+    <!-- màu icon normal -->
+    <color name="normal_color">#757575</color>
+    <!-- màu bg -->
+    <color name="bg_color">#F2F1F7</color>
+    <!-- màu item -->
+    <color name="item_color">#FAFAFA</color>
 </resources>

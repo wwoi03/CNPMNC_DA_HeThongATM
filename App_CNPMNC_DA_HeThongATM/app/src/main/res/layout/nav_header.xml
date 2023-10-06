@@ -3,56 +3,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:background="@drawable/sacom"
+    android:layout_height="wrap_content"
     android:gravity="bottom"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:background="@color/primary_blue_color"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sacombank"
+        android:textSize="44dp"
+        android:textColor="@color/white"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="clip_vertical">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/user" />
+            app:srcCompat="@drawable/user"
+            android:layout_marginEnd="16dp"/>
 
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="-8dp"
-            android:text="TRAN PHUONG NAM"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Mã thẻ: "
-            android:textColor="#AFAAAA"
-            app:layout_constraintStart_toStartOf="@+id/tv_username"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TRAN PHUONG NAM"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/tv_cardid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="0123456789101"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mã thẻ: "
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:textColor="#AFAAAA"/>
+
+            <TextView
+                android:id="@+id/tv_cardid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0123456789101"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
