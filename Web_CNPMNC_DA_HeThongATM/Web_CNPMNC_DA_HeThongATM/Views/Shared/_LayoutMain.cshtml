@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.css" />
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
@@ -119,22 +120,21 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-credit-card"></i>Thẻ/Tài khoản</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <!-- Tạo thẻ ngân hàng -->
+                           
+                            <!-- Sửa thẻ ngân hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="CreditCard" asp-action="Index">Tạo thẻ ngân hàng</a>
                             </li>
-
-                            <!-- Sửa thẻ ngân hàng -->
+                            <!-- Tạo thẻ ngân hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Sửa thẻ ngân hàng</a>
+                                <a asp-controller="CreditCard" asp-action="ListCard">Xem thẻ ngân hàng</a>
                             </li>
-
                             <!-- Khóa thẻ ngân hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Khóa thẻ ngân hàng</a>
+                                <a asp-controller="CreditCard" asp-action="Index">Khóa thẻ ngân hàng</a>
                             </li>
                         </ul>
                     </li>
@@ -303,9 +303,9 @@
                     </div>
 
                     <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      @*   <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
-                        </a>
+                        </a> *@
 
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>

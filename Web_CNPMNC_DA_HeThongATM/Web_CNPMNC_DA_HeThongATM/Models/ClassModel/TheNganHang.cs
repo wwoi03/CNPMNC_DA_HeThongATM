@@ -12,4 +12,6 @@
         public string LoaiThe { get; set; }
         public string MaDangNhap { get; set; }
     }
+
+
 }

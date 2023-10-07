@@ -353,7 +353,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             else { Console.WriteLine("thất bại"); }
         }
 
+        //danh sách thẻ 
+        public List<TheNganHang> getListCard()
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string,TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                List<TheNganHang> theNganHangs = new List<TheNganHang>(data.Values);
+                return theNganHangs;
+			}
+            return null;
+        }
 
+
+        //tìm kiếm thẻ theo cccd
+
+    
         //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------
         //Chuyển tiền
 

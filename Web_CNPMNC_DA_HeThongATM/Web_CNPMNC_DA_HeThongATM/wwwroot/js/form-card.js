@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function inputtimes() {
         var inputNgayThangNam = document.getElementById("ngaymothe");
         var today = new Date();
+        var day = today.getDate();
         var month = today.getMonth() + 1;
         var year = today.getFullYear();
-        var ngayThangNam = month + "/" + year;
+        var ngayThangNam = day+"/"+ month + "/" + year;
         inputNgayThangNam.value = ngayThangNam;
     }
 
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Lấy ngày, tháng và năm sau khi thêm 5 năm
         var month = today.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0
         var year = today.getFullYear();
-
+        var day = today.getDate();
         // Tạo chuỗi ngày tháng năm
         var ngayThangNam =  month + "/" + year;
 
@@ -94,8 +95,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
-    function NgayHetHan(){
-        var NgayHetHan = $('#thanghethan').val()+"/"+ $('#namhethan').val();
+    function NgayHetHan() {
+        // Lấy ngày hiện tại
+        var today = new Date();
+        // Thêm 5 năm vào ngày hiện tại
+        today.setFullYear(today.getFullYear() + 5)
+        var day = today.getDate();
+        // Tạo chuỗi ngày tháng năm
+        var NgayHetHan = day +"/" + $('#thanghethan').val() + "/" + $('#namhethan').val();
         $('#ngayhethan').val(NgayHetHan);
     }
 
