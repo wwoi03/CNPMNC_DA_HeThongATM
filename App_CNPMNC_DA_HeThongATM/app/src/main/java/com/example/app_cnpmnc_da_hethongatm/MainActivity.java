@@ -16,13 +16,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
-<<<<<<< Updated upstream
-import com.example.app_cnpmnc_da_hethongatm.Activities.LookCardActivity;
-=======
+
+//import com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.LockCardActivity;
-import com.example.app_cnpmnc_da_hethongatm.Activities.ListStkActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.UnlockCardActivity;
->>>>>>> Stashed changes
+
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
@@ -125,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.nav_khoathe:
-                Intent intent2 = new Intent(this, LookCardActivity.class);
+                Intent intent2 = new Intent(this, LockCardActivity.class);
                 startActivity(intent2);
                 break;
                 //Haooooooooooooooooooooooooooo nua ne

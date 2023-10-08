@@ -143,7 +143,7 @@ public class UnlockCardActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(UnlockCardActivity.this,ConfirmLockCardActiviti.class);
+                        Intent intent=new Intent(UnlockCardActivity.this, ConfirmLockCardActivity.class);
                         //Du lieu can day
                         intent.putExtra("mathe",mathe);
                         intent.putExtra("loaithe",tenloai);
