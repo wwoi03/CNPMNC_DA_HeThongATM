@@ -238,18 +238,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //tạo số thẻ ngân hàng
         private string GenerateCIF()
         {
-            DateTime now = DateTime.Now;
-            Random random = new Random();
-            int r = random.Next(0, 99);
-            // Tạo số CIF sử dụng thời gian và GUID ngẫu nhiên
-            string cif = $"{now:HHmmss}{r.ToString("D2")}{r.ToString("D2")}";
-
-            return "909090" + cif;
-        }
-
-        //tự động tạo mã số thẻ
-        private string AccountNumber()
-        {
             Random random = new Random();
             string digits = "";
 
@@ -260,31 +248,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
 
             return digits;
+           
+        }
+
+        //tự động tạo mã số thẻ
+        private string AccountNumber()
+        {
+            DateTime now = DateTime.Now;
+            Random random = new Random();
+            int r = random.Next(0, 99);
+            // Tạo số CIF sử dụng thời gian và GUID ngẫu nhiên
+            string cif = $"{now:HHmmss}{r.ToString("D2")}{r.ToString("D2")}";
+
+            return "909090" + cif;
         }
 
 
         //tạo mã PIN
-        public string CreatePIN()
+        public string CreatePin()
         {
-            string MaPIN = GenerateCIF();
-            FirebaseResponse response = client.Get("TheNganHang");
-            if (response != null && response.Body != "null")
-            {
-                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
-                if (data.ContainsKey(MaPIN))
-                {
-                    return CreatePIN();
-                }
-              
-            }
-            return MaPIN;
-        }
-
-
-        //tạo mã số thẻ trên database
-        public string CreateAccountNumbet()
-        {
-            string MaSoThe = AccountNumber();
+            string MaSoThe = GenerateCIF();
             FirebaseResponse response = client.Get("TheNganHang");
             if (response != null && response.Body != "null")
             {
@@ -295,6 +278,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 }
             }
             return MaSoThe;
+        }
+
+
+        //tạo mã số thẻ trên database
+        public string CreateAccountNumbet()
+        {
+            string stk = AccountNumber();
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null && response.Body != "null")
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                if (data.ContainsKey(stk))
+                {
+                    return CreatePin();
+                }
+
+            }
+            return stk;
+           
         }
 
 
