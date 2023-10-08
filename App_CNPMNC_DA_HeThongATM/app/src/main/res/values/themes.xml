@@ -12,6 +12,17 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!-- Các thuộc tính style khác -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+    <style name="Theme.App_CNPMNC_DA_HeThongATM.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.App_CNPMNC_DA_HeThongATM.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.App_CNPMNC_DA_HeThongATM.PopupOverlay"
+        parent="ThemeOverlay.AppCompat.Light" />
 </resources>
 

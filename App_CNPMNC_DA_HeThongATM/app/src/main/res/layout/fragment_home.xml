@@ -47,7 +47,6 @@
 
                 <!-- tab quản lý -->
                 <GridLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:columnCount="2"
@@ -156,13 +155,14 @@
 
                     <!-- Ô 3 -->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cvTransferMoney"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="12dp"
-                        app:cardBackgroundColor="@color/primary_blue_color">
+                        app:cardBackgroundColor="@color/primary_blue_color"
+                        app:cardCornerRadius="8dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -174,32 +174,30 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:gravity="bottom|left"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.5"
+                                android:gravity="bottom|left">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Chuyển\ntiền"
+                                    android:textColor="@color/white"
                                     android:textSize="16dp"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/white">
-                                </TextView>
+                                    android:textStyle="bold"></TextView>
                             </LinearLayout>
 
                             <!-- icon -->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="right"
-                                android:layout_weight="1">
+                                android:layout_weight="1"
+                                android:gravity="right">
 
                                 <ImageView
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:src="@drawable/baseline_credit_card_24"
-                                    android:tintMode="@color/white">
-                                </ImageView>
+                                    android:tintMode="@color/white"></ImageView>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>

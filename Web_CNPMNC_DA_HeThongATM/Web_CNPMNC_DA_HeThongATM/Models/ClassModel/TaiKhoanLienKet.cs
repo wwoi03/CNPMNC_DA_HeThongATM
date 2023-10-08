@@ -5,8 +5,9 @@
         public string SoTaiKhoan { get; set; }
         public string TenTaiKhoan { get; set; }
         public int TinhTrangTaiKhoan { get; set; }
-        public string NgayGD { get; set; }
         public double HanMucThe { get; set; }
+        public string MaSoThe { get; set; }
+        public string NgayGD { get; set; }
         public double SoDu { get; set; }
         public long TienDaGD { get; set; }
         public long TienGD1Lan { get; set; }

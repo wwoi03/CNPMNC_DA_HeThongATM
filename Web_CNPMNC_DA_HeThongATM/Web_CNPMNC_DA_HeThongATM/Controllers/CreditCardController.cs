@@ -12,7 +12,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         FirebaseHelper firebaseHelper = new FirebaseHelper();
         //view tao the
         public  IActionResult Index()
-        {   
+        {
             return View();
         }
         [HttpGet]
@@ -27,8 +27,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
             var data = new
             {
-                Tenkh = custommer.TenKh,
-                Sdt = custommer.Sdt,
+                Tenkh = custommer.TenKhachHang,
+                Sdt = custommer.SoDienThoai,
                 PIN = PIN,
                 Stk = Stk
             };
@@ -45,7 +45,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             cardViewModel.MaDangNhap = "Nguyễn Lê Quốc Thuận";
             cardViewModel.TinhTrangThe = 0;
             firebaseHelper.CreateCard(cardViewModel, cardViewModel.MaKH);
-            firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPIN, custommer.TenKh, cardViewModel.MaSoThe));
+            firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPIN, custommer.TenKhachHang, cardViewModel.MaSoThe));
 
             return RedirectToAction("Index");
 

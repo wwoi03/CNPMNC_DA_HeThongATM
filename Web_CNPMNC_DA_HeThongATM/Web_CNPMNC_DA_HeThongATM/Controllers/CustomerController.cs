@@ -20,32 +20,35 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
            
             return View();
         }
+
         //tạo khách hàng
         [HttpPost]
         public IActionResult CreateCustommer(KhachHangViewModel customer)
-        { 
-            customer.MatKhau =  firebaseHelper.PassRandom();
+        {
+            customer.MatKhau = firebaseHelper.PassRandom();
             ModelState.Remove("Makh");
             ModelState.Remove("MatKhau");
             if (ModelState.IsValid)
             {
-                
-                 firebaseHelper.InsertCustommer(customer);
-                
+
+                firebaseHelper.InsertCustommer(customer);
+
                 return RedirectToAction("Index");
             }
-           
-            return View("Index",customer);
-           
+
+            return View("Index", customer);
+
         }
         //check cccd
         [HttpGet]
         public async Task<IActionResult> CheckCanCuoc(string cccd)
         {
 
-            var idcccd = await firebaseHelper.CheckCCCDExist(cccd);        
+            var idcccd = await firebaseHelper.CheckCCCDExist(cccd);
+            Console.WriteLine(idcccd);
             return Json(idcccd);
         }
+
         //check sdt
         [HttpGet]
         public IActionResult CheckSdt(string Sdt)

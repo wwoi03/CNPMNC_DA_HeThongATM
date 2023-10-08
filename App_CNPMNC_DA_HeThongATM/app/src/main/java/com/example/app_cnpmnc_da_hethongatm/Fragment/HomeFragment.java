@@ -1,9 +1,11 @@
 package com.example.app_cnpmnc_da_hethongatm.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -82,7 +85,7 @@ public class HomeFragment extends Fragment {
     ArrayList<ImageSlide> imageSlides;
     Handler handler = new Handler();
     Runnable runnable;
-
+    CardView cvTransferMoney;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -96,6 +99,7 @@ public class HomeFragment extends Fragment {
     private void initUI(View view) {
         vp2Images = view.findViewById(R.id.vp2Images);
         ci3 = view.findViewById(R.id.ci3);
+        cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
     }
 
     // Khởi tạo
@@ -132,6 +136,15 @@ public class HomeFragment extends Fragment {
 
                 // khoảng thời giản chuyển slide
                 handler.postDelayed(runnable, 3000);
+            }
+        });
+
+        // Xử lý bấm vào chuyển tiền
+        cvTransferMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TransferMoneyActivity.class);
+                startActivity(intent);
             }
         });
     }
