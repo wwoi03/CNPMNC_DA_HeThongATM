@@ -25,31 +25,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             client = new FirebaseClient(config);
         }
         //-------------------------------------------------------------------------KHÁCH HÀNG--------------------------------------------------------------------------------------
-        //lấy danh sách khách hàng
-        public async Task<List<KhachHangViewModel>> GetCustommers()
+        // Lấy danh sách khách hàng
+        public List<KhachHang> GetCustomers()
         {
-            try
-            {
-                FirebaseResponse response = await client.GetAsync("KhachHang");
-                if (response != null && response.Body != "")
-                {
-                    Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
-                    List<KhachHangViewModel> peopleList = new List<KhachHangViewModel>(data.Values);
-                    return peopleList;
-                }
-                else
-                {
-                    Console.WriteLine(response.StatusCode);
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
+            List<KhachHang> dsKhachHang = new List<KhachHang>();
+            FirebaseResponse response = client.Get("KhachHang");
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            dsKhachHang = new List<KhachHang>(data.Values);
+            return dsKhachHang;
         }
-
 
         //tạo khách hàng
         public void InsertCustommer (KhachHangViewModel custommer)
@@ -167,16 +151,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
 
-        // Lấy danh sách khách hàng
-        public List<KhachHang> GetCustomers()
-        {
-            List<KhachHang> dsKhachHang = new List<KhachHang>();
-            FirebaseResponse response = client.Get("KhachHang");
-            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-            dsKhachHang = new List<KhachHang>(data.Values);
-            return dsKhachHang;
-        }
-
 
         //Kiểm tra Sdt nhập vào form
         public bool CheckSdt(string values)
@@ -260,155 +234,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             FirebaseResponse response = client.Push("NhanVien", nhanVien);
         }
-
-        //--------------------------------------------------------------------------THẺ NGÂN HÀNG ----------------------------------------------------------------------------------
-        //tạo số thẻ ngân hàng
-        private string GenerateCIF()
-        {
-            DateTime now = DateTime.Now;
-            Random random = new Random();
-            int r = random.Next(0, 99);
-            // Tạo số CIF sử dụng thời gian và GUID ngẫu nhiên
-            string cif = $"{now:HHmmss}{r.ToString("D2")}{r.ToString("D2")}";
-
-            return "909090" + cif;
-        }
-
-        //tự động tạo mã số thẻ
-        private string AccountNumber()
-        {
-            Random random = new Random();
-            string digits = "";
-
-            for (int i = 0; i < 10; i++)
-            {
-                int randomNumber = random.Next(0, 10); // Số ngẫu nhiên từ 0 đến 9
-                digits += randomNumber.ToString();
-            }
-
-            return digits;
-        }
-
-
-        //tạo mã PIN
-        public string CreatePIN()
-        {
-            string MaPIN = GenerateCIF();
-            FirebaseResponse response = client.Get("TheNganHang");
-            if (response != null && response.Body != "null")
-            {
-                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
-                if (data.ContainsKey(MaPIN))
-                {
-                    return CreatePIN();
-                }
-
-            }
-            return MaPIN;
-        }
-
-
-        //tạo mã số thẻ trên database
-        public string CreateAccountNumbet()
-        {
-            string MaSoThe = AccountNumber();
-            FirebaseResponse response = client.Get("TheNganHang");
-            if (response != null && response.Body != "null")
-            {
-                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
-                if (data.ContainsKey(MaSoThe))
-                {
-                    return CreateAccountNumbet();
-                }
-            }
-            return MaSoThe;
-        }
-
-
-        //lấy key bằng cccd
-        public string GetKeysBycccd(string values)
-        {
-            FirebaseResponse response = client.Get("KhachHang");
-            if (response != null)
-            {
-                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
-                var keys = data.Where(entry => entry.Value.CCCD == values).Select(entry => entry.Key).ToList();
-                if (keys != null)
-                {
-                    return string.Join(",", keys);
-                }
-            }
-            else
-            {
-                Console.WriteLine(response.StatusCode);
-            }
-            return "null";
-        }
-
-
-        //tạo thẻ ngân hàng
-        public void CreateCard(TheNganHangViewModel card, string keys)
-        {
-            if (keys == null)
-            {
-                return;
-            }
-            else
-            {
-                FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
-                if (firebaseResponse != null)
-                {
-                    Console.WriteLine("thanh công");
-                }
-                else
-                {
-                    Console.WriteLine(firebaseResponse.StatusCode);
-                }
-            }
-        }
-
-
-        //tạo thẻ liên kết
-        public void CreateCardLink(TaiKhoanLienKet taiKhoanLienKet)
-        {
-            FirebaseResponse response = client.Push("TaiKhoanLienKet", taiKhoanLienKet);
-            if (response != null)
-            {
-                Console.WriteLine("thành công");
-
-            }
-            else { Console.WriteLine("thất bại"); }
-        }
-
-
-
-        //đừng xóa em đang sửa
-        //public string GetAccount(string Value)
-        //{
-        //    FirebaseResponse response = client.Get("TaiKhoanLienKet");
-        //    if (response != null)
-        //    {
-        //        Dictionary<string, AccountViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, AccountViewModel>>(response.Body);
-
-        //        // Sử dụng LINQ để lấy keys của các bản ghi có SoTaiKhoan trùng với Value
-        //        var matchingKeys = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
-
-        //        if (matchingKeys.Count > 0)
-        //        {
-        //            // matchingKeys là một danh sách các keys có SoTaiKhoan trùng với Value
-        //            // Ở đây, bạn có thể làm gì đó với danh sách này
-        //            return string.Join(", ", matchingKeys);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine(response.StatusCode);
-        //    }
-        //    return null;
-        //}
-    }
-}
-
         //--------------------------------------------------------------------------THẺ NGÂN HÀNG ----------------------------------------------------------------------------------
         //tạo số thẻ ngân hàng
         private string GenerateCIF()

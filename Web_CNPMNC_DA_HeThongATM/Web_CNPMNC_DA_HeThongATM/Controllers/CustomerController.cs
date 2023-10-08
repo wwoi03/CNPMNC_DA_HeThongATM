@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
@@ -16,11 +17,35 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         // Danh sách khách hàng
         public IActionResult Index()
         {
-           
-           
+            List<KhachHang> khachHangs = firebaseHelper.GetCustomers();
+            List<KhachHangViewModel> khachHangViewModels = new List<KhachHangViewModel>();
+            foreach(var i in khachHangs)
+            {
+                var pro = new KhachHangViewModel
+                {
+                    CCCD = i.CCCD,
+                    DiaChi = i.DiaChi,
+                    Email = i.Email,
+                    GioiTinh = i.GioiTinh,
+                    Sdt = i.Sdt,
+                    TenKh = i.TenKh,
+                    NgayTao = i.NgayTao,
+                    MatKhau = i.MatKhau,
+
+                };
+                khachHangViewModels.Add(pro);
+
+
+            }
+
+            ViewData["j"] = khachHangViewModels;
+
             return View();
         }
-
+        public IActionResult CreateCustommer()
+        { 
+        return View();
+        }
         //tạo khách hàng
         [HttpPost]
         public IActionResult CreateCustommer(KhachHangViewModel customer)
@@ -36,7 +61,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View("Index", customer);
+            return View("CreateCustommer", customer);
 
         }
         //check cccd

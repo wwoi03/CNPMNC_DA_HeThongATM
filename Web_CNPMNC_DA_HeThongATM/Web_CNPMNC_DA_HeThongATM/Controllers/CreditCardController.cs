@@ -27,8 +27,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
             var data = new
             {
-                Tenkh = custommer.TenKhachHang,
-                Sdt = custommer.SoDienThoai,
+                Tenkh = custommer.TenKh,
+                Sdt = custommer.Sdt,
                 PIN = PIN,
                 Stk = Stk
             };
@@ -45,7 +45,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             cardViewModel.MaDangNhap = "Nguyễn Lê Quốc Thuận";
             cardViewModel.TinhTrangThe = 0;
             firebaseHelper.CreateCard(cardViewModel, cardViewModel.MaKH);
-            firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPIN, custommer.TenKhachHang, cardViewModel.MaSoThe));
+            firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPIN, custommer.TenKh, cardViewModel.MaSoThe));
 
             return RedirectToAction("Index");
 

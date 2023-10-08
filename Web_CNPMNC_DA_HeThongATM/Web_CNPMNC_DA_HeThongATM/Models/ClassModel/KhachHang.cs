@@ -8,7 +8,6 @@
         public string GioiTinh { get; set; }
         public string Sdt { get; set; }
         public string TenKh { get; set; }
-        public string CCCD { get; set; }
         public string NgayTao { get; set; }
         public string MatKhau { get; set; }
     }

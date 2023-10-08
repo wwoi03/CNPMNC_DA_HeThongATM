@@ -11,7 +11,7 @@
         public double SoDu { get; set; }
         public long TienDaGD { get; set; }
         public long TienGD1Lan { get; set; }
-        public string MaSoThe {  get; set; }
+      
 
         public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, string MaSoThe)
         {
