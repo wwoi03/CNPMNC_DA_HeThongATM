@@ -22,17 +22,14 @@
         <item
             android:id="@+id/nav_khoathe"
             android:icon="@drawable/baseline_lock_person_24"
-<<<<<<< HEAD
-            android:title="KHÓA THẺ/TÀI KHOẢN">
+            android:title="KHÓA THẺ">
         </item>
-=======
-            android:title="KHÓA THẺ"></item>
 
         <item
             android:id="@+id/nav_mokhoathe"
             android:icon="@drawable/baseline_lock_open_24"
-            android:title="MỞ KHÓA THẺ"></item>
->>>>>>> s1-Hao-MoKhoaTK
+            android:title="MỞ KHÓA THẺ">
+        </item>
     </group>
 
     <item

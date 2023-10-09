@@ -8,25 +8,13 @@ public class TheNganHang implements Serializable {
     private String MaDangNhap;
     private String MaKH; // key trong bảng "KhachHang"
     private String MaPin;
-    private String MaSoThe;
+    private long MaSoThe;
     private String NgayHetHan;
     private String NgayMoThe;
     private String SDTDangKy;
     private int TinhTrangThe;
 
     public TheNganHang() {
-    }
-
-    public TheNganHang(String loaiThe, String maDangNhap, String maKH, String maPin, String maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
-        LoaiThe = loaiThe;
-        MaDangNhap = maDangNhap;
-        MaKH = maKH;
-        MaPin = maPin;
-        MaSoThe = maSoThe;
-        NgayHetHan = ngayHetHan;
-        NgayMoThe = ngayMoThe;
-        this.SDTDangKy = SDTDangKy;
-        TinhTrangThe = tinhTrangThe;
     }
 
     public String getLoaiThe() {
@@ -61,11 +49,11 @@ public class TheNganHang implements Serializable {
         MaPin = maPin;
     }
 
-    public String getMaSoThe() {
+    public long getMaSoThe() {
         return MaSoThe;
     }
 
-    public void setMaSoThe(String maSoThe) {
+    public void setMaSoThe(long maSoThe) {
         MaSoThe = maSoThe;
     }
 
@@ -98,6 +86,18 @@ public class TheNganHang implements Serializable {
     }
 
     public void setTinhTrangThe(int tinhTrangThe) {
+        TinhTrangThe = tinhTrangThe;
+    }
+
+    public TheNganHang(String loaiThe, String maDangNhap, String maKH, String maPin, long maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
+        LoaiThe = loaiThe;
+        MaDangNhap = maDangNhap;
+        MaKH = maKH;
+        MaPin = maPin;
+        MaSoThe = maSoThe;
+        NgayHetHan = ngayHetHan;
+        NgayMoThe = ngayMoThe;
+        this.SDTDangKy = SDTDangKy;
         TinhTrangThe = tinhTrangThe;
     }
 }
