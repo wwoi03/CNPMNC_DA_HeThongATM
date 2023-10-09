@@ -8,7 +8,7 @@ public class TheNganHang implements Serializable {
     private String MaDangNhap;
     private String MaKH; // key trong bảng "KhachHang"
     private String MaPin;
-    private long MaSoThe;
+    private String MaSoThe;
     private String NgayHetHan;
     private String NgayMoThe;
     private String SDTDangKy;
@@ -17,7 +17,7 @@ public class TheNganHang implements Serializable {
     public TheNganHang() {
     }
 
-    public TheNganHang(String loaiThe, String maDangNhap, String maKH, String maPin, long maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
+    public TheNganHang(String loaiThe, String maDangNhap, String maKH, String maPin, String maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
         LoaiThe = loaiThe;
         MaDangNhap = maDangNhap;
         MaKH = maKH;
@@ -61,11 +61,11 @@ public class TheNganHang implements Serializable {
         MaPin = maPin;
     }
 
-    public long getMaSoThe() {
+    public String getMaSoThe() {
         return MaSoThe;
     }
 
-    public void setMaSoThe(long maSoThe) {
+    public void setMaSoThe(String maSoThe) {
         MaSoThe = maSoThe;
     }
 

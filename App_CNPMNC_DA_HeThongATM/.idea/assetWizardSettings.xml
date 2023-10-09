@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/credit_card_off/baseline_credit_card_off_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_drop_down/baseline_arrow_drop_down_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_credit_card_off_24" />
+                            <entry key="outputName" value="baseline_arrow_drop_down_24" />
                             <entry key="sourceFile" value="H:\HK1nam3\CNPMNC\Sprint2\CNPMNC_DA_HeThongATM\App_CNPMNC_DA_HeThongATM" />
                           </map>
                         </option>

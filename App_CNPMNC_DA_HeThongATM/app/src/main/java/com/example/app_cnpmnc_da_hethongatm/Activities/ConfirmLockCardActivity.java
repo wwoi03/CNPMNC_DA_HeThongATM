@@ -1,6 +1,7 @@
 
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
@@ -42,11 +44,9 @@ public class ConfirmLockCardActivity extends AppCompatActivity {
         Intent intent=getIntent();
         if(intent!=null&&intent.hasExtra("mathe")){
             mathe=intent.getStringExtra("mathe");
-            tvAccountNumber.setText(mathe);
         }
         if(intent!=null&&intent.hasExtra("loaithe")){
             tenloai=intent.getStringExtra("loaithe");
-            tvAccountType.setText(tenloai);
         }
         if(intent!=null&&intent.hasExtra("ID")){
             id=intent.getStringExtra("ID");
@@ -70,11 +70,13 @@ public class ConfirmLockCardActivity extends AppCompatActivity {
 
     }
     public void getData (){
-        Log.d("TAG", mathe+tenloai+id);
+        Log.d("TAGhghh", mathe+tenloai+id);
         databaseReference.child("TheNganHang").child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 theNganHang=snapshot.getValue(TheNganHang.class);
+                tvAccountNumber.setText(mathe);
+                tvAccountType.setText(tenloai);
                 tvLoaiThe.setText(tenloai);
                 tvSoThe.setText(mathe);
                 switch (theNganHang.getTinhTrangThe()){
@@ -135,8 +137,20 @@ public class ConfirmLockCardActivity extends AppCompatActivity {
                             });
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Thẻ đã bị khóa bởi ngân hàng hoặc gặp sự cố khác", Toast.LENGTH_LONG).show();
-                    finish();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmLockCardActivity.this);
+
+                    // Thiết lập tiêu đề và nội dung của thông báo
+                    builder.setTitle("Thẻ của bạn đã bị Ngân hàng khóa")
+                            .setMessage("Vui lòng ra Ngân hàng để làm việc. Nhé!");
+
+                    // Thiết lập nút tích cực
+                    builder.setPositiveButton("Đã hiểu", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });

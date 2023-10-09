@@ -12,6 +12,15 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.LockCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.UnlockCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ConfirmLockCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.AccountCardActivity"
             android:exported="false" />
         <activity

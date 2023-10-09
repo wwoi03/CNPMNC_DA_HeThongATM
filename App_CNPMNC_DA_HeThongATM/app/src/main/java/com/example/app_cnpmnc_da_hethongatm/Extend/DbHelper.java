@@ -46,7 +46,7 @@ public class DbHelper {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        MY_CARD = (long) dataSnapshot.child("MaSoThe").getValue();
+                        MY_CARD = Long.parseLong(String.valueOf(dataSnapshot.child("MaSoThe").getValue()));
                     }
                 }
             }
