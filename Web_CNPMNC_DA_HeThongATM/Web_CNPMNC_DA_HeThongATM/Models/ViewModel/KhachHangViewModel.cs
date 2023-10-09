@@ -26,15 +26,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         // Kiểm tra không được để trống (null) và có ít nhất một số
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Số điện thoại phải có ít nhất 10 chữ số.")]
-        public string Sdt { get; set; }
+        public string SoDienThoai { get; set; }
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập tên khách hàng.")]
-        public string TenKh { get; set; }
+        public string TenKhachHang { get; set; }
 
         public string NgayTao { get; set; }
 
         public string MatKhau { get; set; }
+
+       
     }
 
 }

@@ -160,7 +160,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             if (response != null && response.Body != null)
             {
                 Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();           
-                if ( data.Values.Any(c => c.Sdt == values))
+                if ( data.Values.Any(c => c.SoDienThoai == values))
                     return true;
                 return false;
                 

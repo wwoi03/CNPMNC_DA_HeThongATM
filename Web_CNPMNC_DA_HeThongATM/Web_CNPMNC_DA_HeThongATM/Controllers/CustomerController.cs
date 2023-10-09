@@ -27,10 +27,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     DiaChi = i.DiaChi,
                     Email = i.Email,
                     GioiTinh = i.GioiTinh,
-                    Sdt = i.Sdt,
-                    TenKh = i.TenKh,
+                    SoDienThoai = i.SoDienThoai,
+                    TenKhachHang = i.TenKhachHang,
                     NgayTao = i.NgayTao,
-                    MatKhau = i.MatKhau,
+                   
 
                 };
                 khachHangViewModels.Add(pro);
@@ -50,8 +50,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult CreateCustommer(KhachHangViewModel customer)
         {
+
             customer.MatKhau = firebaseHelper.PassRandom();
-            ModelState.Remove("Makh");
             ModelState.Remove("MatKhau");
             if (ModelState.IsValid)
             {
