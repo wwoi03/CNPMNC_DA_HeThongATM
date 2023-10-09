@@ -104,6 +104,8 @@ public class UnlockCardActivity extends AppCompatActivity {
     }
 
     public void ReadMaThe(){
+        Log.d("TAG", "Thông tin debug" +config.getCustomerKey());
+
         databaseReference.child("TheNganHang")
                 .orderByChild("MaKH").equalTo(config.getCustomerKey())
                 .addValueEventListener(new ValueEventListener() {
@@ -117,7 +119,7 @@ public class UnlockCardActivity extends AppCompatActivity {
                                 count++;
                         }
                         cardID = new String[count];
-                        Idkey = cardID;
+                        Idkey = new String[count];
                         int i = 0;
                         for (DataSnapshot snap : snapshot.getChildren()) {
                             long ttt = (long) snap.child("TinhTrangThe").getValue();
@@ -176,7 +178,7 @@ public class UnlockCardActivity extends AppCompatActivity {
                         for (DataSnapshot snap : snapshot.getChildren()) {
                             long ttt = (long) snap.child("TinhTrangThe").getValue();
                             String lt=String.valueOf(snap.child("LoaiThe").getValue());
-                            if (ttt != 1 && lt.equals(maloai))
+                            if (ttt != 0 && lt.equals(maloai))
                                 demso++;
                         }
                         if(demso>0){

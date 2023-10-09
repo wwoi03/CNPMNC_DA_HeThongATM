@@ -126,7 +126,7 @@ public class LockCardActivity extends AppCompatActivity  {
                                         count++;
                                 }
                                 cardID = new String[count];
-                                Idkey = cardID;
+                                Idkey = new String[count];
                                 int i = 0;
                                 for (DataSnapshot snap : snapshot.getChildren()) {
                                     long ttt = (long) snap.child("TinhTrangThe").getValue();
