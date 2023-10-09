@@ -3,17 +3,30 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 import java.io.Serializable;
 
 public class TheNganHang implements Serializable {
-    public String LoaiThe;
-    public String MaDangNhap;
-    public String MaKH; // key trong bảng "KhachHang"
-    public int MaPin;
-    public long MaSoThe;
-    public String NgayHetHan;
-    public String NgayMoThe;
-    public String SDTDangKy;
-    public int TinhTrangThe;
+
+    private String LoaiThe;
+    private String MaDangNhap;
+    private String MaKH; // key trong bảng "KhachHang"
+    private String MaPin;
+    private String MaSoThe;
+    private String NgayHetHan;
+    private String NgayMoThe;
+    private String SDTDangKy;
+    private int TinhTrangThe;
 
     public TheNganHang() {
+    }
+
+    public TheNganHang(String loaiThe, String maDangNhap, String maKH, String maPin, String maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
+        LoaiThe = loaiThe;
+        MaDangNhap = maDangNhap;
+        MaKH = maKH;
+        MaPin = maPin;
+        MaSoThe = maSoThe;
+        NgayHetHan = ngayHetHan;
+        NgayMoThe = ngayMoThe;
+        this.SDTDangKy = SDTDangKy;
+        TinhTrangThe = tinhTrangThe;
     }
 
     public String getLoaiThe() {
@@ -40,19 +53,19 @@ public class TheNganHang implements Serializable {
         MaKH = maKH;
     }
 
-    public int getMaPin() {
+    public String getMaPin() {
         return MaPin;
     }
 
-    public void setMaPin(int maPin) {
+    public void setMaPin(String maPin) {
         MaPin = maPin;
     }
 
-    public long getMaSoThe() {
+    public String getMaSoThe() {
         return MaSoThe;
     }
 
-    public void setMaSoThe(long maSoThe) {
+    public void setMaSoThe(String maSoThe) {
         MaSoThe = maSoThe;
     }
 
@@ -85,18 +98,6 @@ public class TheNganHang implements Serializable {
     }
 
     public void setTinhTrangThe(int tinhTrangThe) {
-        TinhTrangThe = tinhTrangThe;
-    }
-
-    public TheNganHang(String loaiThe, String maDangNhap, String maKH, int maPin, long maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
-        LoaiThe = loaiThe;
-        MaDangNhap = maDangNhap;
-        MaKH = maKH;
-        MaPin = maPin;
-        MaSoThe = maSoThe;
-        NgayHetHan = ngayHetHan;
-        NgayMoThe = ngayMoThe;
-        this.SDTDangKy = SDTDangKy;
         TinhTrangThe = tinhTrangThe;
     }
 }
