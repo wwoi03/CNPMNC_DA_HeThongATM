@@ -1,4 +1,6 @@
-﻿namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
 {
     public class TaiKhoanLienKet
     {
@@ -32,3 +34,12 @@
 
 
 }
+//•	HanMucThe(double): …
+//•	LoaiTaiKhoan(string): key của record bên bảng LoaiTaiKhoan
+//•	MaSoThe (long): mã số thẻ ngân hàng tồn tại ở bảng TheNganHang
+//•	SoTaiKhoan (long): mã số tài khoản (10 số)
+//•	SoDu(double): số dư tài khoản hoặc số tiền gửi tiết kiệm tùy thuộc vào loại tài khoản
+//•	TenTaiKhoan (string): mặc định là tên khách hàng bên bảng KhachHang
+//•	TienGDLan1 (double): …
+//•	TienDaGD(double): …
+//•	TinhTrangTaiKhoan(int): đang phân tích
