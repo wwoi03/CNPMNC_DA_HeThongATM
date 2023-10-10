@@ -25,6 +25,7 @@ import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
+import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +46,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
     //
     String taiKhoanNguonKey = "", taiKhoanHuongKey;
     TaiKhoanLienKet taiKhoanNguon, taiKhoanHuong;
+
+    ThuHuong thuHuong;
+    int flag;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -89,7 +93,12 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // khởi tạo dữ liệu
     public void initData() {
-
+        Intent getDataIntent = getIntent();
+        flag = (int) getDataIntent.getSerializableExtra("flag");
+        if (flag == BeneficiaryManagementActivity.USER_NAME) {
+            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tenthuhuong");
+            etAccountBeneficiary.setText(thuHuong.getTenNguoiThuHuong());
+        }
     }
 
     // xử lý sự kiện
