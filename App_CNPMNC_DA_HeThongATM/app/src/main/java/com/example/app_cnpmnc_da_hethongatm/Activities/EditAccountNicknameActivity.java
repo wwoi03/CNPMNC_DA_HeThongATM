@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.app_cnpmnc_da_hethongatm.R;
 
-public class LookCardActivity extends AppCompatActivity {
+public class EditAccountNicknameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_look_card);
+        setContentView(R.layout.activity_edit_account_nickname);
     }
 }

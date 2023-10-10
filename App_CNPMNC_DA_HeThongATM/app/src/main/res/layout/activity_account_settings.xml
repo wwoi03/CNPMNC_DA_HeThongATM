@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AccountSettingsActivity"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    android:layout_marginTop="16dp">
+
+    <!-- Thông tin cá nhân -->
+    <LinearLayout
+        android:id="@+id/llPersonalInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:backgroundTint="@color/item_color"
+        android:padding="16dp"
+        android:layout_marginTop="2dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_co_present_24">
+        </ImageView>
+
+        <TextView
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Thông tin tài khoản"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_weight="1">
+        </TextView>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_chevron_right_24"
+            app:tint="@color/normal_color">
+        </ImageView>
+    </LinearLayout>
+
+    <!-- Sửa nickname -->
+    <LinearLayout
+        android:id="@+id/llEditNickName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:backgroundTint="@color/item_color"
+        android:padding="16dp"
+        android:layout_marginTop="2dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_drive_file_rename_outline_24">
+        </ImageView>
+
+        <TextView
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Đặt nickname tài khoản"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_weight="1">
+        </TextView>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_chevron_right_24"
+            app:tint="@color/normal_color">
+        </ImageView>
+    </LinearLayout>
+
+    <!-- Đổi mật khẩu -->
+    <LinearLayout
+        android:id="@+id/llChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:backgroundTint="@color/item_color"
+        android:padding="16dp"
+        android:layout_marginTop="2dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_lock_person_24">
+        </ImageView>
+
+        <TextView
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Đổi mật khẩu"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_weight="1">
+        </TextView>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_chevron_right_24"
+            app:tint="@color/normal_color">
+        </ImageView>
+    </LinearLayout>
+</LinearLayout>

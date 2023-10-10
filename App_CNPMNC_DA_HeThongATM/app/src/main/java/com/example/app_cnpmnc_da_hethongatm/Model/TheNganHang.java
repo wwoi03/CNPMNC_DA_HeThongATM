@@ -3,15 +3,16 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 import java.io.Serializable;
 
 public class TheNganHang implements Serializable {
-    public String LoaiThe;
-    public String MaDangNhap;
-    public String MaKH; // key trong bảng "KhachHang"
-    public int MaPin;
-    public long MaSoThe;
-    public String NgayHetHan;
-    public String NgayMoThe;
-    public String SDTDangKy;
-    public int TinhTrangThe;
+
+    private String LoaiThe; // key trong bảng "LoaiTheNganHang"
+    private String MaDangNhap;
+    private String MaKH; // key trong bảng "KhachHang"
+    private String MaPin;
+    private long MaSoThe;
+    private String NgayHetHan;
+    private String NgayMoThe;
+    private String SDTDangKy;
+    private int TinhTrangThe;
 
     public TheNganHang() {
     }
@@ -40,11 +41,11 @@ public class TheNganHang implements Serializable {
         MaKH = maKH;
     }
 
-    public int getMaPin() {
+    public String getMaPin() {
         return MaPin;
     }
 
-    public void setMaPin(int maPin) {
+    public void setMaPin(String maPin) {
         MaPin = maPin;
     }
 
@@ -88,7 +89,7 @@ public class TheNganHang implements Serializable {
         TinhTrangThe = tinhTrangThe;
     }
 
-    public TheNganHang(String loaiThe, String maDangNhap, String maKH, int maPin, long maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
+    public TheNganHang(String loaiThe, String maDangNhap, String maKH, String maPin, long maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
         LoaiThe = loaiThe;
         MaDangNhap = maDangNhap;
         MaKH = maKH;

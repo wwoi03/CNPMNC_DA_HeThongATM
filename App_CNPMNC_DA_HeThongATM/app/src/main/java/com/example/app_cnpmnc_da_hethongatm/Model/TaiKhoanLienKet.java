@@ -12,11 +12,12 @@ public class TaiKhoanLienKet implements Serializable {
     private double TienDaGD;
     private double TienGD1Lan;
     private int TinhTrangTaiKhoan;
+    private String LoaiTaiKhoan;
 
     public TaiKhoanLienKet() {
     }
 
-    public TaiKhoanLienKet(double hanMucThe, long maSoThe, String ngayGD, double soDu, long soTaiKhoan, String tenTaiKhoan, double tienDaGD, double tienGD1Lan, int tinhTrangTaiKhoan) {
+    public TaiKhoanLienKet(double hanMucThe, long maSoThe, String ngayGD, double soDu, long soTaiKhoan, String tenTaiKhoan, double tienDaGD, double tienGD1Lan, int tinhTrangTaiKhoan, String loaiTaiKhoan) {
         HanMucThe = hanMucThe;
         MaSoThe = maSoThe;
         NgayGD = ngayGD;
@@ -26,6 +27,7 @@ public class TaiKhoanLienKet implements Serializable {
         TienDaGD = tienDaGD;
         TienGD1Lan = tienGD1Lan;
         TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+        LoaiTaiKhoan = loaiTaiKhoan;
     }
 
     public double getHanMucThe() {
@@ -98,5 +100,13 @@ public class TaiKhoanLienKet implements Serializable {
 
     public void setTinhTrangTaiKhoan(int tinhTrangTaiKhoan) {
         TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+    }
+
+    public String getLoaiTaiKhoan() {
+        return LoaiTaiKhoan;
+    }
+
+    public void setLoaiTaiKhoan(String loaiTaiKhoan) {
+        LoaiTaiKhoan = loaiTaiKhoan;
     }
 }

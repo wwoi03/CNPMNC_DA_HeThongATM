@@ -11,19 +11,9 @@ public class KhachHang implements Serializable {
     private String SoDienThoai;
     private String MatKhau;
     private String TenKhachHang;
+    private String MaNhanVien;
 
     public KhachHang() {
-    }
-
-    public KhachHang(String CCCD, String diaChi, String email, String gioiTinh, String ngayTao, String soDienThoai, String matKhau, String tenKhachHang) {
-        this.CCCD = CCCD;
-        DiaChi = diaChi;
-        Email = email;
-        GioiTinh = gioiTinh;
-        NgayTao = ngayTao;
-        SoDienThoai = soDienThoai;
-        MatKhau = matKhau;
-        TenKhachHang = tenKhachHang;
     }
 
     public String getCCCD() {
@@ -88,5 +78,25 @@ public class KhachHang implements Serializable {
 
     public void setTenKhachHang(String tenKhachHang) {
         TenKhachHang = tenKhachHang;
+    }
+
+    public String getMaNhanVien() {
+        return MaNhanVien;
+    }
+
+    public void setMaNhanVien(String maNhanVien) {
+        MaNhanVien = maNhanVien;
+    }
+
+    public KhachHang(String CCCD, String diaChi, String email, String gioiTinh, String ngayTao, String soDienThoai, String matKhau, String tenKhachHang, String maNhanVien) {
+        this.CCCD = CCCD;
+        DiaChi = diaChi;
+        Email = email;
+        GioiTinh = gioiTinh;
+        NgayTao = ngayTao;
+        SoDienThoai = soDienThoai;
+        MatKhau = matKhau;
+        TenKhachHang = tenKhachHang;
+        MaNhanVien = maNhanVien;
     }
 }

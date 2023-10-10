@@ -5,9 +5,9 @@
         public string GioGiaoDich { get; set; }
         public string NgayGiaoDich { get; set; }
         public string NoiDungChuyenKhoan { get; set; }
-        public double PhiGiaoDich { get; set; }
         public long SoTaiKhoan { get; set; }
         public double SoTienGiaoDich { get; set; }
         public long TaiKhoanNhan { get; set; }
+        public double SoDuHienTai { get; set; }
     }
 }
