@@ -24,6 +24,15 @@
             android:name=".Activities.SearchServiceFunctionActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.UnlockCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LockCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ConfirmLockCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.AccountCardActivity"
             android:exported="false" />
         <activity
@@ -35,9 +44,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity
-            android:name=".Activities.LookCardActivity"
-            android:exported="false" />
         <activity
             android:name=".Activities.BeneficiaryManagementActivity"
             android:exported="false" />

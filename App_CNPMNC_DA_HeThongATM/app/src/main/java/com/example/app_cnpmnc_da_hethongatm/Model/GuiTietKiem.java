@@ -1,19 +1,19 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class GuiTietKiem {
-    private long SoTaiKhoan;
+    private long SoTaiKhoan; // số tài khoản tiết kiệm
     private long TaiKhoanNguon;
     private String NgayGui;
-    private long SoTienGui;
+    private String KyHan; // mã lãi suất
 
     public GuiTietKiem() {
     }
 
-    public GuiTietKiem(long soTaiKhoan, long taiKhoanNguon, String ngayGui, long soTienGui) {
+    public GuiTietKiem(long soTaiKhoan, long taiKhoanNguon, String ngayGui, String kyHan) {
         SoTaiKhoan = soTaiKhoan;
         TaiKhoanNguon = taiKhoanNguon;
         NgayGui = ngayGui;
-        SoTienGui = soTienGui;
+        KyHan = kyHan;
     }
 
     public long getSoTaiKhoan() {
@@ -40,11 +40,11 @@ public class GuiTietKiem {
         NgayGui = ngayGui;
     }
 
-    public long getSoTienGui() {
-        return SoTienGui;
+    public String getKyHan() {
+        return KyHan;
     }
 
-    public void setSoTienGui(long soTienGui) {
-        SoTienGui = soTienGui;
+    public void setKyHan(String kyHan) {
+        KyHan = kyHan;
     }
 }

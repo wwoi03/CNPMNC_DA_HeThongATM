@@ -2,14 +2,14 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class LichSuLaiSuat {
     private String MaGuiTietKiem;
-    private long SoTienLai;
+    private double SoTienLai;
     private String NgayNhan;
-    private long SoDuTaiKhoanNguon;
+    private double SoDuTaiKhoanNguon;
 
     public LichSuLaiSuat() {
     }
 
-    public LichSuLaiSuat(String maGuiTietKiem, long soTienLai, String ngayNhan, long soDuTaiKhoanNguon) {
+    public LichSuLaiSuat(String maGuiTietKiem, double soTienLai, String ngayNhan, double soDuTaiKhoanNguon) {
         MaGuiTietKiem = maGuiTietKiem;
         SoTienLai = soTienLai;
         NgayNhan = ngayNhan;
@@ -24,11 +24,11 @@ public class LichSuLaiSuat {
         MaGuiTietKiem = maGuiTietKiem;
     }
 
-    public long getSoTienLai() {
+    public double getSoTienLai() {
         return SoTienLai;
     }
 
-    public void setSoTienLai(long soTienLai) {
+    public void setSoTienLai(double soTienLai) {
         SoTienLai = soTienLai;
     }
 
@@ -40,11 +40,11 @@ public class LichSuLaiSuat {
         NgayNhan = ngayNhan;
     }
 
-    public long getSoDuTaiKhoanNguon() {
+    public double getSoDuTaiKhoanNguon() {
         return SoDuTaiKhoanNguon;
     }
 
-    public void setSoDuTaiKhoanNguon(long soDuTaiKhoanNguon) {
+    public void setSoDuTaiKhoanNguon(double soDuTaiKhoanNguon) {
         SoDuTaiKhoanNguon = soDuTaiKhoanNguon;
     }
 }

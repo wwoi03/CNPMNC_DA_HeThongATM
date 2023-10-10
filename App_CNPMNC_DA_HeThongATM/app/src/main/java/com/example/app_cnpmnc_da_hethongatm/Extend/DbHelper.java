@@ -49,6 +49,7 @@ public class DbHelper {
                         MY_CARD = (long) dataSnapshot.child("MaSoThe").getValue();
 
                         Log.d("firebase", String.valueOf(MY_CARD));
+                        MY_CARD = Long.parseLong(String.valueOf(dataSnapshot.child("MaSoThe").getValue()));
                     }
                 }
             }
