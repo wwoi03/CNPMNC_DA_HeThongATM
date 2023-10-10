@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/teal_200"
+    tools:context=".NewaccountActivity">
+    >
+    <TextView
+        android:id="@+id/tentaikhoan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TÊN TÀI KHOẢN"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên tài khoản"
+        android:textColor="@color/black"
+        android:inputType="textEmailAddress"
+        />
+    <TextView
+        android:id="@+id/nhapsotaikhoan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NHẬP SỐ TÀI KHOẢN"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập số tài khoản"
+        android:textColor="@color/black"
+        android:inputType="textPassword"
+        />
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="330dp"
+        android:layout_height="63dp"
+        android:layout_gravity="center"
+        android:text="LOGIN" />
+    <Button
+        android:id="@+id/btnregister"
+        android:layout_width="330dp"
+        android:layout_height="63dp"
+        android:layout_gravity="center"
+        android:text="TÌM KIẾM" />
+
+
+
+</LinearLayout>

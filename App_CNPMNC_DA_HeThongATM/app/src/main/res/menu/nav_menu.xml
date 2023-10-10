@@ -30,6 +30,13 @@
             android:icon="@drawable/baseline_lock_open_24"
             android:title="MỞ KHÓA THẺ">
         </item>
+
+        <item
+            android:id="@+id/nav_newaccount"
+            android:icon="@drawable/baseline_logout_24"
+            android:title="TẠO TÀI KHOẢN SỐ ĐẸP">
+        </item>
+
     </group>
 
     <item
@@ -40,6 +47,7 @@
                 android:icon="@drawable/baseline_logout_24"
                 android:title="ĐĂNG XUẤT">
             </item>
+
         </menu>
     </item>
 </menu>

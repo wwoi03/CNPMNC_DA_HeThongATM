@@ -154,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_mokhoathe:
                 startActivity(new Intent(this, UnlockCardActivity.class));
+
+            case R.id.nav_newaccount:
+                Intent intent5 = new Intent(this, NewaccountActivity.class);
+                startActivity(intent5);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
