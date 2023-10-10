@@ -8,22 +8,32 @@
         android:checkableBehavior="single">
 
         <item
+            android:id="@+id/nav_accountSettings"
+            android:icon="@drawable/baseline_account_box_24"
+            android:title="CÀI ĐẶT TÀI KHOẢN">
+        </item>
+
+        <item
             android:id="@+id/nav_quanli"
             android:icon="@drawable/baseline_people_alt_24"
-            android:title="QUẢN LÝ NGƯỜI THỤ HƯỞNG" />
+            android:title="QUẢN LÝ NGƯỜI THỤ HƯỞNG">
+        </item>
 
         <item
             android:id="@+id/nav_khoathe"
             android:icon="@drawable/baseline_lock_person_24"
-            android:title="KHÓA THẺ/TÀI KHOẢN"></item>
+            android:title="KHÓA THẺ/TÀI KHOẢN">
+        </item>
     </group>
+
     <item
         android:title="">
         <menu>
             <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/baseline_logout_24"
-            android:title="ĐĂNG XUẤT"/>
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/baseline_logout_24"
+                android:title="ĐĂNG XUẤT">
+            </item>
         </menu>
     </item>
 </menu>

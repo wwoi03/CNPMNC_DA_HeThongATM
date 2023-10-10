@@ -9,5 +9,7 @@
         public string NgayTao { get; set; } // "DD/MM/YYYY"
         public string SoDienThoai { get; set; }
         public string TenKhachHang { get; set; }
+
+        public string MatKhau { get; set; }
     }
 }

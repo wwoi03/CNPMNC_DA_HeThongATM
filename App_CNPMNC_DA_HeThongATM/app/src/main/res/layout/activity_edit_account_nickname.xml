@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.EditAccountNicknameActivity"
+    android:orientation="vertical"
+    android:layout_margin="16dp">
+
+    <!-- Thông tin người vận chuyển -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="24dp">
+
+        <!-- Tiêu đề -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_drive_file_rename_outline_24"
+                android:layout_marginEnd="10dp">
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đặt nickname yêu thích"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold">
+            </TextView>
+        </LinearLayout>
+
+        <!-- Tiều đề -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tài khoản đặt nickname"
+            android:textSize="20dp"
+            android:layout_marginBottom="10dp">
+        </TextView>
+
+        <!-- Tài khoản cần đặt nickname -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            app:cardCornerRadius="@dimen/conner_radius_12"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/tvSourceAccount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:hint="Chọn tài khoản đặt"
+                android:layout_marginStart="16dp"
+                android:background="@color/white">
+            </TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_arrow_drop_down_24"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="right|center_vertical">
+            </ImageView>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Hiển thị số dư -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <!-- Tiêu đề -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số dư khả dụng"
+                android:textSize="20dp">
+            </TextView>
+
+            <!-- Số dư -->
+            <TextView
+                android:id="@+id/tvSurplus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20dp"
+                android:gravity="right"
+                android:layout_alignParentRight="true">
+            </TextView>
+        </RelativeLayout>
+
+        <!-- Đặt nickname -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            app:cardCornerRadius="@dimen/conner_radius_12"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="2dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInputNickname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:hint="Nhập nickname"
+                android:layout_marginStart="16dp"
+                android:background="@color/white">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:cardCornerRadius="16dp"
+                android:layout_gravity="right|center"
+                android:backgroundTint="@color/normal_color"
+                android:layout_marginEnd="16dp"
+                app:cardElevation="1dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/baseline_close_24"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    app:tint="@color/white">
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Đổi mật khẩu -->
+        <Button
+            android:id="@+id/btConfrimNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:padding="4dp"
+            android:text="Xác nhận"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/coner_radius_button">
+        </Button>
+    </LinearLayout>
+</LinearLayout>

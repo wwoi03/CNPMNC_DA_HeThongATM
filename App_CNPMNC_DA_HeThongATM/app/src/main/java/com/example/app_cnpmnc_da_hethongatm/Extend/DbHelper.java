@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class DbHelper {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    public static long MY_CARD;
+    public static long MY_CARD; // Mã số thẻ ngân hàng của khách hàng đăng nhập vào app
 
     public interface FirebaseListener {
         void onSuccessListener();
@@ -47,6 +47,8 @@ public class DbHelper {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         MY_CARD = (long) dataSnapshot.child("MaSoThe").getValue();
+
+                        Log.d("firebase", String.valueOf(MY_CARD));
                     }
                 }
             }
