@@ -1,22 +1,23 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class LoaiTheNganHang {
-    private Long HanMucLoaiThe;
+    private double HanMucLoaiThe;
     private String MaLoaiTNH;
     private String TenTNH;
 
     public LoaiTheNganHang(){}
-    public LoaiTheNganHang(Long hanMucLoaiThe, String maLoaiTNH, String tenTNH) {
+
+    public LoaiTheNganHang(double hanMucLoaiThe, String maLoaiTNH, String tenTNH) {
         HanMucLoaiThe = hanMucLoaiThe;
         MaLoaiTNH = maLoaiTNH;
         TenTNH = tenTNH;
     }
 
-    public Long getHanMucLoaiThe() {
+    public double getHanMucLoaiThe() {
         return HanMucLoaiThe;
     }
 
-    public void setHanMucLoaiThe(Long hanMucLoaiThe) {
+    public void setHanMucLoaiThe(double hanMucLoaiThe) {
         HanMucLoaiThe = hanMucLoaiThe;
     }
 

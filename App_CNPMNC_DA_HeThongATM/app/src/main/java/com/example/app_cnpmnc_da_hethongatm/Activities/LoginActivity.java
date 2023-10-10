@@ -118,11 +118,11 @@ public class LoginActivity extends AppCompatActivity {
                         if (password.equals(khachHang.getMatKhau())) {
                             // lưu dữ liệu vào Shareference
                             editor.putString("customerPhone", phone);
-                            editor.putString("customerKey", khachHang.getCCCD());
+                            editor.putString("customerKey", dataSnapshot.getKey());
                             editor.putString("customerName", khachHang.getTenKhachHang());
                             editor.commit();
 
-                            DbHelper.getCardNumber(khachHang.getCCCD());
+                            DbHelper.getCardNumber(dataSnapshot.getKey());
 
                             startProgressBar(1500);
                         } else {

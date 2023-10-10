@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class TheNganHang implements Serializable {
 
-    private String LoaiThe;
+    private String LoaiThe; // key trong bảng "LoaiTheNganHang"
     private String MaDangNhap;
     private String MaKH; // key trong bảng "KhachHang"
     private String MaPin;
