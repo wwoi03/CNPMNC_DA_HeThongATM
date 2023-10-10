@@ -2,8 +2,8 @@
 {
     public class ThuHuong
     {
-        public string IdThuHuong { get; set; }
-        public string TKThuHuong { get; set; }
+        public long IdThuHuong { get; set; }
+        public long TKThuHuong { get; set; }
         public string TenNguoiThuHuong { get; set; }
     }
 }
