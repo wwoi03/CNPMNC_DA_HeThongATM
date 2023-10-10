@@ -1,0 +1,41 @@
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@model LoaiTheViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+<body>
+
+    <div id="custom-dialog" title="Thông báo" style="display: none;"></div>
+
+    <form method="post" asp-controller="Customer" asp-action="CreateCustommer" style="margin-left:25%">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header"><strong>Tạo Loại Thẻ</strong></div>
+                <div class="card-body card-block">
+                    <div class="form-group">
+
+                        <label for="company" class=" form-control-label">Mã loại thẻ</label>
+                        <input type="number" asp-for="MaLoaiTNH" id="" class="form-control">
+                    </div>
+                    <div class="form-group">
+
+                        <label for="company" class=" form-control-label">Tên loại thẻ</label>
+                        <input type="text" asp-for="TenTNH" id="" class="form-control">
+                    </div>
+                    <div class="form-group">
+
+                        <label for="company" class=" form-control-label">Hạn mức thẻ</label>
+                        <input type="number" asp-for="HanMucLoaiThe" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/form-custommer.js"> </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</body>
