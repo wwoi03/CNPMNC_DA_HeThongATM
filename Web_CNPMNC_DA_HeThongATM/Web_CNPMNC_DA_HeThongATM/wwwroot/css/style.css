@@ -2531,7 +2531,7 @@ footer.site-footer {
         border-radius: 5px;
         box-shadow: 0 10px 15px rgba(0,0,0,.1);
         padding: 20px;
-        width: 600px;
+        width: 100%;
         padding-top: 160px;
     }
 
@@ -2919,4 +2919,28 @@ text--span {
 }
 .oxd-table-cell div {
     text-align: center;
+}
+/*-------------------------------------------------------------------------------------------dilog---------------------------------------------------*/
+.dialog{
+    position: fixed;
+    top: 0;
+    left: 280px;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    visibility: visible;
+    transition: opacity linear 0.2s;
+}
+.overlay {
+    background-color: #d9d9d9;
+}
+.dialog-body{
+    max-width:600px;
+    position:relative;
+    background-color:aliceblue;
+    padding:16px;
 }

@@ -13,6 +13,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         //view tao the
         public  IActionResult Index()
         {
+
             return View();
         }
         [HttpGet]
@@ -23,6 +24,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             KhachHang custommer =  firebaseHelper.GetCustomerbyid(cccd);
             if(custommer == null)
             {
+                if (TempData.ContainsKey("SuccessMessage"))
+                {
+                    ViewBag.SuccessMessage = TempData["SuccessMessage"];
+                }
+
                 return Json("null");
             }
             var data = new
@@ -46,16 +52,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             cardViewModel.TinhTrangThe = 0;
             firebaseHelper.CreateCard(cardViewModel, cardViewModel.MaKH);
             firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPIN, custommer.TenKhachHang, cardViewModel.MaSoThe));
-
+            TempData["SuccessMessage"] = "You successfully created a card.";
             return RedirectToAction("Index");
 
         }
 
+
+        //danh sách thẻ atm
         public IActionResult ListCard()
         {
             List<TheNganHang> theNganHangs = firebaseHelper.getListCard();
             
             ViewData["listCard"] = theNganHangs;
+            return View();
+        }
+
+
+        //Chỉnh sửa thẻ ngân hàng
+        [HttpGet]
+        public IActionResult EditCardATM() { 
+
             return View();
         }
 

@@ -88,13 +88,16 @@
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                         <div>@item.LoaiThe</div>
                                     </div>
-                                    <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">
-                                        <button type="button" class="oxd-icon-button">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                        <button type="button" class="oxd-icon-button">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </button>
+                                    <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">                                       
+                                        <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM">   <i class="fa-solid fa-circle-info">  </i></a>
+                                        <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM">  <i class="fa-solid fa-pen-to-square"></i></a>
+                                        <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+                                            <span class="badge badge-pill badge-primary">Success</span>
+                                            You successfully read this important alert.
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             }
@@ -108,43 +111,8 @@
             <div class="orangehrm-bottom-container"><!----></div>
         </div>
     </div>
+   
+  
 </body>
-@*
-                                @foreach (var item in listcard)
-                                {
-                                <div class="oxd-table-card">
-                                <div class="oxd-table-row oxd-table-row--with-border" ">
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.MaKH</div>
-                                </div>
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.MaPIN</div>
-                                </div>
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.MaSoThe</div>
-                                </div>
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.NgayMoThe</div>
-                                </div>
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.NgayHetHan</div>
-                                </div>
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.SDTDangKy</div>
-                                </div>
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.TinhTrangThe</div>
-                                </div>
-                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                <div>@item.LoaiThe</div>
-                                </div>
-                                <div class="oxd-table-cell-actions" " style="flex: 1 1 0%;">
-                                <button type="button" class="oxd-icon-button">
-                                <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                                <button type="button" class="oxd-icon-button">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                </div>
-                                </div>
-                                }  *@
+
+                              

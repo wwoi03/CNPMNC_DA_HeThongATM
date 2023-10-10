@@ -330,7 +330,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             else
             {
-                FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
+                // FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
+                FirebaseResponse firebaseResponse = client.Push("TheNganHang", card);
                 if (firebaseResponse != null)
                 {
                     Console.WriteLine("thanh công");
