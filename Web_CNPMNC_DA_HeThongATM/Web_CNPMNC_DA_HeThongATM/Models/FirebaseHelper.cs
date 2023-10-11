@@ -417,17 +417,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
         //---------------------------QUản lý loại thẻ----------------//
+        /* public List<LoaiThe> GetTypesCards()
+         {
+             List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
+             FirebaseResponse response = client.Get("LoaiTheNganHang");
+             List<LoaiThe> data = response.ResultAs<List<LoaiThe>>();
+             dsLoaiThe.AddRange(data);
+             return dsLoaiThe;
+         }*/
         public List<LoaiThe> GetTypesCards()
         {
             List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
             FirebaseResponse response = client.Get("LoaiTheNganHang");
-            List<LoaiThe> data = response.ResultAs<List<LoaiThe>>();
-            dsLoaiThe.AddRange(data);
+            Dictionary<string, LoaiThe> data = response.ResultAs<Dictionary<string, LoaiThe>>();
+            dsLoaiThe = new List<LoaiThe>(data.Values);
             return dsLoaiThe;
         }
 
         //tạo Loại thẻ
-         public void InsertTypesCards(LoaiTheViewModel typescards)
+        public void InsertTypesCards(LoaiTheViewModel typescards)
          {
              try
              {
