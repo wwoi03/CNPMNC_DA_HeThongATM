@@ -38,6 +38,8 @@ public class ListBeneficiaryAdapter extends FirebaseRecyclerAdapter<ThuHuong, Li
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), TransferMoneyActivity.class);
+                intent.putExtra("flag", 1);
+                intent.putExtra("tkthuhuong", model);
                 view.getContext().startActivity(intent);
             }
         });

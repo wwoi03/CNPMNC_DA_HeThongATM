@@ -99,11 +99,13 @@ public class TransferMoneyActivity extends AppCompatActivity {
         Intent getDataIntent = getIntent();
         flag = (int) getDataIntent.getSerializableExtra("flag");
         if (flag == BeneficiaryManagementActivity.USER_NAME) {
-            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tenthuhuong");
-            etAccountBeneficiary.setText(thuHuong.getTenNguoiThuHuong());
+            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
+            long tkThuHuongLong = thuHuong.getTKThuHuong(); // Lưu giá trị long
+            String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
+            etAccountBeneficiary.setText(tkThuHuongStr);
         }
-
     }
+
 
     // xử lý sự kiện
     public void initListener() {

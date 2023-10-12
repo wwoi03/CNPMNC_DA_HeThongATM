@@ -101,7 +101,7 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
                     case R.id.action_chuyentien:
                         Intent intent1 = new Intent(BeneficiaryManagementActivity.this, TransferMoneyActivity.class);
                         intent1.putExtra("flag", USER_NAME);
-                        intent1.putExtra("tenthuhuong", thuHuong);
+                        intent1.putExtra("tkthuhuong", thuHuong);
                         startActivity(intent1);
                         break;
                     case R.id.action_edit:
