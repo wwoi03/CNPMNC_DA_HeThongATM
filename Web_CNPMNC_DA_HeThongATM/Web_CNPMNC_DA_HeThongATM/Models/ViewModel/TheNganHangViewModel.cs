@@ -9,10 +9,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         public string MaKH { get; set; }
 
         [Required(ErrorMessage = "Mã PIN không được để trống.")]
-        public string MaPIN { get; set; }
+        public string MaPin { get; set; }
 
         [Required(ErrorMessage = "Mã số thẻ không được để trống.")]
-        public string MaSoThe { get; set; }
+        public long MaSoThe { get; set; }
 
         [Required(ErrorMessage = "Ngày mở thẻ không được để trống.")]
         public string NgayMoThe { get; set; }
@@ -29,5 +29,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         [Required(ErrorMessage = "Loại thẻ không được để trống.")]
         public string LoaiThe { get; set; }
         public string MaDangNhap { get; set; }
+
+        public string TenKhachHang { get; set; }
+
+        public string TenLoaiThe { get; set; }
     }
 }

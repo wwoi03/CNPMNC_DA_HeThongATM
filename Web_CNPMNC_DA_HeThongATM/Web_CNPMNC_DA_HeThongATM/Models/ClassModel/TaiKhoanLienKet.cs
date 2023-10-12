@@ -6,14 +6,14 @@
         public string TenTaiKhoan { get; set; }
         public int TinhTrangTaiKhoan { get; set; }
         public double HanMucThe { get; set; }
-        public string MaSoThe { get; set; }
+        public long MaSoThe { get; set; }
         public string NgayGD { get; set; }
         public double SoDu { get; set; }
         public long TienDaGD { get; set; }
         public long TienGD1Lan { get; set; }
       
 
-        public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, string MaSoThe)
+        public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, long MaSoThe)
         {
             TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet();
             taiKhoanLienKet.SoDu = 50000;

@@ -2723,12 +2723,13 @@ footer.site-footer {
     height: 100%;
     padding-left: 5px;
     padding-right: 5px;
+   
 }
 
     /* Style alternating rows */
-    .oxd-table-row:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+.backgr oxd-table-row {
+    background-color: #f2f2f2;
+}
 
 /* Style table cells */
 .oxd-table-cell {
@@ -2921,7 +2922,7 @@ text--span {
     text-align: center;
 }
 /*-------------------------------------------------------------------------------------------dilog---------------------------------------------------*/
-.dialog{
+.dialog {
     position: fixed;
     top: 0;
     left: 280px;
@@ -2931,7 +2932,6 @@ text--span {
     display: flex;
     align-items: center;
     justify-content: center;
-  
     visibility: visible;
     transition: opacity linear 0.2s;
 }

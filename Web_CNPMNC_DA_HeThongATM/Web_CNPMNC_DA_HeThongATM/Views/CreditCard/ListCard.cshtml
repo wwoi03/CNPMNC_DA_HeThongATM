@@ -1,19 +1,34 @@
-﻿@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 @{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
-    var listcard = ViewData["listcard"] as IEnumerable<TheNganHang>;
+    var listcard = ViewData["listcard"] as IEnumerable<ListTheNganHangViewModel>;
 }
 <body>
     <div class="content">
         <div class="orangehrm-paper-container">
-            <div class="card-search">
-            </div>
+
+        </div>
+        <div class="orangehrm-paper-container">
+           
             <hr class="oxd-divider orangehrm-horizontal-margin" />
-            <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
+            <div class="topform orangehrm-horizontal-padding orangehrm-vertical-padding">
 
-                <span class="oxd-text oxd-text--span">DANH SÁCH TÀI KHOẢN</span>
+                <span class="oxd-text oxd-text--span col col-md-4">DANH SÁCH TÀI KHOẢN</span>
+                
+                    <div class="card-search col col-md-8">
+                        <div class="input-group">
+                        <input type="text"  id="search-input" class="form-control">
+                            <div class="input-group-btn">
+                            <button class="btn btn-info" id="search-button">
+                                    <i class="fa fa-search"></i> Search                             
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
 
             </div>
+
             <div class="orangehrm-container">
                 <div row-decorator="oxd-table-decorator-card">
                     <div>
@@ -60,12 +75,12 @@
                                 <p> Hành Động</p>
                             </div>
                         </div>
-                        <div class="oxd-table-body">                         
+                        <div class="oxd-table-body" id ="product-list">
                             @foreach(var item in listcard)
                             {
-                                <div class="oxd-table-row oxd-table-row--with-border">
+                                <div class="backgr oxd-table-row oxd-table-row--with-border">
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.MaKH</div>
+                                        <div>@item.TenKhachHang</div>
                                     </div>
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1.4 1 0%;">
                                         <div>@item.MaSoThe</div>
@@ -86,33 +101,30 @@
                                         <div>@item.TinhTrangThe</div>
                                     </div>
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.LoaiThe</div>
+                                        <div>@item.TenLoaiThe</div>
                                     </div>
                                     <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">                                       
                                         <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM">   <i class="fa-solid fa-circle-info">  </i></a>
                                         <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM">  <i class="fa-solid fa-pen-to-square"></i></a>
-                                        <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
-                                            <span class="badge badge-pill badge-primary">Success</span>
-                                            You successfully read this important alert.
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             }
 
 
-
+                           
+                        </div>
+                        <div class="oxd-table-body" id="productListContainer">
+                            <!-- Partial View sẽ được hiển thị ở đây -->
                         </div>
                     </div>
                 </div>
             </div>
+            
             <div class="orangehrm-bottom-container"><!----></div>
         </div>
     </div>
-   
-  
+    <script src="/js/ListCard.js"></script>
 </body>
 
                               

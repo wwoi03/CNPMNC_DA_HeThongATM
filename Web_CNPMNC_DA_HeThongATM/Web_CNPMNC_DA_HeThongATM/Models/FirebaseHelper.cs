@@ -151,6 +151,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
 
+        //lấy tên  khách hàng qua id
+        public string GetNameCustomerbyid(string values)
+        {
+            FirebaseResponse response = client.Get("KhachHang");
+            if (response != null)
+            {
+                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
+
+                var customer = data.Values.FirstOrDefault(kh => kh.CCCD == values);
+
+                if (customer != null)
+                {
+                    return customer.TenKhachHang;
+                }
+            }
+            return "";
+        }
+
+
+
 
         //Kiểm tra Sdt nhập vào form
         public bool CheckSdt(string values)
@@ -370,9 +390,54 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
 
-        //tìm kiếm thẻ theo cccd
+        //lấy tên loại thẻ ngân hàng
+        public string GetNameTypeCard(string values)
+        {
+            FirebaseResponse response = client.Get("LoaiTheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, LoaiTheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiTheNganHang>>(response.Body);
 
-    
+                var nametypes = data.Values.FirstOrDefault(kh => kh.MaLoaiTNH == values);
+
+                if (nametypes != null)
+                {
+                    return nametypes.TenTNH;
+                }
+
+            }
+            return "";
+        }
+
+        //tìm kiếm thẻ theo cccd/ id thẻ/số điện thoại
+        public TheNganHang SearchCard(string searchValue)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+
+                // Thử tìm theo CCCD (Căn cước công dân)
+                var card = data.Values.FirstOrDefault(c => c.MaKH == searchValue);
+
+                // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
+              if (card == null)
+                {
+                    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
+                }
+
+                // Nếu tìm thấy thẻ, trả về thông tin của họ
+                if (card != null)
+                {
+                    return card;
+                }
+            }
+
+            // Trả về null nếu không tìm thấy khách hàng
+            return null;
+        }
+
+
         //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------
         //Chuyển tiền
 
