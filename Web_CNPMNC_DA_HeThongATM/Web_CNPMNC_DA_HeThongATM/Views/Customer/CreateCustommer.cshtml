@@ -1,0 +1,95 @@
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@model KhachHangViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+<body>
+
+    <div id="custom-dialog" title="Thông báo" style="display: none;"></div>
+
+    <form method="post" asp-controller="Customer" asp-action="CreateCustommer" style="margin-left:25%">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header"><strong>CusTomer</strong></div>
+                <div class="card-body card-block">
+                    <div class="form-group">
+
+                        <label for="company" class=" form-control-label">Mã Căn Cước Công Dân</label>
+                        <input type="number" asp-for="CCCD" id="cccd" class="form-control">
+                    </div>
+                    <span asp-validation-for="CCCD" class="text-danger text-validation"></span>
+                    <div class="row form-group">
+                        <div class="col-md-8">
+                            <label for="vat" class="form-control-label">Tên Khách Hàng</label>
+                            <input type="text" asp-for="TenKhachHang" class="form-control">
+                            <span asp-validation-for="TenKhachHang" class="text-danger text-validation"></span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div>
+                                <label class=" form-control-label">Giới tính</label>
+
+                            </div>
+                            <div>
+                                <div class="form-check-inline form-check">
+                                    <label for="inline-radio1" class="form-check-label col-md-7">
+                                        <input type="radio" id="inline-radio1" name="Gioitinh" value="Nam" asp-for="GioiTinh" class="form-check-input">Nam
+                                    </label>
+                                    <label for="inline-radio2" class="form-check-label col-md-6">
+                                        <input type="radio" id="inline-radio2" name="Gioitinh" value="Nữ" asp-for="GioiTinh" class="form-check-input">Nữ
+                                    </label>
+                                </div>
+
+                            </div>
+                            <span asp-validation-for="GioiTinh" class="text-danger text-validation"></span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3">
+                            <label for="sonha" class="form-control-label">Số nhà:</label>
+                            <input type="text" id="sonha" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="phuongxa" class="form-control-label">Phường/Xã:</label>
+                            <input type="text" id="phuongxa" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="quanhuyen" class="form-control-label">Quận/Huyện:</label>
+                            <input type="text" id="quanhuyen" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="tinhthanh" class="form-control-label">Tỉnh/Thành phố:</label>
+                            <input type="text" id="tinhthanh" class="form-control">
+                        </div>
+                        <input type="hidden" asp-for="DiaChi" id="Diachi" class="form-control">
+                        <span asp-validation-for="DiaChi" class="text-danger text-validation col-md-3"></span>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label for="country" class=" form-control-label">Email</label>
+                            <input type="email" asp-for="Email" class="form-control">
+                            <span asp-validation-for="Email" class="text-danger text-validation"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="country" class=" form-control-label">Số Điện Thoại</label>
+                            <input type="number" id="Sdt" asp-for="SoDienThoai" class="form-control">
+                            <span asp-validation-for="SoDienThoai" class="text-danger text-validation"></span>
+                        </div>
+                    </div>
+                    <input hidden asp-for="NgayTao" id="NgayTao" />
+                    <div class="form-actions form-group" style="margin-top:4px">
+                        <button style="width:100%;font-size:20px" type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/form-custommer.js"> </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</body>

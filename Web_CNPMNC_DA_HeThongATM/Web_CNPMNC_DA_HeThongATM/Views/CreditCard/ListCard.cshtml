@@ -1,0 +1,150 @@
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var listcard = ViewData["listcard"] as IEnumerable<TheNganHang>;
+}
+<body>
+    <div class="content">
+        <div class="orangehrm-paper-container">
+            <div class="card-search">
+            </div>
+            <hr class="oxd-divider orangehrm-horizontal-margin" />
+            <div class="orangehrm-horizontal-padding orangehrm-vertical-padding">
+
+                <span class="oxd-text oxd-text--span">DANH SÁCH TÀI KHOẢN</span>
+
+            </div>
+            <div class="orangehrm-container">
+                <div row-decorator="oxd-table-decorator-card">
+                    <div>
+                        <div class="oxd-table-row oxd-table-row--with-border">
+                            @*   <div>
+                            <div>
+                            <label class="">
+                            <!---->
+                            <input type="checkbox">
+                            <span>
+                            <i class="oxd-icon bi-dash"></i>
+                            </span>
+                            </label>
+                            </div>
+                            <!---->
+                            </div> *@
+                            <div style="flex: 1 1 3%;">
+                                <p> Người Dùng</p>
+                            </div>
+
+                            <div style="flex: 1 1 5%;">
+                                <p>  Số tài khoản</p>
+                            </div>
+                            <div style="flex: 1 1 0%">
+                                <p>Mã Pin</p>
+                            </div>
+                            <div style="flex: 1 1 2%;">
+                                <p> Ngày Đăng Ký</p>
+                            </div>
+                            <div style="flex: 1 1 2%;">
+                                <p>Ngày Hết Hạn</p>
+                            </div>
+                            <div style="flex: 1 1 3%;">
+                                <p>Số điện thoại </p>
+                            </div>
+
+                            <div style="flex: 1 1 0%;">
+                                <p>Tình trạng </p>
+                            </div>
+                            <div style="flex: 1 1 0%;">
+                                <p> Loại thẻ</p>
+                            </div>
+                            <div style="flex: 1 1 0%;">
+                                <p> Hành Động</p>
+                            </div>
+                        </div>
+                        <div class="oxd-table-body">                         
+                            @foreach(var item in listcard)
+                            {
+                                <div class="oxd-table-row oxd-table-row--with-border">
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.MaKH</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1.4 1 0%;">
+                                        <div>@item.MaSoThe</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.MaPin</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.NgayMoThe</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.NgayHetHan</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.SDTDangKy</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.TinhTrangThe</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.LoaiThe</div>
+                                    </div>
+                                    <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">
+                                        <button type="button" class="oxd-icon-button">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                        <button type="button" class="oxd-icon-button">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="orangehrm-bottom-container"><!----></div>
+        </div>
+    </div>
+</body>
+@*
+                                @foreach (var item in listcard)
+                                {
+                                <div class="oxd-table-card">
+                                <div class="oxd-table-row oxd-table-row--with-border" ">
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.MaKH</div>
+                                </div>
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.MaPIN</div>
+                                </div>
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.MaSoThe</div>
+                                </div>
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.NgayMoThe</div>
+                                </div>
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.NgayHetHan</div>
+                                </div>
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.SDTDangKy</div>
+                                </div>
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.TinhTrangThe</div>
+                                </div>
+                                <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                <div>@item.LoaiThe</div>
+                                </div>
+                                <div class="oxd-table-cell-actions" " style="flex: 1 1 0%;">
+                                <button type="button" class="oxd-icon-button">
+                                <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <button type="button" class="oxd-icon-button">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                </div>
+                                </div>
+                                }  *@

@@ -10,17 +10,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
     public class CreditCardController : Controller
     {
         FirebaseHelper firebaseHelper = new FirebaseHelper();
-        public IActionResult Index()
+        //view tao the
+        public  IActionResult Index()
         {
             return View();
         }
         [HttpGet]
         public IActionResult GetNameCus(string cccd)
         {
-            string PIN = firebaseHelper.CreatePIN();
+            string PIN = firebaseHelper.CreatePin();
             string Stk = firebaseHelper.CreateAccountNumbet();
-            KhachHang custommer = firebaseHelper.GetCustomerbyid(cccd);
-            if (custommer == null)
+            KhachHang custommer =  firebaseHelper.GetCustomerbyid(cccd);
+            if(custommer == null)
             {
                 return Json("null");
             }
@@ -33,7 +34,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             };
             return Json(data);
         }
-
+        //tao the
         [HttpPost]
         public IActionResult CreateCard(TheNganHangViewModel cardViewModel)
         {
@@ -42,11 +43,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             if (cardViewModel == null || custommer == null) return RedirectToAction("Index");
             //đẩy lên database
             cardViewModel.MaDangNhap = "Nguyễn Lê Quốc Thuận";
+            cardViewModel.TinhTrangThe = 0;
             firebaseHelper.CreateCard(cardViewModel, cardViewModel.MaKH);
             firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPIN, custommer.TenKhachHang, cardViewModel.MaSoThe));
 
             return RedirectToAction("Index");
 
         }
+
+        public IActionResult ListCard()
+        {
+            List<TheNganHang> theNganHangs = firebaseHelper.getListCard();
+            
+            ViewData["listCard"] = theNganHangs;
+            return View();
+        }
+
     }
 }

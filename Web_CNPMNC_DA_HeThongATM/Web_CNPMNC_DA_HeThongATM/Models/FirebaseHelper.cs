@@ -4,6 +4,8 @@ using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
+using UniqueIdGenerator;
+using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
@@ -23,38 +25,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             client = new FirebaseClient(config);
         }
         //-------------------------------------------------------------------------KHÁCH HÀNG--------------------------------------------------------------------------------------
-        //lấy danh sách khách hàng
-        public async Task<List<KhachHangViewModel>> GetCustommers()
+        // Lấy danh sách khách hàng
+        public List<KhachHang> GetCustomers()
         {
-            try
-            {
-                FirebaseResponse response = await client.GetAsync("KhachHang");
-                if (response != null && response.Body != "")
-                {
-                    Dictionary<string, KhachHangViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHangViewModel>>(response.Body);
-                    List<KhachHangViewModel> peopleList = new List<KhachHangViewModel>(data.Values);
-                    return peopleList;
-                }
-                else
-                {
-                    Console.WriteLine(response.StatusCode);
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
+            List<KhachHang> dsKhachHang = new List<KhachHang>();
+            FirebaseResponse response = client.Get("KhachHang");
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            dsKhachHang = new List<KhachHang>(data.Values);
+            return dsKhachHang;
         }
-
 
         //tạo khách hàng
         public void InsertCustommer(KhachHangViewModel custommer)
         {
             try
             {
-                string macuabomay = "autothention";
                 FirebaseResponse response = client.Set("KhachHang/" + custommer.CCCD, custommer);
                 if (response != null)
                 {
@@ -165,49 +150,60 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
 
-        // Lấy danh sách khách hàng
-        public List<KhachHang> GetCustomers()
+
+        //Kiểm tra Sdt nhập vào form
+        public bool CheckSdt(string values)
         {
-            List<KhachHang> dsKhachHang = new List<KhachHang>();
+
             FirebaseResponse response = client.Get("KhachHang");
-            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-            dsKhachHang = new List<KhachHang>(data.Values);
-            return dsKhachHang;
+            if (response != null && response.Body != null)
+            {
+                Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+                if (data.Values.Any(c => c.SoDienThoai == values))
+                    return true;
+                return false;
+
+            }
+            return false;
         }
+        //-------------------------------------------------------------------------------Nhân Viên---------------------------------------------------
 
         // Tính tổng tài sản ngân hàng
         public double GetTotalAssets()
         {
             double totalAssets = 0;
-            
+
             FirebaseResponse response = client.Get("TaiKhoanLienKet");
             Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
-            
+
             totalAssets = data.Values.Sum(item => item.SoDu);
-           
+
             return totalAssets;
         }
+
 
         // Tính tổng giao dịch
         public long GetTotalTransaction()
         {
             long totalTransaction = 0;
-            
+
             FirebaseResponse response = client.Get("LichSuGiaoDich");
             Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
-           
+
             totalTransaction = data.Values.Count;
 
             return totalTransaction;
         }
 
+
         // Lấy danh sách nhân viên
         public List<NhanVien> GetStaffs()
-		{
+        {
             FirebaseResponse response = client.Get("NhanVien");
             Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
 
             List<NhanVien> staffs = data.Values.ToList();
+
 
             return staffs;
         }
@@ -219,7 +215,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             FirebaseResponse response = client.Get("KhachHang");
             Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-            
+
             // tính số lượng khách hàng theo từng tháng trong năm "year"
             for (int i = 1; i <= 12; i++)
             {
@@ -231,28 +227,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         // Lấy số lượng thẻ VISA và ATM
-        
+
         // Tạo tài khoản nhân viên
         public void CreateStaff(NhanVien nhanVien)
         {
             FirebaseResponse response = client.Push("NhanVien", nhanVien);
         }
-
         //--------------------------------------------------------------------------THẺ NGÂN HÀNG ----------------------------------------------------------------------------------
         //tạo số thẻ ngân hàng
         private string GenerateCIF()
-        {
-            DateTime now = DateTime.Now;
-            Random random = new Random();
-            int r = random.Next(0, 99);
-            // Tạo số CIF sử dụng thời gian và GUID ngẫu nhiên
-            string cif = $"{now:HHmmss}{r.ToString("D2")}{r.ToString("D2")}";
-
-            return "909090" + cif;
-        }
-
-        //tự động tạo mã số thẻ
-        private string AccountNumber()
         {
             Random random = new Random();
             string digits = "";
@@ -264,31 +247,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
 
             return digits;
+
+        }
+
+        //tự động tạo mã số thẻ
+        private string AccountNumber()
+        {
+            DateTime now = DateTime.Now;
+            Random random = new Random();
+            int r = random.Next(0, 99);
+            // Tạo số CIF sử dụng thời gian và GUID ngẫu nhiên
+            string cif = $"{now:HHmmss}{r.ToString("D2")}{r.ToString("D2")}";
+
+            return "909090" + cif;
         }
 
 
         //tạo mã PIN
-        public string CreatePIN()
+        public string CreatePin()
         {
-            string MaPIN = GenerateCIF();
-            FirebaseResponse response = client.Get("TheNganHang");
-            if (response != null && response.Body != "null")
-            {
-                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
-                if (data.ContainsKey(MaPIN))
-                {
-                    return CreatePIN();
-                }
-
-            }
-            return MaPIN;
-        }
-
-
-        //tạo mã số thẻ trên database
-        public string CreateAccountNumbet()
-        {
-            string MaSoThe = AccountNumber();
+            string MaSoThe = GenerateCIF();
             FirebaseResponse response = client.Get("TheNganHang");
             if (response != null && response.Body != "null")
             {
@@ -299,6 +277,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 }
             }
             return MaSoThe;
+        }
+
+
+        //tạo mã số thẻ trên database
+        public string CreateAccountNumbet()
+        {
+            string stk = AccountNumber();
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null && response.Body != "null")
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                if (data.ContainsKey(stk))
+                {
+                    return CreatePin();
+                }
+
+            }
+            return stk;
+
         }
 
 
@@ -357,6 +354,39 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             else { Console.WriteLine("thất bại"); }
         }
 
+        //danh sách thẻ 
+        public List<TheNganHang> getListCard()
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                List<TheNganHang> theNganHangs = new List<TheNganHang>(data.Values);
+                return theNganHangs;
+            }
+            return null;
+        }
+
+
+        //tìm kiếm thẻ theo cccd
+
+
+        //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------
+        //Chuyển tiền
+
+
+        public void SendMoney(string numberSend)
+        {
+            // lấy thông tin khách hàng chuyển
+            FirebaseResponse responseSend = client.Get("KhachHang" + numberSend);
+            if (responseSend != null)
+            {
+
+            }
+            //lấy thông tin khách hàng gửi
+            FirebaseResponse responseGet = client.Get("KhachHang");
+        }
+
 
 
         //đừng xóa em đang sửa
@@ -383,6 +413,45 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //    }
         //    return null;
         //}
+
+
+
+        //---------------------------QUản lý loại thẻ----------------//
+        /* public List<LoaiThe> GetTypesCards()
+         {
+             List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
+             FirebaseResponse response = client.Get("LoaiTheNganHang");
+             List<LoaiThe> data = response.ResultAs<List<LoaiThe>>();
+             dsLoaiThe.AddRange(data);
+             return dsLoaiThe;
+         }*/
+        public List<LoaiThe> GetTypesCards()
+        {
+            List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
+            FirebaseResponse response = client.Get("LoaiTheNganHang");
+            Dictionary<string, LoaiThe> data = response.ResultAs<Dictionary<string, LoaiThe>>();
+            dsLoaiThe = new List<LoaiThe>(data.Values);
+            return dsLoaiThe;
+        }
+
+        //tạo Loại thẻ
+        public void InsertTypesCards(LoaiTheViewModel typescards)
+         {
+             try
+             {
+                 FirebaseResponse response = client.Set("LoaiTheNganHang/" + typescards.MaLoaiTNH, typescards);
+                 if (response != null)
+                 {
+
+                 }
+             }
+             catch (Exception ex)
+             {
+                 Console.WriteLine(ex.Message);
+
+             }
+         }
+
     }
 }
 
