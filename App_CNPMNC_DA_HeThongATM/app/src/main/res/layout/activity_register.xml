@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/teal_200"
-    tools:context=".RegisterActivity">
+    tools:context=".Activities.RegisterActivity">
     >
     <TextView
         android:id="@+id/tentaikhoan"

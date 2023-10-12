@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 public class LockCardActivity extends AppCompatActivity  {
 
-
     Spinner spLoaiThe,spSoThe;
     Button btKhoaThe;
     FirebaseDatabase firebaseDatabase;
