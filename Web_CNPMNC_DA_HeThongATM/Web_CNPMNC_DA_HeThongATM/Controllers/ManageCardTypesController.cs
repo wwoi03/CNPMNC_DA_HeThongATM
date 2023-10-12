@@ -39,12 +39,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         }
         //tạo loại thẻ
         [HttpPost]
-        public IActionResult CreateTypesCard(LoaiTheViewModel typescard)
+        public IActionResult CreateTypesCard(LoaiTheViewModel loaiThe)
         {
 
-          
+           /* loaiThe.MaLoaiTNH = firebaseHelper.PassRandom();
+            ModelState.Remove("loaiThe");*/
+            if (ModelState.IsValid)
+            {
 
-            return View("LoaiTheViewModel", typescard);
+                firebaseHelper.InsertTypesCards(loaiThe);
+
+                return RedirectToAction("Index");
+            }
+
+            return View("CreateTypesCard", loaiThe);
 
         }
 
