@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Config {
+
     String fileName = "config";
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;

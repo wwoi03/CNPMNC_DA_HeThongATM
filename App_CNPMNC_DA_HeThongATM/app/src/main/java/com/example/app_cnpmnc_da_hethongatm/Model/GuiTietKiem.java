@@ -16,6 +16,8 @@ public class GuiTietKiem {
         SoTienGui = soTienGui;
     }
 
+
+
     public long getSoTaiKhoan() {
         return SoTaiKhoan;
     }
