@@ -187,6 +187,34 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
            return false;
         }
+        public KhachHang SearchCustomer(string searchCustomer)
+        {
+            FirebaseResponse response = client.Get("KhachHang");
+            if (response != null)
+            {
+                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
+
+                var card = data.Values.FirstOrDefault(c => c.CCCD == searchCustomer);
+
+                return card;
+
+                //// Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
+                //if (card == null)
+                //{
+                //    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
+                //}
+
+                //// Nếu tìm thấy thẻ, trả về thông tin của họ
+                //if (card != null)
+                //{
+                //    return card;
+                //}
+            }
+
+            // Trả về null nếu không tìm thấy khách hàng
+            return null;
+        }
+
         //-------------------------------------------------------------------------------Nhân Viên---------------------------------------------------
 
         // Tính tổng tài sản ngân hàng

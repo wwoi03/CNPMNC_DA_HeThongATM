@@ -82,5 +82,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return Json(CheckSdt);
         }
+        public IActionResult SearchCustomer(string searchCustomer)
+        {
+
+            KhachHang khachHang = firebaseHelper.SearchCustomer(searchCustomer);
+            KhachHangViewModel ViewThes = new KhachHangViewModel();
+            ViewThes.CCCD = khachHang.CCCD;
+            ViewThes.TenKhachHang = khachHang.TenKhachHang;
+            ViewThes.NgayTao = khachHang.NgayTao;
+            ViewThes.Email = khachHang.Email;
+            ViewThes.SoDienThoai = khachHang.SoDienThoai;
+            ViewThes.GioiTinh = khachHang.GioiTinh;
+            ViewThes.DiaChi = khachHang.DiaChi;
+            ViewBag.IteamSeach = ViewThes;
+            return PartialView("SearchCustomer");
+
+        }
     }
 }
