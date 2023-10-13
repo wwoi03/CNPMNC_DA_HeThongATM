@@ -36,7 +36,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
         public string MatKhau { get; set; }
 
-       
+
     }
 
 }

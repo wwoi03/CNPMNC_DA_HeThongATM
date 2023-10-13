@@ -19,7 +19,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             List<KhachHang> khachHangs = firebaseHelper.GetCustomers();
             List<KhachHangViewModel> khachHangViewModels = new List<KhachHangViewModel>();
-            foreach(var i in khachHangs)
+            foreach (var i in khachHangs)
             {
                 var pro = new KhachHangViewModel
                 {
@@ -30,7 +30,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     SoDienThoai = i.SoDienThoai,
                     TenKhachHang = i.TenKhachHang,
                     NgayTao = i.NgayTao,
-                   
+
 
                 };
                 khachHangViewModels.Add(pro);
@@ -43,8 +43,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
         public IActionResult CreateCustommer()
-        { 
-        return View();
+        {
+            return View();
         }
         //tạo khách hàng
         [HttpPost]
@@ -78,7 +78,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpGet]
         public IActionResult CheckSdt(string Sdt)
         {
-          bool CheckSdt =  firebaseHelper.CheckSdt(Sdt);
+            bool CheckSdt = firebaseHelper.CheckSdt(Sdt);
 
             return Json(CheckSdt);
         }

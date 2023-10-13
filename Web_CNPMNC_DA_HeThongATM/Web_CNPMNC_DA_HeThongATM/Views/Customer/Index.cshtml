@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="table-stats order-table ov-h" id="CustomerList">
-                
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -36,9 +36,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in custommerList ) {
+                        @foreach (var item in custommerList)
+                        {
 
-                        <tr>
+                            <tr>
                             <tr>
                                 <td>@item.CCCD</td>
                                 <td>@item.TenKhachHang</td>
@@ -48,11 +49,11 @@
                                 <td>@item.GioiTinh</td>
                                 <td>@item.DiaChi</td>
                             </tr>
-                        </tr>
+                            </tr>
                         }
-                     </tbody>
-                     </table>
-                </div> 
+                    </tbody>
+                </table>
+            </div>
             <div class="table-stats order-table ov-h" id="SearchCustomerID">
             </div><!-- /.table-stats -->
         </div>
