@@ -14,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
 
@@ -85,7 +87,7 @@ public class HomeFragment extends Fragment {
     ArrayList<ImageSlide> imageSlides;
     Handler handler = new Handler();
     Runnable runnable;
-    CardView cvTransferMoney;
+    CardView cvTransferMoney, cvManageAccountAndCard;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -100,6 +102,7 @@ public class HomeFragment extends Fragment {
         vp2Images = view.findViewById(R.id.vp2Images);
         ci3 = view.findViewById(R.id.ci3);
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
+        cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
     }
 
     // Khởi tạo
@@ -144,6 +147,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TransferMoneyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Xử lý bấm vào quản lý danh sách thẻ và tài khoản
+        cvManageAccountAndCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ManageAccountAndCardActivity.class);
                 startActivity(intent);
             }
         });

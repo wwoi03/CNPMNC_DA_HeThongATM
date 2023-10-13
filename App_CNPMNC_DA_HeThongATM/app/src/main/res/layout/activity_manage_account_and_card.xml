@@ -28,9 +28,9 @@
 
                 <!-- image -->
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp2Images"
+                    android:id="@+id/vp2AccountsAndCards"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal">
                 </androidx.viewpager2.widget.ViewPager2>
 

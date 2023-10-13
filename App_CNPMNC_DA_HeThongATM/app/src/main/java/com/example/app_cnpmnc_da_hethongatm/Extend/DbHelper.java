@@ -35,6 +35,7 @@ public class DbHelper {
     public interface FirebaseListener {
         void onSuccessListener();
         void onFailureListener(Exception e);
+        void onSuccessListener(DataSnapshot snapshot);
     }
 
     // Lấy số thẻ ngân hàng
@@ -251,5 +252,28 @@ public class DbHelper {
         String NgayGDHomNay = sdf.format(calendar.getTime());
 
         return NgayGDHomNay;
+    }
+
+    // Lấy loại tài khoản
+    public static void getAccountTypeByKey(String accountTypeKey, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("LoaiTaiKhoan").child(accountTypeKey)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            if (firebaseListener != null) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    firebaseListener.onSuccessListener(dataSnapshot);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }

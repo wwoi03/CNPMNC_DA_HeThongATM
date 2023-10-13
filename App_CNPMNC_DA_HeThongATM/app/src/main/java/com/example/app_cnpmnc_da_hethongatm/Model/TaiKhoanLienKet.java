@@ -109,4 +109,9 @@ public class TaiKhoanLienKet implements Serializable {
     public void setLoaiTaiKhoan(String loaiTaiKhoan) {
         LoaiTaiKhoan = loaiTaiKhoan;
     }
+
+    public String getSoDuFormat() {
+        // Sử dụng String.format với định dạng số có dấu phân cách
+        return String.format("%,d", (long) SoDu);
+    }
 }
