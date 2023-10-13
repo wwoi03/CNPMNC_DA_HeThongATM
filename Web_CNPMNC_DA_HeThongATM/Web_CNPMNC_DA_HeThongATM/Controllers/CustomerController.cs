@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Firebase.Auth;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
@@ -82,5 +83,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return Json(CheckSdt);
         }
+        public ActionResult TimKiem(string tenKhachHang)
+        {
+            var khachHangs = firebaseHelper.SearchKhachHangByTen(tenKhachHang);
+            return View(khachHangs);
+        }
     }
 }
+
+
+
+
+
+

@@ -167,6 +167,22 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
            return false;
         }
+        public List<KhachHang> SearchKhachHangByTen(string tenKhachHang)
+        {
+            FirebaseResponse response = client.Get("KhachHangs");
+            dynamic data = response.ResultAs<dynamic>();
+
+            var khachHangs = new List<KhachHang>();
+            foreach (var khachHang in data)
+            {
+                if (khachHang.Value.TenKh.ToLower().Contains(tenKhachHang.ToLower()))
+                {
+                    khachHangs.Add(khachHang.Value.ToObject<KhachHang>());
+                }
+            }
+
+            return khachHangs;
+        }
         //-------------------------------------------------------------------------------Nhân Viên---------------------------------------------------
 
         // Tính tổng tài sản ngân hàng
