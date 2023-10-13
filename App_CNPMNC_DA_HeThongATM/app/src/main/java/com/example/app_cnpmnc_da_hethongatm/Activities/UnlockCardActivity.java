@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
+import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.TheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -41,8 +42,9 @@ public class UnlockCardActivity extends AppCompatActivity {
     String Id;
     String[]Idkey;
     Config config;
-    int demso;
+    int demso=0;
     int preMaLoai=-1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,7 @@ public class UnlockCardActivity extends AppCompatActivity {
         config=new Config(UnlockCardActivity.this);
         firebaseDatabase = FirebaseDatabase.getInstance("https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseReference=firebaseDatabase.getReference();
+        getCustomerID(config.getCustomerKey());
     }
 
 
@@ -173,13 +176,12 @@ public class UnlockCardActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        demso = 0;
                         for (DataSnapshot snap : snapshot.getChildren()) {
-                            long ttt = (long) snap.child("TinhTrangThe").getValue();
-                            String lt=String.valueOf(snap.child("LoaiThe").getValue());
-                            if (ttt != 0 && lt.equals(maloai))
+                            TheNganHang theNganHang=snap.getValue(TheNganHang.class);
+                            if (theNganHang.getTinhTrangThe()!=0 && theNganHang.getLoaiThe().equals(maloai))
                                 demso++;
                         }
+                        Log.d("TAG", "onDataChange: dddddddddd"+demso+maloai);
                         if(demso>0){
                             ReadMaThe();
                         }
@@ -193,10 +195,16 @@ public class UnlockCardActivity extends AppCompatActivity {
                             // Thiết lập nút tích cực
                             builder.setPositiveButton("Đã hiểu", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    if(pre!=-1){
+                                    if(pre!=-1&&cardID!=null){
                                         maloai=listtypeID[pre];
                                         spLoaiThe.setSelection(pre);
                                     }
+                                }
+                            });
+                            builder.setNegativeButton("Trở về", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(UnlockCardActivity.this, MainActivity.class));
                                 }
                             });
                             AlertDialog dialog = builder.create();
@@ -208,6 +216,22 @@ public class UnlockCardActivity extends AppCompatActivity {
                         Toast.makeText(UnlockCardActivity.this, "Failed ui", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    public String customerID;
+    public String getCustomerID(String customerKey){
+        databaseReference.child("KhachHang").child(customerKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                customerID= snapshot.child("CCCD").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return customerID;
     }
 
 }
