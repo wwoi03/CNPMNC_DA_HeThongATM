@@ -1,51 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="10dp"
 
+    android:layout_margin="10dp"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Mã Gửi Tiết Kiệm"/>
 
         <TextView
             android:id="@+id/tvMaGuiTietKiem"
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:gravity="end"
+
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvSoTienLai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_weight="1"
 
-        <TextView
-            android:id="@+id/tvNgayNhan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Số Dư Tài khoản Nguồn"/>
 
         <TextView
             android:id="@+id/tvSoDuTaiKhoanNguon"
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:gravity="end"
 
-
-
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text=""/>
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Ngày Nhận :"/>
+
+        <TextView
+            android:id="@+id/tvNgayNhan"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="Tiền Lãi"/>
+
+        <TextView
+            android:id="@+id/tvSoTienLai"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:text=""/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
