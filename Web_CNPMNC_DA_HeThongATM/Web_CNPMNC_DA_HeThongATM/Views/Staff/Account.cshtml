@@ -1,0 +1,46 @@
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+@model Dictionary<string, LoaiTaiKhoan>
+@{
+    Dictionary<string,LoaiTaiKhoan> danhsachloaitaikhoan = ViewBag.danhsachloaitaikhoan;
+    var filteredData = danhsachloaitaikhoan.Where(pair => pair.Key != "temp").ToDictionary(pair => pair.Key, pair => pair.Value);
+}
+
+@{
+	Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+
+<div class="card">
+     <div class="card-header">
+       <a href="@Url.Action("CreateAccount", "Staff")" class="btn btn-primary">Thêm loại tài khoản</a>
+     </div>
+       <div class="card-body">
+            <table class="table">
+                 <thead>
+                   <tr>
+                    <th scope="col">Tên loại tài khoản</th>
+                    <th scope="col">Thao tác</th>
+                   </tr>
+                 </thead>
+
+                 
+                 <tbody>
+                     @foreach(var kvp in filteredData )
+                     {
+                       String key = kvp.Key;
+                       LoaiTaiKhoan loaiTaiKhoan = kvp.Value;
+                       
+                       <tr> 
+                           <td>@loaiTaiKhoan.TenLoaiTaiKhoan</td>
+                         
+                           <td>
+                            <a href="@Url.Action("EditAcc", "Staff", new { editKey = @key})" class="btn btn-primary">Sửa</a>
+                            <a href="@Url.Action("DeleteAcc", "Staff", new { DeleteKey = @key})" class="btn btn-danger">Xóa</a>
+                           </td>   
+                       </tr> 
+                     }
+                 </tbody>
+            </table>
+       </div>
+ </div>
