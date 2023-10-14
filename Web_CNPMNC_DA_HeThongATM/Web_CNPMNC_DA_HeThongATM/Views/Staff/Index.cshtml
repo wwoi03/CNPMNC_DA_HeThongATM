@@ -1,3 +1,57 @@
-﻿@{
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+@model Dictionary<string, NhanVien>
+@{
+    Dictionary<string, NhanVien> danhSachNhanVien = ViewBag.danhSachNhanVien;
+}
+@{
 	Layout = "~/Views/Shared/_LayoutMain.cshtml";
 }
+
+
+
+ <div class="card">
+     <div class="card-header">
+       <strong class="card-title">Danh sách nhân viên</strong>
+     </div>
+       <div class="card-body">
+            <table class="table">
+                 <thead>
+                   <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Họ tên nhân viên</th>
+                    <th scope="col">Năm sinh</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">chi nhánh</th>
+                    <th scope="col">Chức vụ</th>
+                    <th scope="col">Mật khẩu</th>
+                    <th scope="col">Thao tác</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   @foreach(var kvp in danhSachNhanVien)
+                   {
+                       string key = kvp.Key;
+                       NhanVien nhanVien = kvp.Value;
+
+                       <tr>
+                           <td>@key</td>
+                           <td>@nhanVien.TenNhanVien</td>
+                           <td>@nhanVien.NamSinh</td>
+                           <td>@nhanVien.DiaChi</td>
+                           <td>@nhanVien.Email</td>
+                           <td>@nhanVien.ChiNhanh</td>
+                           <td>@nhanVien.ChucVu</td>
+                           <td>@nhanVien.MatKhau</td>
+
+                           <td>
+                            <a href="@Url.Action("Edit", "Staff", new { editKey = @key})" class="btn btn-primary">Sửa</a>
+                            <a href="@Url.Action("Delete", "Staff", new { deleteKey = @key})" class="btn btn-danger">Xóa</a>
+                           </td>
+                       </tr> 
+
+                   }
+                 </tbody>
+            </table>
+       </div>
+ </div>

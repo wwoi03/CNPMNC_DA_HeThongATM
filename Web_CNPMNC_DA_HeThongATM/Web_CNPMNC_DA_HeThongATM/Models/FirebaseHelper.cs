@@ -3,6 +3,7 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
@@ -176,17 +177,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         // Tính tổng tài sản ngân hàng
-        public double GetTotalAssets()
-        {
-            double totalAssets = 0;
+        //public double GetTotalAssets()
+        //{
+        //    double totalAssets = 0;
             
-            FirebaseResponse response = client.Get("TaiKhoanLienKet");
-            Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
-            
-            totalAssets = data.Values.Sum(item => item.SoDu);
+        //    FirebaseResponse response = client.Get("TaiKhoanLienKet");
+        //    Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
+
+        //    totalAssets = data.Values.Sum(item => item.SoDu);
            
-            return totalAssets;
-        }
+        //    return totalAssets;
+        //}
 
         // Tính tổng giao dịch
         public long GetTotalTransaction()
@@ -212,6 +213,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return staffs;
         }
 
+        //Lấy danh sách nhân viên lẫn KEY
+        public Dictionary<string, NhanVien> GetStaffsWithKey()
+        {
+            FirebaseResponse response = client.Get("NhanVien");
+            Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
+            return data;
+        }
+        
         // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
         public Dictionary<string, int> GetQuantityCustomerByMonth(int year)
         {
@@ -237,6 +246,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             FirebaseResponse response = client.Push("NhanVien", nhanVien);
         }
+
+        
 
         //--------------------------------------------------------------------------THẺ NGÂN HÀNG ----------------------------------------------------------------------------------
         //tạo số thẻ ngân hàng

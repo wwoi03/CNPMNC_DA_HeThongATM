@@ -2,6 +2,7 @@
 {
     public class NhanVien
     {
+        public string id { get; set; }
         public string ChiNhanh { get; set; }
         public string ChucVu { get; set; }
         public string DiaChi { get; set; }
