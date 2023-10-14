@@ -20,10 +20,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewBag.customers = firebaseHelper.GetCustomers();
 
             // Tính tiền ngân hàng
-            ViewBag.totalAssets = firebaseHelper.GetTotalAssets();
+            //ViewBag.totalAssets = firebaseHelper.GetTotalAssets();
 
             // Tính tổng số lượng giao dịch
-            ViewBag.totalTransaction = firebaseHelper.GetTotalTransaction();
+            //ViewBag.totalTransaction = firebaseHelper.GetTotalTransaction();
 
             // Lấy danh sách nhân viên
             ViewBag.staffs = firebaseHelper.GetStaffs();
