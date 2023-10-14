@@ -144,7 +144,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TransferMoneyActivity.class);
-                intent.putExtra("flag", -1 );
                 startActivity(intent);
             }
         });

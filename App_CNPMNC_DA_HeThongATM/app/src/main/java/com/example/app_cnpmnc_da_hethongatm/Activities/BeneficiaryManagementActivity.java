@@ -33,8 +33,6 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
     public static int ADD_BENEFICIARY_FLAG = 1;
     public static int EDIT_BENEFICIARY_FLAG = 2;
 
-    public static int USER_NAME = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,10 +97,7 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_chuyentien:
-                        Intent intent1 = new Intent(BeneficiaryManagementActivity.this, TransferMoneyActivity.class);
-                        intent1.putExtra("flag", USER_NAME);
-                        intent1.putExtra("tkthuhuong", thuHuong);
-                        startActivity(intent1);
+                        Toast.makeText(BeneficiaryManagementActivity.this, "Hệ thống đang cập nhật", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_edit:
                         Intent intent = new Intent(BeneficiaryManagementActivity.this, AddEditBeneficiaryActivity.class);
