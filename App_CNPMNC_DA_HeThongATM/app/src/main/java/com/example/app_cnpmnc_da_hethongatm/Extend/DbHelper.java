@@ -1,6 +1,7 @@
 package com.example.app_cnpmnc_da_hethongatm.Extend;
 
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class DbHelper {
 
     public interface FirebaseListener {
         void onSuccessListener();
+
         void onFailureListener(Exception e);
     }
 
@@ -196,11 +198,11 @@ public class DbHelper {
                 });
     }
 
-    public static void updateSurplus(String taiKhoanKey, double soDuMoi,String NgayGD,double TienDaGD) {
+    public static void updateSurplus(String taiKhoanKey, double soDuMoi, String NgayGD, double TienDaGD) {
         Map<String, Object> map = new HashMap<>();
         map.put("SoDu", soDuMoi);
-        map.put("NgayGD",NgayGD);
-        map.put("TienDaGD",TienDaGD);
+        map.put("NgayGD", NgayGD);
+        map.put("TienDaGD", TienDaGD);
 
         firebaseDatabase.getReference("TaiKhoanLienKet").child(taiKhoanKey).updateChildren(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -216,10 +218,11 @@ public class DbHelper {
                     }
                 });
     }
+
     // Tạo lịch sử giao dịch
     public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan) {
         LocalTime now = null;
-        String timeString="";
+        String timeString = "";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             now = LocalTime.now();
         }
@@ -245,7 +248,7 @@ public class DbHelper {
         firebaseDatabase.getReference("LichSuGiaoDich").child(newKey).setValue(map);
     }
 
-    public static String GetDataForm(){
+    public static String GetDataForm() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String NgayGDHomNay = sdf.format(calendar.getTime());

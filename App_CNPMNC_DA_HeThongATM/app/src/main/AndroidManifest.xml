@@ -43,7 +43,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".Activities.BeneficiaryManagementActivity"
             android:exported="false" />
@@ -60,6 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.WithdrawSavingsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

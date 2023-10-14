@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountSettingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.SearchServiceFunctionActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.WithdrawSavingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 
@@ -154,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_mokhoathe:
                 startActivity(new Intent(this, UnlockCardActivity.class));
+            case R.id.nav_ruttien:
+                startActivity(new Intent(this, WithdrawSavingsActivity.class));
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
