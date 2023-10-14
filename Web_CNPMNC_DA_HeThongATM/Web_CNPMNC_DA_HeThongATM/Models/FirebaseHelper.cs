@@ -3,9 +3,13 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
-
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Web;
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class FirebaseHelper
@@ -17,7 +21,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             AuthSecret = "086JcgQrRLjvg3lubA1YY9GlAvks4VrYTCeWJJy6",
             BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
+            
         };
+        
         public FirebaseHelper()
         {
             client = new FirebaseClient(config);
@@ -47,8 +53,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return null;
             }
         }
-
-
         //tạo khách hàng
         public void InsertCustommer(KhachHangViewModel custommer)
         {
@@ -64,11 +68,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-
             }
         }
-
-
         //tạo id khách hàng bằng GUID (Globally Unique Identifier)
         private string GuidSystem()
         {
@@ -87,8 +88,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return shortId;
         }
-
-
         //tạo pass ngẫu nhiên
         public string PassRandom()
         {
@@ -105,35 +104,24 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                     // Nếu ID đã tồn tại, thử tạo lại một ID mới
                     return PassRandom();
                 }
-
             }
-
             return Makh.ToString();
-
-
         }
-
-
         //check cccd
         public async Task<bool> CheckCCCDExist(string cccdToCheck)
         {
             try
             {
-
                 FirebaseResponse response = await client.GetAsync("KhachHang");
-
                 if (response == null || response.Body == "null")
                 {
                     return false; // Node không tồn tại hoặc trống
                 }
-
                 Dictionary<string, KhachHangViewModel> data = response.ResultAs<Dictionary<string, KhachHangViewModel>>();
-
                 if (data != null && data.Values.Any(item => item.CCCD == cccdToCheck))//Any() để kiểm tra xem có bất kỳ phần tử nào trong danh sách có trường CCCD bằng với giá trị cccdToCheck hay không.
                 {
                     return true; // CCCD tồn tại trong danh sách
                 }
-
                 return false; // CCCD không tồn tại trong danh sách
             }
             catch (Exception ex)
@@ -143,8 +131,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return false;
             }
         }
-
-
         //lây dữ liệu khách hàng theo id
         public KhachHang GetCustomerbyid(string values)
         {
@@ -159,13 +145,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 {
                     return a;
                 }
-
             }
             return null;
         }
-
-
-        // Lấy danh sách khách hàng
+        //Lấy danh sách khách hàng
         public List<KhachHang> GetCustomers()
         {
             List<KhachHang> dsKhachHang = new List<KhachHang>();
@@ -174,69 +157,221 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             dsKhachHang = new List<KhachHang>(data.Values);
             return dsKhachHang;
         }
-
-        // Tính tổng tài sản ngân hàng
-        public double GetTotalAssets()
-        {
-            double totalAssets = 0;
-            
-            FirebaseResponse response = client.Get("TaiKhoanLienKet");
-            Dictionary<string, TaiKhoanLienKet> data = response.ResultAs<Dictionary<string, TaiKhoanLienKet>>();
-            
-            totalAssets = data.Values.Sum(item => item.SoDu);
-           
-            return totalAssets;
-        }
-
-        // Tính tổng giao dịch
-        public long GetTotalTransaction()
-        {
-            long totalTransaction = 0;
-            
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
-           
-            totalTransaction = data.Values.Count;
-
-            return totalTransaction;
-        }
-
-        // Lấy danh sách nhân viên
-        public List<NhanVien> GetStaffs()
-		{
-            FirebaseResponse response = client.Get("NhanVien");
-            Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
-
-            List<NhanVien> staffs = data.Values.ToList();
-
-            return staffs;
-        }
-
-        // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
+       // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
         public Dictionary<string, int> GetQuantityCustomerByMonth(int year)
         {
             Dictionary<string, int> quantityCustomerByMonth = new Dictionary<string, int>();
-
             FirebaseResponse response = client.Get("KhachHang");
             Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-            
-            // tính số lượng khách hàng theo từng tháng trong năm "year"
+           //tính số lượng khách hàng theo từng tháng trong năm "year"
             for (int i = 1; i <= 12; i++)
             {
                 int count = data.Values.Count(item => int.Parse(item.NgayTao.Split("/")[1]) == i && int.Parse(item.NgayTao.Split("/")[2]) == year);
                 quantityCustomerByMonth.Add("Tháng " + i.ToString(), count);
             }
-
             return quantityCustomerByMonth;
         }
 
-        // Lấy số lượng thẻ VISA và ATM
+
+
+
+
+
+
+
+        //---------------------------------------------------------------NHÂN VIÊN--------------------------------------------------------
+        //LẤY DANH SÁCH NHÂN VIÊN
+        public List<NhanVien> GetStaffs()
+        {
+            FirebaseResponse response = client.Get("NhanVien");
+            Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
+            List<NhanVien> staffs = data.Values.ToList();
+            return staffs;
+        }
+
+        //LẤY DANH SÁCH LOAI TAI KHOAN
+        public List<LoaiTaiKhoan> GetAcc()
+        {
+            FirebaseResponse response = client.Get("LoaiTaiKhoan");
+            Dictionary<string, LoaiTaiKhoan> data = response.ResultAs<Dictionary<string, LoaiTaiKhoan>>();
+            List<LoaiTaiKhoan> loaiTaiKhoans = data.Values.ToList();
+            return loaiTaiKhoans;
+        }
+
+        //LẤY DANH SÁCH NHÂN VIÊN LẪN KEY
+        public Dictionary<string, NhanVien> GetStaffsWithKey()
+        {
+            FirebaseResponse response = client.Get("NhanVien");
+            Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
+            return data;
+        }
+
         
-        // Tạo tài khoản nhân viên
+
+        // TẠO TÀI KHOẢN NHÂN VIÊN
         public void CreateStaff(NhanVien nhanVien)
         {
-            FirebaseResponse response = client.Push("NhanVien", nhanVien);
+            //FirebaseResponse response = client.Push("NhanVien", nhanVien);
+
+            PushResponse response = client.Push("NhanVien", nhanVien);
+            string newKey = response.Result.name;
+
+            // Gán key vào trường Key của đối tượng NhanVien
+            nhanVien.Key = newKey;
+
+            // Cập nhật dữ liệu Nhân viên với key trong Firebase
+            SetResponse setResponse = client.Set("NhanVien/" + newKey, nhanVien);
         }
+
+        //UPDATE TÀI KHOẢN NHÂN VIÊN
+        public void UpdateStaff(NhanVien editedNhanVien)
+        {
+            // Gửi yêu cầu cập nhật nhân viên tới Firebase bằng cách sử dụng key
+            SetResponse setResponse = client.Set("NhanVien/"+editedNhanVien.Key, editedNhanVien);
+        }
+
+        //XÓA TÀI KHOẢN NHÂN VIÊN
+        public void DeleteStaff(string accKey)
+        {
+            // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
+            FirebaseResponse setResponse = client.Delete("NhanVien/" + accKey);
+        }
+      //---------------------------------------------------------------------------------------------------------------------------------------
+     
+
+
+
+
+
+
+
+
+
+
+
+
+        //-------------------------------------------------LOẠI TÀI KHOẢN---------------------------------------------------------------
+
+        // TẠO LOẠI TÀI KHOẢN
+        public void CreateAccount(LoaiTaiKhoan loaiTaiKhoan)
+        {
+            //FirebaseResponse response = client.Push("NhanVien", nhanVien);
+
+            PushResponse response = client.Push("LoaiTaiKhoan", loaiTaiKhoan);
+            string newKey = response.Result.name;
+
+            // Gán key vào trường Key của đối tượng NhanVien
+            loaiTaiKhoan.Key = newKey;
+
+            // Cập nhật dữ liệu Nhân viên với key trong Firebase
+            SetResponse setResponse = client.Set("LoaiTaiKhoan/" + newKey, loaiTaiKhoan);
+        }
+
+        //LẤY DANH SÁCH lOẠI TÀI KHOẢN LẪN KEY
+        public Dictionary<string, LoaiTaiKhoan> GetAccWithKey()
+        {
+            FirebaseResponse response = client.Get("LoaiTaiKhoan");
+            Dictionary<string, LoaiTaiKhoan> data = response.ResultAs<Dictionary<string, LoaiTaiKhoan>>();
+            return data;
+        }
+
+        //UPDATE LOẠI TÀI KHOẢN 
+        public void UpdateAcc(LoaiTaiKhoan editedAcc)
+        {
+            // Gửi yêu cầu cập nhật nhân viên tới Firebase bằng cách sử dụng key
+            SetResponse setResponse = client.Set("LoaiTaiKhoan/"+editedAcc.Key, editedAcc);
+        }
+
+        //XÓA LOẠI TÀI KHOẢN
+        public void DeleteAcc(string accKey)
+        {
+            // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
+           FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
+        }
+      //-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //--------------------------------------------------------------------------THẺ NGÂN HÀNG ----------------------------------------------------------------------------------
         //tạo số thẻ ngân hàng

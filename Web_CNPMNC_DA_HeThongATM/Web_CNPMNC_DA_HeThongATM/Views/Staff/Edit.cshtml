@@ -1,0 +1,67 @@
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+@{
+	Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@{
+    Dictionary<string, NhanVien> danhSachNhanVien = ViewBag.danhSachNhanVien;
+
+}
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-lg-6">
+			<div class="card">
+				<div class="card-header">
+					<strong style="font-size: 24px">Chỉnh sửa</strong><br>
+					<small style="font-size: 15px">thông tin nhân viên</small>
+				</div>
+
+				<div class="card-body card-block">
+					<form method="post" action="@Url.Action("Edit", "Staff")">
+						<input type="hidden" name="Key" value="@Model.Key">
+				
+						<div class="form-group">
+							<label for="name" class="form-control-label">Họ tên nhân viên</label>
+							<input type="text" id="name" name="TenNhanVien" class="form-control" value="@Model.TenNhanVien">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label">Năm sinh</label>
+							<input type="text" id="name" name="NgaySinh" class="form-control" value="@Model.NgaySinh">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label">Địa chỉ</label>
+							<input type="text" id="name" name="DiaChi" class="form-control" value="@Model.DiaChi">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label">Email</label>
+							<input type="text" id="name" name="Email" class="form-control" value="@Model.Email">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label">Số điện thoại</label>
+							<input type="text" id="name" name="SoDienThoai" class="form-control" value="@Model.SoDienThoai">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label">Chi nhánh</label>
+							<input type="text" id="name" name="ChiNhanh" class="form-control" value="@Model.ChiNhanh">
+						</div>
+						<div class="form-group">
+							<label for="name" class="form-control-label">Chức vụ</label>
+							<input type="text" id="name" name="ChucVu" class="form-control" value="@Model.ChucVu">
+						</div>	
+						<div class="form-group">
+							<label for="name" class="form-control-label">Mật khẩu</label>
+							<input type="text" id="name" name="MatKhau" class="form-control" value="@Model.MatKhau">
+						</div>	
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary">lưu Thông tin</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

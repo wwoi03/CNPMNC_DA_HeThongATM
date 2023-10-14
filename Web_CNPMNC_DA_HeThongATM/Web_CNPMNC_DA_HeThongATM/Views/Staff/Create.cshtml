@@ -15,27 +15,35 @@
 
 				<div class="card-body card-block">
 					<form asp-controller="Staff" method="post" asp-action="Create">
+						<div class="alert alert-danger" role="alert">
+                                        This is a danger alert—check it out!
+                                    </div>
 						<div class="form-group">
 							<label for="name" class="form-control-label">Họ tên nhân viên</label>
-							<input type="text" id="name" name="Ten" placeholder="Nhập họ tên nhân viên" class="form-control">
+							<input type="text" id="name" name="Ten" placeholder="Nhập họ tên nhân viên" class="form-control"required >
 						</div>
 						<div class="form-group">
 							<label for="birth" class="form-control-label">Năm sinh nhân viên</label>
-							<input type="text" id="birth" name="NamSinh" placeholder="năm sinh nhân viên" class="form-control">
+							<input type="text" id="birth" name="NgaySinh" placeholder="năm sinh nhân viên"  class="form-control" required>
 						</div>
 						<div class="form-group">
 							<label for="street" class="form-control-label">Địa chỉ nhân viên</label>
-							<input type="text" id="street" name="DiaChi" placeholder="Nhập địa chỉ nhân viên" class="form-control">
+							<input type="text" id="street" name="DiaChi" placeholder="Nhập địa chỉ nhân viên" class="form-control" required>
 						</div>
 						<div class="form-group">
 							<label for="email" class="form-control-label">Email nhân viên</label>
-							<input type="email" id="email" name="email" placeholder="Nhập Email nhân viên" class="form-control">
+							<input type="email" id="email" name="email" placeholder="Nhập Email nhân viên" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label for="email" class="form-control-label">Số điện thoại nhân viên</label>
+							<input type="text" id="email" name="SoDienThoai" placeholder="Nhập số điện thoại nhân viên" class="form-control"  required pattern="\d{10}" maxlength="10">
+							<small id="phoneHelp" class="form-text text-muted">Vui lòng nhập đúng 10 chữ số.</small>
 						</div>
 						<div class="row form-group">
 							<div class="col-8">
 								<div class="form-group">
 									<label for="Branch" class="form-control-label">Chi nhánh làm việc</label>
-									<select id="branch" name="ChiNhanh" class="form-control custom-select">
+									<select id="branch" name="ChiNhanh" class="form-control custom-select" required>
 										<option value="branch1">Chi nhánh 1</option>
 										<option value="branch2">Chi nhánh 2</option>
 										<option value="branch3">Chi nhánh 3</option>
@@ -45,17 +53,18 @@
 							<div class="col-8">
 								<div class="form-group">
 									<label for="position" class="form-control-label">Chức vụ</label>
-									<select id="position" name="ChucVu" class="form-control custom-select">
-										<option value="position1">Chức vụ 1</option>
-										<option value="position2">Chức vụ 2</option>
-										<option value="position3">Chức vụ 3</option>
+									<select id="position" name="ChucVu" class="form-control custom-select" required>
+										<option value="position1">Nhân viên văn phòng</option>
+										<option value="position2">Trưởng phòng</option>
+										<option value="position3">Nhân viên tiếp thị</option>
+										<option value="position3">Nhân viên thu ngân</option>
 									</select>
 								</div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="password" class="form-control-label">Mật khẩu nhân viên</label>
-							<input type="password" id="password" name="MatKhau" placeholder="Nhập mật khẩu nhân viên" class="form-control">
+							<input type="password" id="password" name="MatKhau" placeholder="Nhập mật khẩu nhân viên" class="form-control" required>
 						</div>
 						<div class="text-center">
 							<button type="submit" class="btn btn-primary">Submit</button>

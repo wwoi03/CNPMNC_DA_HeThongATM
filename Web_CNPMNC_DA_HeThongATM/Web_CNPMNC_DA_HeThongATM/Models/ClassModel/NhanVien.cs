@@ -6,8 +6,10 @@
         public string ChucVu { get; set; }
         public string DiaChi { get; set; }
         public string Email { get; set; }
+        public string Key { get; set; }
         public string MatKhau { get; set; }
-        public string NamSinh { get; set; }
+        public string NgaySinh { get; set; }
+        public string SoDienThoai { get; set; }
         public string TenNhanVien { get; set; }
     }
 }
