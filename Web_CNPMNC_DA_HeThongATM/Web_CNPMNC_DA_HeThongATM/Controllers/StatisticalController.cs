@@ -13,19 +13,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
 
-        // Trang chính
+        //Trang chính
         public IActionResult Index()
         {
-            // Lấy danh sách khách hàng
+            //Lấy danh sách khách hàng
             ViewBag.customers = firebaseHelper.GetCustomers();
+            //Tính tiền ngân hàng
+            //ViewBag.totalAssets = firebaseHelper.GetTotalAssets();
 
-            // Tính tiền ngân hàng
-            ViewBag.totalAssets = firebaseHelper.GetTotalAssets();
+            //Tính tổng số lượng giao dịch
+            //ViewBag.totalTransaction = firebaseHelper.GetTotalTransaction();
 
-            // Tính tổng số lượng giao dịch
-            ViewBag.totalTransaction = firebaseHelper.GetTotalTransaction();
-
-            // Lấy danh sách nhân viên
+            //Lấy danh sách nhân viên
             ViewBag.staffs = firebaseHelper.GetStaffs();
 
             GetQuantityCustomerByMonth();
@@ -33,7 +32,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
 
-        // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
+       // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
         public IActionResult GetQuantityCustomerByMonth()
         {
             int year = DateTime.Now.Year;
