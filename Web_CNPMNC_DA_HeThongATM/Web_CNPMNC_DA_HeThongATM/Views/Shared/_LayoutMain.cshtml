@@ -131,14 +131,20 @@
 							<!-- Sửa thẻ ngân hàng -->
 							<li>
 								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Sửa thẻ ngân hàng</a>
+								<a asp-controller="CreditCard" asp-action="Index">Sửa thẻ ngân hàng</a>
 							</li>
-
-							<!-- Khóa thẻ ngân hàng -->
+							@*******************************************************@
+							<!-- Khóa/ mở thẻ ngân hàng -->
 							<li>
 								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Khóa thẻ ngân hàng</a>
+								<a asp-controller="CreditCard" asp-action="CardControl">Mở/Khóa thẻ ngân hàng</a>
 							</li>
+							<!-- Khóa/ mở thẻ ngân hàng -->
+							<li>
+								<i class="fa fa-puzzle-piece"></i>
+								<a asp-controller="CreditCard" asp-action="AccountControl">Mở/Khóa tài khoản khách hàng</a>
+							</li>
+							@*******************************************************@
 						</ul>
 					</li>
 
@@ -146,20 +152,21 @@
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart-o"></i>Thống kê</a>
 						<ul class="sub-menu children dropdown-menu">
+							@*******************************************************@
 							<!-- Thống kê giao dịch -->
 							<li>
 								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Thông kê giao dịch</a>
+								<a asp-controller="CreateCard" asp-action="Index">Thống kê giao dịch</a>
 							</li>
 
 							<!-- Thống kê khách hàng -->
 							<li>
 								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Thông kê khách hàng</a>
+								<a asp-controller="Statement" asp-action="CustomerStatement">Sao kê khách hàng</a>
 							</li>
 						</ul>
 					</li>
-
+					@*******************************************************@
 					<!-- Dịch vụ -->
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gbp"></i>Dịch vụ</a>

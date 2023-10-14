@@ -3,6 +3,7 @@ using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
@@ -383,6 +384,115 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //    }
         //    return null;
         //}
+
+        //----------------------------------------------------------LOAI THE NGAN HANG------------------------------------------------
+        // Lấy danh sách loại thẻ
+        public List<LoaiTheNganHang> GetCardTypes()
+        {
+            List<LoaiTheNganHang> cardtypes;
+            FirebaseResponse response = client.Get("LoaiTheNganHang");
+            Dictionary<string, LoaiTheNganHang> data = response.ResultAs<Dictionary<string, LoaiTheNganHang>>();
+            cardtypes = new List<LoaiTheNganHang>(data.Values);
+            return cardtypes;
+        }
+        // Lấy key loại thẻ bằng tên 
+        public string getCardTypeKeybyName(string loaithe)
+        {
+            FirebaseResponse response = client.Get("LoaiTheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, LoaiTheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiTheNganHang>>(response.Body);
+                var keys = data.Where(entry => entry.Value.TenTNH == loaithe).Select(entry => entry.Key).ToList();
+                if (keys != null)
+                {
+                    return string.Join(",", keys);
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            return "null";
+        }
+        //Lấy dữ liệu thẻ ngân hàng dựa trên customerKey và key loai the
+        public TheNganHang getCardbyCusTypeKeys(string cusKey, string typeKey)
+        {
+
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.MaKH == cusKey && c.LoaiThe == typeKey);
+                if (a != null)
+                {
+                    return a;
+                }
+
+            }
+            return null;
+        }
+        //Đổi trạng thái khóa thẻ
+        public void ChangeCardStatus(long masothe)
+        {
+            Dictionary<string, object> updates;
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                if(getCardbyID(masothe).TinhTrangThe==1 || getCardbyID(masothe).TinhTrangThe == 2)
+                {
+                     updates = new Dictionary<string, object>
+                    {
+                        {"TinhTrangThe" , 0},
+                    };
+                }
+               else
+                {
+                    updates = new Dictionary<string, object>
+                    {
+                        {"TinhTrangThe" , 2},
+                    };
+                }
+                string path = $"TheNganHang/{getKeyCardbyMaSo(masothe)}";
+                client.Update(path, updates);
+            }
+        }
+        //Lấy thẻ bằng mã số 
+        public TheNganHang getCardbyID(long maso)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.MaSoThe == maso );
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+        //Lấy key thẻ bằng mã số
+        public string getKeyCardbyMaSo(long maso)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                var keys = data.Where(entry => entry.Value.MaSoThe == maso).Select(entry => entry.Key).ToList();
+                if (keys != null)
+                {
+                    return string.Join(",", keys);
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            return "null";
+        }
+
     }
 }
 

@@ -1,0 +1,223 @@
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var listCardTypes = @ViewBag.get;
+}
+
+@model CardControlViewModel
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bank Customer Feedback Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/CardControl.css">
+  </head>
+  <body>
+    <div class="col-xs-6 col-sm-6" style="margin-left:25%;">
+        <div class="card">
+            <div class="card-body">
+                <!-- Credit Card -->
+                <div id="pay-invoice">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3 class="text-center">Thông tin thẻ</h3>
+                        </div>
+                        <hr>
+                        <form asp-controller="CreditCard" asp-action="changeStatus" method="post">
+                           
+                            <div class="form-group">
+                                <label for="cc-payment" class="control-label mb-1" >Căn cước công dân</label>
+                                <input onchange="sendData()" id="cccd" value="3333" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false">
+                            </div>
+                            <div class="form-group has-success">
+                                <label for="cc-name" class="control-label mb-1">Loại thẻ</label>
+                                <select id="loaithe" onchange="sendData()">
+                                    @foreach (var item in listCardTypes)
+                                    {
+                                        <option value="@item.TenTNH">@item.TenTNH</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label mb-1">Tên khách hàng</label>
+                                <input id="tenkhachhang" name="cc-number" type="text"  class="form-control cc-number identified visa" readonly >
+                            </div>
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label mb-1">Mã số thẻ</label>
+                                <input id="masothe" name="cc-number" type="text"  class="form-control cc-number identified visa" readonly>
+                            </div>
+                       
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label mb-1">Tình trạng thẻ</label>
+                                <input id="tinhtrangthe" name="cc-number" type="text"  class="form-control cc-number identified visa" readonly>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Ngày mở thẻ</label>
+                                        <input id="ngaymothe" name="cc-exp" type="tel" class="form-control cc-exp"  data-val="true" placeholder="DD / MM / YYYY" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Ngày hết hạn</label>
+                                        <input id="ngayhethan" name="cc-exp" type="tel" class="form-control cc-exp"  data-val="true" placeholder="DD / MM / YYYY" readonly>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div>
+                                <button id="xacnhan" type="submit" class="btn btn-lg btn-info btn-block" asp-controller="CreditCard" asp-action="Index">
+                                    <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                    <span id="payment-button-amount">Xác nhận</span>
+                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendData(){
+            var CCCD = document.getElementById("cccd").value;
+            var LoaiThe = document.getElementById("loaithe").value;
+
+
+           
+
+            findData(CCCD, LoaiThe, function (data) {
+                // Callback sẽ được gọi khi dữ liệu đã được trả về
+                console.log("Dữ liệu đã được trả về:", data);
+               
+            });
+
+            var laytrangthai = {
+                CCCD: CCCD,
+                LoaiThe: LoaiThe,
+            };
+            $.ajax({
+                url: "../../CreditCard/changeStatus", // Đường dẫn của Controller và Action xử lý yêu cầu
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(laytrangthai),
+                success: function (data) {
+                    console.log('Yêu cầu gửi thành công gyuhjjjjjjjjjjjj' + CCCD + laytrangthai.CCCD + data.maSoThe + data);
+                }
+            });
+        }
+
+     
+
+        function findData(CCCD, LoaiThe, callback) {
+            var inputdata = {
+                CCCD: CCCD,
+                LoaiThe: LoaiThe,
+            };
+           
+
+            $.ajax({
+                url: "../../CreditCard/sendCard", // Đường dẫn của Controller và Action xử lý yêu cầu
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(inputdata),
+                success: function (data) {
+                    // Xử lý dữ liệu trả về từ server (nếu có)
+                    console.log('Yêu cầu gửi thành công ' + CCCD + inputdata.CCCD + data.cccd + data.tenKH+ data);
+                    document.getElementById("tinhtrangthe").value = "hhhhhhhh";
+
+                    if (data) {
+                        console.log('Yêu cầu gửi thành công roiiiiiiiiiii' + data.tenKH );
+                        document.getElementById("cccd").value = data.cccd;
+                        document.getElementById("loaithe").value = data.loaiThe;
+                        document.getElementById("tenkhachhang").value = data.tenKH;
+                        document.getElementById("masothe").value = data.theNganHang?.maSoThe;
+                        document.getElementById("tinhtrangthe").value = data.theNganHang?.tinhTrangThe;
+                        document.getElementById("ngaymothe").value = data.theNganHang?.ngayMoThe;
+                        document.getElementById("ngayhethan").value = data.theNganHang?.ngayHetHan;
+                    }
+                    else {
+                        document.getElementById("cccd").value = "Không tìm thấy";
+                        document.getElementById("loaithe").value = "Không tìm thấy";
+                        document.getElementById("tenkhachhang").value = "Không tìm thấy";
+                        document.getElementById("masothe").value = "Không tìm thấy";
+                        document.getElementById("tinhtrangthe").value = "Không tìm thấy";
+                        document.getElementById("ngaymothe").value = "Không tìm thấy";
+                        document.getElementById("ngayhethan").value = "Không tìm thấy";
+                    }
+                    // Gọi callback với dữ liệu trả về
+                    if (typeof callback === "function") {
+                        callback(data);
+                    }
+                   
+
+
+                },
+                error: function (error) {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    console.error("Lỗi khi gửi yêu cầu", error);
+                }
+            });
+        }
+
+     
+        function getData() {
+            $.ajax({
+                url: "../../CreditCard/getCard", // Thay thế bằng đường dẫn và tên hành động thực tế của bạn
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Xử lý và hiển thị dữ liệu
+                    if(data){
+                        console.log('Yêu cầu gửi thành công roiiiiiiiiiii'  + data.tenKH);
+                        document.getElementById("cccd").value = data.CCCD;
+                        document.getElementById("loaithe").value = loaithe;
+                        document.getElementById("tenkhachhang").value = data.tenKH;
+                        document.getElementById("masothe").value = data.theNganHang?.MaSoThe;
+                        document.getElementById("tinhtrangthe").value = data.theNganHang?.TinhTrangThe;
+                        document.getElementById("ngaymothe").value = data.theNganHang?.NgayMoThe;
+                        document.getElementById("ngayhethan").value = data.theNganHang?.NgayHetHan;
+                    }
+                    else{
+                        document.getElementById("cccd").value = "Không tìm thấy";
+                        document.getElementById("loaithe").value = "Không tìm thấy";
+                        document.getElementById("tenkhachhang").value = "Không tìm thấy";
+                        document.getElementById("masothe").value = "Không tìm thấy";
+                        document.getElementById("tinhtrangthe").value = "Không tìm thấy";
+                        document.getElementById("ngaymothe").value = "Không tìm thấy";
+                        document.getElementById("ngayhethan").value = "Không tìm thấy";
+                    }
+                   
+
+
+                },
+                error: function (error) {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                }
+            });
+        }
+        //var tenKH = document.getElementById("tenkhachhang");
+        //var mst = document.getElementById("masothe");
+        //var tinhtrangthe = document.getElementById("tinhtrangthe");
+        //var ngaymo = document.getElementById("ngaymothe");
+        //var ngayhet = document.getElementById("ngayhethan");
+        function displayData(data) {
+            // Hiển thị các thuộc tính của mô hình trong các phần tử HTML
+
+            document.getElementById("cccd").value = data.CCCD;
+            document.getElementById("loaithe").value = data.LoaiThe;
+            document.getElementById("tenkhachhang").value = data.tenKH;
+            document.getElementById("masothe").value = data.theNganHang.MaSoThe;
+            document.getElementById("tinhtrangthe").value = data.theNganHang.TinhTrangThe;
+            document.getElementById("ngaymothe").value = data.theNganHang.NgayMoThe;
+            document.getElementById("ngayhethan").value = data.theNganHang.NgayHetHan;
+           
+        }
+    </script>
+
+  </body>
+</html>
