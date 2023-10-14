@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.google.firebase.database.DataSnapshot;
 
 public class AddEditBeneficiaryActivity extends AppCompatActivity {
     // View
@@ -94,6 +95,11 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
             public void onFailureListener(Exception e) {
                 Toast.makeText(AddEditBeneficiaryActivity.this, "Chỉnh sửa thất bại. Vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+
+            }
         });
     }
 
@@ -109,6 +115,11 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
             @Override
             public void onFailureListener(Exception e) {
                 Toast.makeText(AddEditBeneficiaryActivity.this, "Thêm thất bại. Vui lòng thử lại", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+
             }
         });
     }

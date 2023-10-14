@@ -19,6 +19,7 @@ import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
 public class BeneficiaryManagementActivity extends AppCompatActivity implements BeneficiaryAdapter.Listener {
@@ -126,6 +127,11 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
                                     @Override
                                     public void onFailureListener(Exception e) {
                                         Toast.makeText(BeneficiaryManagementActivity.this,"Hệ thống lỗi. Thao tác thất bại!", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onSuccessListener(DataSnapshot snapshot) {
+
                                     }
                                 });
                             }
