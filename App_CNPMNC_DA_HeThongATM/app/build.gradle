@@ -58,4 +58,7 @@ dependencies {
 
     // Rounded image view
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //DialogPlus
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
 }

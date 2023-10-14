@@ -7,13 +7,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,16 +20,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Adapter.ListBeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
+import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 public class TransferMoneyActivity extends AppCompatActivity {
     // View
@@ -45,6 +47,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
     //
     String taiKhoanNguonKey = "", taiKhoanHuongKey;
     TaiKhoanLienKet taiKhoanNguon, taiKhoanHuong;
+
+    ThuHuong thuHuong;
+    int flag;
+
+
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -89,8 +96,16 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // khởi tạo dữ liệu
     public void initData() {
-
+        Intent getDataIntent = getIntent();
+        flag = (int) getDataIntent.getSerializableExtra("flag");
+        if (flag == BeneficiaryManagementActivity.USER_NAME) {
+            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
+            long tkThuHuongLong = thuHuong.getTKThuHuong(); // Lưu giá trị long
+            String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
+            etAccountBeneficiary.setText(tkThuHuongStr);
+        }
     }
+
 
     // xử lý sự kiện
     public void initListener() {
@@ -165,7 +180,42 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 }
             }
         });
+
+        ivBeneficiary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Khởi tạo FirebaseRecyclerOptions
+                FirebaseRecyclerOptions<ThuHuong> options =
+                        new FirebaseRecyclerOptions.Builder<ThuHuong>()
+                                .setQuery(FirebaseDatabase.getInstance().getReference().child("ThuHuong"), ThuHuong.class)
+                                .build();
+
+                // Khởi tạo ListBeneficiaryAdapter với FirebaseRecyclerOptions
+                ListBeneficiaryAdapter listBeneficiaryAdapter = new ListBeneficiaryAdapter(options);
+
+                // Tạo một DialogPlus mới
+                DialogPlus dialogPlus = DialogPlus.newDialog(TransferMoneyActivity.this)
+                        .setContentHolder(new ViewHolder(R.layout.activity_thuhuongtransfer))
+                        .setExpanded(true, 800)
+                        .create();
+
+                // Tìm RecyclerView trong layout của DialogPlus
+                RecyclerView recyclerView = dialogPlus.getHolderView().findViewById(R.id.rc_thuhuongtransfer);
+
+                // Thiết lập ListBeneficiaryAdapter cho RecyclerView
+                recyclerView.setLayoutManager(new LinearLayoutManager(TransferMoneyActivity.this));
+                recyclerView.setAdapter(listBeneficiaryAdapter);
+
+                // Bắt đầu lắng nghe dữ liệu từ Firebase
+                listBeneficiaryAdapter.startListening();
+
+                dialogPlus.show();
+            }
+        });
     }
+
+
+
 
     // chuyển tiền
     private void transferMoney(double money, String noiDungChuyenKhoan) {
