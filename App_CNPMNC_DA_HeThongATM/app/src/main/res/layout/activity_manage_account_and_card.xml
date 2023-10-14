@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ManageAccountAndCardActivity">
+    tools:context=".Activities.ManageAccountAndCardActivity"
+    android:background="@color/bg_color">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -17,7 +18,8 @@
         <!-- Container -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <!-- image slider -->
             <LinearLayout
@@ -42,6 +44,228 @@
                     android:layout_gravity="center_horizontal"
                     app:ci_drawable="@drawable/bg_indicator_3">
                 </me.relex.circleindicator.CircleIndicator3>
+            </LinearLayout>
+
+            <!-- Tùy chỉnh thẻ/TK -->
+            <LinearLayout
+                android:id="@+id/llSettingCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:backgroundTint="@color/item_color"
+                android:padding="12dp"
+                android:layout_marginTop="2dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_settings_24">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Tùy chỉnh thẻ/TK"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_chevron_right_24"
+                    app:tint="@color/normal_color">
+                </ImageView>
+            </LinearLayout>
+
+            <!-- Lịch sử giao dịch -->
+            <LinearLayout
+                android:id="@+id/llHistoryTransferMoney"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:backgroundTint="@color/item_color"
+                android:padding="12dp"
+                android:layout_marginTop="2dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_history_24">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Lịch sử giao dịch"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_chevron_right_24"
+                    app:tint="@color/normal_color">
+                </ImageView>
+            </LinearLayout>
+
+            <!-- Sao kê -->
+            <LinearLayout
+                android:id="@+id/llStatement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:backgroundTint="@color/item_color"
+                android:padding="12dp"
+                android:layout_marginTop="2dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/file_lines_regular">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Sao kê"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_chevron_right_24"
+                    app:tint="@color/normal_color">
+                </ImageView>
+            </LinearLayout>
+
+            <!-- Nộp tiết kiệm -->
+            <LinearLayout
+                android:id="@+id/llSaving"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:backgroundTint="@color/item_color"
+                android:padding="12dp"
+                android:layout_marginTop="2dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/piggy_bank_solid">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Nộp tiết kiệm"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_chevron_right_24"
+                    app:tint="@color/normal_color">
+                </ImageView>
+            </LinearLayout>
+
+            <!-- Rút tiết kiệm -->
+            <LinearLayout
+                android:id="@+id/llWithdrawSaving"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:backgroundTint="@color/item_color"
+                android:padding="12dp"
+                android:layout_marginTop="2dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/hand_holding_dollar_solid">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Rút tiết kiệm"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_chevron_right_24"
+                    app:tint="@color/normal_color">
+                </ImageView>
+            </LinearLayout>
+
+            <!-- Lịch sử lãi suất -->
+            <LinearLayout
+                android:id="@+id/llHistoryInterestRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:backgroundTint="@color/item_color"
+                android:padding="12dp"
+                android:layout_marginTop="2dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_history_24">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Lịch sử lãi suất"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_chevron_right_24"
+                    app:tint="@color/normal_color">
+                </ImageView>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

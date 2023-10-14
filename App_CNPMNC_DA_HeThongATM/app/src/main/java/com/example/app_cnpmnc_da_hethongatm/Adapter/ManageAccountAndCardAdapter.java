@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -72,6 +73,7 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
     class ManageAccountAndCardAdapterVH extends RecyclerView.ViewHolder {
         TextView tvAccountNumber, tvAccountType, tvSurplus;
         ImageView ivIconSurplus;
+        LinearLayout llLayoutCard;
 
         public ManageAccountAndCardAdapterVH(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +82,7 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
             tvAccountType = itemView.findViewById(R.id.tvAccountType);
             tvSurplus = itemView.findViewById(R.id.tvSurplus);
             ivIconSurplus = itemView.findViewById(R.id.ivIconSurplus);
+            llLayoutCard = itemView.findViewById(R.id.llLayoutCard);
         }
     }
 
