@@ -70,7 +70,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult sendCard([FromBody]inputDatacuaHao input)
         {
-            if (firebaseHelper.GetCustomerbyid(input.CCCD).TenKhachHang != null && firebaseHelper.getCardTypeKeybyName(input.LoaiThe)!=null)
+            if (firebaseHelper.GetCustomerbyid(input.CCCD) != null && firebaseHelper.getCardTypeKeybyName(input.LoaiThe)!=null)
             {
                 tenKH = firebaseHelper.GetCustomerbyid(input.CCCD).TenKhachHang;
                 customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
@@ -93,11 +93,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult changeStatus([FromBody] inputDatacuaHao input)
         {
-            customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
-            cardtypeKey = firebaseHelper.getCardTypeKeybyName(input.LoaiThe);
-            theNganHang = firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey);
-            firebaseHelper.ChangeCardStatus(theNganHang.MaSoThe);
-            return RedirectToAction("CardControl");
+            if (firebaseHelper.GetCustomerbyid(input.CCCD) != null && firebaseHelper.getCardTypeKeybyName(input.LoaiThe) != null)
+            {
+                customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
+                cardtypeKey = firebaseHelper.getCardTypeKeybyName(input.LoaiThe);
+                theNganHang = firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey);
+                if(firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey) != null)
+                {
+                    firebaseHelper.ChangeCardStatus(theNganHang.MaSoThe);
+                    return RedirectToAction("CardControl");
+                }
+            }
+            return sendCard(input);
         }
     }
 }
