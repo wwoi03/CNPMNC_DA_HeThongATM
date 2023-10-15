@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,13 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Map;
-
 public class WithdrawSavingsActivity extends AppCompatActivity {
 
-    TextView et_ruttientietkiem, et_congtientietkiem;
+    TextView tv_taikhoantietkiem, tv_sodutietkiem, tv_ngaygui, tv_kyhan, tv_taikhoanthuhuong;
     Button btn_xulyrutien;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,8 +32,11 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
     }
 
     public void initUI(){
-        et_congtientietkiem = findViewById(R.id.et_congtientietkiem);
-        et_ruttientietkiem = findViewById(R.id.et_ruttientietkiem);
+        tv_taikhoantietkiem = findViewById(R.id.tv_taikhoantietkiem);
+        tv_sodutietkiem = findViewById(R.id.tv_sodutietkiem);
+        tv_ngaygui = findViewById(R.id.tv_ngaygui);
+        tv_kyhan = findViewById(R.id.tv_kyhan);
+        tv_taikhoanthuhuong = findViewById(R.id.tv_taikhoanthuhuong);
         btn_xulyrutien = findViewById(R.id.btn_xulyruttietkiem);
     }
 
@@ -47,26 +47,44 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String loaiTaiKhoanKey = String.valueOf(dataSnapshot.child("LoaiTaiKhoan").getValue());
+                    DatabaseReference loaiTaiKhoanRef = FirebaseDatabase.getInstance().getReference().child("LoaiTaiKhoan").child(loaiTaiKhoanKey);
+                    loaiTaiKhoanRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if ("Tài khoản tiết kiệm".equals(snapshot.child("TenLoaiTaiKhoan").getValue(String.class))) {
+                                DatabaseReference guiTietKiemRef = FirebaseDatabase.getInstance().getReference().child("GuiTietKiem");
+                                guiTietKiemRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                                            Long taikhoantietkiem = childSnapshot.child("SoTaiKhoan").getValue(long.class);
+                                            String tktietkiem = String.valueOf(taikhoantietkiem);
+                                            tv_taikhoantietkiem.setText(tktietkiem);
 
-                    if (loaiTaiKhoanKey.equals("alfkhwriskjvb")) {
-                        DatabaseReference loaiTaiKhoanRef = FirebaseDatabase.getInstance().getReference().child("LoaiTaiKhoan").child(loaiTaiKhoanKey);
-                        loaiTaiKhoanRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                double sodu = dataSnapshot.child("SoDu").getValue(Long.class).doubleValue();
-                                String soDU = String.valueOf(sodu);
-                                et_ruttientietkiem.setText(soDU);
-                            }
+                                            String ngaygui = childSnapshot.child("NgayGui").getValue(String.class);
+                                            tv_ngaygui.setText(ngaygui);
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                                            Long taikhoannguon = childSnapshot.child("SoTaiKhoanNguon").getValue(long.class);
+                                            String tknguon = String.valueOf(taikhoannguon);
+                                            tv_taikhoanthuhuong.setText(tknguon);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+
+                                Long soDu = dataSnapshot.child("SoDu").getValue(long.class);
+                                String soDuTietKiem = String.valueOf(soDu);
+                                tv_sodutietkiem.setText(soDuTietKiem);
                             }
-                        });
-                    } else if (dataSnapshot.getKey().equals("-NgchXtP1Msn2nPXDFHr")){
-                        double sodu = dataSnapshot.child("SoDu").getValue(Long.class).doubleValue();
-                        String soDU = String.valueOf(sodu);
-                        et_congtientietkiem.setText(soDU);
-                    }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
                 }
             }
 
@@ -75,36 +93,58 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
             }
         });
 
+
         btn_xulyrutien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("TaiKhoanLienKet");
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                DatabaseReference taiKhoanLienKetRef = FirebaseDatabase.getInstance().getReference().child("TaiKhoanLienKet");
+
+                taiKhoanLienKetRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        double soDuAlfkhwriskjvb = 0;
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            String loaiTaiKhoanKey = String.valueOf(dataSnapshot.child("LoaiTaiKhoan").getValue());
-                            if (loaiTaiKhoanKey.equals("alfkhwriskjvb")) {
-                                // Lưu số dư hiện tại của tài khoản này
-                                soDuAlfkhwriskjvb = dataSnapshot.child("SoDu").getValue(Double.class);
-                                // Cập nhật số dư của tài khoản này thành 0
-                                dataSnapshot.getRef().child("SoDu").setValue(0);
-                            }
-                        }
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            if(dataSnapshot.getKey().equals("-NgchXtP1Msn2nPXDFHr")){
-                                    Double soDuNgchXtP1Msn2nPXDFHr = dataSnapshot.child("SoDu").getValue(Double.class);
-                                    dataSnapshot.getRef().child("SoDu").setValue(soDuNgchXtP1Msn2nPXDFHr + soDuAlfkhwriskjvb);
-                            }
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            String soTk = String.valueOf(dataSnapshot.child("SoTaiKhoan").getValue());
+                            String soDuString = String.valueOf(dataSnapshot.child("SoDu").getValue());
+                            String loaiTaiKhoankey = String.valueOf(dataSnapshot.child("LoaiTaiKhoan").getValue());
+                            DatabaseReference loaiTaiKhoanRef = FirebaseDatabase.getInstance().getReference().child("LoaiTaiKhoan").child(loaiTaiKhoankey);
+                            loaiTaiKhoanRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if ("Tài khoản tiết kiệm".equals(snapshot.child("TenLoaiTaiKhoan").getValue(String.class))){
+                                        DatabaseReference guiTietKiemRef = FirebaseDatabase.getInstance().getReference().child("GuiTietKiem");
+                                        guiTietKiemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for (DataSnapshot childSnapshot : snapshot.getChildren()){
+                                                    String soTkThuHuong = String.valueOf(childSnapshot.child("SoTaiKhoanNguon").getValue());
+                                                    if (soTkThuHuong.equals(soTk)) {
+
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
             }
         });
-}
     }
+}

@@ -6,36 +6,62 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/et_congtientietkiem"
+        android:id="@+id/tv_taikhoantietkiem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="34sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/et_ruttientietkiem"
+        android:id="@+id/tv_sodutietkiem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="@+id/et_congtientietkiem"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_taikhoantietkiem"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/et_congtientietkiem"
-        app:layout_constraintTop_toBottomOf="@+id/et_congtientietkiem" />
+        app:layout_constraintStart_toStartOf="@+id/tv_taikhoantietkiem"
+        app:layout_constraintTop_toBottomOf="@+id/tv_taikhoantietkiem" />
 
     <Button
         android:id="@+id/btn_xulyruttietkiem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
         android:text="Rút tiền"
-        app:layout_constraintEnd_toEndOf="@+id/et_ruttientietkiem"
-        app:layout_constraintStart_toStartOf="@+id/et_ruttientietkiem"
-        app:layout_constraintTop_toBottomOf="@+id/et_ruttientietkiem" />
+        app:layout_constraintStart_toStartOf="@+id/tv_taikhoanthuhuong"
+        app:layout_constraintTop_toBottomOf="@+id/tv_taikhoanthuhuong" />
+
+    <TextView
+        android:id="@+id/tv_ngaygui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/tv_sodutietkiem"
+        app:layout_constraintStart_toStartOf="@+id/tv_sodutietkiem"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sodutietkiem" />
+
+    <TextView
+        android:id="@+id/tv_kyhan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tv_ngaygui"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ngaygui" />
+
+    <TextView
+        android:id="@+id/tv_taikhoanthuhuong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tv_kyhan"
+        app:layout_constraintTop_toBottomOf="@+id/tv_kyhan" />
 </androidx.constraintlayout.widget.ConstraintLayout>
