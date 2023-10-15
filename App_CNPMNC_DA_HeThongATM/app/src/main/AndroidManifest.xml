@@ -48,6 +48,9 @@
             android:name=".Activities.BeneficiaryManagementActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.HistoryInterestRateActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.ManageAccountAndCardActivity"
             android:exported="false" />
         <activity
@@ -59,6 +62,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.app_cnpmnc_da_hethongatm.Activities.CreateSavingAccountActivity"
+            android:label="Create Saving Account Activity">
         </activity>
 
         <meta-data

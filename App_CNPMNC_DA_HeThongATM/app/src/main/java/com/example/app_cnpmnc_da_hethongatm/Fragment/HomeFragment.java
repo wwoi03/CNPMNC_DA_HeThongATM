@@ -1,6 +1,7 @@
 package com.example.app_cnpmnc_da_hethongatm.Fragment;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,11 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.CreateSavingAccountActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.HistoryInterestRateActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
@@ -88,6 +93,8 @@ public class HomeFragment extends Fragment {
     Handler handler = new Handler();
     Runnable runnable;
     CardView cvTransferMoney, cvManageAccountAndCard;
+    LinearLayout create;
+    ImageView imghistory;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -103,6 +110,9 @@ public class HomeFragment extends Fragment {
         ci3 = view.findViewById(R.id.ci3);
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
+        create=view.findViewById(R.id.create);
+        imghistory=view.findViewById(R.id.imghistory);
+
     }
 
     // Khởi tạo
@@ -160,6 +170,21 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateSavingAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+        imghistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HistoryInterestRateActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     // lấy danh sách image slide

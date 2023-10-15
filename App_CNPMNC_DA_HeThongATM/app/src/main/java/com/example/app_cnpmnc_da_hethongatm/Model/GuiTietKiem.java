@@ -1,13 +1,12 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
+import android.widget.EditText;
+
 public class GuiTietKiem {
     private long SoTaiKhoan; // số tài khoản tiết kiệm
     private long TaiKhoanNguon;
     private String NgayGui;
     private String KyHan; // mã lãi suất
-
-    public GuiTietKiem() {
-    }
 
     public GuiTietKiem(long soTaiKhoan, long taiKhoanNguon, String ngayGui, String kyHan) {
         SoTaiKhoan = soTaiKhoan;

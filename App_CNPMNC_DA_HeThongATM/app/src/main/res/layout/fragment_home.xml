@@ -115,6 +115,7 @@
                         app:cardBackgroundColor="@color/primary_blue_color">
 
                         <LinearLayout
+                            android:id="@+id/create"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal"
@@ -145,6 +146,7 @@
                                 android:layout_weight="1">
 
                                 <ImageView
+                                    android:id="@+id/imghistory"
                                     android:layout_width="30dp"
                                     android:layout_height="40dp"
                                     android:src="@drawable/sack_dollar_solid"
