@@ -75,7 +75,7 @@
                                 <p> Hành Động</p>
                             </div>
                         </div>
-                        <div class="oxd-table-body" id ="product-list">
+                        <div class="oxd-table-body" id ="Card-list">
                             @foreach(var item in listcard)
                             {
                                 <div class="backgr oxd-table-row oxd-table-row--with-border">
@@ -103,8 +103,8 @@
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                         <div>@item.TenLoaiThe</div>
                                     </div>
-                                    <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">                                       
-                                        <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM">   <i class="fa-solid fa-circle-info">  </i></a>
+                                    <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">
+                                        <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM" asp-route-MaSoThe="@item.MaSoThe">   <i class="fa-solid fa-circle-info">  </i></a>
                                         <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM">  <i class="fa-solid fa-pen-to-square"></i></a>
                                         
                                     </div>
@@ -114,7 +114,7 @@
 
                            
                         </div>
-                        <div class="oxd-table-body" id="productListContainer">
+                        <div class="oxd-table-body" id="CardListContainer">
                             <!-- Partial View sẽ được hiển thị ở đây -->
                         </div>
                     </div>

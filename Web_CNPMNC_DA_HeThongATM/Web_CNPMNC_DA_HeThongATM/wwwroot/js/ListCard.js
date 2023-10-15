@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Bắt sự kiện khi người dùng thực hiện tìm kiếm
     $('#search-button').on('click', function () {
-        document.getElementById('product-list').style.display = 'none';
+        document.getElementById('Card-list').style.display = 'none';
         let values = document.getElementById('search-input').value;
         console.log(values);
         if (values =="") {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data: { searchValue: values },
                 success: function (data) {
                     console.log(data);
-                    $('#productListContainer').html(data);
+                    $('#CardListContainer').html(data);
                 }
             });
         }

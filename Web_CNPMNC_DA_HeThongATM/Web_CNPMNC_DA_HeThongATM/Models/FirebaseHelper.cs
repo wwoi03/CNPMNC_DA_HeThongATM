@@ -41,7 +41,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             try
             {
                 string macuabomay = "autothention";
-                FirebaseResponse response =  client.Set("KhachHang/"+custommer.CCCD, custommer);
+                FirebaseResponse response =  client.Push("KhachHang", custommer);
                 if (response != null)
                 {
 
@@ -157,14 +157,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             FirebaseResponse response = client.Get("KhachHang");
             if (response != null)
             {
-                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
-
-                var customer = data.Values.FirstOrDefault(kh => kh.CCCD == values);
-
-                if (customer != null)
+                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);        
+                if(data.TryGetValue(values, out KhachHang khachHang))
                 {
-                    return customer.TenKhachHang;
+                    return khachHang.TenKhachHang;
                 }
+                //var customer = data.Values.FirstOrDefault(kh => kh.CCCD == values);
+
+                //if (customer != null)
+                //{
+                //    return customer.TenKhachHang;
+                //}
             }
             return "";
         }
@@ -261,7 +264,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             Random random = new Random();
             string digits = "";
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 6; i++)
             {
                 int randomNumber = random.Next(0, 10); // Số ngẫu nhiên từ 0 đến 9
                 digits += randomNumber.ToString();
@@ -344,13 +347,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //tạo thẻ ngân hàng
         public void CreateCard(TheNganHangViewModel card, string keys)
         {
-            if (keys == null)
-            {
-                return;
-            }
-            else
-            {
-                // FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
+               card.MaKH = keys;
+              // FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
                 FirebaseResponse firebaseResponse = client.Push("TheNganHang", card);
                 if (firebaseResponse != null)
                 {
@@ -360,7 +358,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 {
                     Console.WriteLine(firebaseResponse.StatusCode);
                 }
-            }
+            
         }
         
 
@@ -399,7 +397,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 Dictionary<string, LoaiTheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiTheNganHang>>(response.Body);
 
                 var nametypes = data.Values.FirstOrDefault(kh => kh.MaLoaiTNH == values);
-
+                
                 if (nametypes != null)
                 {
                     return nametypes.TenTNH;
@@ -434,6 +432,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
 
             // Trả về null nếu không tìm thấy khách hàng
+            return null;
+        }
+
+
+        //lấy thẻ theo id
+        public TheNganHang GetTheNganHangById(long masothe)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if(response != null)
+            {
+                Dictionary<string,TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                TheNganHang thenganhang = data.Values.FirstOrDefault(p => p.MaSoThe == masothe);
+                return thenganhang;
+            }
             return null;
         }
 

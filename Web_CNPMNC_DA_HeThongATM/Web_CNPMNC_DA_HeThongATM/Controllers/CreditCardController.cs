@@ -48,9 +48,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             KhachHang custommer = firebaseHelper.GetCustomerbyid(cardViewModel.MaKH);
             if (cardViewModel == null || custommer == null) return RedirectToAction("Index");
             //đẩy lên database
-            cardViewModel.MaDangNhap = "Nguyễn Lê Quốc Thuận";
+            cardViewModel.MaDangNhap = "1234";
             cardViewModel.TinhTrangThe = 0;
-            firebaseHelper.CreateCard(cardViewModel, cardViewModel.MaKH);
+            firebaseHelper.CreateCard(cardViewModel, firebaseHelper.GetKeysBycccd(cardViewModel.MaKH));
             firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPin, custommer.TenKhachHang, cardViewModel.MaSoThe));
             TempData["SuccessMessage"] = "You successfully created a card.";
             return RedirectToAction("Index");
@@ -87,12 +87,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View(listThes);
         }
 
-        //Chỉnh sửa thẻ ngân hàng
+        //Chỉnh sửa thẻ ngân hàng {load form}
         [HttpGet]
-        public IActionResult EditCardATM() { 
+        public IActionResult EditCardATM(long MaSoThe) { 
 
+            TheNganHang theNganHang = firebaseHelper.GetTheNganHangById(MaSoThe);
+            ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(theNganHang.MaKH);
+            ViewBag.Details = theNganHang;
             return View();
         }
+
+
+        //Chỉnh sửa the ngân hàng {nhận dữ liệu}
+        [HttpPost]
+        public IActionResult EditCardATM(TheNganHangViewModel theNganHang)
+        {
+            return View();
+        }
+
+
         //tìm kiếm theo cccd theo sdt theo masothe
         public IActionResult SearchCard(string searchValue)
         {

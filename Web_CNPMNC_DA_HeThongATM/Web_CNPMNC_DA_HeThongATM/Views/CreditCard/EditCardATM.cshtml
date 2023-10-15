@@ -6,93 +6,92 @@
     Layout = "_LayoutMain";
 }
 <body>
-
-
-    <div class="container">
-
-        <div class="card-container">
-
-            <div class="front">
-                <div class="image">
-                    <img src="/images/chip.png" alt="">
-                    <img src="/images/visa.png" alt="">
-                </div>
-                <div class="card-number-box">################</div>
-
-                <div class="flexbox">
-                    <div class="box">
-                        <div class="card-name-customer">
-                        </div>
-                        <div class="card-holder-name">
-                        </div>
-                    </div>
-                    <div class="box">
-                        <span>expires</span>
-                        <div class="expiration">
-                            <span class="exp-month">mm</span>
-                            <span class="exp-year">yy</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="container" >     
+        <form method="post" asp-controller="CreditCard" asp-action="EditCardATM" style="padding-top:0px ; background-color:#befeee">
+            <div class="inputBox">
+                <span>
+                   Chỉnh Sửa thẻ
+                   
+                </span>
+               
             </div>
-
-            <div class="back">
-                <div class="stripe"></div>
-                <div class="box">
-                    <span>cvv</span>
-                    <div class="cvv-box"></div>
-                    <img src="image/visa.png" alt="">
-                </div>
-            </div>
-
-        </div>
-
-        <form method="post" asp-controller="CreditCard" asp-action="CreateCard">
             <div class="flexbox">
+
                 <div class="inputBox">
-                    <span>Căn cước công dân
+                    <span>Mã Khách Hàng
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
+                    <input readonly value="@ViewBag.Details.MaKH" type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
                 </div>
                 <div class="inputBox">
                     <span>Tên Khách Hàng
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <input type="text" maxlength="16" class="tenkhachhang">
-                </div>
+                    <input readonly value="@ViewBag.TenKhachHang" type="text" maxlength="16" class="tenkhachhang">
+                </div>             
             </div>
             <div class="flexbox">
-                <div class="inputBox">
-                    <span>Số Điện Thoại
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </span>
-                    <input type="text" maxlength="16" class="sdt" asp-for="SDTDangKy">
-                </div>
                 <div class="inputBox">
                     <span>Ngày Mở Thẻ
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <input type="text" maxlength="16" asp-for="NgayMoThe">
+                    <input readonly value="@ViewBag.Details.NgayMoThe" type="text" maxlength="16" class="sdt" asp-for="SDTDangKy">
+                </div>
+                <div class="inputBox">
+                    <span>Ngày Hết Hạn
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input value="@ViewBag.Details.NgayHetHan" type="text" maxlength="16" asp-for="NgayMoThe">
                 </div>
             </div>
             <div class="flexbox">
                 <div class="inputBox">
-                    <span>số thẻ
+                    <span>Mã Pin
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <input type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
+                    <input value="@ViewBag.Details.MaPin" type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
                 </div>
                 <div class="inputBox">
-                    <span>số tài khoản
+                    <span>Mã Số Thẻ
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <input type="text" class="card-holder-input" asp-for="MaSoThe">
+                    <input value="@ViewBag.Details.MaSoThe" type="text" class="card-holder-input" asp-for="MaSoThe">
                     
-                </div>
-             
-               
+                </div>            
             </div>
+            <div class="flexbox">
+                <div class="inputBox">
+                    <span>
+                        Mã Đăng Nhập
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input value="@ViewBag.Details.MaDangNhap" type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
+                </div>
+                <div class="inputBox">
+                    <span>
+                        Tình trạng thẻ
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    @if (ViewBag.Details.TinhTrangThe == 0)
+                    {
+                        <select asp-for="LoaiThe" class="type-card">
+                            <option  selected disabled>Chưa Khóa</option>
+                            <option value="0">Khóa Thẻ</option>
+                            <option value="1">Mở Khóa</option>
+                        </select>
+                       }
+                    else{
+                        <select asp-for="LoaiThe" class="type-card">
+                            <option  selected disabled>Đã Khóa</option>
+                            <option value="0">Khóa Thẻ</option>
+                            <option value="1">Mở Khóa</option>
+                        </select>
+                       }
+                        
+
+                </div>
+            </div>
+
             <div class="flexbox">
                 <a asp-controller="CreditCard" asp-action="ListCard" class="btn btn-danger submit-btn">
                     <i class="fa fa-long-arrow-left"></i> BACK
@@ -105,10 +104,6 @@
         </form>
 
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
-
-    </script>
 </body>
 
 
