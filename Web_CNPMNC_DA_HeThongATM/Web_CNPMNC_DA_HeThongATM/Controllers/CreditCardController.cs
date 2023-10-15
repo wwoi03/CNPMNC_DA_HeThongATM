@@ -70,9 +70,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult sendCard([FromBody]inputDatacuaHao input)
         {
-            if (input.CCCD != null && input.LoaiThe != null)
+            if (firebaseHelper.GetCustomerbyid(input.CCCD).TenKhachHang != null && firebaseHelper.getCardTypeKeybyName(input.LoaiThe)!=null)
             {
-                
                 tenKH = firebaseHelper.GetCustomerbyid(input.CCCD).TenKhachHang;
                 customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
                 cardtypeKey = firebaseHelper.getCardTypeKeybyName(input.LoaiThe);
@@ -80,10 +79,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
             else
             {
-                tenKH = "Không tìm thấy";
-                customerKey = firebaseHelper.GetKeysBycccd("3333");
-                cardtypeKey = firebaseHelper.getCardTypeKeybyName("Thẻ ghi nợ");
-                theNganHang = firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey);
+                return Json("Không tìm thấy");
             }
             CardControlViewModel cardInfor = new CardControlViewModel
             {
@@ -100,9 +96,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
             cardtypeKey = firebaseHelper.getCardTypeKeybyName(input.LoaiThe);
             theNganHang = firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey);
-
             firebaseHelper.ChangeCardStatus(theNganHang.MaSoThe);
-            return RedirectToAction("Index");
+            return RedirectToAction("CardControl");
         }
     }
 }

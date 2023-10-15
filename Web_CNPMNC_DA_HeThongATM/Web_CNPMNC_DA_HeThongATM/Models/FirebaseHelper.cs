@@ -606,7 +606,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             {
                 string datetime = $"{item.NgayGiaoDich} {item.GioGiaoDich}";
                 DateTime date = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                LichSuGiaoDichViewModel ls = new LichSuGiaoDichViewModel(item,"huhu",date, "bbb");
+                string tenKH = getCusbyKey(getCardbyID(getAccountbyKey(item.SoTaiKhoan).MaSoThe).MaKH).TenKhachHang;
+                string tenKH2 = getCusbyKey(getCardbyID(getAccountbyKey(item.TaiKhoanNhan).MaSoThe).MaKH).TenKhachHang;
+                LichSuGiaoDichViewModel ls = new LichSuGiaoDichViewModel(item,"Chuyển khoản",date, tenKH,tenKH2);
                 LSGD.Add(ls);
                 
             }
@@ -620,7 +622,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             List<LichSuGiaoDichViewModel> LSGD = new List<LichSuGiaoDichViewModel>();
            
-            string tenKH= GetCustomerbyid(getCardbyID(getAccountbyKey(stk).MaSoThe).MaKH).TenKhachHang;
+            string tenKH= getCusbyKey(getCardbyID(getAccountbyKey(stk).MaSoThe).MaKH).TenKhachHang;
             foreach (LichSuGiaoDich item in getListHistorybySTK(stk))
             {
                 string datetime = $"{item.NgayGiaoDich} {item.GioGiaoDich}";
@@ -628,14 +630,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 if (date >= from && date <= to)
                 {
                     string status="";
+                    string tenKH2 = "";
                     if (stk == item.SoTaiKhoan)
                     {
-                        status = "Giảm";
+                        tenKH2=getCusbyKey(getCardbyID(getAccountbyKey(item.TaiKhoanNhan).MaSoThe).MaKH).TenKhachHang;
+                        status = "Chuyển đi";
                     }
                     else if (stk == item.TaiKhoanNhan)
-                        status = "Tăng";
-                    
-                    LichSuGiaoDichViewModel ls = new LichSuGiaoDichViewModel(item, status,date,tenKH);
+                    {
+                        status = "Nhận về";
+                        tenKH2 = getCusbyKey(getCardbyID(getAccountbyKey(item.SoTaiKhoan).MaSoThe).MaKH).TenKhachHang;
+                    }
+
+                    LichSuGiaoDichViewModel ls = new LichSuGiaoDichViewModel(item, status,date,tenKH,tenKH2);
                     LSGD.Add(ls);
                 }
             }
@@ -643,13 +650,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             LSGD = LSGD.OrderBy(item => item.date).ToList();
             return LSGD;
         }
-     
+
         ////Kiem tra lich su giao dich
         //public bool checkGiaoDich(long stk)
         //{
         //    LichSuGiaoDich gd = getHistorybySTK(stk);
         //    if(gd.SoTaiKhoan)
         //}
+        //Lay customer by key
+        public KhachHang getCusbyKey(string key)
+        {
+            FirebaseResponse response = client.Get("KhachHang");
+            if (response != null)
+            {
+                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
+                KhachHang khachHang = data[key];
+                if (khachHang != null)
+                    return khachHang;
+            }
+            return null;
+        }
     }
 }
 
