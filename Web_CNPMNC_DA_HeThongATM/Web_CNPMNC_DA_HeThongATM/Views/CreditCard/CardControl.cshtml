@@ -151,6 +151,12 @@
                     else{
                         // Hiển thị nút xác nhận khi có thông báo không tìm thấy
                         document.getElementById('khongtimthay').style.display = 'block';
+                        document.getElementById("cccd").value = '';
+                        document.getElementById("tenkhachhang").value = '';
+                        document.getElementById("masothe").value = '';
+                        document.getElementById("tinhtrangthe").value = '';
+                        document.getElementById("ngaymothe").value = '';
+                        document.getElementById("ngayhethan").value = '';
                     }
                    
                 },
@@ -162,12 +168,7 @@
         }
         function handlerNotFound(){
             document.getElementById('khongtimthay').style.display ='none';
-            document.getElementById("cccd").value = '';
-            document.getElementById("tenkhachhang").value = '';
-            document.getElementById("masothe").value = '';
-            document.getElementById("tinhtrangthe").value = '';
-            document.getElementById("ngaymothe").value = '';
-            document.getElementById("ngayhethan").value = '';
+           
         }
     </script>
 
