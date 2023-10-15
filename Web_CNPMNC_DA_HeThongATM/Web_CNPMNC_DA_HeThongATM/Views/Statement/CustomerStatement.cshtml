@@ -383,6 +383,10 @@
     </div>
     @*<script src="/js/ListCard.js"></script>*@
     <script>
+        if ("@check" === "undefined") {
+            document.getElementById('notfound').style.display = 'block';
+            document.getElementById("search-input").value = "";
+        }
 
         if (document.getElementById("search-input").value === ""){
             document.getElementById("search-button").disabled = true;
@@ -392,10 +396,8 @@
             document.getElementById("fromDate").value = "@Model.fromDate";
             document.getElementById("toDate").value = "@Model.toDate";
         }
-        if ("@check" === "undefined") {
-            document.getElementById('notfound').style.display = 'block';
-            document.getElementById("search-input").value = "";
-        }
+
+        
         function handlerNotFound() {
             document.getElementById('notfound').style.display = 'none';
         }
