@@ -70,12 +70,28 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult sendCard([FromBody]inputDatacuaHao input)
         {
+            string tinhtrang = "undefined";
             if (firebaseHelper.GetCustomerbyid(input.CCCD) != null && firebaseHelper.getCardTypeKeybyName(input.LoaiThe)!=null)
             {
                 tenKH = firebaseHelper.GetCustomerbyid(input.CCCD).TenKhachHang;
                 customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
                 cardtypeKey = firebaseHelper.getCardTypeKeybyName(input.LoaiThe);
                 theNganHang = firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey);
+                if (theNganHang != null)
+                {
+                    switch (theNganHang.TinhTrangThe)
+                    {
+                        case 0:
+                            tinhtrang = "Hoạt động";
+                            break;
+                        case 1:
+                            tinhtrang = "Người dùng đang";
+                            break;
+                        case 2:
+                            tinhtrang = "Ngân hàng đang khóa";
+                            break;
+                    }
+                }
             }
             else
             {
@@ -87,6 +103,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 CCCD = input.CCCD,
                 LoaiThe = input.LoaiThe,
                 tenKH = tenKH,
+                TinhTrang = tinhtrang
             }; return Json(cardInfor);
 
         }

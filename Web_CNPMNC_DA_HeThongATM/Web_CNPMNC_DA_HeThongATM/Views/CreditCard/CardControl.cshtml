@@ -21,12 +21,12 @@
                 <div id="pay-invoice">
                     <div class="card-body">
                         <div class="card-title">
-                            <h3 class="text-center">Thông tin thẻ</h3>
+                            <h3 class="text-center">Mở/Khóa thẻ</h3>
                         </div>
                                               @*****************************************************************@
                         <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:-20px;display:none">
-                            <h4 class="alert-heading">Không tìm thấy!</h4>
-                            <p>Thông tin thẻ bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
+                            <h4 class="alert-heading">Không tìm thấy thông tin khách hàng!</h4>
+                            <p>Thông tin khách hàng bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
                             <hr>
                             <button id="notfound" class="btn btn-danger" onclick="handlerNotFound()" >Đã hiểu</button>
                         </div>
@@ -140,9 +140,15 @@
                         document.getElementById("loaithe").value = data.loaiThe;
                         document.getElementById("tenkhachhang").value = data.tenKH;
                         document.getElementById("masothe").value = data.theNganHang?.maSoThe;
-                        document.getElementById("tinhtrangthe").value = data.theNganHang?.tinhTrangThe;
+                        document.getElementById("tinhtrangthe").value = data.tinhTrang;
                         document.getElementById("ngaymothe").value = data.theNganHang?.ngayMoThe;
                         document.getElementById("ngayhethan").value = data.theNganHang?.ngayHetHan;
+                        if (data.tinhTrang === "undefined") {
+                            document.getElementById("masothe").value = 'Khách hàng không sở hữu loại thẻ này';
+                            document.getElementById("tinhtrangthe").value = 'Khách hàng không sở hữu loại thẻ này';
+                            document.getElementById("ngaymothe").value = '';
+                            document.getElementById("ngayhethan").value = '';
+                        }
                         // Gọi callback với dữ liệu trả về
                         if (typeof callback === "function") {
                             callback(data);

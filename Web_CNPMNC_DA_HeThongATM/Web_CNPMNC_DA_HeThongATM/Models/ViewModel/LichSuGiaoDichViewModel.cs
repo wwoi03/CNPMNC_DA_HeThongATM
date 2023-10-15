@@ -13,6 +13,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
             this.name2 = name2;
         }
         public LichSuGiaoDich LSGD { get; set; }
+        public double SoDu { get; set; }
         public string status { get; set; }
         public DateTime date { get; set; }
         public string name1 { get; set; }

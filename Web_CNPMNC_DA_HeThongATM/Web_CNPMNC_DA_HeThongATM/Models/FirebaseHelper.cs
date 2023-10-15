@@ -621,13 +621,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         public List<LichSuGiaoDichViewModel> getLSGD(long stk, DateTime from, DateTime to)
         {
             List<LichSuGiaoDichViewModel> LSGD = new List<LichSuGiaoDichViewModel>();
-           
-            string tenKH= getCusbyKey(getCardbyID(getAccountbyKey(stk).MaSoThe).MaKH).TenKhachHang;
+            DateTime fromDate = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
+            DateTime toDate = new DateTime(to.Year, to.Month, to.Day, 23, 59, 59);
+
+            string tenKH = getCusbyKey(getCardbyID(getAccountbyKey(stk).MaSoThe).MaKH).TenKhachHang;
             foreach (LichSuGiaoDich item in getListHistorybySTK(stk))
             {
                 string datetime = $"{item.NgayGiaoDich} {item.GioGiaoDich}";
                 DateTime date = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                if (date >= from && date <= to)
+                if (date >= fromDate && date <= toDate)
                 {
                     string status="";
                     string tenKH2 = "";

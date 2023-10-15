@@ -1,9 +1,12 @@
-﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 @{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     var listLSGD = ViewBag.LSDG;
+    var check = ViewBag.check;
 }
 @model CustomerStatementViewModel
+
+
 <head>
     <style>
         .topform {
@@ -265,27 +268,41 @@
             @*<div class="topform orangehrm-horizontal-padding orangehrm-vertical-padding">*@
                 <div class="card-search col col-md-4">
                     <label for="fromDate">Từ ngày:</label>
-                        <input asp-for="fromDate" type="date" id="fromDate" name="fromDate">
+                        <input asp-for="fromDate" type="date" id="fromDate" name="fromDate" onchange="check()">
                    
                 </div>
                 <div class="card-search col col-md-">
                     <label  for="toDate">Đến ngày:</label>
-                        <input asp-for="toDate" type="date" id="toDate" name="toDate">
+                    <input asp-for="toDate" type="date" id="toDate" name="toDate" onchange="check()">
                 </div>
                 <div class="card-search col col-md-4">
                     <div class="input-group">
                         
-                        <input asp-for="cccd" type="text" id="search-input" class="form-control">
+                        <input asp-for="cccd" type="text" id="search-input" class="form-control" placeholder="Vui lòng nhập căn cước công dân" onchange="check()">
                         <div class="input-group-btn">
                                 <button class="btn btn-info" id="search-button" asp-action="CustomerStatement" asp-controller="Statement" formmethod="post">
-                                <i class="fa fa-search"></i> Search
+                                <i class="fa fa-search"></i> Truy xuất
                             </button>
                         </div>
                     </div>
                 </div>
             @*</div>*@
             </form>
+            @*************************************************************************@
+            <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:25%;opacity:0.9;display:none">
+                <h4 class="alert-heading">Kiểm tra lại thông tin!</h4>
+                <p>Ngày bắt đầu không được lớn hơn ngày kết thúc, phải nhập căn cước công dân!</p>
+                <hr>
+            </div>
+            @*****************************************************************@
+            <div class="alert alert-danger" id="notfound" role="alert" style="position:absolute;margin-left:25%;opacity:0.8;display:none">
+                <h4 class="alert-heading">Không tìm thấy thông tin khách hàng!</h4>
+                <p>Thông tin khách hàng bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
+                <hr>
+                <button id="notfound-btn" class="btn btn-danger" onclick="handlerNotFound()">Đã hiểu</button>
+            </div>
 
+            @********************************************************************@
             <div class="orangehrm-container">
                 <div row-decorator="oxd-table-decorator-card">
                     <div>
@@ -365,4 +382,40 @@
         
     </div>
     @*<script src="/js/ListCard.js"></script>*@
+    <script>
+
+        if (document.getElementById("search-input").value === ""){
+            document.getElementById("search-button").disabled = true;
+        }
+        
+        if (@Model !== null) {
+            document.getElementById("fromDate").value = "@Model.fromDate";
+            document.getElementById("toDate").value = "@Model.toDate";
+        }
+        if ("@check" === "undefined") {
+            document.getElementById('notfound').style.display = 'block';
+            document.getElementById("search-input").value = "";
+        }
+        function handlerNotFound() {
+            document.getElementById('notfound').style.display = 'none';
+        }
+        function check() {
+            var from = document.getElementById("fromDate").value;
+            var to = document.getElementById("toDate").value;
+            var search = document.getElementById("search-input").value;
+
+            var fromDate =new Date(from);
+            var toDate =new Date(to);
+
+            if (fromDate > toDate ) {
+                document.getElementById('khongtimthay').style.display = 'block';
+                document.getElementById("search-button").disabled = true;
+            }
+            else if(fromDate <= toDate && search !== ""){
+                document.getElementById('khongtimthay').style.display = 'none';
+                document.getElementById("search-button").disabled = false;
+            }
+        }
+
+    </script>
 </body>

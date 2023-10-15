@@ -11,25 +11,45 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
         public IActionResult CustomerStatement()
         {
-            List<LichSuGiaoDichViewModel> LSDG = firebaseHelper.danhsachLSGD();
+            //TuanDao 0 cho
+            //List<LichSuGiaoDichViewModel> LSDG = firebaseHelper.danhsachLSGD();
+            List<LichSuGiaoDichViewModel> LSDG = new List<LichSuGiaoDichViewModel>();
             ViewBag.LSDG = LSDG;
-            return View();
+            ViewBag.check = "ok";
+            CustomerStatementViewModel cus = new CustomerStatementViewModel();
+            cus.toDate= DateTime.Now.ToString("yyyy-MM-dd");
+            cus.fromDate = DateTime.Now.ToString("yyyy-MM-dd");
+            return View(cus);
         }
 
         [HttpPost]
         public IActionResult CustomerStatement(CustomerStatementViewModel cus)
         {
+            
             if (ModelState.IsValid)
             {
-                string cusKey = firebaseHelper.GetKeysBycccd(cus.cccd);
-                long masothe = firebaseHelper.getCardbyCusKeys(cusKey).MaSoThe;
-                long stk = firebaseHelper.getAccountbyCardKey(masothe).SoTaiKhoan;
-
-                List<LichSuGiaoDichViewModel> LSDG = firebaseHelper.getLSGD(stk, DateTime.Parse(cus.fromDate) ,DateTime.Parse(cus.toDate));
-                ViewBag.LSDG = LSDG;
+                
+                if (firebaseHelper.GetCustomerbyid(cus.cccd)!=null)
+                {
+                    string cusKey = firebaseHelper.GetKeysBycccd(cus.cccd);
+                    long masothe = firebaseHelper.getCardbyCusKeys(cusKey).MaSoThe;
+                    long stk = firebaseHelper.getAccountbyCardKey(masothe).SoTaiKhoan;
+                    List<LichSuGiaoDichViewModel> LSDG = firebaseHelper.getLSGD(stk, DateTime.Parse(cus.fromDate), DateTime.Parse(cus.toDate));
+                    ViewBag.LSDG = LSDG;
+                    ViewBag.check = "ok";
+                }
+                else
+                {
+                    List<LichSuGiaoDichViewModel> LSDG = new List<LichSuGiaoDichViewModel>();
+                    ViewBag.LSDG = LSDG;
+                    ViewBag.check = "undefined";
+                    return View(cus);
+                }
                 return View(cus);
             }
             return View(cus);
         }
+
+        
     }
 }
