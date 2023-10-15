@@ -10,14 +10,25 @@
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">Danh sách khách hàng</strong>
+                <div class="card-search col col-md-8" style="margin-right:100px">
+                    <div class="input-group">
+                        <input type="text" id="search-input" class="form-control">
+                        <div class="input-group-btn">
+                            <button class="btn btn-info" id="search-button">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="table-stats order-table ov-h">
-                <table class="table ">
+            <div class="table-stats order-table ov-h" id="CustomerList">
+
+                <table class="table">
                     <thead>
                         <tr>
                             <th style="width:10%">Mã</th>
                             <th style="width:15%">Tên</th>
-                            <th style="width:15%">CCCD</th>
+                            <th style="width:15%">NgayTao</th>
                             <th style="width:15%%">Email</th>
                             <th style="width:10%">SDT</th>
                             <th style="width:15%%">Giới Tính</th>
@@ -25,8 +36,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in custommerList){
-                        <tr>
+                        @foreach (var item in custommerList)
+                        {
+
+                            <tr>
                             <tr>
                                 <td>@item.CCCD</td>
                                 <td>@item.TenKhachHang</td>
@@ -36,11 +49,14 @@
                                 <td>@item.GioiTinh</td>
                                 <td>@item.DiaChi</td>
                             </tr>
-                        </tr>
+                            </tr>
                         }
                     </tbody>
                 </table>
-            </div> <!-- /.table-stats -->
+            </div>
+            <div class="table-stats order-table ov-h" id="SearchCustomerID">
+            </div><!-- /.table-stats -->
         </div>
     </div>
+    <script src="/js/ListCustomer.js"></script>
 </body>
