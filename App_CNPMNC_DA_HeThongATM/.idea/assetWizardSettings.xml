@@ -18,11 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-<<<<<<< HEAD
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/notifications/baseline_notifications_24.xml" />
-=======
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_drop_down/baseline_arrow_drop_down_24.xml" />
->>>>>>> s1-Hao-MoKhoaTK
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_back/baseline_arrow_back_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -32,13 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-<<<<<<< HEAD
-                            <entry key="outputName" value="baseline_notifications_24" />
-                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\sack-dollar-solid.svg" />
-=======
-                            <entry key="outputName" value="baseline_arrow_drop_down_24" />
-                            <entry key="sourceFile" value="H:\HK1nam3\CNPMNC\Sprint2\CNPMNC_DA_HeThongATM\App_CNPMNC_DA_HeThongATM" />
->>>>>>> s1-Hao-MoKhoaTK
+                            <entry key="outputName" value="baseline_arrow_back_24" />
+                            <entry key="sourceFile" value="D:\ATM\CNPMNC_DA_HeThongATM\App_CNPMNC_DA_HeThongATM" />
                           </map>
                         </option>
                       </PersistentState>

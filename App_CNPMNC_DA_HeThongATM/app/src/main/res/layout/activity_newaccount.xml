@@ -1,58 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@color/teal_200"
-    android:layout_marginTop="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
     tools:context=".Activities.NewaccountActivity">
     >
+    <ImageView
+        android:id="@+id/ivlogo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo"
+        android:layout_margin="100dp"/>
+
     <TextView
-        android:id="@+id/tentaikhoan"
+        android:id="@+id/tvHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TÊN TÀI KHOẢN"
+        android:text="New Beauty Account"
+        android:textSize="30sp"
+        android:textColor="@color/teal_700"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivlogo"
+        android:layout_margin="32dp"
+        android:gravity="center"
+        android:imeOptions="actionDone"
+        android:selectAllOnFocus="true"/>
+
+    <EditText
+        android:id="@+id/edUserName"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="User Name"
+        android:background="#a8ecdd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader"
+        android:layout_margin="16dp"
+        android:hint="User Name"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:padding="8dp"
+        android:drawablePadding="4dp"
+        android:selectAllOnFocus="true"
+        android:drawableLeft="@drawable/baseline_account_box_24"
         />
     <EditText
+        android:id="@+id/edPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tên tài khoản"
-        android:textColor="@color/black"
-        android:inputType="textEmailAddress"
-        />
-    <TextView
-        android:id="@+id/nhapsotaikhoan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NHẬP SỐ TÀI KHOẢN"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nhập số tài khoản"
-        android:textColor="@color/black"
+        android:layout_height="60dp"
+        android:background="#a8ecdd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edUserName"
+        android:layout_margin="16dp"
+        android:hint="Số tài khoản"
         android:inputType="textPassword"
-        />
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:drawableLeft="@drawable/baseline_account_box_24"/>
 
-    <Button
-        android:id="@+id/btnlogin"
-        android:layout_width="330dp"
-        android:layout_height="63dp"
-        android:layout_gravity="center"
-        android:text="LOGIN" />
-    <Button
-        android:id="@+id/btnregister"
-        android:layout_width="330dp"
-        android:layout_height="63dp"
-        android:layout_gravity="center"
-        android:text="TÌM KIẾM" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/edPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btlogin"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textSize="20dp"
+            android:backgroundTint="#009688"/>
+        <Button
+            android:id="@+id/btregister"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="TÌM KIẾM"
+            android:textSize="20dp"
+            android:backgroundTint="#009688"
+            />
 
-
-
-</LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

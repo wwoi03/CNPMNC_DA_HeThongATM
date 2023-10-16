@@ -1,50 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@color/teal_200"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
     tools:context=".Activities.RegisterActivity">
-    >
+
     <TextView
-        android:id="@+id/tentaikhoan"
+        android:id="@+id/tvHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TÊN TÀI KHOẢN"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="Thông tin Hồ sơ"
+        android:textSize="30sp"
+        android:textColor="@color/teal_700"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:id="@+id/edUserNameRe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Họ Và Tên"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader"
         />
     <EditText
+        android:id="@+id/edPasswordRe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên tài khoản"
-        android:textColor="@color/black"
-        android:inputType="textEmailAddress"
-        />
-    <TextView
-        android:id="@+id/btnnhapsotaikhoan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NHẬP SỐ TÀI KHOẢN"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nhập số tài khoản"
-        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        android:hint="Số tài khoản đẹp"
+        android:imeOptions="actionNext"
         android:inputType="textPassword"
-        />
-
+        android:selectAllOnFocus="true"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edUserNameRe"/>
+    <EditText
+        android:id="@+id/edEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Email"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edPasswordRe"/>
+    <EditText
+        android:id="@+id/edPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Số điện thoại"
+        android:imeOptions="actionDone"
+        android:inputType="phone"
+        android:selectAllOnFocus="true"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edEmail"/>
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Giới tính"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edPhone"/>
+    <RadioGroup
+        android:id="@+id/rgSex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_sex"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_sex">
+        <RadioButton
+            android:id="@+id/rbMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Nam"/>
+        <RadioButton
+            android:id="@+id/rbFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Nữ"/>
+    </RadioGroup>
     <Button
-        android:id="@+id/btnregister"
-        android:layout_width="330dp"
-        android:layout_height="63dp"
-        android:layout_gravity="center"
-        android:text="TÌM KIẾM" />
+        android:id="@+id/btRegister"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="16dp"
+        android:text="Đăng ký tài khoản mới"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgSex"/>
 
+    <ImageButton
+        android:id="@+id/imbBack"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:background="@android:color/transparent"
+        android:paddingEnd="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/baseline_arrow_back_24"
+        android:layout_margin="100dp"/>
 
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>

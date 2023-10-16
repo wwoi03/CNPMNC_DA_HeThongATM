@@ -1,87 +1,84 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
+import static android.text.TextUtils.isEmpty;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.Query;
+
+import android.content.SharedPreferences;
+
 
 public class NewaccountActivity extends AppCompatActivity {
-    private EditText tentaikhoan,nhapsotaikhoan;
-    private Button btnlogin, btnregister;
-    private FirebaseAuth mAuth;
+    EditText edUserNameC, edPasswordC;
+    Button btRegister;
 
-    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
+
+    @SuppressLint("MissingInflatedId")
     @Override
-    protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newaccount);
-        mAuth = FirebaseAuth.getInstance();
+       // getSupportActionBar().setTitle("Login");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        tentaikhoan = findViewById(R.id.tentaikhoan);
-        nhapsotaikhoan = findViewById(R.id.nhapsotaikhoan);
-        btnlogin = findViewById(R.id.btnlogin);
-        btnregister = findViewById(R.id.btnregister);
-
-        btnlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
-        btnregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                register();
-            }
-        });
-    }
-    private void register () {
-        Intent i = new Intent(com.example.app_cnpmnc_da_hethongatm.Activities.NewaccountActivity.this, RegisterActivity.class);
-        startActivity(i);
-
+        btRegister = findViewById(R.id.btRegister);
+        edUserNameC = findViewById(R.id.edUserName);
+        edPasswordC = findViewById(R.id.edPassword);
     }
 
-    private void login() {
-        String tentk, stk;
-        tentk = tentaikhoan.getText().toString();
-        stk = tentaikhoan.getText().toString();
 
-        if (TextUtils.isEmpty(tentk)) {
-            Toast.makeText(this, "Vui lòng nhập tên tài khoản", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(stk)) {
-            Toast.makeText(this, "Vui lòng nhập stk mới ", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mAuth.signInWithEmailAndPassword(tentk,stk).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    private View.OnClickListener nhanvaoregister() {
+        btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(com.example.app_cnpmnc_da_hethongatm.Activities.NewaccountActivity.this, "Tạo tài khoản mới thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(com.example.app_cnpmnc_da_hethongatm.Activities.NewaccountActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(com.example.app_cnpmnc_da_hethongatm.Activities.NewaccountActivity.this, "Số tài khoản này đã tồn tại", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                if (isEmpty(edUserNameC.getText().toString(), edPasswordC.getText().toString())) { // kiểm tra chuỗi có rỗng hay không
+                    String email = edUserNameC.getText().toString().trim();
+                    String password = edPasswordC.getText().toString().trim();
+                    checkAccount(email, password); // kiểm tra tài khoản
                 }
-
             }
         });
+        return null;
     }
+
+    private void checkAccount(String email, String password) {
+            Query customer = DbHelper.firebaseDatabase.getReference("KhachHang").orderByChild("SoDienThoai").equalTo(email);
+    }
+
+    private boolean isEmpty(String edUserNameC, String edPasswordC) {
+        if (edUserNameC.isEmpty()) {
+            toastMessage("Vui lòng nhập số điện thoại");
+        } else if (edPasswordC.isEmpty()) {
+            toastMessage("Vui lòng nhập mật khẩu");
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    private void toastMessage(String text) {
+        Toast.makeText(NewaccountActivity.this, text, Toast.LENGTH_SHORT).show();
+    }
+
 }

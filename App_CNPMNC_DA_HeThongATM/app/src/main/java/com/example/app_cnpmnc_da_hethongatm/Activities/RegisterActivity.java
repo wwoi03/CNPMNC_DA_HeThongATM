@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -30,45 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        mAuth = FirebaseAuth.getInstance();
-
-        tentkedit = findViewById(R.id.tentaikhoan);
-        stkedit = findViewById(R.id.nhapsotaikhoan);
-        btnregister = findViewById(R.id.btnregister);
-
-        btnregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                register();
-            }
-        });
-    }
-
-    private void register() {
-        String tentk, stk;
-        tentk = tentkedit.getText().toString();
-        stk = stkedit.getText().toString();
-
-        if (TextUtils.isEmpty(tentk)) {
-            Toast.makeText(this, "Vui lòng nhập tên tài khoản", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(stk)) {
-            Toast.makeText(this, "Vui lòng nhập stk mới ", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mAuth.createUserWithEmailAndPassword(tentk,stk).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "Tạo tài khoản mới thành công", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(RegisterActivity.this, "Số tài khoản này đã tồn tại", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+        //getSupportActionBar().setTitle("Register");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 }
