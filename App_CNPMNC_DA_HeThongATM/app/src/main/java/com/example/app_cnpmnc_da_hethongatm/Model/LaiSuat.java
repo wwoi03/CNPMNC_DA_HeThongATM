@@ -1,7 +1,9 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
-public class LaiSuat {
-    private String MaLaiSuat;
+import java.io.Serializable;
+
+public class LaiSuat implements Serializable {
+    private String Key;
     private String KyHan;
     private double TiLe;
 
@@ -9,18 +11,18 @@ public class LaiSuat {
 
     }
 
-    public LaiSuat(String maLaiSuat, String kyHan, double tiLe) {
-        MaLaiSuat = maLaiSuat;
+    public LaiSuat(String key, String kyHan, double tiLe) {
+        Key = key;
         KyHan = kyHan;
         TiLe = tiLe;
     }
 
-    public String getMaLaiSuat() {
-        return MaLaiSuat;
+    public String getKey() {
+        return Key;
     }
 
-    public void setMaLaiSuat(String maLaiSuat) {
-        MaLaiSuat = maLaiSuat;
+    public void setKey(String key) {
+        Key = key;
     }
 
     public String getKyHan() {

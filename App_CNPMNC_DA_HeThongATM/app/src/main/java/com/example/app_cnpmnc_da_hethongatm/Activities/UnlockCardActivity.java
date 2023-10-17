@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
-import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.TheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.database.DataSnapshot;

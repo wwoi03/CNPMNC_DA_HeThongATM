@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     QuickAccessFragment quickAccessFragment;
 
     // View
-    TextView tv_username, tv_cardid;
+    TextView tv_username, tvPhone;
 
     // Confix
     Config config;
@@ -194,11 +194,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showInfoAccount() {
         View headerView = navigationView.getHeaderView(0);
         tv_username = headerView.findViewById(R.id.tv_username);
-        tv_cardid = headerView.findViewById(R.id.tv_cardid);
+        tvPhone = headerView.findViewById(R.id.tvPhone);
 
         tv_username.setText(config.getCustomerName());
-        Log.d("firebase", String.valueOf(DbHelper.MY_CARD) + " test");
-
-        tv_cardid.setText(String.valueOf(DbHelper.MY_CARD));
+        tvPhone.setText(config.getCustomerPhone());
     }
 }

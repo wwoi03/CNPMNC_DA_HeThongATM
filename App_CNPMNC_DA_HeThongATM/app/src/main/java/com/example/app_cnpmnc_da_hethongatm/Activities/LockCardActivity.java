@@ -16,9 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
-import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
-import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.TheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.database.DataSnapshot;
@@ -26,8 +24,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class LockCardActivity extends AppCompatActivity  {
 
