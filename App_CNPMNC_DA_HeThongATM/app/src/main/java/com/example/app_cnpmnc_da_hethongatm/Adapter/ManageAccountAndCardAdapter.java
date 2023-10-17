@@ -32,7 +32,7 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
         holder.tvAccountNumber.setText(String.valueOf(model.getSoTaiKhoan()));
 
         // lấy loại tài khoản theo key
-        DbHelper.getAccountTypeByKey(model.getLoaiTaiKhoan(), new DbHelper.FirebaseListener() {
+        DbHelper.getAccountTypeByKey(model.getMaLoaiTKKey(), new DbHelper.FirebaseListener() {
             @Override
             public void onSuccessListener() {
 

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -21,6 +22,8 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
 
     // Adapter
     AccountCardAdapter accountCardAdapter;
+
+    Config config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,9 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
 
     // khởi tạo dữ liệu
     public void initData() {
-        FirebaseRecyclerOptions<TaiKhoanLienKet> affiliateAccountOptions = DbHelper.getAffiliateAccounts();
+        config = new Config(this);
+
+        FirebaseRecyclerOptions<TaiKhoanLienKet> affiliateAccountOptions = DbHelper.getAffiliateAccounts(config.getCustomerKey());
         accountCardAdapter = new AccountCardAdapter(affiliateAccountOptions, this);
         rvAccountCard.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvAccountCard.setAdapter(accountCardAdapter);

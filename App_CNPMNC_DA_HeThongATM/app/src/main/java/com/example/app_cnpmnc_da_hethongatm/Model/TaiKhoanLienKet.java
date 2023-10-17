@@ -119,4 +119,8 @@ public class TaiKhoanLienKet implements Serializable {
     public void setTienGD1Lan(double tienGD1Lan) {
         TienGD1Lan = tienGD1Lan;
     }
+
+    public String getSoDuFormat() {
+        return String.format("%d", SoDu);
+    }
 }

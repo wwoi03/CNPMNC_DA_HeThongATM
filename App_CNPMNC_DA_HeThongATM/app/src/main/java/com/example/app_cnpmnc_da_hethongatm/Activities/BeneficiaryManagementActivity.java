@@ -15,6 +15,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -36,6 +37,8 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
 
     public static int USER_NAME = 1;
 
+    Config config;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,9 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
 
     // Khởi tạo dữ liệu
     private void initData() {
-        FirebaseRecyclerOptions<ThuHuong> beneficiaryOptions = DbHelper.getBeneficiaries(DbHelper.MY_CARD);
+        config = new Config(this);
+
+        FirebaseRecyclerOptions<ThuHuong> beneficiaryOptions = DbHelper.getBeneficiaries(config.getCustomerKey());
         beneficiaryAdapter = new BeneficiaryAdapter(beneficiaryOptions, this);
         rvBeneficiary.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvBeneficiary.setAdapter(beneficiaryAdapter);

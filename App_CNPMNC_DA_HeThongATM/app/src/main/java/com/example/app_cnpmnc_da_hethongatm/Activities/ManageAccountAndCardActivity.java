@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
@@ -34,6 +35,8 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     //
     TaiKhoanLienKet currentAccountCardInPage;
     String taiKhoanKey;
+
+    Config config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,9 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
     // Khởi tạo dữ liệu
     public void initData() {
-        FirebaseRecyclerOptions<TaiKhoanLienKet> danhSachTaiKhoanLienKet = DbHelper.getAffiliateAccounts();
+        config = new Config(this);
+
+        FirebaseRecyclerOptions<TaiKhoanLienKet> danhSachTaiKhoanLienKet = DbHelper.getAffiliateAccounts(config.getCustomerKey());
         manageAccountAndCardAdapter = new ManageAccountAndCardAdapter(danhSachTaiKhoanLienKet, this);
         vp2AccountsAndCards.setAdapter(manageAccountAndCardAdapter);
         ci3.setViewPager(vp2AccountsAndCards);
@@ -85,7 +90,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
                 // Hiển thị button theo loại tài khoản
                 hideButtonAccountType(); // ẩn tất cả button cũ
-                if (currentAccountCardInPage.getLoaiTaiKhoan().equals("adoasdlkghqw")) // tạm thời gắn cứng
+                if (currentAccountCardInPage.getMaLoaiTKKey().equals("adoasdlkghqw")) // tạm thời gắn cứng
                     showButtonPaymentAccountType();
                 else
                     showButtonSavingAccountType();

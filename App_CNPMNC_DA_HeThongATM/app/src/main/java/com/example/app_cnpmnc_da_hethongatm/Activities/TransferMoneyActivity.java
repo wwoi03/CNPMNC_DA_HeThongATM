@@ -64,7 +64,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
                         tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
                         tvSurplus.setText(String.valueOf(taiKhoanNguon.getSoDu()) + " VNĐ");
-                        etContent.setText(taiKhoanNguon.getTenTaiKhoan() + " chuyen tien");
+                        etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
                     }
                 }
             }
@@ -139,7 +139,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                                 taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
 
                                                 etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
-                                                tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTaiKhoan()));
+                                                tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
                                                 taiKhoanHuongKey = dataSnapshot.getKey();
                                             }
                                         }
