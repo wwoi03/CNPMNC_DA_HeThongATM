@@ -2,6 +2,7 @@
 {
     public class LoaiTaiKhoan
     {
+        public string Key {  get; set; }
         public string TenLoaiTaiKhoan {  get; set; }
     }
 }

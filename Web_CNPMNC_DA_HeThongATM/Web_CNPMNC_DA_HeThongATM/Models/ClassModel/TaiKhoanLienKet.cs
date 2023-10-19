@@ -4,18 +4,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
 {
     public class TaiKhoanLienKet
     {
-        public string SoTaiKhoan { get; set; }
-        public string TenTaiKhoan { get; set; }
-        public int TinhTrangTaiKhoan { get; set; }
-        public double HanMucThe { get; set; }
-        public long MaSoThe { get; set; }
-        public string NgayGD { get; set; }
+        public string Key { get; set; }
+        public string MaKHKey { get; set; }
+        public string MaLoaiTKKey { get; set; }
+        public long SoTaiKhoan { get; set; }
         public double SoDu { get; set; }
-        public long TienDaGD { get; set; }
-        public long TienGD1Lan { get; set; }
-      
+        public string TenTK { get; set; }
+        public int TinhTrangTaiKhoan { get; set; }
+        public double HanMucTK { get; set; }
 
-        public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, long MaSoThe)
+        /*public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, long MaSoThe)
         {
             TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet();
             taiKhoanLienKet.SoDu = 50000;
@@ -28,18 +26,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
             taiKhoanLienKet.MaSoThe = MaSoThe;
             taiKhoanLienKet.HanMucThe = 1000000000;
             return taiKhoanLienKet;
-        }
-
+        }*/
     }
-
-
 }
-//•	HanMucThe(double): …
-//•	LoaiTaiKhoan(string): key của record bên bảng LoaiTaiKhoan
-//•	MaSoThe (long): mã số thẻ ngân hàng tồn tại ở bảng TheNganHang
-//•	SoTaiKhoan (long): mã số tài khoản (10 số)
-//•	SoDu(double): số dư tài khoản hoặc số tiền gửi tiết kiệm tùy thuộc vào loại tài khoản
-//•	TenTaiKhoan (string): mặc định là tên khách hàng bên bảng KhachHang
-//•	TienGDLan1 (double): …
-//•	TienDaGD(double): …
-//•	TinhTrangTaiKhoan(int): đang phân tích

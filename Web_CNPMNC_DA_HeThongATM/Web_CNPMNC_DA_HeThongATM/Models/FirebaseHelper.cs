@@ -240,7 +240,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             long totalTransaction = 0;
 
             FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
 
             totalTransaction = data.Values.Count;
 
