@@ -1,3 +1,4 @@
+/*
 package com.example.app_cnpmnc_da_hethongatm.Adapter;
 
 import android.content.Context;
@@ -51,3 +52,4 @@ public class spinnerListCardTypeAdapter extends ArrayAdapter<LoaiTheNganHang> {
         return maloai;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import android.content.DialogInterface;
@@ -243,3 +244,4 @@ public class LockCardActivity extends AppCompatActivity  {
         return customerID;
     }
 }
+*/

@@ -27,8 +27,7 @@ import com.example.app_cnpmnc_da_hethongatm.Activities.SearchServiceFunctionActi
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 
-import com.example.app_cnpmnc_da_hethongatm.Activities.LockCardActivity;
-import com.example.app_cnpmnc_da_hethongatm.Activities.UnlockCardActivity;
+//import com.example.app_cnpmnc_da_hethongatm.Activities.UnlockCardActivity;
 
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
@@ -149,11 +148,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent2);
                 break;
             case R.id.nav_khoathe:
-                Intent intent3 = new Intent(this, LockCardActivity.class);
-                startActivity(intent3);
+                /*Intent intent3 = new Intent(this, LockCardActivity.class);
+                startActivity(intent3);*/
                 break;
             case R.id.nav_mokhoathe:
-                startActivity(new Intent(this, UnlockCardActivity.class));
+                /*startActivity(new Intent(this, UnlockCardActivity.class));*/
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
