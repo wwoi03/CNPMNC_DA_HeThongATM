@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,11 +29,12 @@ import android.content.SharedPreferences;
 
 
 public class NewaccountActivity extends AppCompatActivity {
-    EditText edUserNameC, edPasswordC;
-    Button btRegister;
+    TextView tvSourceAccount, etsodep;
+    Button btsearch;
 
 
-    @SuppressLint("MissingInflatedId")
+
+    @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,19 +43,20 @@ public class NewaccountActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        btRegister = findViewById(R.id.btRegister);
-        edUserNameC = findViewById(R.id.edUserName);
-        edPasswordC = findViewById(R.id.edPassword);
+
+        tvSourceAccount = findViewById(R.id.tvSourceAccount);
+        etsodep = findViewById(R.id.etsodep);
+        btsearch =findViewById(R.id.btsearch);
     }
 
 
     private View.OnClickListener nhanvaoregister() {
-        btRegister.setOnClickListener(new View.OnClickListener() {
+        btsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isEmpty(edUserNameC.getText().toString(), edPasswordC.getText().toString())) { // kiểm tra chuỗi có rỗng hay không
-                    String email = edUserNameC.getText().toString().trim();
-                    String password = edPasswordC.getText().toString().trim();
+                if (isEmpty(tvSourceAccount.toString(), etsodep.toString())) { // kiểm tra chuỗi có rỗng hay không
+                    String email = tvSourceAccount.toString().trim();
+                    String password = etsodep.toString().trim();
                     checkAccount(email, password); // kiểm tra tài khoản
                 }
             }
@@ -66,10 +68,10 @@ public class NewaccountActivity extends AppCompatActivity {
             Query customer = DbHelper.firebaseDatabase.getReference("KhachHang").orderByChild("SoDienThoai").equalTo(email);
     }
 
-    private boolean isEmpty(String edUserNameC, String edPasswordC) {
-        if (edUserNameC.isEmpty()) {
+    private boolean isEmpty(String tvSourceAccount, String etsodep) {
+        if (tvSourceAccount.isEmpty()) {
             toastMessage("Vui lòng nhập số điện thoại");
-        } else if (edPasswordC.isEmpty()) {
+        } else if (etsodep.isEmpty()) {
             toastMessage("Vui lòng nhập mật khẩu");
         } else {
             return true;
