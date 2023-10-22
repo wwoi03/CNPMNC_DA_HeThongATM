@@ -244,10 +244,7 @@ public class DbHelper {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             if (firebaseListener != null) {
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    firebaseListener.onSuccessListener(dataSnapshot);
-                                    break;
-                                }
+                                firebaseListener.onSuccessListener(snapshot);
                             }
                         }
                     }
