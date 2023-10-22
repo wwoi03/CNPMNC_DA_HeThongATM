@@ -121,6 +121,7 @@ public class TaiKhoanLienKet implements Serializable {
     }
 
     public String getSoDuFormat() {
-        return String.format("%d", SoDu);
+        // Sử dụng String.format với định dạng số có dấu phân cách
+        return String.format("%,d", (long) SoDu);
     }
 }

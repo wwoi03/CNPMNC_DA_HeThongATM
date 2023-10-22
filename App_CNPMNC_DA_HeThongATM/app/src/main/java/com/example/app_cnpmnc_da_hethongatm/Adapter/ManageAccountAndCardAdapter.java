@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -45,7 +46,8 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
 
             @Override
             public void onSuccessListener(DataSnapshot snapshot) {
-                holder.tvAccountType.setText(String.valueOf(snapshot.getValue()));
+                LoaiTaiKhoan loaiTaiKhoan = snapshot.getValue(LoaiTaiKhoan.class);
+                holder.tvAccountType.setText("Tài khoản " + loaiTaiKhoan.getTenLoaiTaiKhoan());
             }
         });
 
