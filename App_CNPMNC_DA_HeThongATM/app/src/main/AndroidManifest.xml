@@ -60,6 +60,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.WithdrawSavingsActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ListAccountSavingsActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.NotificationActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
