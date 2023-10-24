@@ -17,6 +17,8 @@ import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
@@ -31,6 +33,28 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
     @Override
     protected void onBindViewHolder(@NonNull ManageAccountAndCardAdapterVH holder, int position, @NonNull TaiKhoanLienKet model) {
         holder.tvAccountNumber.setText(String.valueOf(model.getSoTaiKhoan()));
+
+        /*DatabaseReference databaseReference = DbHelper.firebaseDatabase.getReference("LoaiTaiKhoan").child(model.getMaLoaiTKKey());
+
+        Task<DataSnapshot> dataSnapshotTask = databaseReference.get();
+
+        LoaiTaiKhoan[] loaiTaiKhoan = new LoaiTaiKhoan[1];
+
+        dataSnapshotTask.addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                DataSnapshot dataSnapshot = task.getResult();
+
+                loaiTaiKhoan[0] = dataSnapshot.getValue(LoaiTaiKhoan.class);
+                holder.tvAccountType.setText("Tài khoản " + loaiTaiKhoan[0].getTenLoaiTaiKhoan());
+                Log.d("firebase", "1");
+            }
+        });
+
+        Log.d("firebase", loaiTaiKhoan[0].getTenLoaiTaiKhoan());*/
+
+
+
 
         // lấy loại tài khoản theo key
         DbHelper.getAccountTypeByKey(model.getMaLoaiTKKey(), new DbHelper.FirebaseListener() {
