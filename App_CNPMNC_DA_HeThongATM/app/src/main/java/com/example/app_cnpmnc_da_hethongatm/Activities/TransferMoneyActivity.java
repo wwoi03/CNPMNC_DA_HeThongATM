@@ -52,7 +52,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     int flag;
 
 
-
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -61,7 +60,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     if (result.getResultCode() == CHOOSE_SOURCE_ACCOUNT) {
                         taiKhoanNguon = (TaiKhoanLienKet) result.getData().getSerializableExtra("taiKhoanNguon");
                         taiKhoanNguonKey = (String) result.getData().getSerializableExtra("taiKhoanNguonKey");
-
                         tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
                         tvSurplus.setText(String.valueOf(taiKhoanNguon.getSoDu()) + " VNĐ");
                         etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
@@ -205,10 +203,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 // Thiết lập ListBeneficiaryAdapter cho RecyclerView
                 recyclerView.setLayoutManager(new LinearLayoutManager(TransferMoneyActivity.this));
                 recyclerView.setAdapter(listBeneficiaryAdapter);
-
                 // Bắt đầu lắng nghe dữ liệu từ Firebase
                 listBeneficiaryAdapter.startListening();
-
                 dialogPlus.show();
             }
         });
