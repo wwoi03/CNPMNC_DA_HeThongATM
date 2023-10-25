@@ -15,11 +15,9 @@ public class GiaoDich implements Serializable {
     private double SoDuLucNhan;
     private String LoaiGiaoDichKey;
 
-    public GiaoDich(){
-
-    }
-
-    public GiaoDich(String key, long taiKhoanNguon, long taiKhoanNhan, String ngayGiaoDich, String gioGiaoDich, String noiDungChuyenKhoan, double soTienGiaoDich, double phiGiaoDich, double soDuLucGui, double soDuLucNhan, String loaiGiaoDichKey) {
+    public GiaoDich(String key, long taiKhoanNguon, long taiKhoanNhan, String ngayGiaoDich, String gioGiaoDich,
+                    String noiDungChuyenKhoan, double soTienGiaoDich, double phiGiaoDich, double soDuLucGui,
+                    double soDuLucNhan, String loaiGiaoDichKey) {
         Key = key;
         TaiKhoanNguon = taiKhoanNguon;
         TaiKhoanNhan = taiKhoanNhan;

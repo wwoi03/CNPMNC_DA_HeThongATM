@@ -75,12 +75,12 @@ public class UnlockCardActivity extends AppCompatActivity {
                 listtype=new String[(int)snapshot.getChildrenCount()];
                 listtypeID=new String[(int)snapshot.getChildrenCount()];
                 int i=0;
-                for(DataSnapshot snap : snapshot.getChildren()){
+                /*for(DataSnapshot snap : snapshot.getChildren()){
                     LoaiTheNganHang loaithe=snap.getValue(LoaiTheNganHang.class);
                     listtype[i]=loaithe.getTenTNH();
                     listtypeID[i]=loaithe.getMaLoaiTNH();
                     i++;
-                }
+                }*/
                 ArrayAdapter<String> cardtypelist=new ArrayAdapter<String>(UnlockCardActivity.this, android.R.layout.simple_spinner_item,listtype);
                 cardtypelist.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spLoaiThe.setAdapter(cardtypelist);
@@ -175,11 +175,11 @@ public class UnlockCardActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot snap : snapshot.getChildren()) {
+                        /*for (DataSnapshot snap : snapshot.getChildren()) {
                             TheNganHang theNganHang=snap.getValue(TheNganHang.class);
                             if (theNganHang.getTinhTrangThe()!=0 && theNganHang.getLoaiThe().equals(maloai))
                                 demso++;
-                        }
+                        }*/
                         Log.d("TAG", "onDataChange: dddddddddd"+demso+maloai);
                         if(demso>0){
                             ReadMaThe();
