@@ -77,12 +77,12 @@ public class LockCardActivity extends AppCompatActivity  {
                 listtype=new String[(int)snapshot.getChildrenCount()];
                 listtypeID=new String[(int)snapshot.getChildrenCount()];
                 int i=0;
-                for(DataSnapshot snap : snapshot.getChildren()){
+               /* for(DataSnapshot snap : snapshot.getChildren()){
                     LoaiTheNganHang loaithe=snap.getValue(LoaiTheNganHang.class);
                     listtype[i]=loaithe.getTenTNH();
                     listtypeID[i]=loaithe.getMaLoaiTNH();
                     i++;
-                }
+                }*/
                 ArrayAdapter<String>cardtypelist=new ArrayAdapter<String>(LockCardActivity.this, android.R.layout.simple_spinner_dropdown_item,listtype);
                 cardtypelist.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spLoaiThe.setAdapter(cardtypelist);
