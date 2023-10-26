@@ -13,16 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ListBeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -40,6 +44,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     TextView tvSurplus, tvNameBeneficiary, tvSourceAccount;
     EditText etMoney, etContent, etAccountBeneficiary;
     Button btTransferMoney;
+    ProgressBar progressBar;
 
     // Flag
     public static int CHOOSE_SOURCE_ACCOUNT = 101;
@@ -50,6 +55,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     ThuHuong thuHuong;
     int flag;
+    String maLoaiGGKey;
 
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -82,6 +88,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // ánh xạ view
     public void initUI() {
+        progressBar = findViewById(R.id.progressBar);
         tvSourceAccount = findViewById(R.id.tvSourceAccount);
         ivBeneficiary = findViewById(R.id.ivBeneficiary);
         tvSurplus = findViewById(R.id.tvSurplus);
@@ -94,6 +101,32 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // khởi tạo dữ liệu
     public void initData() {
+        /*// Lấy mã loại giao dịch
+        DbHelper.showProgressDialog(progressBar);
+
+        DbHelper.getTransactionTypeByTransactionTypeCode(ResultCode.CHUYEN_TIEN, new DbHelper.FirebaseListener() {
+            @Override
+            public void onSuccessListener() {
+
+            }
+
+            @Override
+            public void onFailureListener(Exception e) {
+
+            }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+                LoaiGiaoDich loaiGiaoDich = snapshot.getValue(LoaiGiaoDich.class);
+                maLoaiGGKey = loaiGiaoDich.getKey();
+                DbHelper.dismissProgressDialog();
+            }
+        });
+
+
+        Log.d("firebase", "abc");*/
+
+
         Intent getDataIntent = getIntent();
         flag = (int) getDataIntent.getSerializableExtra("flag");
         if (flag == BeneficiaryManagementActivity.USER_NAME) {

@@ -1,6 +1,13 @@
 package com.example.app_cnpmnc_da_hethongatm.Extend;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,12 +37,24 @@ import java.util.Locale;
 import java.util.Map;
 
 public class DbHelper {
+    static ProgressBar progressBar;
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
     public interface FirebaseListener {
         void onSuccessListener();
         void onFailureListener(Exception e);
         void onSuccessListener(DataSnapshot snapshot);
+    }
+
+    // bật ProgressDialog
+    public static void showProgressDialog(ProgressBar _progressBar) {
+        progressBar = _progressBar;
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    // tắt ProgressDialog
+    public static void dismissProgressDialog() {
+        progressBar.setVisibility(View.GONE);
     }
 
     // Lấy số thẻ ngân hàng
@@ -248,6 +267,31 @@ public class DbHelper {
                             if (firebaseListener != null) {
                                 firebaseListener.onSuccessListener(snapshot);
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    // lấy loại giao dịch theo mã loại giao dịch
+    public static void getTransactionTypeByTransactionTypeCode(String maLoaiGD, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("LoaiGiaoDich").orderByChild("MaLoaiGD").equalTo(maLoaiGD)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                if (firebaseListener != null) {
+                                    firebaseListener.onSuccessListener(dataSnapshot);
+                                }
+
+                                break;
+                            }
+
                         }
                     }
 

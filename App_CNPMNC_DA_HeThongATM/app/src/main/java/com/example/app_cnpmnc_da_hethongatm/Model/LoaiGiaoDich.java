@@ -2,15 +2,15 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class LoaiGiaoDich {
     private String Key;
-    private String MaLoaGD;
+    private String MaLoaiGD;
     private String TenLoai;
 
     public LoaiGiaoDich() {
     }
 
-    public LoaiGiaoDich(String key, String maLoaGD, String tenLoai) {
+    public LoaiGiaoDich(String key, String maLoaiGD, String tenLoai) {
         Key = key;
-        MaLoaGD = maLoaGD;
+        MaLoaiGD = maLoaiGD;
         TenLoai = tenLoai;
     }
 
@@ -30,11 +30,11 @@ public class LoaiGiaoDich {
         TenLoai = tenLoai;
     }
 
-    public String getMaLoaGD() {
-        return MaLoaGD;
+    public String getMaLoaiGD() {
+        return MaLoaiGD;
     }
 
-    public void setMaLoaGD(String maLoaGD) {
-        MaLoaGD = maLoaGD;
+    public void setMaLoaiGD(String maLoaGD) {
+        MaLoaiGD = maLoaGD;
     }
 }
