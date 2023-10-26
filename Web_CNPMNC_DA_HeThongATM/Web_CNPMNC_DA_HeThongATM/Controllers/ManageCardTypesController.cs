@@ -33,11 +33,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return View();
         }
+        //tạo loại thẻ
         public IActionResult CreateTypesCard()
         {
             return View();
         }
-        //tạo loại thẻ
+        
         [HttpPost]
         public IActionResult CreateTypesCard(LoaiTheViewModel loaiThe)
         {
@@ -55,6 +56,43 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View("CreateTypesCard", loaiThe);
 
         }
+        //chỉnh sửa loại thẻ
+        [HttpGet]
+        public IActionResult EditTypesCard(long MaLoaiTNH)
+        {
+
+            LoaiThe loaiThe = firebaseHelper.GetMaLoaiTNH(MaLoaiTNH);
+            ViewBag.TenKhachHang = firebaseHelper.GetMaLoaiTNH(MaLoaiTNH);
+            ViewBag.Details = loaiThe;
+            return View();
+        }
+        //Chỉnh sửa loại thẻ {nhận dữ liệu}
+        [HttpPost]
+        public IActionResult EditTypesCard(LoaiTheViewModel theNganHang)
+        {
+            return View();
+        }
+
+
+
+
+        //Xóa Loại Thẻ
+        [HttpGet]
+        public IActionResult DeleteTypesCard(long MaLoaiTNH)
+        {
+            LoaiThe loaiThe = firebaseHelper.GetMaLoaiTNH(MaLoaiTNH);
+            ViewBag.TenKhachHang = firebaseHelper.GetMaLoaiTNH(MaLoaiTNH);
+            ViewBag.Details = loaiThe;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTypesCard(long MaLoaiTNH)
+        {
+            return View();
+        }
+
+
 
     }
 }

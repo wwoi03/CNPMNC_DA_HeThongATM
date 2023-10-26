@@ -3,7 +3,7 @@
 @model LoaiTheViewModel
 @{
     Layout = "_LayoutMain";
-    var TypesListList = ViewData["TypesCardList"] as IEnumerable<LoaiTheViewModel>;
+    var TypesListCard = ViewData["TypesCardList"] as IEnumerable<LoaiTheViewModel>;
 }
 <body>
     <div class="col-lg-12">
@@ -22,15 +22,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in TypesListList)
+                        @foreach (var item in TypesListCard)
                         {
                             <tr>
                             <tr>
                                 <td>@item.MaLoaiTNH</td>
                                 <td>@item.TenTNH</td>
                                 <td>@item.HanMucLoaiThe</td>
-                                <td>Xem nè</td>
-
+                                <td>
+                                <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">
+                                    <button type="button" class="oxd-icon-button">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                    <button type="button" class="oxd-icon-button">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </div>
+                                </td>
                             </tr>
                             </tr>
                         }

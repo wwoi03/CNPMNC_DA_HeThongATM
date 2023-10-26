@@ -451,7 +451,66 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
              }
          }
+        //chỉnh sửa loại thẻ
+        // Edit an existing type of card
+        internal LoaiThe GetMaLoaiTNH(long maLoaiTNH)
+        {
+            throw new NotImplementedException();
+        }
+        public void EditTypesCard(long MaLoaiTNH, LoaiTheViewModel updatedCard)
+        {
+            try
+            {
+                FirebaseResponse getResponse = client.Get("LoaiTheNganHang/" + MaLoaiTNH);
+                LoaiTheViewModel existingCard = getResponse.ResultAs<LoaiTheViewModel>();
 
+                if (existingCard != null)
+                {
+
+                    FirebaseResponse setResponse = client.Set("LoaiTheNganHang/" + MaLoaiTNH, existingCard);
+
+                    if (setResponse != null)
+                    {
+
+                    }
+                }
+                else
+                {
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        //xóa loại thẻ
+        // Delete a type of card
+        public void DeleteTypesCard(long MaLoaiTNH)
+        {
+            try
+            {
+                FirebaseResponse getResponse = client.Get("LoaiTheNganHang/" + MaLoaiTNH);
+                if (getResponse != null && getResponse.ResultAs<LoaiTheViewModel>() != null)
+                {
+                    FirebaseResponse deleteResponse = client.Delete("LoaiTheNganHang/" + MaLoaiTNH);
+
+                    if (deleteResponse != null)
+                    {
+
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+       
     }
 }
 
