@@ -6,8 +6,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +25,15 @@ import com.example.app_cnpmnc_da_hethongatm.R;
 
 import com.google.firebase.database.Query;
 
+import java.util.ArrayList;
+
 
 public class NewaccountActivity extends AppCompatActivity {
     TextView tvSourceAccount, etsodep;
     Button btsearch;
-
-
+    ListView listDanhSach;
+    ArrayAdapter adapterDanhSach;
+    ArrayList arrayDanhSach;
 
     @SuppressLint({"MissingInflatedId", "WrongViewCast"})
     @Override
@@ -41,42 +47,57 @@ public class NewaccountActivity extends AppCompatActivity {
 
         tvSourceAccount = findViewById(R.id.tvSourceAccount);
         etsodep = findViewById(R.id.etsodep);
-        btsearch =findViewById(R.id.btsearch);
-    }
+        btsearch = findViewById(R.id.btsearch);
+        listDanhSach = findViewById(R.id.liststk);
 
-
-    private View.OnClickListener nhanvaoregister() {
+        //khai báo arraylist và gán vào Adapter
+        arrayDanhSach = new ArrayList<String>();
+        adapterDanhSach = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayDanhSach);
+        //gán arrayAdapter vào listView
+        listDanhSach.setAdapter(adapterDanhSach);
+        //xử lí kiện nút nhấn
         btsearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (isEmpty(tvSourceAccount.toString(), etsodep.toString())) { // kiểm tra chuỗi có rỗng hay không
-                    String email = tvSourceAccount.toString().trim();
-                    String password = etsodep.toString().trim();
-                    checkAccount(email, password); // kiểm tra tài khoản
+            public void onClick(View view) {
+                //kiểm tra số đã nhập chưa
+                String msg;
+                msg = "Số Đẹp:" + etsodep.getText().toString();
+                if (!etsodep.getText().toString().equals("")) {
+                    arrayDanhSach.add(msg);
+                    //cập nhật danh sách
+                    adapterDanhSach.notifyDataSetChanged();
+                    etsodep.setText("");
+
                 }
             }
         });
-        return null;
+        //xử lý kiện nhấn để xóa stk
+        listDanhSach.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> agr0, View view, int i, long l) {
+                String msg;
+                msg = "Bạn vừa xóa số tài khoản:\n";
+                msg = msg + arrayDanhSach.get(i);
+                //xóa số tài khoản
+                arrayDanhSach.remove(i);
+                adapterDanhSach.notifyDataSetChanged();
+                //hiện thông báo
+                Toast.makeText(NewaccountActivity.this, msg, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        //xử lý chọn số tài khoản
+        listDanhSach.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int i, long l) {
+                String msg;
+                msg = "Bạn vừa chọn số tài khoản:\n";
+                msg = msg + arrayDanhSach.get(i);
+                //hiện thông báo
+                Toast.makeText(NewaccountActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    private void checkAccount(String email, String password) {
-        Query customer = DbHelper.firebaseDatabase.getReference("KhachHang").orderByChild("SoDienThoai").equalTo(email);
-    }
-
-    private boolean isEmpty(String tvSourceAccount, String etsodep) {
-        if (tvSourceAccount.isEmpty()) {
-            toastMessage("Vui lòng nhập số điện thoại");
-        } else if (etsodep.isEmpty()) {
-            toastMessage("Vui lòng nhập mật khẩu");
-        } else {
-            return true;
-        }
-        return false;
-    }
-
-    private void toastMessage(String text) {
-        Toast.makeText(NewaccountActivity.this, text, Toast.LENGTH_SHORT).show();
-    }
-
+    ;
 }
-

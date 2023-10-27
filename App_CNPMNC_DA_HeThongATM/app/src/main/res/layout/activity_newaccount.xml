@@ -124,6 +124,7 @@
                 android:textSize="20dp"
                 android:gravity="center_vertical"
                 android:hint="Nhập số tìm kiếm theo yêu cầu"
+                android:numeric="decimal"
                 android:layout_marginStart="16dp"
                 android:background="@color/white">
             </com.google.android.material.textfield.TextInputEditText>
@@ -157,5 +158,10 @@
             android:layout_marginTop="32dp"
             android:background="@drawable/coner_radius_button">
         </Button>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/liststk">
+        </ListView>
     </LinearLayout>
 </LinearLayout>
