@@ -8,7 +8,7 @@ public class TaiKhoanLienKet implements Serializable {
     private String MaLoaiTKKey;
     private long SoTaiKhoan;
     private double SoDu;
-    private String TenTaiKhoan;
+    private String TenTK;
     private int TinhTrangTaiKhoan;
     private double HanMucTK;
     private String NgayGD;
@@ -18,13 +18,13 @@ public class TaiKhoanLienKet implements Serializable {
     public TaiKhoanLienKet() {
     }
 
-    public TaiKhoanLienKet(String key, String maKHKey, String maLoaiTKKey, long soTaiKhoan, double soDu, String tenTaiKhoan, int tinhTrangTaiKhoan, double hanMucTK, String ngayGD, double tienDaGD, double tienGD1Lan) {
+    public TaiKhoanLienKet(String key, String maKHKey, String maLoaiTKKey, long soTaiKhoan, double soDu, String tenTK, int tinhTrangTaiKhoan, double hanMucTK, String ngayGD, double tienDaGD, double tienGD1Lan) {
         Key = key;
         MaKHKey = maKHKey;
         MaLoaiTKKey = maLoaiTKKey;
         SoTaiKhoan = soTaiKhoan;
         SoDu = soDu;
-        TenTaiKhoan = tenTaiKhoan;
+        TenTK = tenTK;
         TinhTrangTaiKhoan = tinhTrangTaiKhoan;
         HanMucTK = hanMucTK;
         NgayGD = ngayGD;
@@ -72,12 +72,12 @@ public class TaiKhoanLienKet implements Serializable {
         SoDu = soDu;
     }
 
-    public String getTenTaiKhoan() {
-        return TenTaiKhoan;
+    public String getTenTK() {
+        return TenTK;
     }
 
-    public void setTenTaiKhoan(String tenTaiKhoan) {
-        TenTaiKhoan = tenTaiKhoan;
+    public void setTenTK(String tenTK) {
+        TenTK = tenTK;
     }
 
     public int getTinhTrangTaiKhoan() {
