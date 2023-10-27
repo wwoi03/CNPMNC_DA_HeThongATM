@@ -1,27 +1,43 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
-public class GuiTietKiem {
-    private long SoTaiKhoan; // số tài khoản tiết kiệm
+import java.io.Serializable;
+
+public class GuiTietKiem implements Serializable {
+    private String Key;
+    private long TaiKhoanTietKiem; // số tài khoản tiết kiệm
     private long TaiKhoanNguon;
+    private String LaiSuatKey; // mã lãi suất
     private String NgayGui;
-    private String KyHan; // mã lãi suất
+    private double TienLaiToiKy;
+    private double TienGui;
 
     public GuiTietKiem() {
     }
 
-    public GuiTietKiem(long soTaiKhoan, long taiKhoanNguon, String ngayGui, String kyHan) {
-        SoTaiKhoan = soTaiKhoan;
+    public GuiTietKiem(String key, long taiKhoanTietKiem, long taiKhoanNguon, String laiSuatKey, String ngayGui, double tienLaiToiKy, double tienGui) {
+        Key = key;
+        TaiKhoanTietKiem = taiKhoanTietKiem;
         TaiKhoanNguon = taiKhoanNguon;
+        LaiSuatKey = laiSuatKey;
         NgayGui = ngayGui;
-        KyHan = kyHan;
+        TienLaiToiKy = tienLaiToiKy;
+        TienGui = tienGui;
     }
 
-    public long getSoTaiKhoan() {
-        return SoTaiKhoan;
+    public String getKey() {
+        return Key;
     }
 
-    public void setSoTaiKhoan(long soTaiKhoan) {
-        SoTaiKhoan = soTaiKhoan;
+    public void setKey(String key) {
+        Key = key;
+    }
+
+    public long getTaiKhoanTietKiem() {
+        return TaiKhoanTietKiem;
+    }
+
+    public void setTaiKhoanTietKiem(long taiKhoanTietKiem) {
+        TaiKhoanTietKiem = taiKhoanTietKiem;
     }
 
     public long getTaiKhoanNguon() {
@@ -32,6 +48,14 @@ public class GuiTietKiem {
         TaiKhoanNguon = taiKhoanNguon;
     }
 
+    public String getLaiSuatKey() {
+        return LaiSuatKey;
+    }
+
+    public void setLaiSuatKey(String laiSuatKey) {
+        LaiSuatKey = laiSuatKey;
+    }
+
     public String getNgayGui() {
         return NgayGui;
     }
@@ -40,11 +64,19 @@ public class GuiTietKiem {
         NgayGui = ngayGui;
     }
 
-    public String getKyHan() {
-        return KyHan;
+    public double getTienLaiToiKy() {
+        return TienLaiToiKy;
     }
 
-    public void setKyHan(String kyHan) {
-        KyHan = kyHan;
+    public void setTienLaiToiKy(double tienLaiToiKy) {
+        TienLaiToiKy = tienLaiToiKy;
+    }
+
+    public double getTienGui() {
+        return TienGui;
+    }
+
+    public void setTienGui(double tienGui) {
+        TienGui = tienGui;
     }
 }

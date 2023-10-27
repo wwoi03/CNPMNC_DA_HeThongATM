@@ -1,6 +1,7 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
 public class AnhCCCD {
+    private String Key;
     private String CCCD;
     private String MatTruoc;
     private String MatSau;
@@ -8,10 +9,19 @@ public class AnhCCCD {
     public AnhCCCD() {
     }
 
-    public AnhCCCD(String CCCD, String matTruoc, String matSau) {
+    public AnhCCCD(String key, String CCCD, String matTruoc, String matSau) {
+        Key = key;
         this.CCCD = CCCD;
         MatTruoc = matTruoc;
         MatSau = matSau;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 
     public String getCCCD() {

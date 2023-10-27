@@ -53,16 +53,16 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mã thẻ: "
+                android:text="Số điện thoại: "
                 android:layout_weight="1"
                 android:textSize="16dp"
                 android:textColor="#AFAAAA"/>
 
             <TextView
-                android:id="@+id/tv_cardid"
+                android:id="@+id/tvPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0123456789101"
+                android:text="0909900009"
                 android:layout_weight="1"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"

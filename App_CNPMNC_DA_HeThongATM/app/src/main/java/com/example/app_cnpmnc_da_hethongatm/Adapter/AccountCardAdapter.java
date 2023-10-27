@@ -29,7 +29,6 @@ public class AccountCardAdapter extends FirebaseRecyclerAdapter<TaiKhoanLienKet,
     protected void onBindViewHolder(@NonNull AccountCardAdapterVH holder, int position, @NonNull TaiKhoanLienKet model) {
         holder.tvAccountNumber.setText(String.valueOf(model.getSoTaiKhoan()));
         holder.tvSurplus.setText(String.valueOf(model.getSoDu()));
-
         initListener(holder, position, model);
     }
 

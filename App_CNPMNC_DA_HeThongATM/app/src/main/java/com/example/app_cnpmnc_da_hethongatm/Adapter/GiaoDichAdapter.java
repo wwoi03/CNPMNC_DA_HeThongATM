@@ -1,0 +1,62 @@
+package com.example.app_cnpmnc_da_hethongatm.Adapter;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import java.util.List;
+
+public class GiaoDichAdapter extends  RecyclerView.Adapter<GiaoDichAdapter.GiaoDichViewHolder>{
+    private List<GiaoDich> giaoDiches;
+
+    public GiaoDichAdapter(List<GiaoDich> giaoDiches) {
+        this.giaoDiches = giaoDiches;
+    }
+
+    @NonNull
+    @Override
+    public GiaoDichViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gd,parent,false);
+        return new GiaoDichViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull GiaoDichViewHolder holder, int position) {
+        GiaoDich giaoDich = giaoDiches.get(position);
+        if (giaoDich==null){
+            return;
+        }
+        holder.gd_soTien.setText(String.valueOf(giaoDich.getSoTienGiaoDich()));
+        holder.gd_nd.setText(giaoDich.getNoiDungChuyenKhoan());
+        String ngaythang = giaoDich.getNgayGiaoDich();
+        String thoigian = giaoDich.getGioGiaoDich();
+        holder.gd_time.setText(ngaythang + " "+thoigian);
+    }
+
+    @Override
+    public int getItemCount() {
+        if(giaoDiches !=null){
+            return giaoDiches.size();
+        }
+        return 0;
+    }
+
+    public class GiaoDichViewHolder extends RecyclerView.ViewHolder{
+        TextView gd_soTien,gd_nd,gd_time;
+        public GiaoDichViewHolder(@NonNull View itemView) {
+            super(itemView);
+            gd_soTien = itemView.findViewById(R.id.gd_soTien);
+            gd_nd = itemView.findViewById(R.id.gd_nd);
+            gd_time = itemView.findViewById(R.id.gd_time);
+        }
+    }
+}
