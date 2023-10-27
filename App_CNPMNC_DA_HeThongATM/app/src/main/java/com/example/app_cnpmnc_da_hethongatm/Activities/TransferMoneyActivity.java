@@ -130,6 +130,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
                     if(accountBeneficiaryString.isEmpty()){
                         BuildAlertDialog("Không được để trống người thụ hưởng");
+                        tvNameBeneficiary.setText("");
                     }
 
                     // kiểm tra edit text rỗng?
@@ -137,6 +138,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
                         if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
                             BuildAlertDialog("Không thể tự chuyển khỏan cho bản thân");
+                            tvNameBeneficiary.setText("");
                         }
                         else {
                             // truy vấn đến TaiKhoanLK theo số tài khoản
@@ -194,7 +196,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     BuildAlertDialog("Số tiền giao dịch vuợt quá hạn mức");
                     checkvalid ++;
                 }
-                else if(checkvalid == 0){ // không rỗng
+                Log.d(String.valueOf(checkvalid), "checkvalid: ");
+                if(checkvalid == 0){ // không rỗng
                     double money = Double.parseDouble(moneyString);
                     // kiểm tra số tiền phải >= 1k
                     if (money >= 1000) {
@@ -223,10 +226,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         .setContentHolder(new ViewHolder(R.layout.activity_thuhuongtransfer))
                         .setExpanded(true, 800)
                         .create();
-
                 // Tìm RecyclerView trong layout của DialogPlus
                 RecyclerView recyclerView = dialogPlus.getHolderView().findViewById(R.id.rc_thuhuongtransfer);
-
                 // Thiết lập ListBeneficiaryAdapter cho RecyclerView
                 recyclerView.setLayoutManager(new LinearLayoutManager(TransferMoneyActivity.this));
                 recyclerView.setAdapter(listBeneficiaryAdapter);
@@ -236,9 +237,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
     // chuyển tiền
     private void transferMoney(double money, String noiDungChuyenKhoan) {
