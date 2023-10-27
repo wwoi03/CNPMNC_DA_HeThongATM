@@ -51,6 +51,9 @@
             android:name=".Activities.ManageAccountAndCardActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.NewaccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
