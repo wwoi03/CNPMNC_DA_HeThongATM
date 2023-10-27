@@ -6,73 +6,7 @@
     Layout = "_LayoutMain";
 }
 <body>
-    @*	<form method="post" asp-controller="CreateCard" asp-action="CreateCard" class="col-md-12">
-    <div class="col-lg-8">
-    <div class="card">
-    <div class="card-header"><strong>CusTomer</strong></div>
-    <div class="card-body card-block">
-    <div class="form-group">
-
-    <label for="company" class=" form-control-label">Mã Căn Cước Công Dân</label>
-    <input type="number" asp-for="CCCD" id="cccd" class="form-control"></div>
-    <div class="row form-group">
-    <div class="col-md-8">
-    <label for="vat" class="form-control-label">Tên Khách Hàng</label>
-    <input type="text" asp-for="Tenkh"  class="form-control"></div>
-
-    <div  class="col-md-4">
-    <div >
-    <label class=" form-control-label">Giới tính</label>
-    </div>
-    <div>
-    <div class="form-check-inline form-check">
-    <label for="inline-radio1" class="form-check-label col-md-7">
-    <input type="radio" id="inline-radio1" name="Gioitinh" value="Nam" asp-for="Gioitinh" class="form-check-input">Nam
-    </label>
-    <label for="inline-radio2" class="form-check-label col-md-6">
-    <input type="radio" id="inline-radio2" name="Gioitinh" value="Nữ" asp-for="Gioitinh" class="form-check-input">Nữ
-    </label>
-    </div>
-    </div>
-    </div>
-    </div>
-    <div class="row form-group">
-    <div class="col-md-3">
-    <label for="sonha" class="form-control-label">Số nhà:</label>
-    <input type="text" id="sonha" class="form-control">
-    </div>
-    <div class="col-md-3">
-    <label for="phuongxa" class="form-control-label">Phường/Xã:</label>
-    <input type="text" id="phuongxa" class="form-control">
-    </div>
-    <div class="col-md-3">
-    <label for="quanhuyen" class="form-control-label">Quận/Huyện:</label>
-    <input type="text" id="quanhuyen" class="form-control">
-    </div>
-    <div class="col-md-3">
-    <label for="tinhthanh" class="form-control-label">Tỉnh/Thành phố:</label>
-    <input type="text" id="tinhthanh" class="form-control">
-    </div>
-    <input type="hidden" asp-for="Diachi" id="Diachi" class="form-control">
-    </div>
-
-    <div class="row form-group">
-    <div class="col-md-6">
-    <label for="country" class=" form-control-label">Email</label>
-    <input type="email"  asp-for="Email"  class="form-control">
-    </div>
-    <div class="col-md-6">
-    <label for="country" class=" form-control-label">Số Điện Thoại</label>
-    <input type="number" asp-for="Sdt"  class="form-control">
-    </div>
-    </div>
-    <div class="form-actions form-group" style="margin-top:4px">
-    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-    </div>
-    </div>
-    </div>
-    </div>
-    </form>*@
+    
 
     <div class="container">
 
@@ -114,30 +48,36 @@
         </div>
 
         <form method="post" asp-controller="CreditCard" asp-action="CreateCard">
-            <div class="inputBox">
-                <span>Căn cước công dân</span>
-                <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
+            <div class="flexbox">
+                <div class="inputBox">
+                    <span>Căn cước công dân</span>
+                    <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
+                </div>
+                <div class="inputBox">
+                    <span>Tên Khách Hàng</span>
+                    <input type="text" maxlength="16" class="tenkhachhang">
+                </div>
             </div>
-            <div class="inputBox">
-                <span>Tên Khách Hàng</span>
-                <input type="text" maxlength="16" class="tenkhachhang">
+            <div class="flexbox">
+                <div class="inputBox">
+                    <span>Số Điện Thoại</span>
+                    <input type="text" maxlength="16" class="sdt" asp-for="SDTDangKy">
+                </div>
+                <div class="inputBox">
+                    <span>Ngày Mở Thẻ</span>
+                    <input type="text" maxlength="16" id="ngaymothe" asp-for="NgayMoThe">
+                </div>
             </div>
-            <div class="inputBox">
-                <span>Số Điện Thoại</span>
-                <input type="text" maxlength="16" class="sdt" asp-for="SDTDangKy">
-            </div>
-            <div class="inputBox">
-                <span>Ngày Mở Thẻ</span>
-                <input type="text" maxlength="16" id="ngaymothe" asp-for="NgayMoThe">
-            </div>
-            <div class="inputBox">
-                <span>số thẻ</span>
-                <input type="text" maxlength="16" class="card-number-input" asp-for="MaPIN">
-            </div>
-            <div class="inputBox">
-                <span>số tài khoản</span>
-                <input type="text" class="card-holder-input" asp-for="MaSoThe">
-            </div>
+             <div class="flexbox">
+                <div class="inputBox">
+                    <span>số thẻ</span>
+                    <input type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
+                </div>
+                <div class="inputBox">
+                    <span>số tài khoản</span>
+                    <input type="text" class="card-holder-input" asp-for="MaSoThe">
+                </div>
+            </div>      
             <div class="flexbox">
                 <div class="inputBox">
                     <span>Tháng hết hạn</span>
@@ -165,9 +105,8 @@
                     <span>Loại Thẻ</span>
                     <select asp-for="LoaiThe" class="type-card">
                         <option value="Loại" selected disabled>Loại</option>
-                        <option value="Redit">Redit</option>
-                        <option value="Visa">Visa</option>
-                        <option value="Non">Non</option>
+                        <option value="adkasdglwekb">TD</option>
+                        <option value="adkasdglwekb">GN</option>
                     </select>
                 </div>
             </div>
@@ -179,4 +118,17 @@
     <script src="/js/form-card.js">
 
     </script>
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+            <span class="badge badge-pill badge-primary">Success</span>
+            @ViewBag.SuccessMessage
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    }
 </body>
+
+
+

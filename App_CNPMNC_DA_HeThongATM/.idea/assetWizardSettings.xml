@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -18,11 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-<<<<<<< HEAD
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/notifications/baseline_notifications_24.xml" />
-=======
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_drop_down/baseline_arrow_drop_down_24.xml" />
->>>>>>> s1-Hao-MoKhoaTK
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/history/baseline_history_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -32,13 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-<<<<<<< HEAD
-                            <entry key="outputName" value="baseline_notifications_24" />
-                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\sack-dollar-solid.svg" />
-=======
-                            <entry key="outputName" value="baseline_arrow_drop_down_24" />
-                            <entry key="sourceFile" value="H:\HK1nam3\CNPMNC\Sprint2\CNPMNC_DA_HeThongATM\App_CNPMNC_DA_HeThongATM" />
->>>>>>> s1-Hao-MoKhoaTK
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="piggy_bank_solid" />
+                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\piggy-bank-solid.svg" />
                           </map>
                         </option>
                       </PersistentState>

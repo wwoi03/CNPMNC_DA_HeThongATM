@@ -3,17 +3,41 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 import java.io.Serializable;
 
 public class KhachHang implements Serializable {
+    private String Key;
     private String CCCD;
+    private String TenKH;
+    private String NgaySinh;
+    private String GioiTinh;
     private String DiaChi;
     private String Email;
-    private String GioiTinh;
-    private String NgayTao;
     private String SoDienThoai;
+    private String NgayTao;
     private String MatKhau;
-    private String TenKhachHang;
-    private String MaNhanVien;
+    private String MaNhanVienKey;
 
     public KhachHang() {
+    }
+
+    public KhachHang(String key, String CCCD, String tenKH, String ngaySinh, String gioiTinh, String diaChi, String email, String soDienThoai, String ngayTao, String matKhau, String maNhanVienKey) {
+        Key = key;
+        this.CCCD = CCCD;
+        TenKH = tenKH;
+        NgaySinh = ngaySinh;
+        GioiTinh = gioiTinh;
+        DiaChi = diaChi;
+        Email = email;
+        SoDienThoai = soDienThoai;
+        NgayTao = ngayTao;
+        MatKhau = matKhau;
+        MaNhanVienKey = maNhanVienKey;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 
     public String getCCCD() {
@@ -22,6 +46,30 @@ public class KhachHang implements Serializable {
 
     public void setCCCD(String CCCD) {
         this.CCCD = CCCD;
+    }
+
+    public String getTenKH() {
+        return TenKH;
+    }
+
+    public void setTenKH(String tenKH) {
+        TenKH = tenKH;
+    }
+
+    public String getNgaySinh() {
+        return NgaySinh;
+    }
+
+    public void setNgaySinh(String ngaySinh) {
+        NgaySinh = ngaySinh;
+    }
+
+    public String getGioiTinh() {
+        return GioiTinh;
+    }
+
+    public void setGioiTinh(String gioiTinh) {
+        GioiTinh = gioiTinh;
     }
 
     public String getDiaChi() {
@@ -40,12 +88,12 @@ public class KhachHang implements Serializable {
         Email = email;
     }
 
-    public String getGioiTinh() {
-        return GioiTinh;
+    public String getSoDienThoai() {
+        return SoDienThoai;
     }
 
-    public void setGioiTinh(String gioiTinh) {
-        GioiTinh = gioiTinh;
+    public void setSoDienThoai(String soDienThoai) {
+        SoDienThoai = soDienThoai;
     }
 
     public String getNgayTao() {
@@ -56,14 +104,6 @@ public class KhachHang implements Serializable {
         NgayTao = ngayTao;
     }
 
-    public String getSoDienThoai() {
-        return SoDienThoai;
-    }
-
-    public void setSoDienThoai(String soDienThoai) {
-        SoDienThoai = soDienThoai;
-    }
-
     public String getMatKhau() {
         return MatKhau;
     }
@@ -72,31 +112,11 @@ public class KhachHang implements Serializable {
         MatKhau = matKhau;
     }
 
-    public String getTenKhachHang() {
-        return TenKhachHang;
+    public String getMaNhanVienKey() {
+        return MaNhanVienKey;
     }
 
-    public void setTenKhachHang(String tenKhachHang) {
-        TenKhachHang = tenKhachHang;
-    }
-
-    public String getMaNhanVien() {
-        return MaNhanVien;
-    }
-
-    public void setMaNhanVien(String maNhanVien) {
-        MaNhanVien = maNhanVien;
-    }
-
-    public KhachHang(String CCCD, String diaChi, String email, String gioiTinh, String ngayTao, String soDienThoai, String matKhau, String tenKhachHang, String maNhanVien) {
-        this.CCCD = CCCD;
-        DiaChi = diaChi;
-        Email = email;
-        GioiTinh = gioiTinh;
-        NgayTao = ngayTao;
-        SoDienThoai = soDienThoai;
-        MatKhau = matKhau;
-        TenKhachHang = tenKhachHang;
-        MaNhanVien = maNhanVien;
+    public void setMaNhanVienKey(String maNhanVienKey) {
+        MaNhanVienKey = maNhanVienKey;
     }
 }
