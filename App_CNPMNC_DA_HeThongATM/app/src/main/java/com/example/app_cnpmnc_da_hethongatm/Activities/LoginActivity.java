@@ -119,10 +119,8 @@ public class LoginActivity extends AppCompatActivity {
                             // lưu dữ liệu vào Shareference
                             editor.putString("customerPhone", phone);
                             editor.putString("customerKey", dataSnapshot.getKey());
-                            editor.putString("customerName", khachHang.getTenKhachHang());
+                            editor.putString("customerName", khachHang.getTenKH());
                             editor.commit();
-
-                            DbHelper.getCardNumber(dataSnapshot.getKey());
 
                             startProgressBar(1500);
                         } else {

@@ -21,14 +21,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.AccountCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountSettingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.ListAccountSavingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.SearchServiceFunctionActivity;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 
-import com.example.app_cnpmnc_da_hethongatm.Activities.LockCardActivity;
-import com.example.app_cnpmnc_da_hethongatm.Activities.UnlockCardActivity;
+//import com.example.app_cnpmnc_da_hethongatm.Activities.UnlockCardActivity;
 
 import com.example.app_cnpmnc_da_hethongatm.Fragment.HomeFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     QuickAccessFragment quickAccessFragment;
 
     // View
-    TextView tv_username, tv_cardid;
+    TextView tv_username, tvPhone;
 
     // Confix
     Config config;
@@ -149,11 +150,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent2);
                 break;
             case R.id.nav_khoathe:
-                Intent intent3 = new Intent(this, LockCardActivity.class);
-                startActivity(intent3);
+                /*Intent intent3 = new Intent(this, LockCardActivity.class);
+                startActivity(intent3);*/
                 break;
             case R.id.nav_mokhoathe:
-                startActivity(new Intent(this, UnlockCardActivity.class));
+                /*startActivity(new Intent(this, UnlockCardActivity.class));*/
+            case R.id.nav_ruttien:
+                Intent intent3 = new Intent(this, ListAccountSavingsActivity.class);
+                startActivity(intent3);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -168,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onCreateOptionsMenu(menu);
     }
 
+
     // tương tác với các item trong menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -175,6 +180,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.mnuSearch:
                 Intent cart = new Intent(MainActivity.this, SearchServiceFunctionActivity.class);
                 startActivity(cart);
+                break;
+            case R.id.mnuNotification:
+                Intent intent1 = new Intent(MainActivity.this, AccountCardActivity.class);
+                intent1.putExtra("flag", 10);
+                startActivity(intent1);
                 break;
         }
 
@@ -194,11 +204,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void showInfoAccount() {
         View headerView = navigationView.getHeaderView(0);
         tv_username = headerView.findViewById(R.id.tv_username);
-        tv_cardid = headerView.findViewById(R.id.tv_cardid);
+        tvPhone = headerView.findViewById(R.id.tvPhone);
 
         tv_username.setText(config.getCustomerName());
-        Log.d("firebase", String.valueOf(DbHelper.MY_CARD) + " test");
-
-        tv_cardid.setText(String.valueOf(DbHelper.MY_CARD));
+        tvPhone.setText(config.getCustomerPhone());
     }
 }

@@ -1,3 +1,4 @@
+/*
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
-import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTheNganHang;
+import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.TheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +42,9 @@ public class UnlockCardActivity extends AppCompatActivity {
     String Id;
     String[]Idkey;
     Config config;
-    int demso;
+    int demso=0;
+    int preMaLoai=-1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,7 @@ public class UnlockCardActivity extends AppCompatActivity {
         config=new Config(UnlockCardActivity.this);
         firebaseDatabase = FirebaseDatabase.getInstance("https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseReference=firebaseDatabase.getReference();
+        getCustomerID(config.getCustomerKey());
     }
 
 
@@ -92,8 +96,8 @@ public class UnlockCardActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l ) {
                 maloai=listtypeID[i];
                 tenloai=listtype[i];
-                Log.d("TAG", "Thông tin debug"+maloai);
-                Check();
+                Check(preMaLoai);
+                preMaLoai=i;
             }
 
             @Override
@@ -117,7 +121,7 @@ public class UnlockCardActivity extends AppCompatActivity {
                                 count++;
                         }
                         cardID = new String[count];
-                        Idkey = cardID;
+                        Idkey = new String[count];
                         int i = 0;
                         for (DataSnapshot snap : snapshot.getChildren()) {
                             long ttt = (long) snap.child("TinhTrangThe").getValue();
@@ -166,19 +170,18 @@ public class UnlockCardActivity extends AppCompatActivity {
             }
         });
     }
-    public void Check(){
+    public void Check(int pre){
         databaseReference.child("TheNganHang")
                 .orderByChild("MaKH").equalTo(config.getCustomerKey())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        demso = 0;
                         for (DataSnapshot snap : snapshot.getChildren()) {
-                            long ttt = (long) snap.child("TinhTrangThe").getValue();
-                            String lt=String.valueOf(snap.child("LoaiThe").getValue());
-                            if (ttt != 1 && lt.equals(maloai))
+                            TheNganHang theNganHang=snap.getValue(TheNganHang.class);
+                            if (theNganHang.getTinhTrangThe()!=0 && theNganHang.getLoaiThe().equals(maloai))
                                 demso++;
                         }
+                        Log.d("TAG", "onDataChange: dddddddddd"+demso+maloai);
                         if(demso>0){
                             ReadMaThe();
                         }
@@ -186,14 +189,22 @@ public class UnlockCardActivity extends AppCompatActivity {
                             AlertDialog.Builder builder = new AlertDialog.Builder(UnlockCardActivity.this);
 
                             // Thiết lập tiêu đề và nội dung của thông báo
-                            builder.setTitle("Bạn không có thẻ "+tenloai+ " nào cần mở khóa!")
-                                    .setMessage("Vui lòng kiểm tra lại trước khi mở khóa. Nhé!");
+                            builder.setTitle("Bạn không có thẻ " + tenloai + " nào cần mở khóa!")
+                                    .setMessage("Vui lòng kiểm tra trước khi khóa. Nhé!");
 
                             // Thiết lập nút tích cực
                             builder.setPositiveButton("Đã hiểu", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    // Xử lý khi người dùng nhấn nút Đồng ý
-                                    // Để đóng dialog, không cần phải thêm gì cả vì nó sẽ tự đóng
+                                    if(pre!=-1&&cardID!=null){
+                                        maloai=listtypeID[pre];
+                                        spLoaiThe.setSelection(pre);
+                                    }
+                                }
+                            });
+                            builder.setNegativeButton("Trở về", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(UnlockCardActivity.this, MainActivity.class));
                                 }
                             });
                             AlertDialog dialog = builder.create();
@@ -207,4 +218,20 @@ public class UnlockCardActivity extends AppCompatActivity {
                 });
     }
 
-}
+    public String customerID;
+    public String getCustomerID(String customerKey){
+        databaseReference.child("KhachHang").child(customerKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                customerID= snapshot.child("CCCD").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return customerID;
+    }
+
+}*/

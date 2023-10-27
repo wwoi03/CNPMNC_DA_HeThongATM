@@ -1,12 +1,20 @@
 package com.example.app_cnpmnc_da_hethongatm.Extend;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
+import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
@@ -29,16 +37,28 @@ import java.util.Locale;
 import java.util.Map;
 
 public class DbHelper {
+    static ProgressBar progressBar;
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    public static long MY_CARD; // Mã số thẻ ngân hàng của khách hàng đăng nhập vào app
 
     public interface FirebaseListener {
         void onSuccessListener();
         void onFailureListener(Exception e);
+        void onSuccessListener(DataSnapshot snapshot);
+    }
+
+    // bật ProgressDialog
+    public static void showProgressDialog(ProgressBar _progressBar) {
+        progressBar = _progressBar;
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    // tắt ProgressDialog
+    public static void dismissProgressDialog() {
+        progressBar.setVisibility(View.GONE);
     }
 
     // Lấy số thẻ ngân hàng
-    public static void getCardNumber(String customerKey) {
+    /*public static void getCardNumber(String customerKey) {
         Query card = firebaseDatabase.getReference("TheNganHang").orderByChild("MaKH").equalTo(customerKey);
 
         card.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -59,7 +79,7 @@ public class DbHelper {
 
             }
         });
-    }
+    }*/
 
     // Lấy danh sách chức năng
     public static FirebaseRecyclerOptions<ChucNang> getServiceFunctions() {
@@ -71,9 +91,9 @@ public class DbHelper {
     }
 
     // Lấy danh sách người thụ hưởng
-    public static FirebaseRecyclerOptions<ThuHuong> getBeneficiaries(long maSoThe) {
+    public static FirebaseRecyclerOptions<ThuHuong> getBeneficiaries(String maKHKey) {
         FirebaseRecyclerOptions<ThuHuong> options = new FirebaseRecyclerOptions.Builder<ThuHuong>()
-                .setQuery(firebaseDatabase.getReference("ThuHuong").orderByChild("MaSoThe").equalTo(maSoThe), ThuHuong.class)
+                .setQuery(firebaseDatabase.getReference("ThuHuong").orderByChild("MaKHKey").equalTo(maKHKey), ThuHuong.class)
                 .build();
 
         return options;
@@ -102,14 +122,16 @@ public class DbHelper {
                 });
     }
 
-    // Sửa người thụ hưởng
+    // Thêm người thụ hưởng
     public static void addBeneficiary(ThuHuong thuHuong, FirebaseListener firebaseListener) {
+        String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
+
         Map<String, Object> map = new HashMap<>();
+        map.put("Key", newKey);
         map.put("TKThuHuong", (long) thuHuong.getTKThuHuong());
-        map.put("MaSoThe", (long) thuHuong.getMaSoThe());
+        map.put("MaKHKey", thuHuong.getMaKHKey());
         map.put("TenNguoiThuHuong", thuHuong.getTenNguoiThuHuong());
 
-        String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
 
         firebaseDatabase.getReference("ThuHuong").child(newKey).setValue(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -148,33 +170,14 @@ public class DbHelper {
     }
 
     // Lấy danh sách tài khoản liên kết
-    public static FirebaseRecyclerOptions<TaiKhoanLienKet> getAffiliateAccounts() {
+    public static FirebaseRecyclerOptions<TaiKhoanLienKet> getAffiliateAccounts(String maKHKey) {
         FirebaseRecyclerOptions<TaiKhoanLienKet> options = new FirebaseRecyclerOptions.Builder<TaiKhoanLienKet>()
-                .setQuery(firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("MaSoThe").equalTo(MY_CARD), TaiKhoanLienKet.class)
+                .setQuery(firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("MaKHKey").equalTo(maKHKey), TaiKhoanLienKet.class)
                 .build();
 
         return options;
     }
-
-    // tìm tài khoản theo số tài khoản
-    /*public static TaiKhoanLienKet getAffiliateAccountByAccountNumber(long soTaiKhoan) {
-        firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(soTaiKhoan)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-    }*/
+    //Lấy danh sách GiaoDich
 
     // cập nhật số dư
     public static void updateSurplus(String taiKhoanKey, double soDuMoi) {
@@ -216,7 +219,8 @@ public class DbHelper {
                     }
                 });
     }
-    // Tạo lịch sử giao dịch
+
+    // Tạo lịch sử giao dịch - Hưng
     public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan) {
         LocalTime now = null;
         String timeString="";
@@ -251,5 +255,50 @@ public class DbHelper {
         String NgayGDHomNay = sdf.format(calendar.getTime());
 
         return NgayGDHomNay;
+    }
+
+    // Lấy loại tài khoản theo mã loại
+    public static void getAccountTypeByKey(String accountTypeKey, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("LoaiTaiKhoan").child(accountTypeKey)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            if (firebaseListener != null) {
+                                firebaseListener.onSuccessListener(snapshot);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    // lấy loại giao dịch theo mã loại giao dịch
+    public static void getTransactionTypeByTransactionTypeCode(String maLoaiGD, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("LoaiGiaoDich").orderByChild("MaLoaiGD").equalTo(maLoaiGD)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                if (firebaseListener != null) {
+                                    firebaseListener.onSuccessListener(dataSnapshot);
+                                }
+
+                                break;
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }
