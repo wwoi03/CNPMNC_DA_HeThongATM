@@ -253,7 +253,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         Toast.makeText(TransferMoneyActivity.this, text, Toast.LENGTH_SHORT).show();
     }
 
-    private void BuildAlertDialog(String TenLoi){
+    public void BuildAlertDialog(String TenLoi){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Có Lỗi");
         builder.setMessage(TenLoi);
@@ -266,7 +266,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void BuildAlertDialogSuccess(){
+    public void BuildAlertDialogSuccess(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Chuyển tiền thành công");
         builder.setMessage("Bấm ok để về trang chủ");
