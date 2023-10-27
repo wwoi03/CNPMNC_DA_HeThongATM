@@ -120,8 +120,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("customerPhone", phone);
                             editor.putString("customerKey", dataSnapshot.getKey());
                             editor.putString("customerName", khachHang.getTenKH());
+                            editor.putBoolean("stateLogin",true);
                             editor.commit();
-
                             startProgressBar(1500);
                         } else {
                             toastMessage("Mật khẩu không chính xác");
@@ -169,5 +169,10 @@ public class LoginActivity extends AppCompatActivity {
     // ẩn ProgressBar
     private void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }
