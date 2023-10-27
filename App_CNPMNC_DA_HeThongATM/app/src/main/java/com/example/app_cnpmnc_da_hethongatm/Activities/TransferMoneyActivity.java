@@ -67,7 +67,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         taiKhoanNguonKey = (String) result.getData().getSerializableExtra("taiKhoanNguonKey");
                         tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
                         tvSurplus.setText(String.valueOf(taiKhoanNguon.getSoDu()) + " VNĐ");
-                        etContent.setText(taiKhoanNguon.getTenTaiKhoan() + " chuyen tien");
+                        etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
                     // kiểm tra edit text rỗng?
                     if (!accountBeneficiaryString.isEmpty()) {
-                        if(accountBeneficiaryString == taiKhoanNguon.getTenTaiKhoan()){
+                        if(accountBeneficiaryString == taiKhoanNguon.getTenTK()){
                             BuildAlertDialog("Không thể tự chuyển khỏan cho bản thân");
                         }
                         else {
@@ -148,7 +148,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                                     taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
                                                     etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
-                                                    tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTaiKhoan()));
+                                                    tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
                                                     taiKhoanHuongKey = dataSnapshot.getKey();
                                                 }
                                             }
@@ -283,7 +283,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private String GetDate(){
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = sdf.format(currentDate);
         return formattedDate;
