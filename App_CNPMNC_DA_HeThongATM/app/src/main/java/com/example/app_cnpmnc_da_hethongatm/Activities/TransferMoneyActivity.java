@@ -76,7 +76,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_money);
-
         initUI();
         initData();
         initListener();
@@ -107,6 +106,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
             String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
             etAccountBeneficiary.setText(tkThuHuongStr);
         }
+        taiKhoanNguon = new TaiKhoanLienKet();
+        taiKhoanHuong = new TaiKhoanLienKet();
     }
 
 
@@ -133,11 +134,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
                     // kiểm tra edit text rỗng?
                     if (!accountBeneficiaryString.isEmpty()) {
-                        if(accountBeneficiaryString == taiKhoanNguon.getTenTK()){
+                        long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
+                        if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
                             BuildAlertDialog("Không thể tự chuyển khỏan cho bản thân");
                         }
                         else {
-                            long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
                             // truy vấn đến TaiKhoanLK theo số tài khoản
                             Log.d(String.valueOf(accountBeneficiary), "onFocusChange: ");
                             DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
@@ -183,7 +184,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 } else if (moneyString.isEmpty()) { // rỗng
                     BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
                     checkvalid ++;
-
                 } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
                     BuildAlertDialog("Không đủ tiền để gd");
                     checkvalid++;
