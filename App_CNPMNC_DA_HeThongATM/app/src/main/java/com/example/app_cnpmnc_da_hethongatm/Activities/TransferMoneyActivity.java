@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class TransferMoneyActivity extends AppCompatActivity {
     // View
@@ -62,7 +67,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         taiKhoanNguonKey = (String) result.getData().getSerializableExtra("taiKhoanNguonKey");
                         tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
                         tvSurplus.setText(String.valueOf(taiKhoanNguon.getSoDu()) + " VNĐ");
-                        etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
+                        etContent.setText(taiKhoanNguon.getTenTaiKhoan() + " chuyen tien");
                     }
                 }
             }
@@ -122,33 +127,41 @@ public class TransferMoneyActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
+                    if(accountBeneficiaryString.isEmpty()){
+                        BuildAlertDialog("Không được để trống người thụ hưởng");
+                    }
 
                     // kiểm tra edit text rỗng?
                     if (!accountBeneficiaryString.isEmpty()) {
-                        long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
-
-                        // truy vấn đến TaiKhoanLK theo số tài khoản
-                        DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        if (snapshot.exists()) {
-                                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                                taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
-
-                                                etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
-                                                tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
-                                                taiKhoanHuongKey = dataSnapshot.getKey();
+                        if(accountBeneficiaryString == taiKhoanNguon.getTenTaiKhoan()){
+                            BuildAlertDialog("Không thể tự chuyển khỏan cho bản thân");
+                        }
+                        else {
+                            long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
+                            // truy vấn đến TaiKhoanLK theo số tài khoản
+                            Log.d(String.valueOf(accountBeneficiary), "onFocusChange: ");
+                            DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                                    taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
+                                                    etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
+                                                    tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTaiKhoan()));
+                                                    taiKhoanHuongKey = dataSnapshot.getKey();
+                                                }
                                             }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
 
-                                    }
-                                });
+                                        }
+                                    });
+                        }
                     }
+
                 }
             }
         });
@@ -157,17 +170,31 @@ public class TransferMoneyActivity extends AppCompatActivity {
         btTransferMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int checkvalid = 0;
                 // kiểm tra tổng
                 String moneyString = etMoney.getText().toString().trim();
                 String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
-
                 if (taiKhoanNguonKey.isEmpty()) {
                     BuildAlertDialog("Vui lòng chọn tài khoản nguồn");
+                    checkvalid ++;
                 } else if (accountBeneficiaryString.isEmpty()) {
                     BuildAlertDialog("Vui lòng nhập tài khoản hưởng");
+                    checkvalid ++;
                 } else if (moneyString.isEmpty()) { // rỗng
                     BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
-                } else { // không rỗng
+                    checkvalid ++;
+
+                } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
+                    BuildAlertDialog("Không đủ tiền để gd");
+                    checkvalid++;
+                }else if (GetDate() != taiKhoanNguon.getNgayGD()) {
+                    taiKhoanNguon.setNgayGD(GetDate());
+                    taiKhoanNguon.setTienDaGD(0);
+                } else if (Double.parseDouble(moneyString)+taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
+                    BuildAlertDialog("Số tiền giao dịch vuợt quá hạn mức");
+                    checkvalid ++;
+                }
+                else if(checkvalid == 0){ // không rỗng
                     double money = Double.parseDouble(moneyString);
                     // kiểm tra số tiền phải >= 1k
                     if (money >= 1000) {
@@ -217,8 +244,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private void transferMoney(double money, String noiDungChuyenKhoan) {
         DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money); // tài khoản nguồn
         DbHelper.updateSurplus(taiKhoanHuongKey, taiKhoanHuong.getSoDu() + money); // tài khoản hưởng
-
-        DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan);
+        DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"-AWFo21aLu3212YNBUgf");
         BuildAlertDialogSuccess();
     }
 
@@ -253,5 +279,13 @@ public class TransferMoneyActivity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+    private String GetDate(){
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = sdf.format(currentDate);
+        return formattedDate;
     }
 }

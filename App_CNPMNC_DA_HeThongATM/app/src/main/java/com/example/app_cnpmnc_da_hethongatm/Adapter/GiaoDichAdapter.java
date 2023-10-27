@@ -1,5 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;

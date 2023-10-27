@@ -227,7 +227,7 @@ public class DbHelper {
     }
 
     // Tạo lịch sử giao dịch - Hưng
-    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan) {
+    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan,String loaigd) {
         LocalTime now = null;
         String timeString="";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -244,15 +244,17 @@ public class DbHelper {
         Map<String, Object> map = new HashMap<>();
         map.put("GioGiaoDich", timeString);
         map.put("NgayGiaoDich", GetDataForm());
-        map.put("SoTaiKhoan", taiKhoanNguon.getSoTaiKhoan());
+        map.put("TaiKhoanNguon", taiKhoanNguon.getSoTaiKhoan());
         map.put("NoiDungChuyenKhoan", noiDungChuyenKhoan);
         map.put("SoTienGiaoDich", soTienGiaoDich);
         map.put("TaiKhoanNhan", taiKhoanNhan.getSoTaiKhoan());
-        map.put("SoDuHienTai", taiKhoanNguon.getSoDu());
-
-        String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
-
-        firebaseDatabase.getReference("LichSuGiaoDich").child(newKey).setValue(map);
+        map.put("SoDuLucGui", taiKhoanNguon.getSoDu());
+        map.put("LoaiGiaoDichKey",loaigd);
+        String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
+        map.put("Key",newKey);
+        map.put("PhiGiaoDich",0);
+        map.put("SoDuLucNhan", taiKhoanNhan.getSoDu());
+        firebaseDatabase.getReference("GiaoDich").child(newKey).setValue(map);
     }
 
     public static String GetDataForm(){
