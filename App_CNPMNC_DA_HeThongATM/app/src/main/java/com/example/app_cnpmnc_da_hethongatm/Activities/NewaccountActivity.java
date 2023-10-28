@@ -61,7 +61,7 @@ public class NewaccountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //kiểm tra số đã nhập chưa
                 String msg;
-                msg = "Số Đẹp:" + etsodep.getText().toString();
+                msg = etsodep.getText().toString();
                 if (!etsodep.getText().toString().equals("")) {
                     arrayDanhSach.add(msg);
                     //cập nhật danh sách
@@ -91,7 +91,7 @@ public class NewaccountActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, int i, long l) {
                 String msg;
-                msg = "Bạn vừa chọn số tài khoản:\n";
+                msg = "Bạn vừa cập nhật số tài khoản mới:\n";
                 msg = msg + arrayDanhSach.get(i);
                 //hiện thông báo
                 Toast.makeText(NewaccountActivity.this, msg, Toast.LENGTH_SHORT).show();
