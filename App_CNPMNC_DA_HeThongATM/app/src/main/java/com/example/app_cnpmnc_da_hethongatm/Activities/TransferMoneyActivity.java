@@ -184,30 +184,34 @@ public class TransferMoneyActivity extends AppCompatActivity {
         ivBeneficiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Khởi tạo FirebaseRecyclerOptions
                 FirebaseRecyclerOptions<ThuHuong> options =
                         new FirebaseRecyclerOptions.Builder<ThuHuong>()
                                 .setQuery(FirebaseDatabase.getInstance().getReference().child("ThuHuong"), ThuHuong.class)
                                 .build();
 
-                // Khởi tạo ListBeneficiaryAdapter với FirebaseRecyclerOptions
                 ListBeneficiaryAdapter listBeneficiaryAdapter = new ListBeneficiaryAdapter(options);
 
-                // Tạo một DialogPlus mới
                 DialogPlus dialogPlus = DialogPlus.newDialog(TransferMoneyActivity.this)
                         .setContentHolder(new ViewHolder(R.layout.activity_thuhuongtransfer))
                         .setExpanded(true, 800)
                         .create();
 
-                // Tìm RecyclerView trong layout của DialogPlus
                 RecyclerView recyclerView = dialogPlus.getHolderView().findViewById(R.id.rc_thuhuongtransfer);
 
-                // Thiết lập ListBeneficiaryAdapter cho RecyclerView
                 recyclerView.setLayoutManager(new LinearLayoutManager(TransferMoneyActivity.this));
                 recyclerView.setAdapter(listBeneficiaryAdapter);
 
-                // Bắt đầu lắng nghe dữ liệu từ Firebase
                 listBeneficiaryAdapter.startListening();
+
+                listBeneficiaryAdapter.setOnItemClickListener(new ListBeneficiaryAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(ThuHuong model) {
+                        long tkThuHuongLong = model.getTKThuHuong();
+                        String tkThuHuongStr = Long.toString(tkThuHuongLong);
+                        etAccountBeneficiary.setText(tkThuHuongStr);
+                        dialogPlus.dismiss();// đóng dialogplus
+                    }
+                });
 
                 dialogPlus.show();
             }
