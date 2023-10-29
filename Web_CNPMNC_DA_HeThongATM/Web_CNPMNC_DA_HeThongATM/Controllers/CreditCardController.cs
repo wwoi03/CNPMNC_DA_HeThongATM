@@ -127,5 +127,78 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return PartialView("SearchCard", ViewThes);
 
         }
+        //*******************************************
+        string customerKey;
+        string cardtypeKey;
+        string tenKH;
+        string masothe;
+        TheNganHang theNganHang;
+        public IActionResult AccountControl()
+        {
+
+            return View();
+        }
+
+        public IActionResult CardControl()
+        {
+            ViewBag.get = firebaseHelper.GetCardTypes();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult sendCard([FromBody] inputDatacuaHao input)
+        {
+            string tinhtrang = "undefined";
+            if (firebaseHelper.GetCustomerbyid(input.CCCD) != null && firebaseHelper.getCardTypeKeybyName(input.LoaiThe) != null)
+            {
+                tenKH = firebaseHelper.GetCustomerbyid(input.CCCD).TenKhachHang;
+                customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
+                cardtypeKey = firebaseHelper.getCardTypeKeybyName(input.LoaiThe);
+                theNganHang = firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey);
+                if (theNganHang != null)
+                {
+                    switch (theNganHang.TinhTrangThe)
+                    {
+                        case 0:
+                            tinhtrang = "Hoạt động";
+                            break;
+                        case 1:
+                            tinhtrang = "Người dùng đang";
+                            break;
+                        case 2:
+                            tinhtrang = "Ngân hàng đang khóa";
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                return Json("Không tìm thấy");
+            }
+            CardControlViewModel cardInfor = new CardControlViewModel
+            {
+                theNganHang = theNganHang,
+                CCCD = input.CCCD,
+                LoaiThe = input.LoaiThe,
+                tenKH = tenKH,
+                TinhTrang = tinhtrang
+            }; return Json(cardInfor);
+
+        }
+        [HttpPost]
+        public IActionResult changeStatus([FromBody] inputDatacuaHao input)
+        {
+            if (firebaseHelper.GetCustomerbyid(input.CCCD) != null && firebaseHelper.getCardTypeKeybyName(input.LoaiThe) != null)
+            {
+                customerKey = firebaseHelper.GetKeysBycccd(input.CCCD);
+                cardtypeKey = firebaseHelper.getCardTypeKeybyName(input.LoaiThe);
+                theNganHang = firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey);
+                if (firebaseHelper.getCardbyCusTypeKeys(customerKey, cardtypeKey) != null)
+                {
+                    firebaseHelper.ChangeCardStatus(theNganHang.MaSoThe);
+                    return RedirectToAction("CardControl");
+                }
+            }
+            return sendCard(input);
+        }
     }
 }
