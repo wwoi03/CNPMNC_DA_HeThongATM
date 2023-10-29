@@ -18,6 +18,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập email.")]
         public string Email { get; set; }
+        public string NgaySinh { get; set; }
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập giới tính.")]
@@ -30,11 +31,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập tên khách hàng.")]
-        public string TenKhachHang { get; set; }
+        public string TenKH { get; set; }
 
         public string NgayTao { get; set; }
 
         public string MatKhau { get; set; }
+
+        public string MaNhanVienKey { get; set; }
 
 
     }

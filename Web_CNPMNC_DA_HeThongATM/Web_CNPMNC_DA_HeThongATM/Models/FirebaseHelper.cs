@@ -163,7 +163,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
                 if (customer != null)
                 {
-                    return customer.TenKhachHang;
+                    return customer.TenKH;
                 }
             }
             return "";
