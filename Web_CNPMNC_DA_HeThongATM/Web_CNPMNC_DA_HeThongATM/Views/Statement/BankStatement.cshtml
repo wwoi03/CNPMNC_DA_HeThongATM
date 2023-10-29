@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     var listLSGD = ViewBag.LSGD;
     var check = ViewBag.check;
+
 }
 @model CustomerStatementViewModel
 
@@ -267,31 +268,21 @@
             <form class="topform orangehrm-horizontal-padding orangehrm-vertical-padding" asp-controller="Statement" asp-action="CustomerStatement" method="post">
                 @*<div class="topform orangehrm-horizontal-padding orangehrm-vertical-padding">*@
                 <div class="card-search col col-md-4">
-                    <label for="fromDate">Từ ngày:</label>
-                    <input asp-for="fromDate" type="date" id="fromDate" name="fromDate" onchange="check()">
+                    <label for="fromDate">Từ năm:</label>
+                    <input asp-for="fromDate" type="number" min="1900" max="2100" id="fromDate" name="fromDate" onchange="check()">
 
                 </div>
                 <div class="card-search col col-md-">
-                    <label for="toDate">Đến ngày:</label>
-                    <input asp-for="toDate" type="date" id="toDate" name="toDate" onchange="check()">
+                    <label for="toDate">Đến năm:</label>
+                    <input asp-for="toDate" type="number" min="1900" max="2100" id="toDate" name="toDate" onchange="check()">
                 </div>
-                <div class="card-search col col-md-4">
-                    <div class="input-group">
-
-                        <input asp-for="cccd" type="text" id="search-input" class="form-control" placeholder="Vui lòng nhập căn cước công dân" onchange="check()">
-                        <div class="input-group-btn">
-                            <button class="btn btn-info" id="search-button" asp-action="CustomerStatement" asp-controller="Statement" formmethod="post">
-                                <i class="fa fa-search"></i> Truy xuất
-                            </button>
-                        </div>
-                    </div>
-                </div>
+             
                 @*</div>*@
             </form>
             @*************************************************************************@
             <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:25%;opacity:0.9;display:none">
                 <h4 class="alert-heading">Kiểm tra lại thông tin!</h4>
-                <p>Ngày bắt đầu không được lớn hơn ngày kết thúc, phải nhập căn cước công dân!</p>
+                <p>Năm bắt đầu không được lớn hơn năm kết thúc!</p>
                 <hr>
             </div>
             @*****************************************************************@
@@ -320,11 +311,11 @@
                             <!---->
                             </div> *@
                             <div style="flex: 1 1 3%;">
-                                <p> Khách Hàng</p>
+                                <p> Khách hàng chuyển</p>
                             </div>
 
                             <div style="flex: 1 1 3%;">
-                                <p> Đồng Giao Dịch</p>
+                                <p> Khách Hàng Nhận</p>
                             </div>
 
                             <div style="flex: 1 1 2%;">
@@ -335,7 +326,10 @@
                                 <p> Số Tiền Chuyển</p>
                             </div>
                             <div style="flex: 1 1 0%;">
-                                <p> Số Dư</p>
+                                <p> Số Dư Người Gửi</p>
+                            </div>
+                            <div style="flex: 1 1 0%;">
+                                <p> Số Dư Người Nhận</p>
                             </div>
                             <div style="flex: 1 1 0%;">
                                 <p> Trạng Thái</p>
@@ -358,7 +352,10 @@
                                         <div>@item.LSGD.SoTienGiaoDich</div>
                                     </div>
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.SoDu</div>
+                                        <div>@item.LSGD.SoDuLucGui</div>
+                                    </div>
+                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                        <div>@item.LSGD.SoDuLucNhan</div>
                                     </div>
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                         <div>@item.status</div>
@@ -392,10 +389,10 @@
             document.getElementById("search-button").disabled = true;
         }
 
-        if (@Model !== null) {
-            document.getElementById("fromDate").value = "@Model.fromDate";
-            document.getElementById("toDate").value = "@Model.toDate";
-        }
+        @*//if (@Model !== null) {
+        //    document.getElementById("fromDate").value = "@Model.fromDate";
+        //    document.getElementById("toDate").value = "@Model.toDate";
+        //}*@
 
 
         function handlerNotFound() {

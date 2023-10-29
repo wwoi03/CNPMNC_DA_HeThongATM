@@ -27,23 +27,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Create(NhanVienViewModel nhanVienViewModel)
-        {
-            NhanVien nhanVien = new NhanVien()
-            {
-                ChiNhanh = nhanVienViewModel.ChiNhanh,
-                ChucVu = nhanVienViewModel.ChucVu,
-                DiaChi = nhanVienViewModel.DiaChi,
-                Email = nhanVienViewModel.Email,
-                MatKhau = nhanVienViewModel.MatKhau,
-                NamSinh = nhanVienViewModel.NamSinh,
-                TenNhanVien = nhanVienViewModel.Ten
-            };
+        //[HttpPost]
+        //public IActionResult Create(NhanVienViewModel nhanVienViewModel)
+        //{
+        //    NhanVien nhanVien = new NhanVien()
+        //    {
+        //        ChiNhanh = nhanVienViewModel.ChiNhanh,
+        //        ChucVu = nhanVienViewModel.ChucVu,
+        //        DiaChi = nhanVienViewModel.DiaChi,
+        //        Email = nhanVienViewModel.Email,
+        //        MatKhau = nhanVienViewModel.MatKhau,
+        //        NamSinh = nhanVienViewModel.NamSinh,
+        //        TenNhanVien = nhanVienViewModel.Ten
+        //    };
 
-            firebaseHelper.CreateStaff(nhanVien);
+        //    firebaseHelper.CreateStaff(nhanVien);
 
-            return RedirectToAction("Index", "Staff");
-        }
+        //    return RedirectToAction("Index", "Staff");
+        //}
     }
 }

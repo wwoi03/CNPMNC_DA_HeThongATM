@@ -9,12 +9,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
     {
         FirebaseHelper firebaseHelper = new FirebaseHelper();
 
+        public IActionResult BankStatement()
+        {
+            List<ThongKeViewModel> LSDG = firebaseHelper.danhsachLSGD();
+            ViewBag.LSGD = LSDG;
+            ViewBag.check = "ok";
+            return View();
+        }
+
         public IActionResult CustomerStatement()
         {
             //TuanDao 0 cho
             //List<LichSuGiaoDichViewModel> LSDG = firebaseHelper.danhsachLSGD();
             List<GiaoDichViewModel> LSDG = new List<GiaoDichViewModel>();
-            ViewBag.LSDG = LSDG;
+            ViewBag.LSGD = LSDG;
             ViewBag.check = "ok";
             CustomerStatementViewModel cus = new CustomerStatementViewModel();
             cus.toDate = DateTime.Now.ToString("yyyy-MM-dd");
@@ -32,10 +40,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 if (firebaseHelper.GetCustomerbyid(cus.cccd) != null)
                 {
                     string cusKey = firebaseHelper.GetKeysBycccd(cus.cccd);
-                    long masothe = firebaseHelper.getCardbyCusKeys(cusKey).MaSoThe;
-                    long stk = firebaseHelper.getAccountbyCardKey(masothe).SoTaiKhoan;
+                    long stk = firebaseHelper.getAccountbyCusKey(cusKey).SoTaiKhoan;
                     List<GiaoDichViewModel> LSDG = firebaseHelper.getLSGD(stk, DateTime.Parse(cus.fromDate), DateTime.Parse(cus.toDate));
-                    ViewBag.LSDG = LSDG;
+                    ViewBag.LSGD = LSDG;
                     ViewBag.check = "ok";
                 }
                 else

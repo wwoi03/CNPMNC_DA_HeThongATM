@@ -1,66 +1,86 @@
-﻿@{
-    Layout = "_LayoutMain";
+﻿﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var listCardTypes = @ViewBag.get;
 }
-<body>
 
-    <div class="col-xs-6 col-sm-6" style="margin-left:25%;padding-bottom:5%;padding-top:2%">
+@model CardControlViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Customer Feedback Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/CardControl.css">
+</head>
+<body>
+    <div class="col-xs-6 col-sm-6" style="margin-left:25%;">
         <div class="card">
-            <div class="card-header">
-                <strong class="card-title">Quản lí tình trạng tài khoản</strong>
-            </div>
             <div class="card-body">
                 <!-- Credit Card -->
                 <div id="pay-invoice">
                     <div class="card-body">
                         <div class="card-title">
-                            <h3 class="text-center">Pay Invoice</h3>
+                            <h3 class="text-center">Mở/Khóa thẻ</h3>
                         </div>
+                        @*****************************************************************@
+                        <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:-20px;display:none">
+                            <h4 class="alert-heading">Không tìm thấy thông tin khách hàng!</h4>
+                            <p>Thông tin khách hàng bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
+                            <hr>
+                            <button id="notfound" class="btn btn-danger" onclick="handlerNotFound()">Đã hiểu</button>
+                        </div>
+
+                        @********************************************************************@
                         <hr>
-                        <form action="#" method="post" novalidate="novalidate">
-                            <div class="form-group text-center">
-                                <ul class="list-inline">
-                                    <li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
-                                    <li class="list-inline-item"><i class="fa fa-cc-mastercard fa-2x"></i></li>
-                                    <li class="list-inline-item"><i class="fa fa-cc-amex fa-2x"></i></li>
-                                    <li class="list-inline-item"><i class="fa fa-cc-discover fa-2x"></i></li>
-                                </ul>
-                            </div>
+                        <form asp-controller="CreditCard" asp-action="changeStatus" method="post">
+
                             <div class="form-group">
-                                <label for="cc-payment" class="control-label mb-1">Payment amount</label>
-                                <input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="100.00">
+                                <label for="cc-payment" class="control-label mb-1">Căn cước công dân</label>
+                                <input onchange="sendData()" id="cccd" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false">
                             </div>
                             <div class="form-group has-success">
-                                <label for="cc-name" class="control-label mb-1">Name on card</label>
-                                <input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name">
-                                <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+                                <label for="cc-name" class="control-label mb-1">Loại thẻ</label>
+                                <br />
+                                <select id="loaithe" onchange="sendData()" style="    border: solid 1px gray; opacity:0.8" class="form-control">
+                                    @foreach (var item in listCardTypes)
+                                    {
+                                        <option value="@item.TenLoaiTaiKhoan">@item.TenLoaiTaiKhoan</option>
+                                    }
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="cc-number" class="control-label mb-1">Card number</label>
-                                <input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified visa" value="" data-val="true" data-val-required="Please enter the card number" data-val-cc-number="Please enter a valid card number">
-                                <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                                <label for="cc-number" class="control-label mb-1">Tên khách hàng</label>
+                                <input style="opacity:0.5; color:black" id="tenkhachhang" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label mb-1">Mã số thẻ</label>
+                                <input style="opacity:0.5; color:black" id="masothe" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label mb-1">Tình trạng thẻ</label>
+                                <input style="opacity:0.5; color:black" id="tinhtrangthe" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="cc-exp" class="control-label mb-1">Expiration</label>
-                                        <input id="cc-exp" name="cc-exp" type="tel" class="form-control cc-exp" value="" data-val="true" data-val-required="Please enter the card expiration" data-val-cc-exp="Please enter a valid month and year" placeholder="MM / YY">
-                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                        <label for="cc-exp" class="control-label mb-1">Ngày mở thẻ</label>
+                                        <input style="opacity:0.5; color:black" id="ngaymothe" name="cc-exp" type="tel" class="form-control cc-exp" data-val="true" placeholder="DD / MM / YYYY" readonly>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <label for="x_card_code" class="control-label mb-1">Security code</label>
-                                    <div class="input-group">
-                                        <input id="x_card_code" name="x_card_code" type="tel" class="form-control cc-cvc" value="" data-val="true" data-val-required="Please enter the security code" data-val-cc-cvc="Please enter a valid security code" autocomplete="off">
-                                        <div class="input-group-addon">
-                                            <span class="fa fa-question-circle fa-lg" data-toggle="popover" data-container="body" data-html="true" data-title="Security Code" data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>" data-trigger="hover"></span>
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label mb-1">Ngày hết hạn</label>
+                                        <input style="opacity:0.5; color:black" id="ngayhethan" name="cc-exp" type="tel" class="form-control cc-exp" data-val="true" placeholder="DD / MM / YYYY" readonly>
                                     </div>
                                 </div>
+
                             </div>
                             <div>
-                                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                                    <i class="fa fa-lock fa-lg"></i>&nbsp;
-                                    <span id="payment-button-amount">Pay $100.00</span>
+                                <button id="xacnhan" type="submit" class="btn btn-lg btn-info btn-block" asp-controller="CreditCard" asp-action="CardControl">
+
+                                    <span id="payment-button-amount" style="color:white">Xác nhận</span>
                                     <span id="payment-button-sending" style="display:none;">Sending…</span>
                                 </button>
                             </div>
@@ -71,7 +91,93 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        function sendData(){
+            var CCCD = document.getElementById("cccd").value;
+            var LoaiThe = document.getElementById("loaithe").value;
+
+
+
+
+            findData(CCCD, LoaiThe, function (data) {
+
+            });
+
+            var laytrangthai = {
+                CCCD: CCCD,
+                LoaiThe: LoaiThe,
+            };
+            $.ajax({
+                url: "../../CreditCard/changeStatus", // Đường dẫn của Controller và Action xử lý yêu cầu
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(laytrangthai),
+                success: function (data) {
+                }
+            });
+        }
+
+
+
+        function findData(CCCD, LoaiThe, callback) {
+            var inputdata = {
+                CCCD: CCCD,
+                LoaiThe: LoaiThe,
+            };
+
+
+            $.ajax({
+                url: "../../CreditCard/sendCard", // Đường dẫn của Controller và Action xử lý yêu cầu
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(inputdata),
+                success: function (data) {
+                    // Xử lý dữ liệu trả về từ server (nếu có)
+
+                    if (data !== "Không tìm thấy") {
+                        document.getElementById("cccd").value = data.cccd;
+                        document.getElementById("loaithe").value = data.loaiThe;
+                        document.getElementById("tenkhachhang").value = data.tenKH;
+                        document.getElementById("masothe").value = data.theNganHang?.maSoThe;
+                        document.getElementById("tinhtrangthe").value = data.tinhTrang;
+                        document.getElementById("ngaymothe").value = data.theNganHang?.ngayMoThe;
+                        document.getElementById("ngayhethan").value = data.theNganHang?.ngayHetHan;
+                        if (data.tinhTrang === "undefined") {
+                            document.getElementById("masothe").value = 'Khách hàng không sở hữu loại thẻ này';
+                            document.getElementById("tinhtrangthe").value = 'Khách hàng không sở hữu loại thẻ này';
+                            document.getElementById("ngaymothe").value = '';
+                            document.getElementById("ngayhethan").value = '';
+                        }
+                        // Gọi callback với dữ liệu trả về
+                        if (typeof callback === "function") {
+                            callback(data);
+                        }
+                    }
+                    else{
+                        // Hiển thị nút xác nhận khi có thông báo không tìm thấy
+                        document.getElementById('khongtimthay').style.display = 'block';
+                        document.getElementById("cccd").value = '';
+                        document.getElementById("tenkhachhang").value = '';
+                        document.getElementById("masothe").value = '';
+                        document.getElementById("tinhtrangthe").value = '';
+                        document.getElementById("ngaymothe").value = '';
+                        document.getElementById("ngayhethan").value = '';
+                    }
+
+                },
+                error: function (error) {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    console.error("Lỗi khi gửi yêu cầu", error);
+                }
+            });
+        }
+        function handlerNotFound(){
+            document.getElementById('khongtimthay').style.display ='none';
+
+        }
+    </script>
+
 </body>
-
-
-
+</html>
