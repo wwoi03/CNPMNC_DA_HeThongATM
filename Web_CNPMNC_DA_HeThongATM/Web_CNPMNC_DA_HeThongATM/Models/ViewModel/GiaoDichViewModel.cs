@@ -2,9 +2,9 @@
 
 namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 {
-    public class LichSuGiaoDichViewModel
+    public class GiaoDichViewModel
     {
-        public LichSuGiaoDichViewModel(LichSuGiaoDich ls, string status, DateTime date, string name1,string name2)
+        public GiaoDichViewModel(GiaoDich ls, string status, DateTime date, string name1,string name2)
         {
             LSGD = ls;
             this.status = status;
@@ -12,7 +12,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
             this.name1 = name1;
             this.name2 = name2;
         }
-        public LichSuGiaoDich LSGD { get; set; }
+        public GiaoDich LSGD { get; set; }
         public double SoDu { get; set; }
         public string status { get; set; }
         public DateTime date { get; set; }

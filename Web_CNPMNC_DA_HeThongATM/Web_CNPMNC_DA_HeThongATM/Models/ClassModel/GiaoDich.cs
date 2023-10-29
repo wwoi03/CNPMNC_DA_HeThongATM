@@ -1,6 +1,6 @@
 ﻿namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
 {
-    public class LichSuGiaoDich
+    public class GiaoDich
     {
         public string GioGiaoDich { get; set; }
         public string NgayGiaoDich { get; set; }

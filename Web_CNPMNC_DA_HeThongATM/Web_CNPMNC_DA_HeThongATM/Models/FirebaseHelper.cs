@@ -196,8 +196,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             long totalTransaction = 0;
             
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
            
             totalTransaction = data.Values.Count;
 
@@ -547,13 +547,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return null;
         }
         //Lay LichSuGD tren STK 
-        public LichSuGiaoDich getHistorybySTK(long stk)
+        public GiaoDich getHistorybySTK(long stk)
         {
 
             FirebaseResponse response = client.Get("TaiKhoanLienKet");
             if (response != null)
             {
-                Dictionary<string, LichSuGiaoDich> data = JsonConvert.DeserializeObject<Dictionary<string, LichSuGiaoDich>>(response.Body);
+                Dictionary<string, GiaoDich> data = JsonConvert.DeserializeObject<Dictionary<string, GiaoDich>>(response.Body);
 
                 var a = data.Values.FirstOrDefault(c => c.SoTaiKhoan == stk);
                 if (a != null)
@@ -564,51 +564,51 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return null;
         }
         //DSLSGD tang
-        public List<LichSuGiaoDich> getListHistoryUPbySTK(long stk)
+        public List<GiaoDich> getListHistoryUPbySTK(long stk)
         {
-            List<LichSuGiaoDich> history;
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string,LichSuGiaoDich>>();
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string,GiaoDich>>();
             history = data.Values.Where(item =>  item.TaiKhoanNhan==stk).ToList();
             return history;
         }
         //DSLSGD giam
-        public List<LichSuGiaoDich> getListHistoryDownbySTK(long stk)
+        public List<GiaoDich> getListHistoryDownbySTK(long stk)
         {
-            List<LichSuGiaoDich> history;
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
             history = data.Values.Where(item => item.SoTaiKhoan == stk).ToList();
             return history;
         }
         //DSLSGD drftghyhgfdsfdghgfdesdfghnmhjgfrghjmhgytrfghyjhytghj
-        public List<LichSuGiaoDich> getListHistorybySTK(long stk)
+        public List<GiaoDich> getListHistorybySTK(long stk)
         {
-            List<LichSuGiaoDich> history;
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
             history = data.Values.Where(item => item.SoTaiKhoan == stk || item.TaiKhoanNhan == stk).ToList();
             return history;
         }
         //DSGIUIKGJHJBVGBJBKLIHGBVJKBfdtttr***************************************************************
-        public List<LichSuGiaoDich> getListHistorybySTK()
+        public List<GiaoDich> getListHistorybySTK()
         {
-            List<LichSuGiaoDich> history;
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
-            history = new List<LichSuGiaoDich>(data.Values);
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+            history = new List<GiaoDich>(data.Values);
             return history;
         }
-        public List<LichSuGiaoDichViewModel> danhsachLSGD()
+        public List<GiaoDichViewModel> danhsachLSGD()
         {
-            List<LichSuGiaoDichViewModel> LSGD = new List<LichSuGiaoDichViewModel>();
-            foreach (LichSuGiaoDich item in getListHistorybySTK())
+            List<GiaoDichViewModel> LSGD = new List<GiaoDichViewModel>();
+            foreach (GiaoDich item in getListHistorybySTK())
             {
                 string datetime = $"{item.NgayGiaoDich} {item.GioGiaoDich}";
                 DateTime date = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                 string tenKH = getCusbyKey(getCardbyID(getAccountbyKey(item.SoTaiKhoan).MaSoThe).MaKH).TenKhachHang;
                 string tenKH2 = getCusbyKey(getCardbyID(getAccountbyKey(item.TaiKhoanNhan).MaSoThe).MaKH).TenKhachHang;
-                LichSuGiaoDichViewModel ls = new LichSuGiaoDichViewModel(item,"Chuyển khoản",date, tenKH,tenKH2);
+                GiaoDichViewModel ls = new GiaoDichViewModel(item,"Chuyển khoản",date, tenKH,tenKH2);
                 LSGD.Add(ls);
                 
             }
@@ -618,14 +618,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         //Saoke tr oi met qua************************************************
-        public List<LichSuGiaoDichViewModel> getLSGD(long stk, DateTime from, DateTime to)
+        public List<GiaoDichViewModel> getLSGD(long stk, DateTime from, DateTime to)
         {
-            List<LichSuGiaoDichViewModel> LSGD = new List<LichSuGiaoDichViewModel>();
+            List<GiaoDichViewModel> LSGD = new List<GiaoDichViewModel>();
             DateTime fromDate = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
             DateTime toDate = new DateTime(to.Year, to.Month, to.Day, 23, 59, 59);
 
             string tenKH = getCusbyKey(getCardbyID(getAccountbyKey(stk).MaSoThe).MaKH).TenKhachHang;
-            foreach (LichSuGiaoDich item in getListHistorybySTK(stk))
+            foreach (GiaoDich item in getListHistorybySTK(stk))
             {
                 string datetime = $"{item.NgayGiaoDich} {item.GioGiaoDich}";
                 DateTime date = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
@@ -644,7 +644,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                         tenKH2 = getCusbyKey(getCardbyID(getAccountbyKey(item.SoTaiKhoan).MaSoThe).MaKH).TenKhachHang;
                     }
 
-                    LichSuGiaoDichViewModel ls = new LichSuGiaoDichViewModel(item, status,date,tenKH,tenKH2);
+                    GiaoDichViewModel ls = new GiaoDichViewModel(item, status,date,tenKH,tenKH2);
                     LSGD.Add(ls);
                 }
             }
@@ -656,7 +656,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         ////Kiem tra lich su giao dich
         //public bool checkGiaoDich(long stk)
         //{
-        //    LichSuGiaoDich gd = getHistorybySTK(stk);
+        //    GiaoDich gd = getHistorybySTK(stk);
         //    if(gd.SoTaiKhoan)
         //}
         //Lay customer by key

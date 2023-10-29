@@ -13,7 +13,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             //TuanDao 0 cho
             //List<LichSuGiaoDichViewModel> LSDG = firebaseHelper.danhsachLSGD();
-            List<LichSuGiaoDichViewModel> LSDG = new List<LichSuGiaoDichViewModel>();
+            List<GiaoDichViewModel> LSDG = new List<GiaoDichViewModel>();
             ViewBag.LSDG = LSDG;
             ViewBag.check = "ok";
             CustomerStatementViewModel cus = new CustomerStatementViewModel();
@@ -34,13 +34,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     string cusKey = firebaseHelper.GetKeysBycccd(cus.cccd);
                     long masothe = firebaseHelper.getCardbyCusKeys(cusKey).MaSoThe;
                     long stk = firebaseHelper.getAccountbyCardKey(masothe).SoTaiKhoan;
-                    List<LichSuGiaoDichViewModel> LSDG = firebaseHelper.getLSGD(stk, DateTime.Parse(cus.fromDate), DateTime.Parse(cus.toDate));
+                    List<GiaoDichViewModel> LSDG = firebaseHelper.getLSGD(stk, DateTime.Parse(cus.fromDate), DateTime.Parse(cus.toDate));
                     ViewBag.LSDG = LSDG;
                     ViewBag.check = "ok";
                 }
                 else
                 {
-                    List<LichSuGiaoDichViewModel> LSDG = new List<LichSuGiaoDichViewModel>();
+                    List<GiaoDichViewModel> LSDG = new List<GiaoDichViewModel>();
                     ViewBag.LSDG = LSDG;
                     ViewBag.check = "undefined";
                     return View(cus);
