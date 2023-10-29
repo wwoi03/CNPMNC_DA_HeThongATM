@@ -7,6 +7,7 @@ using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
+    /*
     public class CreditCardController : Controller
     {
         FirebaseHelper firebaseHelper = new FirebaseHelper();
@@ -86,7 +87,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewData["listCard"] = listThes;
             return View(listThes);
         }
-
+        /*
         //Chỉnh sửa thẻ ngân hàng {load form}
         [HttpGet]
         public IActionResult EditCardATM(long MaSoThe) { 
@@ -127,5 +128,5 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return PartialView("SearchCard", ViewThes);
 
         }
-    }
+        */
 }

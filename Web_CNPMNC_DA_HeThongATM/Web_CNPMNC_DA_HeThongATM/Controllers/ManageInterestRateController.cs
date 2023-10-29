@@ -14,10 +14,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
 
-        // Danh sách loại thẻ
+        // Danh sách Lãi suất
         public IActionResult Index()
         {
-            List<LaiSuat> khachHangs = firebaseHelper.GetLaiSuat();
+            List<LaiSuat> khachHangs = firebaseHelper.GetLaiSuats();
             List<LaiSuatViewModel> LaiSuatViewModel = new List<LaiSuatViewModel>();
             foreach (var i in khachHangs)
             {
@@ -34,14 +34,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return View();
         }
-        //tạo loại thẻ
-        public IActionResult CreateTypesCard()
+        //tạo lãi suất
+        public IActionResult CreateLaiSuat()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateTypesCard(LoaiTheViewModel loaiThe)
+        public IActionResult CreateLaiSuat(LaiSuatViewModel laiSuat)
         {
 
             /* loaiThe.MaLoaiTNH = firebaseHelper.PassRandom();
@@ -49,12 +49,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             if (ModelState.IsValid)
             {
 
-                firebaseHelper.InsertTypesCards(loaiThe);
+                firebaseHelper.InsertLaiSuats(laiSuat);
 
                 return RedirectToAction("Index");
             }
 
-            return View("CreateTypesCard", loaiThe);
+            return View("CreateLaiSuat", laiSuat);
 
         }
     }

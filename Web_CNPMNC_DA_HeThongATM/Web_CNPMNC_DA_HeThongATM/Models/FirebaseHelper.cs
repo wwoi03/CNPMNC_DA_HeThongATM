@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 using FireSharp;
-=======
-﻿using FireSharp;
->>>>>>> s2-Tung-ManageCardTypess
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
@@ -11,6 +7,7 @@ using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using UniqueIdGenerator;
 using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+using System.Security.Permissions;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
@@ -44,12 +41,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             try
             {
-<<<<<<< HEAD
-                string macuabomay = "autothention";
-                FirebaseResponse response =  client.Push("KhachHang", custommer);
-=======
                 FirebaseResponse response = client.Set("KhachHang/" + custommer.CCCD, custommer);
->>>>>>> s2-Tung-ManageCardTypess
                 if (response != null)
                 {
 
@@ -159,75 +151,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
 
-<<<<<<< HEAD
-        //lấy tên  khách hàng qua id
-        public string GetNameCustomerbyid(string values)
-        {
-            FirebaseResponse response = client.Get("KhachHang");
-            if (response != null)
-            {
-                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);        
-                if(data.TryGetValue(values, out KhachHang khachHang))
-                {
-                    return khachHang.TenKhachHang;
-                }
-                //var customer = data.Values.FirstOrDefault(kh => kh.CCCD == values);
-
-                //if (customer != null)
-                //{
-                //    return customer.TenKhachHang;
-                //}
-            }
-            return "";
-        }
-
-
-
-
-        //Kiểm tra Sdt nhập vào form
-        public bool CheckSdt(string values)
-        {
-
-            FirebaseResponse response = client.Get("KhachHang");
-            if (response != null && response.Body != null)
-            {
-                Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-                if (data.Values.Any(c => c.SoDienThoai == values))
-                    return true;
-                return false;
-
-            }
-            return false;
-        }
-        public KhachHang SearchCustomer(string searchCustomer)
-        {
-            FirebaseResponse response = client.Get("KhachHang");
-            if (response != null)
-            {
-                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
-
-                var card = data.Values.FirstOrDefault(c => c.CCCD == searchCustomer);
-
-                return card;
-
-                //// Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-                //if (card == null)
-                //{
-                //    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
-                //}
-
-                //// Nếu tìm thấy thẻ, trả về thông tin của họ
-                //if (card != null)
-                //{
-                //    return card;
-                //}
-            }
-
-            // Trả về null nếu không tìm thấy khách hàng
-            return null;
-        }
-
-=======
 
         //Kiểm tra Sdt nhập vào form
         public bool CheckSdt(string values)
@@ -244,7 +167,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return false;
         }
->>>>>>> s2-Tung-ManageCardTypess
         //-------------------------------------------------------------------------------Nhân Viên---------------------------------------------------
 
         // Tính tổng tài sản ngân hàng
@@ -264,20 +186,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         // Tính tổng giao dịch
         public long GetTotalTransaction()
         {
-<<<<<<< HEAD
-            long totalTransaction = 0;
-
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
-
-=======
             long totalTransaction = 0;
 
             FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
+            //Dictionary<string, LichSuGiaoDich> data = response.ResultAs<Dictionary<string, LichSuGiaoDich>>();
 
->>>>>>> s2-Tung-ManageCardTypess
-            totalTransaction = data.Values.Count;
+            //totalTransaction = data.Values.Count;
 
             return totalTransaction;
         }
@@ -301,15 +215,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             Dictionary<string, int> quantityCustomerByMonth = new Dictionary<string, int>();
 
             FirebaseResponse response = client.Get("KhachHang");
-<<<<<<< HEAD
-            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-
-            // tính số lượng khách hàng theo từng tháng trong năm "year"
-=======
             Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
 
             // tính số lượng khách hàng theo từng tháng trong năm "year"
->>>>>>> s2-Tung-ManageCardTypess
             for (int i = 1; i <= 12; i++)
             {
                 int count = data.Values.Count(item => int.Parse(item.NgayTao.Split("/")[1]) == i && int.Parse(item.NgayTao.Split("/")[2]) == year);
@@ -317,19 +225,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
 
             return quantityCustomerByMonth;
-<<<<<<< HEAD
-        }
-
-        // Lấy số lượng thẻ VISA và ATM
-
-        // Tạo tài khoản nhân viên
-=======
         }
 
         // Lấy số lượng thẻ VISA và ATM
 
         // Tạo tài khoản nhân viên
->>>>>>> s2-Tung-ManageCardTypess
         public void CreateStaff(NhanVien nhanVien)
         {
             FirebaseResponse response = client.Push("NhanVien", nhanVien);
@@ -341,23 +241,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             Random random = new Random();
             string digits = "";
 
-<<<<<<< HEAD
-            for (int i = 0; i < 6; i++)
-=======
             for (int i = 0; i < 10; i++)
->>>>>>> s2-Tung-ManageCardTypess
             {
                 int randomNumber = random.Next(0, 10); // Số ngẫu nhiên từ 0 đến 9
                 digits += randomNumber.ToString();
             }
 
-<<<<<<< HEAD
-            return digits;
-
-=======
             return digits;
 
->>>>>>> s2-Tung-ManageCardTypess
         }
 
         //tự động tạo mã số thẻ
@@ -404,13 +295,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 }
 
             }
-<<<<<<< HEAD
-            return stk;
-
-=======
             return stk;
 
->>>>>>> s2-Tung-ManageCardTypess
         }
 
 
@@ -438,11 +324,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //tạo thẻ ngân hàng
         public void CreateCard(TheNganHangViewModel card, string keys)
         {
-<<<<<<< HEAD
-               card.MaKH = keys;
-              // FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
-                FirebaseResponse firebaseResponse = client.Push("TheNganHang", card);
-=======
             if (keys == null)
             {
                 return;
@@ -450,7 +331,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             else
             {
                 FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
->>>>>>> s2-Tung-ManageCardTypess
                 if (firebaseResponse != null)
                 {
                     Console.WriteLine("thanh công");
@@ -459,15 +339,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 {
                     Console.WriteLine(firebaseResponse.StatusCode);
                 }
-<<<<<<< HEAD
-            
-        }
-        
-=======
             }
         }
 
->>>>>>> s2-Tung-ManageCardTypess
 
         //tạo thẻ liên kết
         public void CreateCardLink(TaiKhoanLienKet taiKhoanLienKet)
@@ -489,80 +363,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             {
                 Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
                 List<TheNganHang> theNganHangs = new List<TheNganHang>(data.Values);
-<<<<<<< HEAD
-                return theNganHangs;
-=======
                 return theNganHangs;
->>>>>>> s2-Tung-ManageCardTypess
             }
             return null;
         }
 
 
-<<<<<<< HEAD
-        //lấy tên loại thẻ ngân hàng
-        public string GetNameTypeCard(string values)
-        {
-            FirebaseResponse response = client.Get("LoaiTheNganHang");
-            if (response != null)
-            {
-                Dictionary<string, LoaiTheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiTheNganHang>>(response.Body);
-
-                var nametypes = data.Values.FirstOrDefault(kh => kh.MaLoaiTNH == values);
-                
-                if (nametypes != null)
-                {
-                    return nametypes.TenTNH;
-                }
-
-            }
-            return "";
-        }
-
-        //tìm kiếm thẻ theo cccd/ id thẻ/số điện thoại
-        public TheNganHang SearchCard(string searchValue)
-        {
-            FirebaseResponse response = client.Get("TheNganHang");
-            if (response != null)
-            {
-                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
-
-                // Thử tìm theo CCCD (Căn cước công dân)
-                var card = data.Values.FirstOrDefault(c => c.MaKH == searchValue);
-
-                // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-                if (card == null)
-                {
-                    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
-                }
-
-                // Nếu tìm thấy thẻ, trả về thông tin của họ
-                if (card != null)
-                {
-                    return card;
-                }
-            }
-
-            // Trả về null nếu không tìm thấy khách hàng
-            return null;
-        }
-
-
-        //lấy thẻ theo id
-        public TheNganHang GetTheNganHangById(long masothe)
-        {
-            FirebaseResponse response = client.Get("TheNganHang");
-            if(response != null)
-            {
-                Dictionary<string,TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
-                TheNganHang thenganhang = data.Values.FirstOrDefault(p => p.MaSoThe == masothe);
-                return thenganhang;
-            }
-            return null;
-        }
-=======
         //tìm kiếm thẻ theo cccd
->>>>>>> s2-Tung-ManageCardTypess
 
 
         //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------
@@ -574,13 +381,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // lấy thông tin khách hàng chuyển
             FirebaseResponse responseSend = client.Get("KhachHang" + numberSend);
             if (responseSend != null)
-<<<<<<< HEAD
-            {
-
-=======
             {
 
->>>>>>> s2-Tung-ManageCardTypess
             }
             //lấy thông tin khách hàng gửi
             FirebaseResponse responseGet = client.Get("KhachHang");
@@ -613,10 +415,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //    return null;
         //}
 
-<<<<<<< HEAD
-    }
-
-=======
 
 
         //---------------------------QUản lý loại thẻ----------------//
@@ -639,21 +437,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         //tạo Loại thẻ
         public void InsertTypesCards(LoaiTheViewModel typescards)
-         {
-             try
-             {
-                 FirebaseResponse response = client.Set("LoaiTheNganHang/" + typescards.MaLoaiTNH, typescards);
-                 if (response != null)
-                 {
+        {
+            try
+            {
+                FirebaseResponse response = client.Set("LoaiTheNganHang/" + typescards.MaLoaiTNH, typescards);
+                if (response != null)
+                {
 
-                 }
-             }
-             catch (Exception ex)
-             {
-                 Console.WriteLine(ex.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-             }
-         }
+            }
+        }
         //chỉnh sửa loại thẻ
         // Edit an existing type of card
         internal LoaiThe GetMaLoaiTNH(long maLoaiTNH)
@@ -713,8 +511,36 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
         }
 
-       
+
+        //-------------------------------------------------QUản lý lãi suất---------------------------------------------------------//
+  
+        //Danh sách LÃI SUẤT
+        public List<LaiSuat> GetLaiSuats()
+        {
+            List<LaiSuat> dsLaiSuat = new List<LaiSuat>();
+            FirebaseResponse response = client.Get("LaiSuat");
+            Dictionary<string, LaiSuat> data = response.ResultAs<Dictionary<string, LaiSuat>>();
+            dsLaiSuat = new List<LaiSuat>(data.Values);
+            return dsLaiSuat;
+        }
+
+        //tạo Lãi suất
+        public void InsertLaiSuats(LaiSuatViewModel laiSuat)
+        {
+            try
+            {
+                FirebaseResponse response = client.Set("LaiSuat/" + laiSuat.Key, laiSuat);
+                if (response != null)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+        }
     }
->>>>>>> s2-Tung-ManageCardTypess
 }
 

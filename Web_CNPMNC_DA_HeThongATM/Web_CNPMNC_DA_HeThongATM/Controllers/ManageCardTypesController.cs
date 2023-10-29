@@ -86,14 +86,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult DeleteTypesCard(long MaLoaiTNH)
-        {
-            return View();
-        }
-
-
-
     }
 }
 
