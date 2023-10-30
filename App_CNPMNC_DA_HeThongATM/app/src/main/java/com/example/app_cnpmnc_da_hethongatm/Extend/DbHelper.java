@@ -17,6 +17,7 @@ import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.NhacChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -327,5 +328,14 @@ public class DbHelper {
 
                     }
                 });
+    }
+
+    // lấy danh sách nhắc chuyển tiền
+    public static FirebaseRecyclerOptions<NhacChuyenTien> getReminderTransferMoneys(String maKHKey) {
+        FirebaseRecyclerOptions<NhacChuyenTien> options = new FirebaseRecyclerOptions.Builder<NhacChuyenTien>()
+                .setQuery(firebaseDatabase.getReference("NhacChuyenTien").orderByChild("MaKHKey").equalTo(maKHKey), NhacChuyenTien.class)
+                .build();
+
+        return options;
     }
 }
