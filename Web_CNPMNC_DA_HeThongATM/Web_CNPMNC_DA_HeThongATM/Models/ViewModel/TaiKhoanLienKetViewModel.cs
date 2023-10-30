@@ -10,5 +10,6 @@
         public string TenTK { get; set; }
         public int TinhTrangTaiKhoan { get; set; }
         public double HanMucTK { get; set; }
+        public double SoTien { get; set; }
     }
 }

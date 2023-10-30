@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
+using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -12,7 +14,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult ChuyenTien(AccountViewModel account)
+        public IActionResult ChuyenTien(TaiKhoanLienKetViewModel account)
         {
             double sotien = account.SoTien;
             firebaseHelper.RutTien(sotien, account.SoTaiKhoan);

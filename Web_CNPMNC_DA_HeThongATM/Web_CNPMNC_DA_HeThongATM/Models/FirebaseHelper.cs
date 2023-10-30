@@ -375,7 +375,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------//
 
         //Chức năng Rút tiền
-        public bool RutTien(double soTien, string value)
+        public bool RutTien(double SoTien, string value)
         {
             string info = GetAccount(value);
             try
@@ -383,11 +383,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
 
                 // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<AccountViewModel>();
+                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
 
                 //// trừ số tiền vào số dư
-                //accountData.SoDu += soTien;
-                Double SoDuHientai = accountData.SoDu - soTien;
+                //accountData.SoDu += SoTien;
+                Double SoDuHientai = accountData.SoDu - SoTien;
 
 
                 // Cập nhật số dư trên Firebase
@@ -410,7 +410,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
 
                 // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<AccountViewModel>();
+                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
 
                 ////  Chuyển tiền xong cộng số tiền vào số dư
                 //accountData.SoDu += soTien;
