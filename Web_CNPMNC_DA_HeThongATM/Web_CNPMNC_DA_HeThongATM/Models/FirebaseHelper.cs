@@ -374,8 +374,45 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------//
 
+        public string GetAccount(long Value )
+        {
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            if (response != null)
+            {
+                Dictionary<string, TaiKhoanLienKet> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKet>>(response.Body);
+                var accountData = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
+                if (accountData != null)
+                {
+                    return string.Join(",", accountData);
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            return null;
+
+        }
+        //Lấy tên tài khoản bằng Số tài khoản
+        public TaiKhoanLienKet GetAccountbyid(long sotaikhoan)
+        {
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            if (response != null)
+            {
+                Dictionary<string, TaiKhoanLienKet> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKet>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.SoTaiKhoan == sotaikhoan);
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+
+
         //Chức năng Rút tiền
-        public bool RutTien(double SoTien, string value)
+        public bool RutTien(double SoTien, long value)
         {
             string info = GetAccount(value);
             try
@@ -386,12 +423,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
 
                 //// trừ số tiền vào số dư
-                //accountData.SoDu += SoTien;
-                Double SoDuHientai = accountData.SoDu - SoTien;
+                //accountData.SoDu -= SoTien;
+                Double SoDu = accountData.SoDu - SoTien;
 
 
                 // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/Sodu", SoDuHientai);
+                client.Set("TaiKhoanLienKet/" + info + "/Sodu", SoDu);
 
                 return true; // Cập nhật thành công
             }
@@ -401,8 +438,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return false; // Cập nhật thất bại
             }
         }
-        //Chức năng chuyển tiền
-        public bool ChuyenTien(double soTien, string value)
+        //-----------------------------------------------------Chức năng chuyển tiền-----------------------------------------------------//
+        public bool ChuyenTien(double soTien, long value)
         {
             string info = GetAccount(value);
             try
@@ -414,11 +451,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
                 ////  Chuyển tiền xong cộng số tiền vào số dư
                 //accountData.SoDu += soTien;
-                Double SoDuHientai = accountData.SoDu + soTien;
+                Double SoDu = accountData.SoDu + soTien;
 
 
                 // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/soDu", SoDuHientai);
+                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDu);
 
                 return true; // Cập nhật thành công
             }

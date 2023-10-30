@@ -1,40 +1,10 @@
-﻿@using Web_CNPMNC_DA_HeThongATM.Models
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
-@model AccountViewModel
+@model TaiKhoanLienKetViewModel
 @{
     Layout = "_LayoutMain";
-    var accounts = ViewData["j"] as List<AccountViewModel>;
+    var abc = ViewData["abc"] as IEnumerable<TaiKhoanLienKetViewModel>;
 }
-
-
-@*<body>
-    <form method="post" asp-controller="Account" asp-action="ChuyenTien" style="margin-left:20%">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header"><strong>Chuyển Tiền</strong></div>
-                <div class="card-body card-block">
-                    <div class="form-group">
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Số tài khoản người nhận tiền</label>
-                            <input type="text" asp-for="SoTaiKhoan" class="form-control">
-                        </div>
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Số Tiền</label>
-                            <input type="text" asp-for="SoTien" class="form-control">
-                        </div>
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Họ và tên người nhận tiền</label>
-                            <input type="text" asp-for="TenTk" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-actions form-group" style="margin-top:4px">
-                        <button type="submit" class="btn btn-primary btn-sm">Xác nhận chuyển tiền</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</body>*@
 
 <body>
 
@@ -48,28 +18,28 @@
                 <form method="post" asp-controller="TransferMoney" asp-action="ChuyenTien"
                       class="formbold-chatbox-form">
                     <div class="formbold-mb-5">
-                        <label for="name" class="formbold-form-label"> Số tài khoản người nhận </label>
-                        <input type="text" asp-for="SoTaiKhoan"
+                        <label for="stk" class="formbold-form-label"> Số tài khoản người nhận </label>
+                        <input id="SoTaiKhoan" type="text" asp-for="SoTaiKhoan" aria-required="true" aria-invalid="false"
                                placeholder="Nhập số tài khoản"
                                class="formbold-form-input" />
                     </div>
                     <div class="formbold-mb-5">
                         <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản </label>
-                        <input type="text" asp-for="TenTk"
-                               placeholder="Bùi Thanh Tùng"
-                               class="formbold-form-input" />
+                        <input id="tenTK" type="text" asp-for="TenTK"
+                               placeholder=""
+                               class="formbold-form-input" readonly>
                     </div>
 
                     <div class="formbold-mb-5">
                         <label for="message" class="formbold-form-label"> Số tiền </label>
                         <input type="text" asp-for="SoTien"
                                placeholder="999.999 VNĐ"
-                               class="formbold-form-input" />
+                               class="formbold-form-input" >
                         </input>
                     </div>
 
                     <div>
-                        <button class="formbold-btn w-full">Chuyển Tiền</button>
+                        <button asp-controller="TransferMoney" asp-action="ChuyenTien" class="formbold-btn w-full">Chuyển Tiền</button>
                     </div>
                 </form>
 
@@ -259,4 +229,7 @@
                     display: none;
                 }
         </style>
+        <script src="/js/RutChuyenTien.js" >
+            
+        </script>
 </body>

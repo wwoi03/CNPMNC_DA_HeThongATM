@@ -1,12 +1,10 @@
-﻿@using Web_CNPMNC_DA_HeThongATM.Models
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
-@model AccountViewModel
+@model TaiKhoanLienKetViewModel
 @{
     Layout = "_LayoutMain";
-    var accounts = ViewData["j"] as List<AccountViewModel>;
+    var LaiSuatList = ViewData["LaiSuatList"] as IEnumerable<TaiKhoanLienKetViewModel>;
 }
-
-
 @*<body>
     <form method="post" asp-controller="Account" asp-action="RutTien" style="margin-left:20%">
         <div class="col-lg-8">
@@ -54,8 +52,8 @@
                     </div>
                     <div class="formbold-mb-5">
                         <label for="email" class="formbold-form-label"> Họ và tên </label>
-                        <input type="text" asp-for="TenTk"
-                               placeholder="Đào Công Tuấn"
+                        <input type="text" asp-for="TenTK"
+                               placeholder=""
                                class="formbold-form-input" />
                     </div>
 
