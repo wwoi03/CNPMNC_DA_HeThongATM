@@ -11,8 +11,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -24,7 +27,7 @@ import android.widget.TextView;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountSettingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
-import com.example.app_cnpmnc_da_hethongatm.Activities.ListAccountSavingsActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.LoginActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.SearchServiceFunctionActivity;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
@@ -36,6 +39,8 @@ import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     // BNV
@@ -51,19 +56,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     HomeFragment homeFragment;
     TransactionFragment transactionFragment;
     QuickAccessFragment quickAccessFragment;
-
+    Config config;
     // View
     TextView tv_username, tvPhone;
 
     // Confix
-    Config config;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        config = new Config(this);
         initUI();
         initData(savedInstanceState);
         initListener();
@@ -73,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initUI() {
         bnvMenu = findViewById(R.id.bnvMenu);
         drawerLayout = findViewById(R.id.drawer_layout);
-
-
     }
 
     // Khởi tạo
@@ -155,11 +158,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_mokhoathe:
                 /*startActivity(new Intent(this, UnlockCardActivity.class));*/
-            case R.id.nav_ruttien:
-                Intent intent3 = new Intent(this, ListAccountSavingsActivity.class);
-                startActivity(intent3);
+            case R.id.nav_logout:
+                Log.d(String.valueOf(config.getStateLogin()), "trc khi logout: ");
+                config.ClearData();
+                Log.d(String.valueOf(config.getStateLogin()), "sau khi logout: ");
+                Intent intent1 = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent1);
+                finish();
+//                Intent intent3 = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(intent3);
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -193,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        config.ClearData();
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {

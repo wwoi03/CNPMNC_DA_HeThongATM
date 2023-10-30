@@ -16,6 +16,7 @@ import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -177,8 +178,32 @@ public class DbHelper {
 
         return options;
     }
-    //Lấy danh sách GiaoDich
-
+    //Lấy danh sách LoaiGiaoDic
+//    public static String getLoaiGiaoDich(String keygiaodich){
+//        String abc = "";
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("LoaiGiaoDich/"+keygiaodich);
+//        Log.d("LoaiGiaoDich/"+keygiaodich, "getLoaiGiaoDich: ");
+//        myRef.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+//                    LoaiGiaoDich loaiGiaoDich = dataSnapshot.getValue(LoaiGiaoDich.class);
+//                    Log.d(loaiGiaoDich.getTenLoai(), "onDataChange: ");
+//                    if (loaiGiaoDich != null) {
+//                        abc = loaiGiaoDich.getTenLoai();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return abc;
+//    }
     // cập nhật số dư
     public static void updateSurplus(String taiKhoanKey, double soDuMoi) {
         Map<String, Object> map = new HashMap<>();
@@ -221,7 +246,7 @@ public class DbHelper {
     }
 
     // Tạo lịch sử giao dịch - Hưng
-    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan) {
+    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan,String loaigd) {
         LocalTime now = null;
         String timeString="";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -238,15 +263,17 @@ public class DbHelper {
         Map<String, Object> map = new HashMap<>();
         map.put("GioGiaoDich", timeString);
         map.put("NgayGiaoDich", GetDataForm());
-        map.put("SoTaiKhoan", taiKhoanNguon.getSoTaiKhoan());
+        map.put("TaiKhoanNguon", taiKhoanNguon.getSoTaiKhoan());
         map.put("NoiDungChuyenKhoan", noiDungChuyenKhoan);
         map.put("SoTienGiaoDich", soTienGiaoDich);
         map.put("TaiKhoanNhan", taiKhoanNhan.getSoTaiKhoan());
-        map.put("SoDuHienTai", taiKhoanNguon.getSoDu());
-
-        String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
-
-        firebaseDatabase.getReference("LichSuGiaoDich").child(newKey).setValue(map);
+        map.put("SoDuLucGui", taiKhoanNguon.getSoDu());
+        map.put("LoaiGiaoDichKey",loaigd);
+        String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
+        map.put("Key",newKey);
+        map.put("PhiGiaoDich",0);
+        map.put("SoDuLucNhan", taiKhoanNhan.getSoDu());
+        firebaseDatabase.getReference("GiaoDich").child(newKey).setValue(map);
     }
 
     public static String GetDataForm(){
