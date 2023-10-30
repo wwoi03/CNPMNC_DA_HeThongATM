@@ -372,61 +372,74 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //tìm kiếm thẻ theo cccd
 
 
-        //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------
-        //Chuyển tiền
+        //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------//
 
-
-        public void SendMoney(string numberSend)
+        //Chức năng Rút tiền
+        public bool RutTien(double soTien, string value)
         {
-            // lấy thông tin khách hàng chuyển
-            FirebaseResponse responseSend = client.Get("KhachHang" + numberSend);
-            if (responseSend != null)
+            string info = GetAccount(value);
+            try
             {
+                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
 
+                // Lấy dữ liệu tài khoản từ Firebase
+                var accountData = response.ResultAs<AccountViewModel>();
+
+                //// trừ số tiền vào số dư
+                //accountData.SoDu += soTien;
+                Double SoDuHientai = accountData.SoDu - soTien;
+
+
+                // Cập nhật số dư trên Firebase
+                client.Set("TaiKhoanLienKet/" + info + "/Sodu", SoDuHientai);
+
+                return true; // Cập nhật thành công
             }
-            //lấy thông tin khách hàng gửi
-            FirebaseResponse responseGet = client.Get("KhachHang");
+            catch (Exception ex)
+            {
+                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+                return false; // Cập nhật thất bại
+            }
+        }
+        //Chức năng chuyển tiền
+        public bool ChuyenTien(double soTien, string value)
+        {
+            string info = GetAccount(value);
+            try
+            {
+                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+                // Lấy dữ liệu tài khoản từ Firebase
+                var accountData = response.ResultAs<AccountViewModel>();
+
+                ////  Chuyển tiền xong cộng số tiền vào số dư
+                //accountData.SoDu += soTien;
+                Double SoDuHientai = accountData.SoDu + soTien;
+
+
+                // Cập nhật số dư trên Firebase
+                client.Set("TaiKhoanLienKet/" + info + "/soDu", SoDuHientai);
+
+                return true; // Cập nhật thành công
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+                return false; // Cập nhật thất bại
+            }
         }
 
 
-
-        //đừng xóa em đang sửa
-        //public string GetAccount(string Value)
-        //{
-        //    FirebaseResponse response = client.Get("TaiKhoanLienKet");
-        //    if (response != null)
-        //    {
-        //        Dictionary<string, AccountViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, AccountViewModel>>(response.Body);
-
-        //        // Sử dụng LINQ để lấy keys của các bản ghi có SoTaiKhoan trùng với Value
-        //        var matchingKeys = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
-
-        //        if (matchingKeys.Count > 0)
-        //        {
-        //            // matchingKeys là một danh sách các keys có SoTaiKhoan trùng với Value
-        //            // Ở đây, bạn có thể làm gì đó với danh sách này
-        //            return string.Join(", ", matchingKeys);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine(response.StatusCode);
-        //    }
-        //    return null;
-        //}
-
-
-
-        //---------------------------QUản lý loại thẻ----------------//
-        /* public List<LoaiThe> GetTypesCards()
-         {
-             List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
-             FirebaseResponse response = client.Get("LoaiTheNganHang");
-             List<LoaiThe> data = response.ResultAs<List<LoaiThe>>();
-             dsLoaiThe.AddRange(data);
-             return dsLoaiThe;
-         }*/
-        public List<LoaiThe> GetTypesCards()
+//-------------------------------------------------------------QUản lý loại thẻ-----------------------------------------------//
+/* public List<LoaiThe> GetTypesCards()
+ {
+     List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
+     FirebaseResponse response = client.Get("LoaiTheNganHang");
+     List<LoaiThe> data = response.ResultAs<List<LoaiThe>>();
+     dsLoaiThe.AddRange(data);
+     return dsLoaiThe;
+ }*/
+public List<LoaiThe> GetTypesCards()
         {
             List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
             FirebaseResponse response = client.Get("LoaiTheNganHang");
