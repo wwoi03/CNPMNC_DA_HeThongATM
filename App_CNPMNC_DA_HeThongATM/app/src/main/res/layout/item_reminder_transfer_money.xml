@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llReminderItem"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:background="@drawable/bottom_border">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Icon -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="6dp"
+                android:layout_margin="2dp">
+
+                <ImageView
+                    android:id="@+id/ivAccount"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="1dp"
+                    android:src="@drawable/file_invoice_dollar_solid"
+                    app:tint="@color/primary_blue_color"
+                    android:layout_gravity="center">
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <!--Ten thong bao-->
+                <TextView
+                    android:id="@+id/tvContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sinh nhật xếp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:gravity="top"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvReminderDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="01/01/2023"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="16dp"
+                        android:background="@color/normal_color"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_gravity="center_vertical">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvAmountMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.500.000đ"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue_color"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_Popup"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_chevron_right_24"
+                app:tint="@color/normal_color">
+            </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
