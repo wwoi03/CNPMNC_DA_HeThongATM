@@ -7,12 +7,32 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class WithdrawMoneyController : Controller
     {
+        string TenTK;
+        string accountKey;
+
         FirebaseHelper firebaseHelper = new FirebaseHelper();
         public IActionResult Index()
         {
 
             return View();
         }
+        [HttpGet]
+        public IActionResult sendAccount(long SoTaiKhoan)
+        {
+            string tinhtrang = "undefined";
+            if (firebaseHelper.GetAccountbyid(SoTaiKhoan) != null)
+            {
+                TenTK = firebaseHelper.GetAccountbyid(SoTaiKhoan).TenTK;
+                return Json(TenTK);
+            }
+            else
+            {
+                return Json("Không tìm thấy");
+            }
+
+
+        }
+
         [HttpPost]
         public IActionResult RutTien(TaiKhoanLienKetViewModel account)
         {
@@ -20,6 +40,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper.RutTien(sotien, account.SoTaiKhoan);
             return RedirectToAction("Index");
         }
+
+
+
+
+
+
+
+
         //public Account(Account firebaseClient)
         //{
         //    firebaseClient = firebaseClient;

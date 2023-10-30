@@ -372,7 +372,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //tìm kiếm thẻ theo cccd
 
 
-        //------------------------------------------------------------------Chuyển Tiền-----------------------------------------------------//
+        //------------------------------------------------------------------Chức năng trong dịch vụ-----------------------------------------------------//
 
         public string GetAccount(long Value )
         {
@@ -412,32 +412,49 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
         //Chức năng Rút tiền
-        public bool RutTien(double SoTien, long value)
+        public bool RutTien(double soTien, long soTaiKhoan)
         {
-            string info = GetAccount(value);
-            try
+            // Lấy thông tin tài khoản từ Firebase bằng số tài khoản
+            string info = GetAccount(soTaiKhoan);
+
+            if (info != null)
             {
-                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+                try
+                {
+                    // Lấy dữ liệu tài khoản từ Firebase
+                    FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+                    var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
 
-                // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+                    // Kiểm tra xem số dư trong tài khoản có đủ để rút không
+                    if (accountData.SoDu >= soTien)
+                    {
+                        // Trừ số tiền vào số dư
+                        double SoDuMoi = accountData.SoDu - soTien;
 
-                //// trừ số tiền vào số dư
-                //accountData.SoDu -= SoTien;
-                Double SoDu = accountData.SoDu - SoTien;
+                        // Cập nhật số dư trên Firebase
+                        client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuMoi);
 
-
-                // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/Sodu", SoDu);
-
-                return true; // Cập nhật thành công
+                        return true; // Rút tiền thành công
+                    }
+                    else
+                    {
+                        // Số dư không đủ để rút
+                        return false; // Rút tiền thất bại
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+                    return false; // Rút tiền thất bại
+                }
             }
-            catch (Exception ex)
+            else
             {
-                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
-                return false; // Cập nhật thất bại
+                // Số tài khoản không tồn tại
+                return false; // Rút tiền thất bại
             }
         }
+
         //-----------------------------------------------------Chức năng chuyển tiền-----------------------------------------------------//
         public bool ChuyenTien(double soTien, long value)
         {

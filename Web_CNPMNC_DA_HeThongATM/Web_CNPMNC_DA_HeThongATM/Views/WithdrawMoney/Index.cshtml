@@ -3,38 +3,10 @@
 @model TaiKhoanLienKetViewModel
 @{
     Layout = "_LayoutMain";
-    var LaiSuatList = ViewData["LaiSuatList"] as IEnumerable<TaiKhoanLienKetViewModel>;
+    var aben = ViewData["aben"] as IEnumerable<TaiKhoanLienKetViewModel>;
 }
-@*<body>
-    <form method="post" asp-controller="Account" asp-action="RutTien" style="margin-left:20%">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header"><strong>Rút Tiền</strong></div>
-                <div class="card-body card-block">
-                    <div class="form-group">
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Số tài Khoản</label>
-                            <input type="text" asp-for="SoTaiKhoan" class="form-control">
-                        </div>
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Họ và tên chủ tài khoản</label>
-                            <input type="text" asp-for="TenTk" class="form-control">
-                        </div>
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Số Tiền</label>
-                            <input type="text" asp-for="SoTien" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-actions form-group" style="margin-top:4px">
-                        <button type="submit" class="btn btn-primary btn-sm">Rút tiền</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</body>*@
 <body>
-
+    <script src="/js/RutChuyenTien.js">  </script>
 
     <div class="formbold-main-wrapper">
         <div class="w-full">
@@ -45,33 +17,34 @@
                 <form method="post" asp-controller="WihtdrawMoney" asp-action="RutTien"
                       class="formbold-chatbox-form">
                     <div class="formbold-mb-5">
-                        <label for="name" class="formbold-form-label"> Số tài khoản </label>
-                        <input type="text" asp-for="SoTaiKhoan"
+                        <label for="stk" class="formbold-form-label"> Số tài khoản người rút </label>
+                        <input id="SoTaiKhoan" type="text" asp-for="SoTaiKhoan" aria-required="true" aria-invalid="false"
                                placeholder="Nhập số tài khoản"
                                class="formbold-form-input" />
                     </div>
                     <div class="formbold-mb-5">
-                        <label for="email" class="formbold-form-label"> Họ và tên </label>
-                        <input type="text" asp-for="TenTK"
+                        <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản </label>
+                        <input id="tenTK" type="text" asp-for="TenTK"
                                placeholder=""
-                               class="formbold-form-input" />
+                               class="formbold-form-input" readonly>
                     </div>
 
                     <div class="formbold-mb-5">
                         <label for="message" class="formbold-form-label"> Số tiền </label>
                         <input type="text" asp-for="SoTien"
                                placeholder="1.000.000"
-                               class="formbold-form-input" />
+                               class="formbold-form-input" >
                         </input>
                     </div>
 
                     <div>
-                        <button class="formbold-btn w-full">Rút tiền</button>
+                        <button asp-controller="TransferMoney" asp-action="ChuyenTien" class="formbold-btn w-full">Rút tiền</button>
                     </div>
                 </form>
 
             </div>
         </div>
+
         <style>
             .formbold-main-wrapper {
                 display: flex;
@@ -79,16 +52,7 @@
                 justify-content: center;
                 padding: 48px;
             }
-            /*  .formbold-form-wrapper {
-                            margin: 0 auto;
-                            max-width: 550px;
-                            width: 100%;
-                            background: white;
-                            border: 1px solid #e0e0e0;
-                            border-radius: 8px;
-                            display: none;
-                          }*/
-
+           
             .formbold-form-header {
                 background: #6a64f1;
                 display: flex;
