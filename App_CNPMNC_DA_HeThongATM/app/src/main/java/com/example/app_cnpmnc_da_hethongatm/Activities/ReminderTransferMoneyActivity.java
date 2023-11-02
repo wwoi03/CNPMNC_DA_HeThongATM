@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -71,7 +72,8 @@ public class ReminderTransferMoneyActivity extends AppCompatActivity implements 
         ivAddReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ReminderTransferMoneyActivity.this, AddReminderTransferMoneyActivity.class);
+                startActivity(intent);
             }
         });
     }

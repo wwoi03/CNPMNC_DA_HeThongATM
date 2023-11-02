@@ -9,7 +9,8 @@
     android:paddingEnd="16dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:background="@drawable/bottom_border">
+    android:layout_marginBottom="3dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,18 +26,18 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:cardCornerRadius="100dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="50dp"
+                android:background="@color/white"
                 android:layout_margin="2dp">
 
                 <ImageView
                     android:id="@+id/ivAccount"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center"
                     android:padding="1dp"
                     android:src="@drawable/file_invoice_dollar_solid"
-                    app:tint="@color/primary_blue_color"
-                    android:layout_gravity="center">
+                    app:tint="@color/primary_blue_color">
                 </ImageView>
             </androidx.cardview.widget.CardView>
 

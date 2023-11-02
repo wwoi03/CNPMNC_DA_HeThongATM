@@ -338,4 +338,37 @@ public class DbHelper {
 
         return options;
     }
+
+    // thêm nhắc chuyển tiền
+    public static void addReminderTransferMoney(String maKHKey, TaiKhoanLienKet taiKhoanNhan, String content, String dateLimit, double money, FirebaseListener firebaseListener) {
+        String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("Key", newKey);
+        map.put("MaKHKey", maKHKey);
+        map.put("LoaiGiaoDichKey", "");
+        map.put("NoiDungNhac", content);
+        map.put("NgayHetHan", dateLimit);
+        map.put("TaiKhoanNhan", taiKhoanNhan.getSoTaiKhoan());
+        map.put("SoTienNhacChuyen", money);
+        map.put("TrangThai", 0);
+
+        firebaseDatabase.getReference("NhacChuyenTien").child(newKey).setValue(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onFailureListener(e);
+                        }
+                    }
+                });
+    }
 }

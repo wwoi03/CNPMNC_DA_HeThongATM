@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ConfirmReminderTransferMoneyActivity"
+    android:background="@color/white">
+
+    <!-- Scroll -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Toolbar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tbToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_tool_bar"
+                android:background="@color/primary_blue_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </androidx.appcompat.widget.Toolbar>
+
+            <!-- Form -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="16dp">
+
+                <!-- Loại giao dịch -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Loại giao dịch"
+                        android:textSize="16dp"
+                        android:textColor="@color/normal_color">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nhắc chuyển tiền"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Diễn giải -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Diễn giải"
+                        android:textSize="16dp"
+                        android:textColor="@color/normal_color">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sinh nhật sếp"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Ngày hết hạn -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày hết hạn"
+                        android:textSize="16dp"
+                        android:textColor="@color/normal_color">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvDateLimit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="01/01/2023"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Số người cần nhắc -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số người cần nhắc"
+                        android:textSize="16dp"
+                        android:textColor="@color/normal_color">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Người nhận -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Người nhận"
+                        android:textSize="16dp"
+                        android:textColor="@color/normal_color">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvBeneficiary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DAO CONG TUAN - 0909900009"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Số tiền nhắc -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số tiền nhắc chuyển"
+                        android:textSize="16dp"
+                        android:textColor="@color/primary_blue_color">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.500.000đ"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue_color"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Button tiếp tục -->
+                <Button
+                    android:id="@+id/btConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_radius_button"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Xác nhận">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

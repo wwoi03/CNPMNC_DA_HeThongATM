@@ -12,7 +12,10 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
-            android:name=".AddReminderTransferMoneyActivity"
+            android:name=".Activities.ConfirmReminderTransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddReminderTransferMoneyActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.ReminderTransferMoneyActivity"
