@@ -4,6 +4,8 @@
     <dimen name="dp_4">4dp</dimen>
     <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_1">1dp</dimen>
+    <dimen name="border_dp">1dp</dimen>
     <dimen name="conner_radius_12">12dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="height_tool_bar">56dp</dimen>
 </resources>
