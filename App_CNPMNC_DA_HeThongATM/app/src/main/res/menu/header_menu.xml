@@ -4,9 +4,9 @@
 
     <!-- Tìm kiếm chức năng -->
     <item
-        android:id="@+id/mnuSearch"
+        android:id="@+id/mnuScan"
         android:title="Search"
-        android:icon="@drawable/baseline_search_24"
+        android:icon="@drawable/baseline_qr_code_scanner_24"
         android:iconTint="@color/white"
         app:showAsAction="always">
     </item>
