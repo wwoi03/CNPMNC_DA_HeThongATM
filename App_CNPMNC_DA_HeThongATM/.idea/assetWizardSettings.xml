@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/keyboard_double_arrow_right/baseline_keyboard_double_arrow_right_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/text_snippet/baseline_text_snippet_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_keyboard_double_arrow_right_24" />
+                            <entry key="outputName" value="baseline_text_snippet_24" />
                             <entry key="sourceFile" value="C:\Users\tuand\Downloads\piggy-bank-solid.svg" />
                           </map>
                         </option>

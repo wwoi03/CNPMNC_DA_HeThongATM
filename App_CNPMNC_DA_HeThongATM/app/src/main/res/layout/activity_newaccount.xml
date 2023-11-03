@@ -1,197 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.con/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activities.NewaccountActivity"
     android:orientation="vertical"
-    android:layout_margin="16dp">
+    android:gravity="center_horizontal">
 
-    <!-- Thông tin người vận chuyển -->
+
+
+    <!-- Tiêu đề -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="24dp">
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
 
-        <!-- Tiêu đề -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="10dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_account_box_24"
+            android:layout_marginEnd="10dp">
+        </ImageView>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/baseline_drive_file_rename_outline_24"
-                android:layout_marginEnd="10dp">
-            </ImageView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mở Tài khoản thanh toán số chọn"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:textStyle="bold">
-            </TextView>
-        </LinearLayout>
-
-        <!-- Tiều đề -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tìm kiếm số tài khoản yêu thích"
+            android:text="Kho số đẹp"
             android:textSize="20dp"
-            android:layout_marginBottom="10dp">
+            android:textColor="@color/black"
+            android:textStyle="bold">
         </TextView>
-
-        <!-- Tài khoản cần đặt nickname -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            app:cardCornerRadius="@dimen/conner_radius_12"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:id="@+id/tvSourceAccount"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:textSize="20dp"
-                android:gravity="center_vertical"
-                android:hint="Số tài khoản yêu thích"
-                android:layout_marginStart="16dp"
-                android:background="@color/white">
-            </TextView>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_drop_down_24"
-                android:layout_marginEnd="16dp"
-                android:layout_gravity="right|center_vertical">
-            </ImageView>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Hiển thị số dư -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <!-- Tiêu đề -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kho số đẹp"
-                android:textSize="20dp">
-            </TextView>
-
-            <!-- Số dư -->
-            <TextView
-                android:id="@+id/tvSurplus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="20dp"
-                android:gravity="right"
-                android:layout_alignParentRight="true">
-            </TextView>
-        </RelativeLayout>
-
-        <!-- Đặt  -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            app:cardCornerRadius="@dimen/conner_radius_12"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="2dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etsodep"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:textSize="20dp"
-                android:gravity="center_vertical"
-                android:hint="Nhập số tìm kiếm theo yêu cầu"
-                android:numeric="decimal"
-                android:layout_marginStart="16dp"
-                android:background="@color/white">
-            </com.google.android.material.textfield.TextInputEditText>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="15dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/normal_color"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="1dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:src="@drawable/baseline_close_24"
-                    app:tint="@color/white"></ImageView>
-            </androidx.cardview.widget.CardView>
-        </androidx.cardview.widget.CardView>
-
-        <!-- Đổi mật khẩu -->
-        <Button
-            android:id="@+id/btsearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:padding="4dp"
-            android:text="Tìm kiếm"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/coner_radius_button">
-        </Button>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp">
-
-            <!-- Tiêu đề -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/baseline_keyboard_double_arrow_right_24"
-                    android:layout_marginEnd="10dp">
-                </ImageView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Danh sách STK Chọn"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold">
-                </TextView>
-            </LinearLayout>
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/liststk">
-        </ListView>
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="*Mô tả sản phẩm mở tài khoản thanh toán số chọn"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"></TextView>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etstk"
+        android:hint="Nhập số tài khoản yêu thích"
+        android:numeric="integer|decimal"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="Lưu ý: Quý khách có thể tìm kiếm số tài khoản có số cuối theo sở thích như ngày sinh, số yêu thích"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"></TextView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TÌM KIẾM"
+        android:id="@+id/btnThem"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_drive_file_rename_outline_24"
+            android:layout_marginEnd="10dp">
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh sách số tài khoản"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold">
+        </TextView>
     </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listTaiKhoan">
+
+    </ListView>
+
 </LinearLayout>

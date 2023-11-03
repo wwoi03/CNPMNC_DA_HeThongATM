@@ -15,9 +15,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
+
+import java.util.ArrayList;
 
 public class TransferMoneyActivity extends AppCompatActivity {
     // View
@@ -97,6 +101,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         etContent = findViewById(R.id.etContent);
         etAccountBeneficiary = findViewById(R.id.etAccountBeneficiary);
         btTransferMoney = findViewById(R.id.btTransferMoney);
+
     }
 
     // khởi tạo dữ liệu
