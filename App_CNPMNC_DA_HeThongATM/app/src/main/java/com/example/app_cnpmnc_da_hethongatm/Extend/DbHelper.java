@@ -371,4 +371,22 @@ public class DbHelper {
                     }
                 });
     }
+
+    // tìm kiếm tài khoản theo số tài khoản
+    public static void getAccountByAccountNumber(long soTaiKhoan, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(soTaiKhoan)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener(snapshot);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
 }
