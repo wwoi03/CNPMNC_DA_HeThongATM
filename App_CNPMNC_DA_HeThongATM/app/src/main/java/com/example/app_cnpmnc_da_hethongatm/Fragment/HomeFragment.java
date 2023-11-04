@@ -13,8 +13,10 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.PhoneActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
@@ -88,6 +90,8 @@ public class HomeFragment extends Fragment {
     Handler handler = new Handler();
     Runnable runnable;
     CardView cvTransferMoney, cvManageAccountAndCard;
+    LinearLayout cvHotro;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -103,6 +107,7 @@ public class HomeFragment extends Fragment {
         ci3 = view.findViewById(R.id.ci3);
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
+        cvHotro = view.findViewById(R.id.cvhotro);
     }
 
     // Khởi tạo
@@ -157,6 +162,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ManageAccountAndCardActivity.class);
+                startActivity(intent);
+            }
+        });
+        cvHotro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PhoneActivity.class);
                 startActivity(intent);
             }
         });
