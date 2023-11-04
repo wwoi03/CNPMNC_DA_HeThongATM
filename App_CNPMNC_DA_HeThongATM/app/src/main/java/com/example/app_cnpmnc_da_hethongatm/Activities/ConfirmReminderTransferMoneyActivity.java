@@ -114,7 +114,7 @@ public class ConfirmReminderTransferMoneyActivity extends AppCompatActivity {
         tvContent.setText(content);
         tvDateLimit.setText(dateLimit);
         tvBeneficiary.setText(taiKhoanNhan.getTenTK() + " - " + taiKhoanNhan.getSoTaiKhoan());
-        tvMoney.setText(String.format("%,d", (long) (money)));
+        tvMoney.setText(String.format("%,d", (long) (money)) + "đ");
     }
 
     // xử lý sự kiệm khi bấm vào nút "Xác nhận"

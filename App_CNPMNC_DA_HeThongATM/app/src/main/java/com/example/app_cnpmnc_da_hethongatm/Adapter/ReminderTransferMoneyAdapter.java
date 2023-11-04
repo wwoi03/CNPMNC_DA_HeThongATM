@@ -32,7 +32,7 @@ public class ReminderTransferMoneyAdapter extends FirebaseRecyclerAdapter<NhacCh
 
         holder.tvReminderDay.setText(model.getNgayHetHan());
 
-        holder.tvAmountMoney.setText(model.getSoTienNhacChuyenFormat());
+        holder.tvAmountMoney.setText(model.getSoTienNhacChuyenFormat() + "đ");
 
         initListener(holder, position, model);
     }
