@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AddReminderTransferMoneyActivity"
+    tools:context=".Activities.AddEditReminderTransferMoneyActivity"
     android:background="@color/bg_color"
     android:id="@+id/clMainLayout">
 
@@ -251,6 +251,42 @@
                     android:layout_marginTop="12dp"
                     android:text="Tiếp tục">
                 </Button>
+
+                <!-- Edit -->
+                <LinearLayout
+                    android:id="@+id/llEditButtonContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <!-- Button xóa -->
+                    <Button
+                        android:id="@+id/btDelete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_radius_button"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Xóa">
+                    </Button>
+
+                    <!-- Button xác nhận cập nhật -->
+                    <Button
+                        android:id="@+id/btUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_radius_button"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Xác nhận">
+                    </Button>
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

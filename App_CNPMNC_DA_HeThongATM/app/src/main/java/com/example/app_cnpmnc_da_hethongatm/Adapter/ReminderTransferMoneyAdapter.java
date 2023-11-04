@@ -26,7 +26,37 @@ public class ReminderTransferMoneyAdapter extends FirebaseRecyclerAdapter<NhacCh
 
     @Override
     protected void onBindViewHolder(@NonNull ReminderTransferMoneyVH holder, int position, @NonNull NhacChuyenTien model) {
-        // kiểm tra hiển thị icon theo trạng thái nhắc chuyển tiền
+        checkShowIconDateLimit(holder, model);
+
+        holder.tvContent.setText(model.getNoiDungNhac());
+
+        holder.tvReminderDay.setText(model.getNgayHetHan());
+
+        holder.tvAmountMoney.setText(model.getSoTienNhacChuyenFormat());
+
+        initListener(holder, position, model);
+    }
+
+    @NonNull
+    @Override
+    public ReminderTransferMoneyVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reminder_transfer_money, parent, false);
+        return new ReminderTransferMoneyVH(view);
+    }
+
+    // xử lý sự kiện
+    private void initListener(ReminderTransferMoneyVH holder, int position, NhacChuyenTien model) {
+        // xử lý khi bấm vào một item bất kỳ
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClickReminderListener(model);
+            }
+        });
+    }
+
+    // kiểm tra hiển thị icon theo trạng thái nhắc chuyển tiền
+    private void checkShowIconDateLimit(ReminderTransferMoneyVH holder, NhacChuyenTien model) {
         if (model.checkLate() && model.getTrangThai() == ResultCode.CHUA_DEN_HAN) { // quá hạn
             holder.ivReminderIcon.setImageResource(R.drawable.circle_exclamation_solid);
             holder.ivReminderIcon.setColorFilter(R.color.warning_color);
@@ -37,24 +67,6 @@ public class ReminderTransferMoneyAdapter extends FirebaseRecyclerAdapter<NhacCh
             holder.ivReminderIcon.setImageResource(R.drawable.circle_check_solid);
             holder.ivReminderIcon.setColorFilter(R.color.done_color);
         }
-
-        holder.tvContent.setText(model.getNoiDungNhac());
-
-        holder.tvReminderDay.setText(model.getNgayHetHan());
-
-        holder.tvAmountMoney.setText(model.getSoTienNhacChuyenFormat());
-    }
-
-    @NonNull
-    @Override
-    public ReminderTransferMoneyVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reminder_transfer_money, parent, false);
-        return new ReminderTransferMoneyVH(view);
-    }
-
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
     }
 
     class ReminderTransferMoneyVH extends RecyclerView.ViewHolder {
@@ -73,5 +85,6 @@ public class ReminderTransferMoneyAdapter extends FirebaseRecyclerAdapter<NhacCh
     }
 
     public interface Listener {
+        void onClickReminderListener(NhacChuyenTien nhacChuyenTien);
     }
 }

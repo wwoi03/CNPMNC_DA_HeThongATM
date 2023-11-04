@@ -12,23 +12,23 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
-import com.example.app_cnpmnc_da_hethongatm.MainActivity;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
+import com.example.app_cnpmnc_da_hethongatm.Model.NhacChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.database.DataSnapshot;
@@ -39,27 +39,31 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
-public class AddReminderTransferMoneyActivity extends AppCompatActivity {
+public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
     // View
     Toolbar tbToolbar;
     EditText etContent, etMoney, etBeneficiary, etDateLimit;
     TextView tvBeneficiaryName;
     ImageView ivDateLimitIcon;
-    Button btNext;
+    Button btNext, btUpdate, btDelete;
     RelativeLayout rlInfoBeneficiary;
     ConstraintLayout clMainLayout;
+    LinearLayout llEditButtonContainer;
 
     // var
     int mYear, mMonth, mDay;
     TaiKhoanLienKet taiKhoanNhan;
+    NhacChuyenTien editNhacChuyenTien;
     String content, moneyString, beneficiary, dateLimit;
     double money;
     boolean BENEFICIARY_EXISTS;
+    Intent getDataIntent;
+    int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_reminder_transfer_money);
+        setContentView(R.layout.activity_add_edit_reminder_transfer_money);
 
         initUI();
         initData();
@@ -76,13 +80,24 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
         etDateLimit = findViewById(R.id.etDateLimit);
         ivDateLimitIcon = findViewById(R.id.ivDateLimitIcon);
         btNext = findViewById(R.id.btNext);
+        btUpdate = findViewById(R.id.btUpdate);
+        btDelete = findViewById(R.id.btDelete);
         rlInfoBeneficiary = findViewById(R.id.rlInfoBeneficiary);
         tvBeneficiaryName = findViewById(R.id.tvBeneficiaryName);
+        llEditButtonContainer = findViewById(R.id.llEditButtonContainer);
     }
 
     // khởi tạo dữ liệu
     private void initData() {
         setupToolbar();
+
+        getDataIntent = getIntent();
+        flag = (int) getDataIntent.getSerializableExtra("flag");
+
+        if (flag == ResultCode.EDIT_REMINDER_TRANSFER_MONEY) {
+            editNhacChuyenTien = (NhacChuyenTien) getDataIntent.getSerializableExtra("editNhacChuyenTien");
+            showInfoReminderTransferMoney();
+        }
     }
 
     // lắng nghe xự kiện
@@ -120,6 +135,18 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // hiển thị thông tin nhắc chuyển tiền
+    private void showInfoReminderTransferMoney() {
+        etContent.setText(editNhacChuyenTien.getNoiDungNhac());
+        etDateLimit.setText(editNhacChuyenTien.getNgayHetHan());
+        etMoney.setText(editNhacChuyenTien.getSoTienNhacChuyenFormat());
+        etBeneficiary.setText(String.valueOf(editNhacChuyenTien.getTaiKhoanNhan()));
+        checkExistsBeneficiary();
+
+        btNext.setVisibility(View.GONE);
+        llEditButtonContainer.setVisibility(View.VISIBLE);
+    }
+
     // xử lý khi bấm nút "Tiếp tục"
     private void onClickButtonNext() {
         btNext.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +169,7 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
                         buildAlertDialog("Số tiền nhập phải lớn hơn 1000");
                     } else {
                         if (BENEFICIARY_EXISTS == true) {
-                            Intent intent = new Intent(AddReminderTransferMoneyActivity.this, ConfirmReminderTransferMoneyActivity.class);
+                            Intent intent = new Intent(AddEditReminderTransferMoneyActivity.this, ConfirmReminderTransferMoneyActivity.class);
                             intent.putExtra("taiKhoanNhan", taiKhoanNhan);
                             intent.putExtra("content", content);
                             intent.putExtra("money", money);
@@ -254,7 +281,7 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
                 mDay = calendar.get(Calendar.DAY_OF_MONTH);
 
                 //show dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddReminderTransferMoneyActivity.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddEditReminderTransferMoneyActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

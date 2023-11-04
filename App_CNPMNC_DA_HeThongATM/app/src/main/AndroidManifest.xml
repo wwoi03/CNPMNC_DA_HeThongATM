@@ -15,7 +15,7 @@
             android:name=".Activities.ConfirmReminderTransferMoneyActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.AddReminderTransferMoneyActivity"
+            android:name=".Activities.AddEditReminderTransferMoneyActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.ReminderTransferMoneyActivity"

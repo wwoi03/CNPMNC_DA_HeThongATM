@@ -1,6 +1,5 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ReminderTransferMoneyAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.Model.NhacChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -72,7 +72,8 @@ public class ReminderTransferMoneyActivity extends AppCompatActivity implements 
         ivAddReminder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ReminderTransferMoneyActivity.this, AddReminderTransferMoneyActivity.class);
+                Intent intent = new Intent(ReminderTransferMoneyActivity.this, AddEditReminderTransferMoneyActivity.class);
+                intent.putExtra("flag", ResultCode.ADD_REMINDER_TRANSFER_MONEY);
                 startActivity(intent);
             }
         });
@@ -118,5 +119,14 @@ public class ReminderTransferMoneyActivity extends AppCompatActivity implements 
     protected void onStop() {
         super.onStop();
         reminderTransferMoneyAdapter.stopListening();
+    }
+
+    // xử lý khi bấm vào một item bất kỳ
+    @Override
+    public void onClickReminderListener(NhacChuyenTien nhacChuyenTien) {
+        Intent intent = new Intent(ReminderTransferMoneyActivity.this, AddEditReminderTransferMoneyActivity.class);
+        intent.putExtra("flag", ResultCode.EDIT_REMINDER_TRANSFER_MONEY);
+        intent.putExtra("editNhacChuyenTien", nhacChuyenTien);
+        startActivity(intent);
     }
 }

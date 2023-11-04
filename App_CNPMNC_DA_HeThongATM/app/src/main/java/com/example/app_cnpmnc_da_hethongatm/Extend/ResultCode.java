@@ -16,4 +16,7 @@ public class ResultCode {
     public static int QUA_HAN_CHUYEN_TIEN = 2; // quá hạn chuyển tiền
     public static int CHUA_DEN_HAN = 0; // // chưa đến hạn
 
+    // Nhắc chuyển tiền
+    public static int ADD_REMINDER_TRANSFER_MONEY = 101; // thêm nhắc chuyển tiền
+    public static int EDIT_REMINDER_TRANSFER_MONEY = 102; // sửa nhắc chuyển tiền
 }

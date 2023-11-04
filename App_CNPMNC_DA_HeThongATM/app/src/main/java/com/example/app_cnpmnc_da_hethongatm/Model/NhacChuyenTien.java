@@ -2,10 +2,11 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 
 import android.os.Build;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class NhacChuyenTien {
+public class NhacChuyenTien implements Serializable {
     private String Key;
     private String MaKHKey;
     private String LoaiGiaoDichKey;
