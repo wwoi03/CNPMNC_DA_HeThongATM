@@ -16,13 +16,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class ListBeneficiaryAdapter extends FirebaseRecyclerAdapter<ThuHuong, ListBeneficiaryAdapter.myViewHolder>{
-    /**
-     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-     * {@link FirebaseRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
 
+    private OnItemClickListener listener;
 
     public ListBeneficiaryAdapter(@NonNull FirebaseRecyclerOptions<ThuHuong> options) {
         super(options);
@@ -37,14 +32,11 @@ public class ListBeneficiaryAdapter extends FirebaseRecyclerAdapter<ThuHuong, Li
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), TransferMoneyActivity.class);
-                intent.putExtra("flag", 1);
-                intent.putExtra("tkthuhuong", model);
-                view.getContext().startActivity(intent);
+                if (listener != null) {
+                    listener.onItemClick(model);
+                }
             }
         });
-
-
     }
 
     @NonNull
@@ -62,5 +54,13 @@ public class ListBeneficiaryAdapter extends FirebaseRecyclerAdapter<ThuHuong, Li
             tv_idnote = itemView.findViewById(R.id.tv_idnote);
             tv_usernamenote = itemView.findViewById(R.id.tv_usernamnote);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(ThuHuong model);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

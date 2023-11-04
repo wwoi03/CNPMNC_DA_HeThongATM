@@ -9,6 +9,13 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="link1">
+        Click <a href = "https://www.sacombank.com.vn/ca-nhan.html"> here </a> https://www.sacombank.com.vn/ca-nhan.html
+    </string>
+    <string name="link2">
+        Click <a href = "https://www.sacombank.com.vn/doanh-nghiep.html"> here </a> https://www.sacombank.com.vn/doanh-nghiep.html
+    </string>
+
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
