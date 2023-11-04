@@ -52,6 +52,11 @@ public class ReminderTransferMoneyAdapter extends FirebaseRecyclerAdapter<NhacCh
         return new ReminderTransferMoneyVH(view);
     }
 
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+    }
+
     class ReminderTransferMoneyVH extends RecyclerView.ViewHolder {
         TextView tvContent, tvReminderDay, tvAmountMoney;
         ImageView ivReminderIcon;

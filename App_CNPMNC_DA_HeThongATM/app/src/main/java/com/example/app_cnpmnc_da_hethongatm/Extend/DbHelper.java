@@ -333,7 +333,9 @@ public class DbHelper {
     // lấy danh sách nhắc chuyển tiền
     public static FirebaseRecyclerOptions<NhacChuyenTien> getReminderTransferMoneys(String maKHKey) {
         FirebaseRecyclerOptions<NhacChuyenTien> options = new FirebaseRecyclerOptions.Builder<NhacChuyenTien>()
-                .setQuery(firebaseDatabase.getReference("NhacChuyenTien").orderByChild("MaKHKey").equalTo(maKHKey), NhacChuyenTien.class)
+                .setQuery(firebaseDatabase.getReference("NhacChuyenTien")
+                        .orderByChild("MaKHKey")
+                        .equalTo(maKHKey), NhacChuyenTien.class)
                 .build();
 
         return options;
