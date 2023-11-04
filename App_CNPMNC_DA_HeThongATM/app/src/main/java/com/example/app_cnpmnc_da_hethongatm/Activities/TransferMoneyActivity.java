@@ -53,6 +53,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
 
 
+
+
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -77,6 +79,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         initUI();
         initData();
         initListener();
+        getIntentFromQRCode();
     }
     private void UpdateTaiKhoanNguon(){
 
@@ -261,5 +264,15 @@ public class TransferMoneyActivity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void getIntentFromQRCode(){
+        Intent intent = getIntent();
+        String qrCodeData = intent.getStringExtra("SoTaiKhoan");
+        long amount = intent.getLongExtra("amount", 0);
+        String message = intent.getStringExtra("message");
+        etAccountBeneficiary.setText(qrCodeData);
+        etContent.setText(message);
+        etMoney.setText(String.valueOf(amount));
     }
 }

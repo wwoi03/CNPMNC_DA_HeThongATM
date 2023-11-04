@@ -200,13 +200,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (intentResult != null){
+            String qrCodeData = intentResult.getContents();
+            String[] parts = qrCodeData.split(",");
+            String SoTaiKhoan = parts[0];
+            long amount = 0;  // Giá trị mặc định
+            String message = "";  // Giá trị mặc định
+            if (parts.length > 2) {
+                amount = Long.parseLong(parts[2]);  // Chuyển đổi amount sang long
+            }
+            if (parts.length > 3) {
+                message = parts[3];
+            }
             Intent intent = new Intent(MainActivity.this, TransferMoneyActivity.class);
+            intent.putExtra("SoTaiKhoan", SoTaiKhoan);
+            intent.putExtra("amount", amount);  // Truyền amount như một long
+            intent.putExtra("message", message);
             intent.putExtra("flag", -1 );
             startActivity(intent);
         }else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
 
     @Override
     public void onBackPressed() {
