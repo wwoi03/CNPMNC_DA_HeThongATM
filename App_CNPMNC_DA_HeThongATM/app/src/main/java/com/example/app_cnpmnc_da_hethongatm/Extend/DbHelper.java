@@ -17,6 +17,7 @@ import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.NhacChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -319,6 +320,113 @@ public class DbHelper {
                                 break;
                             }
 
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    // lấy danh sách nhắc chuyển tiền
+    public static FirebaseRecyclerOptions<NhacChuyenTien> getReminderTransferMoneys(String maKHKey) {
+        FirebaseRecyclerOptions<NhacChuyenTien> options = new FirebaseRecyclerOptions.Builder<NhacChuyenTien>()
+                .setQuery(firebaseDatabase.getReference("NhacChuyenTien")
+                        .orderByChild("MaKHKey")
+                        .equalTo(maKHKey), NhacChuyenTien.class)
+                .build();
+
+        return options;
+    }
+
+    // cập nhật nhắc chuyển tiền
+    public static void updateReminderTransferMoney(NhacChuyenTien nhacChuyenTien, FirebaseListener firebaseListener) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("NoiDungNhac", nhacChuyenTien.getNoiDungNhac());
+        map.put("NgayHetHan", nhacChuyenTien.getNgayHetHan());
+        map.put("TaiKhoanNhan", nhacChuyenTien.getTaiKhoanNhan());
+        map.put("SoTienNhacChuyen", nhacChuyenTien.getSoTienNhacChuyen());
+        map.put("TrangThai", nhacChuyenTien.getTrangThai());
+
+        firebaseDatabase.getReference("NhacChuyenTien").child(nhacChuyenTien.getKey()).updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    // xóa nhắc chuyển tiền
+    public static void deleteReminderTransferMoney(String nhacChuyenTienKey, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("NhacChuyenTien").child(nhacChuyenTienKey).removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null)
+                            firebaseListener.onSuccessListener();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (firebaseListener != null)
+                            firebaseListener.onFailureListener(e);
+                    }
+                });
+    }
+
+    // thêm nhắc chuyển tiền
+    public static void addReminderTransferMoney(String maKHKey, TaiKhoanLienKet taiKhoanNhan, String content, String dateLimit, double money, FirebaseListener firebaseListener) {
+        String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("Key", newKey);
+        map.put("MaKHKey", maKHKey);
+        map.put("LoaiGiaoDichKey", "");
+        map.put("NoiDungNhac", content);
+        map.put("NgayHetHan", dateLimit);
+        map.put("TaiKhoanNhan", taiKhoanNhan.getSoTaiKhoan());
+        map.put("SoTienNhacChuyen", money);
+        map.put("TrangThai", 0);
+
+        firebaseDatabase.getReference("NhacChuyenTien").child(newKey).setValue(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onFailureListener(e);
+                        }
+                    }
+                });
+    }
+
+    // tìm kiếm tài khoản theo số tài khoản
+    public static void getAccountByAccountNumber(long soTaiKhoan, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(soTaiKhoan)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener(snapshot);
                         }
                     }
 

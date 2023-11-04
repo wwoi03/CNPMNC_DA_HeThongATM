@@ -61,7 +61,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     int flag;
     String maLoaiGGKey;
 
-
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -169,7 +168,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     if (!accountBeneficiaryString.isEmpty()) {
                         long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
                         if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
-                            BuildAlertDialog("Không thể tự chuyển khỏan cho bản thân");
+                            BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
                             tvNameBeneficiary.setText("");
                         }
                         else {
@@ -224,7 +223,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 }else if (GetDate() != taiKhoanNguon.getNgayGD()) {
                     taiKhoanNguon.setNgayGD(GetDate());
                     taiKhoanNguon.setTienDaGD(0);
-                } else if (Double.parseDouble(moneyString)+taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
+                } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
                     BuildAlertDialog("Số tiền giao dịch vuợt quá hạn mức");
                     checkvalid ++;
                 }

@@ -1,6 +1,12 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
-public class NhacChuyenTien {
+import android.os.Build;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class NhacChuyenTien implements Serializable {
     private String Key;
     private String MaKHKey;
     private String LoaiGiaoDichKey;
@@ -86,5 +92,38 @@ public class NhacChuyenTien {
 
     public void setTrangThai(int trangThai) {
         TrangThai = trangThai;
+    }
+
+    public String getSoTienNhacChuyenFormat() {
+        // Sử dụng String.format với định dạng số có dấu phân cách
+        return String.format("%,d", (long) SoTienNhacChuyen);
+    }
+
+    // kiểm tra quá ngày hạn
+    public boolean checkLate() {
+        DateTimeFormatter formatter = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        }
+
+        LocalDate date = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            date = LocalDate.parse(NgayHetHan, formatter);
+        }
+
+        LocalDate now = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            now = LocalDate.now();
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (date.isBefore(now)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

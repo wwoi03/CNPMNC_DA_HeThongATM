@@ -12,6 +12,15 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.ConfirmReminderTransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddEditReminderTransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ReminderTransferMoneyActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.EditAccountNicknameActivity"
             android:exported="false" />
         <activity
@@ -60,10 +69,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.WithdrawSavingsActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ListAccountSavingsActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.NotificationActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ActivityListGD" />
+        <activity android:name=".Activities.WithdrawSavingsActivity" />
+        <activity android:name=".Activities.ListAccountSavingsActivity" />
+        <activity android:name=".Activities.NotificationActivity" />
+        <activity android:name=".Activities.ActivityListGD" />
 
         <meta-data
             android:name="preloaded_fonts"
