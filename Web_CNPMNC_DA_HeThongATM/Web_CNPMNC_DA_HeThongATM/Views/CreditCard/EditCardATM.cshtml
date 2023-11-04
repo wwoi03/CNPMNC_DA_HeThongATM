@@ -21,7 +21,7 @@
                     <span>Mã Khách Hàng
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <input readonly value="@ViewBag.Details.MaKH" type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
+                    <input readonly value="@ViewBag.Details.MaKH" type="text" maxlength="16" id="makhachhang" asp-for="Key">
                 </div>
                 <div class="inputBox">
                     <span>Tên Khách Hàng
@@ -35,7 +35,7 @@
                     <span>Ngày Mở Thẻ
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <input readonly value="@ViewBag.Details.NgayMoThe" type="text" maxlength="16" class="sdt" asp-for="SDTDangKy">
+                    <input readonly value="@ViewBag.Details.NgayMoThe" type="text" maxlength="16" class="sdt" asp-for="MaSoThe">
                 </div>
                 <div class="inputBox">
                     <span>Ngày Hết Hạn
@@ -67,7 +67,7 @@
                     </span>
                     <input value="@ViewBag.Details.MaDangNhap" type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
                 </div>
-                <div class="inputBox">
+                @* <div class="inputBox">
                     <span>
                         Tình trạng thẻ
                         <i class="fa-solid fa-pen-to-square"></i>
@@ -89,7 +89,7 @@
                        }
                         
 
-                </div>
+                </div> *@
             </div>
 
             <div class="flexbox">
