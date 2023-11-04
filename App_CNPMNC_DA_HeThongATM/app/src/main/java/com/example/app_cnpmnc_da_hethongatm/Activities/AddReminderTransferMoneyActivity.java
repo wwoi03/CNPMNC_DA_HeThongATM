@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
     TaiKhoanLienKet taiKhoanNhan;
     String content, moneyString, beneficiary, dateLimit;
     double money;
+    boolean BENEFICIARY_EXISTS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
     // lắng nghe xự kiện
     private void initListener() {
         onClickDateLimit();
+        onClickEditBeneficiary();
         onClickButtonNext();
     }
 
@@ -138,7 +141,16 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
                     } else if (money < 1000) { // kiểm tra số tiền phải lớn hơn 1000
                         buildAlertDialog("Số tiền nhập phải lớn hơn 1000");
                     } else {
-                        checkExistsBeneficiary();
+                        if (BENEFICIARY_EXISTS == true) {
+                            Intent intent = new Intent(AddReminderTransferMoneyActivity.this, ConfirmReminderTransferMoneyActivity.class);
+                            intent.putExtra("taiKhoanNhan", taiKhoanNhan);
+                            intent.putExtra("content", content);
+                            intent.putExtra("money", money);
+                            intent.putExtra("dateLimit", dateLimit);
+                            startActivity(intent);
+                        } else {
+                            checkExistsBeneficiary();
+                        }
                     }
                 }
             }
@@ -164,8 +176,42 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
         return true;
     }
 
+    // xóa focus hiện tại
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+    // xử lý sự kiện khi bấm nhập người thự hưởng
+    private void onClickEditBeneficiary() {
+        etBeneficiary.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    checkExistsBeneficiary();
+                }
+            }
+        });
+    }
+
     // kiểm tra người thụ hưởng
     private void checkExistsBeneficiary() {
+        if (beneficiary == null) {
+            beneficiary = "";
+        }
+
         long soTaiKhoan = Long.parseLong(String.valueOf(etBeneficiary.getText()).trim());
         DbHelper.getAccountByAccountNumber(soTaiKhoan, new DbHelper.FirebaseListener() {
             @Override
@@ -184,18 +230,14 @@ public class AddReminderTransferMoneyActivity extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         taiKhoanNhan = dataSnapshot.getValue(TaiKhoanLienKet.class);
                         showInfoBeneficiary();
-
-                        Intent intent = new Intent(AddReminderTransferMoneyActivity.this, ConfirmReminderTransferMoneyActivity.class);
-                        intent.putExtra("taiKhoanNhan", taiKhoanNhan);
-                        intent.putExtra("content", content);
-                        intent.putExtra("money", money);
-                        intent.putExtra("dateLimit", dateLimit);
-                        startActivity(intent);
+                        BENEFICIARY_EXISTS = true;
                         break;
+
                     }
                 } else { // không tồn tại
                     hiddenInfoBeneficiary();
-                    buildAlertDialog("Tài khoản thụ hưởng không tồn tại");
+                    buildAlertDialog("Tài khoản không tồn tại");
+                    BENEFICIARY_EXISTS = false;
                 }
             }
         });

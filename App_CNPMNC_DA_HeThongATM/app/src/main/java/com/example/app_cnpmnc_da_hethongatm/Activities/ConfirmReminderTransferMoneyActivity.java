@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
@@ -24,7 +25,8 @@ public class ConfirmReminderTransferMoneyActivity extends AppCompatActivity {
     // View
     Toolbar tbToolbar;
     TextView tvContent, tvDateLimit, tvBeneficiary, tvMoney;
-    Button btConfirm;
+    Button btConfirm, btReturn;
+    LinearLayout llSuccess;
 
     // var
     Config config;
@@ -50,6 +52,8 @@ public class ConfirmReminderTransferMoneyActivity extends AppCompatActivity {
         tvMoney = findViewById(R.id.tvMoney);
         tvDateLimit = findViewById(R.id.tvDateLimit);
         btConfirm = findViewById(R.id.btConfirm);
+        btReturn = findViewById(R.id.btReturn);
+        llSuccess = findViewById(R.id.llSuccess);
     }
 
     // khởi tạo dữ liệu
@@ -71,7 +75,8 @@ public class ConfirmReminderTransferMoneyActivity extends AppCompatActivity {
 
     // lắng nghe xự kiện
     private void initListener() {
-        onClickConfirm();
+        onClickButtonConfirm();
+        onClickButtonReturn();
     }
 
     // setup toolbar
@@ -113,20 +118,17 @@ public class ConfirmReminderTransferMoneyActivity extends AppCompatActivity {
     }
 
     // xử lý sự kiệm khi bấm vào nút "Xác nhận"
-    private void onClickConfirm() {
+    private void onClickButtonConfirm() {
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DbHelper.addReminderTransferMoney(config.getCustomerKey(), taiKhoanNhan, content, dateLimit, money, new DbHelper.FirebaseListener() {
                     @Override
                     public void onSuccessListener() {
-                        Intent intent = new Intent(ConfirmReminderTransferMoneyActivity.this, ReminderTransferMoneyActivity.class);
-                        /*
-                        * FLAG_ACTIVITY_CLEAR_TOP: Nếu Activity bạn muốn khởi động đã tồn tại trong stack, nó sẽ được mang lên đầu stack và tất
-                        * cả các Activity ở trên nó sẽ bị hủy. Nếu Activity không tồn tại, một thể hiện mới của nó sẽ được tạo ra.
-                        * */
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        tbToolbar.setVisibility(View.GONE);
+                        btConfirm.setVisibility(View.GONE);
+                        btReturn.setVisibility(View.VISIBLE);
+                        llSuccess.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -139,6 +141,22 @@ public class ConfirmReminderTransferMoneyActivity extends AppCompatActivity {
 
                     }
                 });
+            }
+        });
+    }
+
+    // xử lý bấm quay về
+    private void onClickButtonReturn() {
+        btReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfirmReminderTransferMoneyActivity.this, ReminderTransferMoneyActivity.class);
+                /*
+                 * FLAG_ACTIVITY_CLEAR_TOP: Nếu Activity bạn muốn khởi động đã tồn tại trong stack, nó sẽ được mang lên đầu stack và tất
+                 * cả các Activity ở trên nó sẽ bị hủy. Nếu Activity không tồn tại, một thể hiện mới của nó sẽ được tạo ra.
+                 * */
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
     }

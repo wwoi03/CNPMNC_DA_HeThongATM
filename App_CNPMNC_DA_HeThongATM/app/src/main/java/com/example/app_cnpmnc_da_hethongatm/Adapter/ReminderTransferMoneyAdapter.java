@@ -27,7 +27,7 @@ public class ReminderTransferMoneyAdapter extends FirebaseRecyclerAdapter<NhacCh
     @Override
     protected void onBindViewHolder(@NonNull ReminderTransferMoneyVH holder, int position, @NonNull NhacChuyenTien model) {
         // kiểm tra hiển thị icon theo trạng thái nhắc chuyển tiền
-        if (model.checkLate()) { // quá hạn
+        if (model.checkLate() && model.getTrangThai() == ResultCode.CHUA_DEN_HAN) { // quá hạn
             holder.ivReminderIcon.setImageResource(R.drawable.circle_exclamation_solid);
             holder.ivReminderIcon.setColorFilter(R.color.warning_color);
         } else if (model.getTrangThai() == ResultCode.CHUA_DEN_HAN) { // chưa đến hạn

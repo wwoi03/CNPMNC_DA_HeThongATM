@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_calendar_month_24" />
-                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\clock-solid.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="circle_check_regular" />
+                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\circle-check-regular.svg" />
                           </map>
                         </option>
                       </PersistentState>

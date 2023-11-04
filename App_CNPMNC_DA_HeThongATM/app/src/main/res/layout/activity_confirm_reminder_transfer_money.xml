@@ -30,6 +30,50 @@
                 app:layout_constraintTop_toTopOf="parent">
             </androidx.appcompat.widget.Toolbar>
 
+            <!-- Thành công -->
+            <LinearLayout
+                android:id="@+id/llSuccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/circle_check_regular"
+                    app:tint="@color/done_color"
+                    android:padding="2dp"
+                    android:layout_marginBottom="8dp">
+                </ImageView>
+
+                <!-- title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nhắc chuyển tiền\nthành công"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+                </TextView>
+
+                <!-- sub title -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yêu cầu nhắc chuyển tiền của bạ\nđã được thêm thành công"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp">
+                </TextView>
+            </LinearLayout>
+
             <!-- Form -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -196,6 +240,19 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
                     android:text="Xác nhận">
+                </Button>
+
+                <!-- Button quay về -->
+                <Button
+                    android:id="@+id/btReturn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_radius_button"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Hoàn thành"
+                    android:visibility="gone">
                 </Button>
             </LinearLayout>
         </LinearLayout>
