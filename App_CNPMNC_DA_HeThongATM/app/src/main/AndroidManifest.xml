@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CALL_PHONE">
+
+    </uses-permission>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
+
+        <activity android:name=".Activities.PhoneActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.EditAccountNicknameActivity"
             android:exported="false" />
@@ -60,10 +67,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.WithdrawSavingsActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ListAccountSavingsActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.NotificationActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ActivityListGD" />
+        <activity android:name=".WithdrawSavingsActivity" />
+        <activity android:name=".ListAccountSavingsActivity" />
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".ActivityListGD" />
 
         <meta-data
             android:name="preloaded_fonts"
