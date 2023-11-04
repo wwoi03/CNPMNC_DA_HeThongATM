@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -59,6 +61,8 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
     boolean BENEFICIARY_EXISTS;
     Intent getDataIntent;
     int flag;
+    int DELETE_REMINDER_TRANSFER_MONEY = 103;
+    int UPDATE_REMINDER_TRANSFER_MONEY = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,8 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
         onClickDateLimit();
         onClickEditBeneficiary();
         onClickButtonNext();
+        onClickButtonUpdate();
+        onClickButtonDelete();
     }
 
     // setup toolbar
@@ -139,7 +145,7 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
     private void showInfoReminderTransferMoney() {
         etContent.setText(editNhacChuyenTien.getNoiDungNhac());
         etDateLimit.setText(editNhacChuyenTien.getNgayHetHan());
-        etMoney.setText(editNhacChuyenTien.getSoTienNhacChuyenFormat());
+        etMoney.setText(String.valueOf(editNhacChuyenTien.getSoTienNhacChuyen()));
         etBeneficiary.setText(String.valueOf(editNhacChuyenTien.getTaiKhoanNhan()));
         checkExistsBeneficiary();
 
@@ -152,36 +158,130 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                content = String.valueOf(etContent.getText()).trim();
-                moneyString = String.valueOf(etMoney.getText()).trim();
-                beneficiary = String.valueOf(etBeneficiary.getText()).trim();
-                dateLimit = String.valueOf(etDateLimit.getText()).trim();
+                checkValidation();
+            }
+        });
+    }
 
-                if (checkEmpty() == true) { // kiểm tra rỗng
-                    money = Double.parseDouble(moneyString);
+    // xử lý sự kiện khi bấm vào nút cập nhật
+    private void onClickButtonUpdate() {
+        btUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkValidation();
+            }
+        });
+    }
 
-                    if (checkDateLimitIsValid() == false) { // kiểm tra ngày nhập hợp lệ
-                        etDateLimit.setText("");
-                        buildAlertDialog("Vui lòng nhập đúng định dạng dd/mm/yyyy");
-                    } else if (checkDateLimitAfterCurrentDate(dateLimit) == false) { // kiểm tra ngày phải đến sau ngày hiện tại
-                        buildAlertDialog("Ngày đến hạn phải có sau ngày hiện tại");
-                    } else if (money < 1000) { // kiểm tra số tiền phải lớn hơn 1000
-                        buildAlertDialog("Số tiền nhập phải lớn hơn 1000");
+    // xử lý khi bấm xóa
+    private void onClickButtonDelete() {
+        btDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogConfirm("Bạn có chắc chắn muốn xóa không?", DELETE_REMINDER_TRANSFER_MONEY);
+            }
+        });
+    }
+
+    // kiểm tra tất cả các field
+    private void checkValidation() {
+        content = String.valueOf(etContent.getText()).trim();
+        moneyString = String.valueOf(etMoney.getText()).trim();
+        beneficiary = String.valueOf(etBeneficiary.getText()).trim();
+        dateLimit = String.valueOf(etDateLimit.getText()).trim();
+
+        if (checkEmpty() == true) { // kiểm tra rỗng
+            money = Double.parseDouble(moneyString);
+
+            if (checkDateLimitIsValid() == false) { // kiểm tra ngày nhập hợp lệ
+                etDateLimit.setText("");
+                buildAlertDialog("Vui lòng nhập đúng định dạng dd/mm/yyyy");
+            } else if (checkDateLimitAfterCurrentDate(dateLimit) == false) { // kiểm tra ngày phải đến sau ngày hiện tại
+                buildAlertDialog("Ngày đến hạn phải có sau ngày hiện tại");
+            } else if (money < 1000) { // kiểm tra số tiền phải lớn hơn 1000
+                buildAlertDialog("Số tiền nhập phải lớn hơn 1000");
+            } else {
+                if (BENEFICIARY_EXISTS == true) {
+                    if (flag == ResultCode.EDIT_REMINDER_TRANSFER_MONEY) {
+                        showDialogConfirm("Bạn có chắc chắn muốn cập nhật không?", UPDATE_REMINDER_TRANSFER_MONEY);
                     } else {
-                        if (BENEFICIARY_EXISTS == true) {
-                            Intent intent = new Intent(AddEditReminderTransferMoneyActivity.this, ConfirmReminderTransferMoneyActivity.class);
-                            intent.putExtra("taiKhoanNhan", taiKhoanNhan);
-                            intent.putExtra("content", content);
-                            intent.putExtra("money", money);
-                            intent.putExtra("dateLimit", dateLimit);
-                            startActivity(intent);
-                        } else {
-                            checkExistsBeneficiary();
-                        }
+                        Intent intent = new Intent(AddEditReminderTransferMoneyActivity.this, ConfirmReminderTransferMoneyActivity.class);
+                        intent.putExtra("taiKhoanNhan", taiKhoanNhan);
+                        intent.putExtra("content", content);
+                        intent.putExtra("money", money);
+                        intent.putExtra("dateLimit", dateLimit);
+                        startActivity(intent);
                     }
+                } else {
+                    checkExistsBeneficiary();
+                }
+            }
+        }
+    }
+
+    // xác nhận cập nhật
+    private void showDialogConfirm(String text, int deleteOrUpdate) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận");
+        builder.setMessage(text);
+
+        // Nút Đồng ý
+        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (deleteOrUpdate == DELETE_REMINDER_TRANSFER_MONEY) { // xóa
+                    DbHelper.deleteReminderTransferMoney(editNhacChuyenTien.getKey(), new DbHelper.FirebaseListener() {
+                        @Override
+                        public void onSuccessListener() {
+                            Toast.makeText(AddEditReminderTransferMoneyActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailureListener(Exception e) {
+
+                        }
+
+                        @Override
+                        public void onSuccessListener(DataSnapshot snapshot) {
+
+                        }
+                    });
+                } else if (deleteOrUpdate == UPDATE_REMINDER_TRANSFER_MONEY) { // cập nhật
+                    editNhacChuyenTien.setNoiDungNhac(content);
+                    editNhacChuyenTien.setSoTienNhacChuyen(money);
+                    editNhacChuyenTien.setNgayHetHan(dateLimit);
+                    editNhacChuyenTien.setTaiKhoanNhan(Long.parseLong(beneficiary));
+
+                    DbHelper.updateReminderTransferMoney(editNhacChuyenTien, new DbHelper.FirebaseListener() {
+                        @Override
+                        public void onSuccessListener() {
+                            Toast.makeText(AddEditReminderTransferMoneyActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailureListener(Exception e) {
+
+                        }
+
+                        @Override
+                        public void onSuccessListener(DataSnapshot snapshot) {
+
+                        }
+                    });
                 }
             }
         });
+
+        // Nút Hủy
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     // kiểm tra nhập hợp lệ
@@ -351,7 +451,7 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
 
     // chuyển định dạng ngày
     private String dateFormat(int year, int month, int dayOfMonth) {
-        return String.format("%02d", dayOfMonth + 1) + "/" + String.format("%02d", month + 1) + "/" + year;
+        return String.format("%02d", dayOfMonth) + "/" + String.format("%02d", month + 1) + "/" + year;
     }
 
     // kiểm tra ngày nhập hợp lệ

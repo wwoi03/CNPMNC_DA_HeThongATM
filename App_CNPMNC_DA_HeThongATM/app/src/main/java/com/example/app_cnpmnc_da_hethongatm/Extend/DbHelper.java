@@ -341,6 +341,51 @@ public class DbHelper {
         return options;
     }
 
+    // cập nhật nhắc chuyển tiền
+    public static void updateReminderTransferMoney(NhacChuyenTien nhacChuyenTien, FirebaseListener firebaseListener) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("NoiDungNhac", nhacChuyenTien.getNoiDungNhac());
+        map.put("NgayHetHan", nhacChuyenTien.getNgayHetHan());
+        map.put("TaiKhoanNhan", nhacChuyenTien.getTaiKhoanNhan());
+        map.put("SoTienNhacChuyen", nhacChuyenTien.getSoTienNhacChuyen());
+        map.put("TrangThai", nhacChuyenTien.getTrangThai());
+
+        firebaseDatabase.getReference("NhacChuyenTien").child(nhacChuyenTien.getKey()).updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    // xóa nhắc chuyển tiền
+    public static void deleteReminderTransferMoney(String nhacChuyenTienKey, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("NhacChuyenTien").child(nhacChuyenTienKey).removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null)
+                            firebaseListener.onSuccessListener();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (firebaseListener != null)
+                            firebaseListener.onFailureListener(e);
+                    }
+                });
+    }
+
     // thêm nhắc chuyển tiền
     public static void addReminderTransferMoney(String maKHKey, TaiKhoanLienKet taiKhoanNhan, String content, String dateLimit, double money, FirebaseListener firebaseListener) {
         String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
