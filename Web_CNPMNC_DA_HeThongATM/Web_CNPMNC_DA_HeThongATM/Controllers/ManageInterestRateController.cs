@@ -7,6 +7,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class ManageInterestRateController : Controller
     {
+       
+
         FirebaseHelper firebaseHelper;
 
         public ManageInterestRateController()
@@ -57,5 +59,37 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View("CreateLaiSuat", laiSuat);
 
         }
+
+        // Chỉnh sửa
+        public IActionResult EditLaiSuat(string key)
+        {
+            // Gọi đến firebaseHelper để lấy thông tin lãi suất dựa trên key.
+            LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
+
+            if (laiSuat == null)
+            {
+                return View("LaiSuatNotFound");
+            }
+
+            return View("EditLaiSuat", laiSuat);
+        }
+
+        [HttpPost]
+        public IActionResult EditLaiSuatPost(LaiSuatViewModel updatedLaiSuat)
+        {
+            if (ModelState.IsValid)
+            {
+                // Gọi đến firebaseHelper để cập nhật thông tin lãi suất bằng Key.
+                firebaseHelper.UpdateLaiSuatByKey(updatedLaiSuat.Key, updatedLaiSuat);
+
+                return RedirectToAction("Index");
+            }
+
+            return View("EditLaiSuat", updatedLaiSuat);
+        }
+
+
+
+
     }
 }

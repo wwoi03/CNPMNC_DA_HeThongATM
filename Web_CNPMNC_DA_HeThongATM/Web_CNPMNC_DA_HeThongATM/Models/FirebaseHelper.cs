@@ -594,6 +594,7 @@ public List<LoaiThe> GetTypesCards()
         //tạo Lãi suất
         public void InsertLaiSuats(LaiSuatViewModel laiSuat)
         {
+           
             try
             {
                 FirebaseResponse response = client.Set("LaiSuat/" + laiSuat.Key, laiSuat);
@@ -608,6 +609,45 @@ public List<LoaiThe> GetTypesCards()
 
             }
         }
+
+        public LaiSuatViewModel GetLaiSuatByKey(string key)
+        {
+            try
+            {
+                FirebaseResponse response = client.Get("LaiSuat/" + key);
+                if (response == null || string.IsNullOrEmpty(response.Body))
+                {
+                    return null;
+                }
+
+                LaiSuatViewModel laiSuat = JsonConvert.DeserializeObject<LaiSuatViewModel>(response.Body);
+                return laiSuat;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+
+        public void UpdateLaiSuatByKey(string key, LaiSuatViewModel updatedLaiSuat)
+        {
+            try
+            {
+                FirebaseResponse response = client.Update("LaiSuat/" + key, updatedLaiSuat);
+                if (response != null)
+                {
+                    // Xử lý khi cập nhật thành công (nếu cần).
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+
     }
 }
 
