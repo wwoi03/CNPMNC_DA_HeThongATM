@@ -18,26 +18,31 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.DialogPlusAccountAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Adapter.DialogPlusTransferLimitAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
+import com.example.app_cnpmnc_da_hethongatm.Model.HanMucChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
-public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implements DialogPlusAccountAdapter.Listener {
+import java.util.ArrayList;
+
+public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implements DialogPlusAccountAdapter.Listener, DialogPlusTransferLimitAdapter.Listener {
     // View
     Toolbar tbToolbar;
     TextView tvTransferLimitCurrent, tvTotalTransferMoney, tvRemainingLimit, tvAccount, tvTransferLimit;
     Button btNext;
-    RecyclerView rvListAccount;
+    RecyclerView rvListAccount, rvListTransferLimit;
     LinearLayout llInfoAccount;
 
     // var
     Config config;
     DialogPlusAccountAdapter dialogPlusAccountAdapter;
-    DialogPlus accountDialogPlus;
+    DialogPlusTransferLimitAdapter dialogPlusTransferLimitAdapter;
+    DialogPlus accountDialogPlus, transferLimitDialogPlus;
     String accountNumberString, transferLimitCurrentString, totalTransferMoneyString, remainingLimitString;
 
     @Override
@@ -66,28 +71,50 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
 
         config = new Config(this);
 
-        FirebaseRecyclerOptions<TaiKhoanLienKet> listAccount = DbHelper.getAffiliateAccounts(config.getCustomerKey());
+        // Tài khoản
+        {
+            FirebaseRecyclerOptions<TaiKhoanLienKet> listAccount = DbHelper.getAffiliateAccounts(config.getCustomerKey());
 
-        dialogPlusAccountAdapter = new DialogPlusAccountAdapter(listAccount, this);
-        accountDialogPlus = DialogPlus
-                .newDialog(AdjustMoneyTransferLimitActivity.this)
-                .setContentHolder(new ViewHolder(R.layout.dialog_plus_list_account))
-                .setExpanded(true, 800)
-                .setOverlayBackgroundResource(android.R.color.transparent) // Đặt màu nền trong suốt
-                .create();
+            dialogPlusAccountAdapter = new DialogPlusAccountAdapter(listAccount, this);
+            accountDialogPlus = DialogPlus
+                    .newDialog(AdjustMoneyTransferLimitActivity.this)
+                    .setContentHolder(new ViewHolder(R.layout.dialog_plus_list_account))
+                    .setExpanded(true, 800)
+                    .setOverlayBackgroundResource(android.R.color.transparent) // Đặt màu nền trong suốt
+                    .create();
 
-        // Tìm RecyclerView trong layout của DialogPlus
-        rvListAccount = accountDialogPlus.getHolderView().findViewById(R.id.rvListAccount);
+            // Tìm RecyclerView trong layout của DialogPlus
+            rvListAccount = accountDialogPlus.getHolderView().findViewById(R.id.rvListAccount);
 
-        // Thiết lập ListBeneficiaryAdapter cho RecyclerView
-        rvListAccount.setLayoutManager(new LinearLayoutManager(AdjustMoneyTransferLimitActivity.this));
-        rvListAccount.setAdapter(dialogPlusAccountAdapter);
+            // Thiết lập listAccount cho RecyclerView
+            rvListAccount.setLayoutManager(new LinearLayoutManager(AdjustMoneyTransferLimitActivity.this));
+            rvListAccount.setAdapter(dialogPlusAccountAdapter);
+        }
 
-        dialogPlusAccountAdapter.startListening();
+        // Hạn mức
+        {
+            FirebaseRecyclerOptions<HanMucChuyenTien> listTransferLimit = DbHelper.getTransferMoneyLimit();
+
+            dialogPlusTransferLimitAdapter = new DialogPlusTransferLimitAdapter(listTransferLimit, this);
+            transferLimitDialogPlus = DialogPlus
+                    .newDialog(AdjustMoneyTransferLimitActivity.this)
+                    .setContentHolder(new ViewHolder(R.layout.dialog_plus_list_transfer_limit))
+                    .setExpanded(true, 800)
+                    .setOverlayBackgroundResource(android.R.color.transparent) // Đặt màu nền trong suốt
+                    .create();
+
+            // Tìm RecyclerView trong layout của DialogPlus
+            rvListTransferLimit = transferLimitDialogPlus.getHolderView().findViewById(R.id.rvListTransferLimit);
+
+            // Thiết lập listTransferLimit cho RecyclerView
+            rvListTransferLimit.setLayoutManager(new LinearLayoutManager(AdjustMoneyTransferLimitActivity.this));
+            rvListTransferLimit.setAdapter(dialogPlusTransferLimitAdapter);
+        }
     }
 
     private void initListener() {
         onClickChooseAccount();
+        onClickChooseTransferLimit();
     }
 
     private void setupToolbar() {
@@ -128,6 +155,15 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
         super.onStart();
 
         dialogPlusAccountAdapter.startListening();
+        dialogPlusTransferLimitAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        dialogPlusAccountAdapter.stopListening();
+        dialogPlusTransferLimitAdapter.stopListening();
     }
 
     // xử lý khi bấm vào chọn tài khoản
@@ -140,11 +176,14 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        dialogPlusAccountAdapter.stopListening();
+    // xử lý khi bấm vào chọn tài khoản
+    private void onClickChooseTransferLimit() {
+        tvTransferLimit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transferLimitDialogPlus.show();
+            }
+        });
     }
 
     @Override
@@ -163,5 +202,13 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
         llInfoAccount.setVisibility(View.VISIBLE);
 
         accountDialogPlus.dismiss();
+    }
+
+    @Override
+    public void onClickItemDialogPlusTransferLimitListener(HanMucChuyenTien hanMucChuyenTien) {
+        transferLimitCurrentString = String.valueOf(hanMucChuyenTien.getHanMuc());
+
+        tvTransferLimit.setText(hanMucChuyenTien.getNumberFormat(Double.parseDouble(transferLimitCurrentString)) + " VND");
+        transferLimitDialogPlus.dismiss();
     }
 }

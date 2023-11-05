@@ -51,7 +51,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="14dp"
+                    android:paddingBottom="16dp"
                     android:background="@drawable/bottom_border">
 
                     <TextView
@@ -72,12 +72,12 @@
                     </TextView>
                 </RelativeLayout>
 
-                <!-- Hạn mức hiện tại -->
+                <!-- Tổng số tiền đã chuyển -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="14dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="16dp"
                     android:background="@drawable/bottom_border">
 
                     <TextView
@@ -98,11 +98,11 @@
                     </TextView>
                 </RelativeLayout>
 
-                <!-- Hạn mức hiện tại -->
+                <!-- Hạn mức còn lại -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp">
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -173,6 +173,7 @@
 
             <!-- Ngày hết hạn -->
             <LinearLayout
+                android:id="@+id/ll2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll1"
@@ -216,6 +217,17 @@
                         app:tint="@color/primary_blue_color"></ImageView>
                 </RelativeLayout>
             </LinearLayout>
+
+            <TextView
+                android:layout_below="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quý khách vui lòng lựa chọn hạn mức giao dịch\nchuyển tiền tối đa có thể thực hiện trong 01 ngày trên DCTBank."
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_marginTop="8dp">
+            </TextView>
 
             <!-- Button -->
             <Button
