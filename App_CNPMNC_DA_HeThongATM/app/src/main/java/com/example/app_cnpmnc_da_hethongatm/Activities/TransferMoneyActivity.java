@@ -18,6 +18,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -275,6 +276,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
                 // Tìm RecyclerView trong layout của DialogPlus
                 RecyclerView recyclerView = dialogPlus.getHolderView().findViewById(R.id.rc_thuhuongtransfer);
+
                 // Thiết lập ListBeneficiaryAdapter cho RecyclerView
                 recyclerView.setLayoutManager(new LinearLayoutManager(TransferMoneyActivity.this));
                 recyclerView.setAdapter(listBeneficiaryAdapter);
@@ -298,9 +300,15 @@ public class TransferMoneyActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-        tbToolbar.setTitle("Chuyển tiền");
-        tbToolbar.setTitleTextColor(-1);
+        tbToolbar.setTitle("");
         setSupportActionBar(tbToolbar);
+
+        TextView textView = new TextView(this);
+        textView.setText("Chuyển tiền");
+        textView.setTextSize(20);
+        textView.setTextColor(Color.WHITE);
+        textView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        tbToolbar.addView(textView);
 
         // kích hoạt nút quay lại trên ActionBar
         if (getSupportActionBar() != null) {

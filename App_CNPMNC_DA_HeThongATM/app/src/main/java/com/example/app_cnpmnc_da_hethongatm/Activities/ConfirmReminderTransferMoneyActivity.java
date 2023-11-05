@@ -3,10 +3,12 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -81,9 +83,15 @@ public class ConfirmReminderTransferMoneyActivity extends AppCompatActivity {
 
     // setup toolbar
     private void setupToolbar() {
-        tbToolbar.setTitle("Xác nhận");
-        tbToolbar.setTitleTextColor(-1);
+        tbToolbar.setTitle("");
         setSupportActionBar(tbToolbar);
+
+        TextView textView = new TextView(this);
+        textView.setText("Xác nhận");
+        textView.setTextSize(20);
+        textView.setTextColor(Color.WHITE);
+        textView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        tbToolbar.addView(textView);
 
         // kích hoạt nút quay lại trên ActionBar
         if (getSupportActionBar() != null) {
