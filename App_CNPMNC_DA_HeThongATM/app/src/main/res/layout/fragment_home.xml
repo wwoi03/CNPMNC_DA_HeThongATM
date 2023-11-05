@@ -282,6 +282,7 @@
 
                             <!-- hình ảnh -->
                             <ImageView
+                                android:id="@+id/img_scanQR"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:src="@drawable/baseline_qr_code_scanner_24">

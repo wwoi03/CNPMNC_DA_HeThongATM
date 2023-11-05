@@ -1,6 +1,7 @@
 package com.example.app_cnpmnc_da_hethongatm;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,8 +28,11 @@ import android.widget.TextView;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountSettingsActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.BeneficiaryManagementActivity;
-import com.example.app_cnpmnc_da_hethongatm.Activities.LoginActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.GenerateQRCodeActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.ListAccountSavingsActivity;
+
 import com.example.app_cnpmnc_da_hethongatm.Activities.SearchServiceFunctionActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 
@@ -39,6 +43,8 @@ import com.example.app_cnpmnc_da_hethongatm.Fragment.QuickAccessFragment;
 import com.example.app_cnpmnc_da_hethongatm.Fragment.TransactionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.io.File;
 
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Confix
 
+    public static int USER_NAME = 1;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -185,9 +192,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mnuSearch:
-                Intent cart = new Intent(MainActivity.this, SearchServiceFunctionActivity.class);
-                startActivity(cart);
+            case R.id.mnuScan:
+                IntentIntegrator intentIntegrator = new IntentIntegrator(MainActivity.this);
+                intentIntegrator.setOrientationLocked(true);
+                intentIntegrator.setPrompt("Scan a QR code");
+                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                intentIntegrator.initiateScan();
+                intentIntegrator.setBeepEnabled(false);
                 break;
             case R.id.mnuNotification:
                 Intent intent1 = new Intent(MainActivity.this, AccountCardActivity.class);
@@ -198,6 +209,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (intentResult != null){
+            String qrCodeData = intentResult.getContents();
+            String[] parts = qrCodeData.split(",");
+            String SoTaiKhoan = parts[0];
+            long amount = 0;
+            String message = "";
+            if (parts.length > 2) {
+                amount = Long.parseLong(parts[2]);
+            }
+            if (parts.length > 3) {
+                message = parts[3];
+            }
+            Intent intent = new Intent(MainActivity.this, TransferMoneyActivity.class);
+            intent.putExtra("SoTaiKhoan", SoTaiKhoan);
+            intent.putExtra("amount", amount);
+            intent.putExtra("message", message);
+            intent.putExtra("flag", -1 );
+            startActivity(intent);
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {

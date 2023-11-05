@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.CALL_PHONE">
-
-    </uses-permission>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
 
     <application
         android:allowBackup="true"
@@ -76,10 +75,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.WithdrawSavingsActivity" />
-        <activity android:name=".Activities.ListAccountSavingsActivity" />
-        <activity android:name=".Activities.NotificationActivity" />
-        <activity android:name=".Activities.ActivityListGD" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.WithdrawSavingsActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ListAccountSavingsActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.NotificationActivity" />
+        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity" android:screenOrientation="portrait" android:stateNotNeeded="true" tools:replace="android:screenOrientation" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.GenerateQRCodeActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
