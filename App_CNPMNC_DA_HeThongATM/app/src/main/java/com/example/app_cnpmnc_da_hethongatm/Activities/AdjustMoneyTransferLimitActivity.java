@@ -2,6 +2,7 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,7 +45,7 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
     DialogPlusAccountAdapter dialogPlusAccountAdapter;
     DialogPlusTransferLimitAdapter dialogPlusTransferLimitAdapter;
     DialogPlus accountDialogPlus, transferLimitDialogPlus;
-    String accountNumberString, transferLimitCurrentString, totalTransferMoneyString, remainingLimitString;
+    String accountKey, accountNumberString, transferLimitCurrentString, totalTransferMoneyString, remainingLimitString, transferLimitNewString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +117,7 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
     private void initListener() {
         onClickChooseAccount();
         onClickChooseTransferLimit();
+        onClickButtonNext();
     }
 
     private void setupToolbar() {
@@ -186,8 +189,29 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
         });
     }
 
+    // xử lý khi bấm vào chọn tài khoản
+    private void onClickButtonNext() {
+        btNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (accountNumberString == null || accountNumberString.isEmpty()) {
+                    Toast.makeText(AdjustMoneyTransferLimitActivity.this, "Vùi lòng chọn tài khoản", Toast.LENGTH_SHORT).show();
+                } else if (transferLimitNewString == null || transferLimitNewString.isEmpty()) {
+                    Toast.makeText(AdjustMoneyTransferLimitActivity.this, "Vùi lòng chọn hạn mức mới", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(AdjustMoneyTransferLimitActivity.this, ConfirmTransferLimitActivity.class);
+                    intent.putExtra("accountKey", accountKey);
+                    intent.putExtra("transferLimitCurrentString", transferLimitCurrentString);
+                    intent.putExtra("transferLimitNewString", transferLimitNewString);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
     @Override
     public void onClickItemDialogPlusAccountListener(TaiKhoanLienKet taiKhoanLienKet) {
+        accountKey = taiKhoanLienKet.getKey();
         accountNumberString = String.valueOf(taiKhoanLienKet.getSoTaiKhoan());
         transferLimitCurrentString = String.valueOf(taiKhoanLienKet.getHanMucTK());
         remainingLimitString = String.valueOf(taiKhoanLienKet.getHanMucTK() - taiKhoanLienKet.getTienDaGD());
@@ -206,9 +230,9 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
 
     @Override
     public void onClickItemDialogPlusTransferLimitListener(HanMucChuyenTien hanMucChuyenTien) {
-        transferLimitCurrentString = String.valueOf(hanMucChuyenTien.getHanMuc());
+        transferLimitNewString = String.valueOf(hanMucChuyenTien.getHanMuc());
 
-        tvTransferLimit.setText(hanMucChuyenTien.getNumberFormat(Double.parseDouble(transferLimitCurrentString)) + " VND");
+        tvTransferLimit.setText(hanMucChuyenTien.getNumberFormat(Double.parseDouble(transferLimitNewString)) + " VND");
         transferLimitDialogPlus.dismiss();
     }
 }

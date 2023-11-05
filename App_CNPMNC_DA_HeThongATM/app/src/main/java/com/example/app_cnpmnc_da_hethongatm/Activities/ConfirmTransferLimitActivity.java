@@ -7,16 +7,20 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.google.firebase.database.DataSnapshot;
 
 public class ConfirmTransferLimitActivity extends AppCompatActivity {
 
@@ -24,10 +28,11 @@ public class ConfirmTransferLimitActivity extends AppCompatActivity {
     Toolbar tbToolbar;
     LinearLayout llSuccess, llInfoAccount;
     Button btConfirm, btClose;
-    TextView tvTransferLimitCurrent, tvTransferLimitNew, tvTransferLimitNewSuccess;
+    TextView tvTransferLimitCurrent, tvTransferLimitNew, tvTransferLimitNewSuccess, tv1;
 
     // Var
     Intent getDataIntent;
+    String accountKey, transferLimitCurrentString, transferLimitNewString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class ConfirmTransferLimitActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        tbToolbar = findViewById(R.id.tbToolbar);
         llSuccess = findViewById(R.id.llSuccess);
         llInfoAccount = findViewById(R.id.llInfoAccount);
         btConfirm = findViewById(R.id.btConfirm);
@@ -47,6 +53,7 @@ public class ConfirmTransferLimitActivity extends AppCompatActivity {
         tvTransferLimitCurrent = findViewById(R.id.tvTransferLimitCurrent);
         tvTransferLimitNew = findViewById(R.id.tvTransferLimitNew);
         tvTransferLimitNewSuccess = findViewById(R.id.tvTransferLimitNewSuccess);
+        tv1 = findViewById(R.id.tv1);
     }
 
     private void initData() {
@@ -54,13 +61,16 @@ public class ConfirmTransferLimitActivity extends AppCompatActivity {
 
         getDataIntent = getIntent();
 
-        if (getDataIntent.getData() != null) {
+        accountKey = (String) getDataIntent.getSerializableExtra("accountKey");
+        transferLimitCurrentString = (String) getDataIntent.getSerializableExtra("transferLimitCurrentString");
+        transferLimitNewString = (String) getDataIntent.getSerializableExtra("transferLimitNewString");
 
-        }
+        showInfoConfirm();
     }
 
     private void initListener() {
-
+        onClickButtonConfirm();
+        onClickButtonClose();
     }
 
     private void setupToolbar() {
@@ -101,10 +111,28 @@ public class ConfirmTransferLimitActivity extends AppCompatActivity {
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                llSuccess.setVisibility(View.VISIBLE);
-                btClose.setVisibility(View.VISIBLE);
-                btConfirm.setVisibility(View.GONE);
-                tbToolbar.setVisibility(View.GONE);
+                DbHelper.updateTransferMoneyLimit(accountKey, Double.parseDouble(transferLimitNewString), new DbHelper.FirebaseListener() {
+                    @Override
+                    public void onSuccessListener() {
+                        tvTransferLimitNewSuccess.setText(getNumberFormat(Double.parseDouble(transferLimitNewString)) + " VND");
+                        llSuccess.setVisibility(View.VISIBLE);
+                        btClose.setVisibility(View.VISIBLE);
+                        btConfirm.setVisibility(View.GONE);
+                        tbToolbar.setVisibility(View.GONE);
+                        llInfoAccount.setVisibility(View.GONE);
+                        tv1.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onFailureListener(Exception e) {
+
+                    }
+
+                    @Override
+                    public void onSuccessListener(DataSnapshot snapshot) {
+
+                    }
+                });
             }
         });
     }
@@ -123,5 +151,16 @@ public class ConfirmTransferLimitActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    // hiển thị thông tin
+    private void showInfoConfirm() {
+        tvTransferLimitCurrent.setText(getNumberFormat(Double.parseDouble(transferLimitCurrentString)) + " VND");
+        tvTransferLimitNew.setText(getNumberFormat(Double.parseDouble(transferLimitNewString)) + " VND");
+    }
+
+    public String getNumberFormat(double number) {
+        // Sử dụng String.format với định dạng số có dấu phân cách
+        return String.format("%,d", (long) number);
     }
 }
