@@ -61,4 +61,6 @@ dependencies {
 
     //DialogPlus
     implementation 'com.orhanobut:dialogplus:1.11@aar'
+
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
