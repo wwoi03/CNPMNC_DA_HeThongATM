@@ -12,8 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ListBeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
@@ -49,6 +55,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     EditText etMoney, etContent, etAccountBeneficiary;
     Button btTransferMoney;
     ProgressBar progressBar;
+    Toolbar tbToolbar;
 
     // Flag
     public static int CHOOSE_SOURCE_ACCOUNT = 101;
@@ -80,6 +87,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_money);
+
         initUI();
         initData();
         initListener();
@@ -90,6 +98,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // ánh xạ view
     public void initUI() {
+        tbToolbar = findViewById(R.id.tbToolbar);
         progressBar = findViewById(R.id.progressBar);
         tvSourceAccount = findViewById(R.id.tvSourceAccount);
         ivBeneficiary = findViewById(R.id.ivBeneficiary);
@@ -103,6 +112,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // khởi tạo dữ liệu
     public void initData() {
+        setupToolbar();
+
         /*// Lấy mã loại giao dịch
         DbHelper.showProgressDialog(progressBar);
 
@@ -130,15 +141,21 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
 
         Intent getDataIntent = getIntent();
-        flag = (int) getDataIntent.getSerializableExtra("flag");
-        if (flag == BeneficiaryManagementActivity.USER_NAME) {
-            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
-            long tkThuHuongLong = thuHuong.getTKThuHuong(); // Lưu giá trị long
-            String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
-            etAccountBeneficiary.setText(tkThuHuongStr);
+
+        if (getDataIntent.getData() != null) {
+            flag = (int) getDataIntent.getSerializableExtra("flag");
+            if (flag == BeneficiaryManagementActivity.USER_NAME) {
+                thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
+                long tkThuHuongLong = thuHuong.getTKThuHuong(); // Lưu giá trị long
+                String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
+                etAccountBeneficiary.setText(tkThuHuongStr);
+            }
+            taiKhoanNguon = new TaiKhoanLienKet();
+            taiKhoanHuong = new TaiKhoanLienKet();
+
         }
-        taiKhoanNguon = new TaiKhoanLienKet();
-        taiKhoanHuong = new TaiKhoanLienKet();
+
+        getIntentFromQRCode();
     }
 
 
@@ -159,10 +176,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
-                    if(accountBeneficiaryString.isEmpty()){
+                    /*if(accountBeneficiaryString.isEmpty()){
                         BuildAlertDialog("Không được để trống người thụ hưởng");
                         tvNameBeneficiary.setText("");
-                    }
+                    }*/
 
                     // kiểm tra edit text rỗng?
                     if (!accountBeneficiaryString.isEmpty()) {
@@ -253,7 +270,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 DialogPlus dialogPlus = DialogPlus.newDialog(TransferMoneyActivity.this)
                         .setContentHolder(new ViewHolder(R.layout.activity_thuhuongtransfer))
                         .setExpanded(true, 800)
+                        .setOverlayBackgroundResource(android.R.color.transparent) // Đặt màu nền trong suốt
                         .create();
+
                 // Tìm RecyclerView trong layout của DialogPlus
                 RecyclerView recyclerView = dialogPlus.getHolderView().findViewById(R.id.rc_thuhuongtransfer);
                 // Thiết lập ListBeneficiaryAdapter cho RecyclerView
@@ -268,6 +287,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         long tkThuHuongLong = model.getTKThuHuong();
                         String tkThuHuongStr = Long.toString(tkThuHuongLong);
                         etAccountBeneficiary.setText(tkThuHuongStr);
+                        tvNameBeneficiary.setText(model.getTenNguoiThuHuong());
                         dialogPlus.dismiss();// đóng dialogplus
                     }
                 });
@@ -275,6 +295,35 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 dialogPlus.show();
             }
         });
+    }
+
+    private void setupToolbar() {
+        tbToolbar.setTitle("Chuyển tiền");
+        tbToolbar.setTitleTextColor(-1);
+        setSupportActionBar(tbToolbar);
+
+        // kích hoạt nút quay lại trên ActionBar
+        if (getSupportActionBar() != null) {
+            // Đặt màu trắng cho nút quay lại
+            final Drawable upArrow = getResources().getDrawable(R.drawable.baseline_chevron_left_24);
+            upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+            getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+            // Hiển thị nút quay lại
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+
+    }
+
+    // xử lý sự kiện ấn nút quay lại
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();  // Kết thúc Activity hiện tại và quay lại Activity trước đó
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // chuyển tiền
@@ -323,5 +372,15 @@ public class TransferMoneyActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = sdf.format(currentDate);
         return formattedDate;
+    }
+
+    public void getIntentFromQRCode(){
+        Intent intent = getIntent();
+        String qrCodeData = intent.getStringExtra("SoTaiKhoan");
+        long amount = intent.getLongExtra("amount", 0);
+        String message = intent.getStringExtra("message");
+        etAccountBeneficiary.setText(qrCodeData);
+        etContent.setText(message);
+        etMoney.setText(String.valueOf(amount));
     }
 }

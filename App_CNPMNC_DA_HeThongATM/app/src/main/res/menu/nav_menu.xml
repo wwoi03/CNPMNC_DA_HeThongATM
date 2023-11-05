@@ -30,11 +30,6 @@
             android:icon="@drawable/baseline_lock_open_24"
             android:title="MỞ KHÓA THẺ">
         </item>
-
-        <item
-            android:id="@+id/nav_ruttien"
-            android:title="RÚT TIỀN">
-        </item>
     </group>
 
     <item
