@@ -139,6 +139,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
         taiKhoanNguon = new TaiKhoanLienKet();
         taiKhoanHuong = new TaiKhoanLienKet();
+
+        getIntentFromQRCode();
     }
 
 
@@ -323,5 +325,15 @@ public class TransferMoneyActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = sdf.format(currentDate);
         return formattedDate;
+    }
+
+    public void getIntentFromQRCode(){
+        Intent intent = getIntent();
+        String qrCodeData = intent.getStringExtra("SoTaiKhoan");
+        long amount = intent.getLongExtra("amount", 0);
+        String message = intent.getStringExtra("message");
+        etAccountBeneficiary.setText(qrCodeData);
+        etContent.setText(message);
+        etMoney.setText(String.valueOf(amount));
     }
 }

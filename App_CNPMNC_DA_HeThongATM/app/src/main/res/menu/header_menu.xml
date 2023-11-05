@@ -19,4 +19,13 @@
         android:iconTint="@color/white"
         app:showAsAction="always">
     </item>
+
+    <!--&lt;!&ndash; quét QR &ndash;&gt;
+    <item
+        android:id="@+id/mnuScan"
+        android:title="Search"
+        android:icon="@drawable/baseline_qr_code_scanner_24"
+        android:iconTint="@color/white"
+        app:showAsAction="always">
+    </item>-->
 </menu>
