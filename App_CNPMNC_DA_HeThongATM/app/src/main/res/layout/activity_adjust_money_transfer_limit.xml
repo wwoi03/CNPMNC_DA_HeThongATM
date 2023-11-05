@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".Activities.AdjustMoneyTransferLimitActivity">
+
+    <!-- Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_tool_bar"
+            android:background="@color/primary_blue_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Form -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <!-- Thông tin -->
+            <LinearLayout
+                android:id="@+id/llInfoAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:padding="16dp"
+                android:background="@drawable/border_radius_all"
+                android:backgroundTint="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Hạn mức hiện tại -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:background="@drawable/bottom_border">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hạn mức hiện tại"
+                        android:textSize="18dp">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvTransferLimitCurrent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3,000,000,000 VNĐ"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Tổng số tiền đã chuyển -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="16dp"
+                    android:background="@drawable/bottom_border">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tổng số tiền đã chuyển"
+                        android:textSize="18dp">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvTotalTransferMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1,000,000 VNĐ"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+
+                <!-- Hạn mức còn lại -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hạn mức còn lại"
+                        android:textSize="18dp">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvRemainingLimit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2,999,000,000 VNĐ"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- Ngày hết hạn -->
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:orientation="vertical"
+                android:layout_below="@+id/llInfoAccount">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Tài khoản"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp">
+
+                    <!-- Nhập người thụ hưởng -->
+                    <TextView
+                        android:id="@+id/tvAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_radius_all"
+                        android:hint="Chọn tài khoản"
+                        android:inputType="number"
+                        android:padding="10dp"
+                        android:textSize="18dp"></TextView>
+
+                    <!-- Icon -->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="12dp"
+                        android:src="@drawable/baseline_arrow_drop_down_24"
+                        app:tint="@color/primary_blue_color"></ImageView>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- Ngày hết hạn -->
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Hạn mức mới"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp">
+
+                    <!-- Nhập người thụ hưởng -->
+                    <TextView
+                        android:id="@+id/tvTransferLimit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_radius_all"
+                        android:hint="50,000,000 VND"
+                        android:inputType="number"
+                        android:padding="10dp"
+                        android:textSize="18dp"></TextView>
+
+                    <!-- Icon -->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="12dp"
+                        android:src="@drawable/baseline_arrow_drop_down_24"
+                        app:tint="@color/primary_blue_color"></ImageView>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_below="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quý khách vui lòng lựa chọn hạn mức giao dịch\nchuyển tiền tối đa có thể thực hiện trong 01 ngày trên DCTBank."
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_marginTop="8dp">
+            </TextView>
+
+            <!-- Button -->
+            <Button
+                android:id="@+id/btNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/coner_radius_button"
+                android:padding="4dp"
+                android:text="Tiếp tục"
+                android:textSize="16dp"></Button>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

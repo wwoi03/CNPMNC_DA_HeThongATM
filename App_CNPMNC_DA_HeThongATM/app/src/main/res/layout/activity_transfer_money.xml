@@ -291,7 +291,7 @@
                     </RelativeLayout>
 
                     <!-- Phí giao dịch -->
-                    <EditText
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -300,7 +300,7 @@
                         android:padding="10dp"
                         android:background="@drawable/border_radius_all"
                         android:layout_marginBottom="10dp">
-                    </EditText>
+                    </TextView>
 
                     <!-- Nội dung chuyển tiền -->
                     <EditText

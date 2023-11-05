@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.HanMucChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.NhacChuyenTien;
@@ -179,6 +180,16 @@ public class DbHelper {
 
         return options;
     }
+
+    // lấy danh sách hạn mức chuyển tiền
+    public static FirebaseRecyclerOptions<HanMucChuyenTien> getTransferMoneyLimit() {
+        FirebaseRecyclerOptions<HanMucChuyenTien> options = new FirebaseRecyclerOptions.Builder<HanMucChuyenTien>()
+                .setQuery(firebaseDatabase.getReference("HanMucChuyenTien").orderByChild("HanMuc"), HanMucChuyenTien.class)
+                .build();
+
+        return options;
+    }
+
     //Lấy danh sách LoaiGiaoDic
 //    public static String getLoaiGiaoDich(String keygiaodich){
 //        String abc = "";
