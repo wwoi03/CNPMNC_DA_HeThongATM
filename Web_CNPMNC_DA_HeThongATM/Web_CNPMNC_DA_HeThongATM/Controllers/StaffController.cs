@@ -19,14 +19,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             return View();
         }
-
+        public IActionResult Decentralization()
+        {
+            return View();
+        }
+       
         // Thêm nhân viên
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-
+        
+       
         //[HttpPost]
         //public IActionResult Create(NhanVienViewModel nhanVienViewModel)
         //{
