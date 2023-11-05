@@ -190,6 +190,28 @@ public class DbHelper {
         return options;
     }
 
+    // cập nhật hạn mức mới
+    public static void updateTransferMoneyLimit(String taiKhoanKey, double hanMucMoi, FirebaseListener firebaseListener) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("HanMucTK", hanMucMoi);
+
+        firebaseDatabase.getReference("TaiKhoanLienKet").child(taiKhoanKey).updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
     //Lấy danh sách LoaiGiaoDic
 //    public static String getLoaiGiaoDich(String keygiaodich){
 //        String abc = "";
