@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.AccountCardActivity;
@@ -63,9 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Config config;
     // View
     TextView tv_username, tvPhone;
-
-    // Confix
-
+    RelativeLayout ctFastAccess;
+    LinearLayout closeFastAccess, llScanQR, llCreateQR, llSaving, llTransferMoney;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -82,6 +84,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initUI() {
         bnvMenu = findViewById(R.id.bnvMenu);
         drawerLayout = findViewById(R.id.drawer_layout);
+        ctFastAccess = findViewById(R.id.ctFastAccess);
+        closeFastAccess = findViewById(R.id.closeFastAccess);
+        llScanQR = findViewById(R.id.llScanQR);
+        llCreateQR = findViewById(R.id.llCreateQR);
+        llSaving = findViewById(R.id.llSaving);
+        llTransferMoney = findViewById(R.id.llTransferMoney);
     }
 
     // Khởi tạo
@@ -129,11 +137,65 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     replaceFragment(transactionFragment);
                     break;
                 case R.id.mnuQuickAccess:
-                    replaceFragment(quickAccessFragment);
+                    ctFastAccess.setVisibility(View.VISIBLE);
+                    toolbar.setVisibility(View.GONE);
+                    bnvMenu.setVisibility(View.GONE);
                     break;
             }
             return true;
         });
+
+        // xử lý tắt truy cập nhanh
+        closeFastAccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctFastAccess.setVisibility(View.GONE);
+                toolbar.setVisibility(View.VISIBLE);
+                bnvMenu.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // xử lý bấm các nút bấm ở truy cập nhanh
+        llCreateQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchPage("GenerateQRCodeActivity");
+            }
+        });
+
+        llScanQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchPage("ScanQRActivity");
+            }
+        });
+
+        llTransferMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchPage("TransferMoneyActivity");
+            }
+        });
+
+        llSaving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchPage("GenerateQRCodeActivity");
+            }
+        });
+    }
+
+    // chuyển trang
+    private void switchPage(String namePage) {
+        String className = "com.example.app_cnpmnc_da_hethongatm.Activities." + namePage;
+
+        try {
+            Class<?> myClass = Class.forName(className);
+            Intent intent = new Intent(this, myClass);
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // load Fragment

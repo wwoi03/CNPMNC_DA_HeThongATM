@@ -141,15 +141,19 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
 
         Intent getDataIntent = getIntent();
-        flag = (int) getDataIntent.getSerializableExtra("flag");
-        if (flag == BeneficiaryManagementActivity.USER_NAME) {
-            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
-            long tkThuHuongLong = thuHuong.getTKThuHuong(); // Lưu giá trị long
-            String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
-            etAccountBeneficiary.setText(tkThuHuongStr);
+
+        if (getDataIntent.getData() != null) {
+            flag = (int) getDataIntent.getSerializableExtra("flag");
+            if (flag == BeneficiaryManagementActivity.USER_NAME) {
+                thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
+                long tkThuHuongLong = thuHuong.getTKThuHuong(); // Lưu giá trị long
+                String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
+                etAccountBeneficiary.setText(tkThuHuongStr);
+            }
+            taiKhoanNguon = new TaiKhoanLienKet();
+            taiKhoanHuong = new TaiKhoanLienKet();
+
         }
-        taiKhoanNguon = new TaiKhoanLienKet();
-        taiKhoanHuong = new TaiKhoanLienKet();
 
         getIntentFromQRCode();
     }
