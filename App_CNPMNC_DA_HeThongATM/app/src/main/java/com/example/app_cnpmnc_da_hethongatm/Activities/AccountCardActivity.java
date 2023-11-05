@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
@@ -70,17 +71,23 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     // Xử lý sự kiện bấm vào từng thẻ
     @Override
     public void setOnClickItemListener(TaiKhoanLienKet model, DatabaseReference databaseReference) {
-        if(flag ==10){
-            Intent intent = new Intent(AccountCardActivity.this, ActivityListGD.class);
-            intent.putExtra("taiKhoanNguon", model.getSoTaiKhoan());
-            startActivity(intent);
+        if(model.getTinhTrangTaiKhoan() != 0){
+            Toast.makeText(AccountCardActivity.this, "Thẻ khóa r thằng loz", Toast.LENGTH_SHORT).show();
         }
         else {
-            Intent intent = getIntent();
-            intent.putExtra("taiKhoanNguon", model);
-            intent.putExtra("taiKhoanNguonKey", databaseReference.getKey());
-            setResult(TransferMoneyActivity.CHOOSE_SOURCE_ACCOUNT, intent);
-            finish();
+            if(flag ==10){
+                Intent intent = new Intent(AccountCardActivity.this, ActivityListGD.class);
+                intent.putExtra("taiKhoanNguon", model.getSoTaiKhoan());
+                startActivity(intent);
+            }
+            else {
+                Intent intent = getIntent();
+                intent.putExtra("taiKhoanNguon", model);
+                intent.putExtra("taiKhoanNguonKey", databaseReference.getKey());
+                setResult(TransferMoneyActivity.CHOOSE_SOURCE_ACCOUNT, intent);
+                finish();
+            }
         }
+
     }
 }

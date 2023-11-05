@@ -266,6 +266,7 @@
 
                     <!-- OR Code -->
                     <LinearLayout
+                        android:id="@+id/cvhotro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -294,7 +295,7 @@
                             android:gravity="center_vertical|center_horizontal"
                             android:textSize="16dp"
                             android:textColor="@color/black"
-                            android:text="QR Code"
+                            android:text="Trang hỗ trợ"
                             android:paddingTop="4dp">
                         </TextView>
                     </LinearLayout>

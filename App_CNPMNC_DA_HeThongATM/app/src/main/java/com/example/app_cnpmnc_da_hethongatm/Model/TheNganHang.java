@@ -10,11 +10,12 @@ public class TheNganHang implements Serializable {
     private String NgayHetHan;
     private String NgayMoThe;
     private int TinhTrangThe;
+    private String MaKHKey;
 
     public TheNganHang() {
     }
 
-    public TheNganHang(String key, long maSoThe, long soTaiKhoan, String maPin, String ngayHetHan, String ngayMoThe, int tinhTrangThe) {
+    public TheNganHang(String key, long maSoThe, long soTaiKhoan, String maPin, String ngayHetHan, String ngayMoThe, int tinhTrangThe, String maKHKey) {
         Key = key;
         MaSoThe = maSoThe;
         SoTaiKhoan = soTaiKhoan;
@@ -22,6 +23,7 @@ public class TheNganHang implements Serializable {
         NgayHetHan = ngayHetHan;
         NgayMoThe = ngayMoThe;
         TinhTrangThe = tinhTrangThe;
+        MaKHKey = maKHKey;
     }
 
     public String getKey() {
@@ -78,6 +80,14 @@ public class TheNganHang implements Serializable {
 
     public void setTinhTrangThe(int tinhTrangThe) {
         TinhTrangThe = tinhTrangThe;
+    }
+
+    public String getMaKHKey() {
+        return MaKHKey;
+    }
+
+    public void setMaKHKey(String maKHKey) {
+        MaKHKey = maKHKey;
     }
 }
 

@@ -18,4 +18,10 @@
     <color name="bg_color">#F2F1F7</color>
     <!-- màu item -->
     <color name="item_color">#FAFAFA</color>
+    <!-- màu cảnh báo -->
+    <color name="warning_color">#FFCB49</color>
+    <!-- màu hoàn thành -->
+    <color name="done_color">#00903B</color>
+    <!-- màu đang trong thời hạn -->
+    <color name="in_phase_color">#3285EE</color>
 </resources>
