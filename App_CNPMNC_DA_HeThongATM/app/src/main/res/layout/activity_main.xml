@@ -55,6 +55,179 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/main_menu" />
+
+        <!-- Truy cập nhanh -->
+        <RelativeLayout
+            android:id="@+id/ctFastAccess"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_background"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/flContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clickable="true"
+            android:focusable="true">
+
+            <RelativeLayout
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:background="@drawable/circle_shape"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/txt9"
+                    android:layout_width="@dimen/wh_fast_access"
+                    android:layout_height="@dimen/wh_fast_access"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/circle_shape"
+                    android:backgroundTint="@color/primary_blue_color"
+                    android:gravity="center"
+                    android:src="@drawable/universal_access_solid"
+                    android:textColor="#ffff"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    app:tint="@color/white" />
+
+                <LinearLayout
+                    android:id="@+id/llScanQR"
+                    android:layout_width="@dimen/wh_fast_access"
+                    android:layout_height="@dimen/wh_fast_access"
+                    android:layout_above="@id/txt9"
+                    android:layout_alignLeft="@id/txt9"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:textColor="#ffff"
+                    android:textSize="40sp"
+                    android:textStyle="bold">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_qr_code_scanner_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quét QR"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSaving"
+                    android:layout_width="@dimen/wh_fast_access"
+                    android:layout_height="@dimen/wh_fast_access"
+                    android:layout_alignTop="@id/txt9"
+                    android:layout_toLeftOf="@id/txt9"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:textColor="#ffff"
+                    android:textSize="40sp"
+                    android:textStyle="bold">
+
+                    <ImageView
+                        android:id="@+id/txt2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_qr_code_scanner_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Gửi tiết\nkiệm"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llTransferMoney"
+                    android:layout_width="@dimen/wh_fast_access"
+                    android:layout_height="@dimen/wh_fast_access"
+                    android:layout_below="@id/txt9"
+                    android:layout_alignLeft="@id/txt9"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:textColor="#ffff"
+                    android:textSize="40sp"
+                    android:textStyle="bold">
+
+                    <ImageView
+                        android:id="@+id/txt3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_qr_code_scanner_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chuyển tiền"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCreateQR"
+                    android:layout_width="@dimen/wh_fast_access"
+                    android:layout_height="@dimen/wh_fast_access"
+                    android:layout_alignTop="@id/txt9"
+                    android:layout_toRightOf="@id/txt9"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:textColor="#ffff"
+                    android:textSize="40sp"
+                    android:textStyle="bold">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_qr_code_scanner_24"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tạo QR"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"></TextView>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/closeFastAccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
+                android:gravity="center">
+
+                <!-- đóng truy cập nhanh -->
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/baseline_close_24"
+                    app:tint="@color/white"
+                    android:background="@drawable/border_radius_button"
+                    android:backgroundTint="#83AED1">
+                </ImageView>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đóng"
+                    android:textColor="@color/white"
+                    android:textSize="16dp">
+                </TextView>
+            </LinearLayout>
+        </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Navigation View -->
@@ -67,5 +240,7 @@
         app:menu="@menu/nav_menu"
         app:itemIconTint="@color/primary_blue_color"
         app:itemTextColor="@color/primary_blue_color"/>
+
+
 </androidx.drawerlayout.widget.DrawerLayout>
 
