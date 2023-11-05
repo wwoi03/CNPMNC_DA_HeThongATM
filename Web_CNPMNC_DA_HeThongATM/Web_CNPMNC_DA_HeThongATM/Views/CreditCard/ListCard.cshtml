@@ -4,6 +4,7 @@
     var listcard = ViewData["listcard"] as IEnumerable<ListTheNganHangViewModel>;
 }
 <body>
+
     <div class="content">
         <div class="orangehrm-paper-container">
 
@@ -49,27 +50,23 @@
                                 <p> Người Dùng</p>
                             </div>
 
-                            <div style="flex: 1 1 5%;">
-                                <p>  Số tài khoản</p>
+                            <div style="flex: 1 1 3%;">
+                                <p> Số tài khoản</p>
                             </div>
-                            <div style="flex: 1 1 0%">
+                            <div style="flex: 1 1 2%">
                                 <p>Mã Pin</p>
-                            </div>
-                            <div style="flex: 1 1 2%;">
+                            </div>                           
+                            <div style="flex: 1 1 4%;">
                                 <p> Ngày Đăng Ký</p>
                             </div>
                             <div style="flex: 1 1 2%;">
                                 <p>Ngày Hết Hạn</p>
-                            </div>
-                            <div style="flex: 1 1 3%;">
-                                <p>Số điện thoại </p>
-                            </div>
-
+                            </div>                        
                             <div style="flex: 1 1 0%;">
                                 <p>Tình trạng </p>
                             </div>
                             <div style="flex: 1 1 0%;">
-                                <p> Loại thẻ</p>
+                                <p>Mã Số Thẻ</p>
                             </div>
                             <div style="flex: 1 1 0%;">
                                 <p> Hành Động</p>
@@ -82,11 +79,14 @@
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                         <div>@item.TenKhachHang</div>
                                     </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1.4 1 0%;">
-                                        <div>@item.MaSoThe</div>
+                                    <div class="oxd-table-cell oxd-padding-cell"  style="flex: 1 1 0%;">
+                                        <div data-original="@item.SoTaiKhoan" class="sensitive">@item.SoTaiKhoan</div>
+                                        <i class="fa-solid fa-eye reveal hidden"></i>
                                     </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.MaPin</div>
+                                    <div class="oxd-table-cell oxd-padding-cell"  style="flex: 1 1 0%;">
+                                        
+                                        <div data-original="@item.MaPin" class="sensitive">@item.MaPin  </div>
+                                        <i class="fa-solid fa-eye reveal hidden"></i>
                                     </div>
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                         <div>@item.NgayMoThe</div>
@@ -94,17 +94,16 @@
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                         <div>@item.NgayHetHan</div>
                                     </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.SDTDangKy</div>
-                                    </div>
+                                   
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                         <div>@item.TinhTrangThe</div>
                                     </div>
                                     <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.TenLoaiThe</div>
+                                        <div data-original="@item.MaSoThe" class="sensitive">@item.MaSoThe</div>
+                                        <i class="fa-solid fa-eye reveal hidden"></i>
                                     </div>
                                     <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">
-                                        <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM" asp-route-MaSoThe="@item.MaSoThe">   <i class="fa-solid fa-circle-info">  </i></a>
+                                        <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM" asp-route-MaSoThe="@item.MaSoThe"><i class="fa-solid fa-circle-info"></i></a>
                                         <a class="oxd-icon-button" asp-controller="CreditCard" asp-action="EditCardATM">  <i class="fa-solid fa-pen-to-square"></i></a>
                                         
                                     </div>
@@ -125,6 +124,7 @@
         </div>
     </div>
     <script src="/js/ListCard.js"></script>
+    <script src="/js/hiddenacccout.js"></script>
 </body>
 
                               

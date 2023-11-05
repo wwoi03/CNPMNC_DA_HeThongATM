@@ -473,7 +473,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //        Dictionary<string, LoaiTheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiTheNganHang>>(response.Body);
 
         //        var nametypes = data.Values.FirstOrDefault(kh => kh.MaLoaiTNH == values);
-                
+
         //        if (nametypes != null)
         //        {
         //            return nametypes.TenTNH;
@@ -484,32 +484,32 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //}
 
         //tìm kiếm thẻ theo cccd/ id thẻ/số điện thoại
-        //public TheNganHang SearchCard(string searchValue)
-        //{
-        //    FirebaseResponse response = client.Get("TheNganHang");
-        //    if (response != null)
-        //    {
-        //        Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+        public TheNganHang SearchCard(string searchValue)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
 
-        //        // Thử tìm theo CCCD (Căn cước công dân)
-        //        var card = data.Values.FirstOrDefault(c => c.Key == searchValue);
+                // Thử tìm theo CCCD (Căn cước công dân)
+                var card = data.Values.FirstOrDefault(c => c.Key == searchValue);
 
-        //        // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-        //        if (card == null)
-        //        {
-        //            card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c. == searchValue);
-        //        }
+                // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
+                if (card == null)
+                {
+                    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SoTaiKhoan == long.Parse(searchValue));
+                }
 
-        //        // Nếu tìm thấy thẻ, trả về thông tin của họ
-        //        if (card != null)
-        //        {
-        //            return card;
-        //        }
-        //    }
+                // Nếu tìm thấy thẻ, trả về thông tin của họ
+                if (card != null)
+                {
+                    return card;
+                }
+            }
 
-        //    // Trả về null nếu không tìm thấy khách hàng
-        //    return null;
-        //}
+            // Trả về null nếu không tìm thấy khách hàng
+            return null;
+        }
 
 
         //lấy thẻ theo id
