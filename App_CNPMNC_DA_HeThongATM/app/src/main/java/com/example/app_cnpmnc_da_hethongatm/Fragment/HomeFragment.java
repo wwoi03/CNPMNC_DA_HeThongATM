@@ -13,9 +13,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import com.example.app_cnpmnc_da_hethongatm.Activities.GenerateQRCodeActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.PhoneActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
@@ -23,8 +22,6 @@ import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
@@ -93,8 +90,8 @@ public class HomeFragment extends Fragment {
     Handler handler = new Handler();
     Runnable runnable;
     CardView cvTransferMoney, cvManageAccountAndCard;
+    LinearLayout cvHotro;
 
-    ImageView img_ScanQR;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -110,7 +107,7 @@ public class HomeFragment extends Fragment {
         ci3 = view.findViewById(R.id.ci3);
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
-        img_ScanQR = view.findViewById(R.id.img_scanQR);
+        cvHotro = view.findViewById(R.id.cvhotro);
     }
 
     // Khởi tạo
@@ -168,15 +165,13 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        img_ScanQR.setOnClickListener(new View.OnClickListener() {
+        cvHotro.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), GenerateQRCodeActivity.class);
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PhoneActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 
     // lấy danh sách image slide

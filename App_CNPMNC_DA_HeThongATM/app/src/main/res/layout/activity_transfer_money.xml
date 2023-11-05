@@ -74,14 +74,15 @@
 
                     <TextView
                         android:id="@+id/tvSourceAccount"
-                        android:layout_width="367dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
-                        android:background="@color/white"
+                        android:inputType="text"
+                        android:textSize="20dp"
                         android:gravity="center_vertical"
                         android:hint="Chọn tài khoản nguồn"
-                        android:inputType="text"
-                        android:textSize="20dp"></TextView>
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white">
+                    </TextView>
 
                     <ImageView
                         android:layout_width="wrap_content"
