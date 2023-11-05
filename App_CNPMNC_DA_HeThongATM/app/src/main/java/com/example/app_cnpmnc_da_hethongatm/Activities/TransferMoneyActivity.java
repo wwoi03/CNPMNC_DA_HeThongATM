@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -255,7 +257,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 DialogPlus dialogPlus = DialogPlus.newDialog(TransferMoneyActivity.this)
                         .setContentHolder(new ViewHolder(R.layout.activity_thuhuongtransfer))
                         .setExpanded(true, 800)
+                        .setOverlayBackgroundResource(android.R.color.transparent) // Đặt màu nền trong suốt
                         .create();
+
                 // Tìm RecyclerView trong layout của DialogPlus
                 RecyclerView recyclerView = dialogPlus.getHolderView().findViewById(R.id.rc_thuhuongtransfer);
                 // Thiết lập ListBeneficiaryAdapter cho RecyclerView
