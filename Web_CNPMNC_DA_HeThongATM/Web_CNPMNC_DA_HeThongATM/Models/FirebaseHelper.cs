@@ -651,32 +651,31 @@ public List<LoaiThe> GetTypesCards()
 
 
         //-------------------------------------------------mở khóa tài khoản ---------------------------------------------------------//
-        public bool TinhTrangTaiKhoan(int tinhtrangTK, long value)
+        public bool TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
         {
-            string info = GetAccount(value);
+            string info = GetAccount(SoTaiKhoan);
             try
             {
+                // check tk có tồn tại ko
                 FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
 
-                // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
-
-                ////  thay đổi trạng thái
-               
-                int TinhTrangTaiKhoan = accountData.TinhTrangTaiKhoan + tinhtrangTK;
-
-
-                // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/TinhTrangTaiKhoan", TinhTrangTaiKhoan);
-
-                return true; // Cập nhật thành công
+                if (response != null && response.ResultAs<TaiKhoanLienKetViewModel>() != null)
+                {
+                    // Cập nhật trạng thái tài khoản
+                    client.Set("TaiKhoanLienKet/" + info + "/TinhTrangTaiKhoan", tinhTrangTaiKhoan);
+                    return true; // Cập nhật thành công
+                }
+                else
+                {
+                    return false; // Cập nhật thất bại
+                }
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
                 return false; // Cập nhật thất bại
             }
         }
+
 
 
     }

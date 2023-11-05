@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FireSharp;
+using Microsoft.AspNetCore.Mvc;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
@@ -27,12 +28,30 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
         }
 
+        //[HttpPost]
+        //public IActionResult TinhTrangTaiKhoan(TaiKhoanLienKetViewModel account)
+        //{
+        //    int tinhtrangTK = account.TinhTrangTaiKhoan;
+        //    firebaseHelper.TinhTrangTaiKhoan(tinhtrangTK, account.TinhTrangTaiKhoan);
+        //    return RedirectToAction("Index");
+        //}
+
         [HttpPost]
-        public IActionResult TinhTrangTaiKhoan(TaiKhoanLienKetViewModel account)
+        public IActionResult TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
         {
-            int tinhtrangTK = account.TinhTrangTaiKhoan;
-            firebaseHelper.TinhTrangTaiKhoan(tinhtrangTK, account.TinhTrangTaiKhoan);
-            return RedirectToAction("Index");
+            if (firebaseHelper.TrangThaiTk(SoTaiKhoan, tinhTrangTaiKhoan))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                // Xử lý khi thay đổi trạng thái không thành công
+                return View("Error");
+            }
         }
+
+
+
+
     }
 }
