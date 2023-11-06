@@ -17,10 +17,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         public string NgayMoThe { get; set; }
 
        
-        public string NgayHetHan { get; set; }           
-      
-        public long SoTaiKhoan { get; set; }
+        public string NgayHetHan { get; set; }
 
-        public int TinhTrangThe { get; set; }
+        
+        public string SDTDangKy { get; set; }
+
+       
+        public int TinhTrangThe { get; set; }     
+        public string LoaiThe { get; set; }
+        public string TenLoaiThe { get; set; }
+        public string MaDangNhap { get; set; }
     }
 }

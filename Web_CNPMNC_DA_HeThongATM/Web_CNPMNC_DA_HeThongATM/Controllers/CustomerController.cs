@@ -28,7 +28,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     Email = i.Email,
                     GioiTinh = i.GioiTinh,
                     SoDienThoai = i.SoDienThoai,
-                    TenKhachHang = i.TenKH,
+                    TenKhachHang = i.TenKhachHang,
                     NgayTao = i.NgayTao,
 
 
@@ -82,15 +82,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return Json(CheckSdt);
         }
-
-        //Tìm kiếm khách hàng
         public IActionResult SearchCustomer(string searchCustomer)
         {
 
             KhachHang khachHang = firebaseHelper.SearchCustomer(searchCustomer);
             KhachHangViewModel ViewThes = new KhachHangViewModel();
             ViewThes.CCCD = khachHang.CCCD;
-            ViewThes.TenKhachHang = khachHang.TenKH;
+            ViewThes.TenKhachHang = khachHang.TenKhachHang;
             ViewThes.NgayTao = khachHang.NgayTao;
             ViewThes.Email = khachHang.Email;
             ViewThes.SoDienThoai = khachHang.SoDienThoai;

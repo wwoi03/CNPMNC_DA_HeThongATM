@@ -32,13 +32,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             NhanVien nhanVien = new NhanVien()
             {
-                ChiNhanhKey = nhanVienViewModel.ChiNhanhKey,
+                ChiNhanh = nhanVienViewModel.ChiNhanh,
                 ChucVu = nhanVienViewModel.ChucVu,
                 DiaChi = nhanVienViewModel.DiaChi,
                 Email = nhanVienViewModel.Email,
                 MatKhau = nhanVienViewModel.MatKhau,
-                NgaySinh = nhanVienViewModel.NgaySinh,
-                TenNhanVien = nhanVienViewModel.TenNhanVien
+                NamSinh = nhanVienViewModel.NamSinh,
+                TenNhanVien = nhanVienViewModel.Ten
             };
 
             firebaseHelper.CreateStaff(nhanVien);
