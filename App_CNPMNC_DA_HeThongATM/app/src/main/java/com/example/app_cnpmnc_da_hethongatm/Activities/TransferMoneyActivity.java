@@ -95,21 +95,17 @@ public class TransferMoneyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_money);
+        initUI();
+        initData();
+        initListener();
         Intent intent = getIntent();
         flagSaveBill = intent.getIntExtra("flag1",0);
-        initUI();
-        long a = intent.getLongExtra("STK123",0);
-        double b = intent.getDoubleExtra("SoTien123",0);
-        String c = String.valueOf(intent.getStringExtra("NoiDung123"));
+        long a =(long) intent.getSerializableExtra("STK123");
+        double b =(double) intent.getSerializableExtra("SoTien123");
+        String c = (String) intent.getSerializableExtra("NoiDung123");
         etAccountBeneficiary.setText(String.valueOf(a));
         etMoney.setText(String.valueOf(b));
         etContent.setText(c);
-        Log.d(String.valueOf(flagSaveBill), "BiNull roi: ");
-        Log.d(String.valueOf(a), "STK: ");
-        Log.d(String.valueOf(b), "SoTien: ");
-        Log.d(c, "NoiDung:");
-        initData();
-        initListener();
     }
     private void UpdateTaiKhoanNguon(){
 
