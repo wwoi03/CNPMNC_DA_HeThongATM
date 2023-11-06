@@ -11,8 +11,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
         public IActionResult BankStatement()
         {
-            List<ThongKeViewModel> LSDG = firebaseHelper.danhsachLSGD();
-            ViewBag.LSGD = LSDG;
+            //List<ThongKeViewModel> LSDG = firebaseHelper.danhsachLSGD();
+            //ViewBag.LSGD = LSDG;
             ViewBag.check = "ok";
             return View();
         }
