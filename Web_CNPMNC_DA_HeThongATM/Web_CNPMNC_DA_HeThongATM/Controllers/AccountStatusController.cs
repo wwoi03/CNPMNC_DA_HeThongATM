@@ -1,9 +1,8 @@
-<<<<<<< HEAD
+
 ﻿using FireSharp;
 using Microsoft.AspNetCore.Mvc;
-=======
 ﻿using Microsoft.AspNetCore.Mvc;
->>>>>>> s3-Tung-QL_LaiSuat
+
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
@@ -32,7 +31,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
         }
 
-<<<<<<< HEAD
         //[HttpPost]
         //public IActionResult TinhTrangTaiKhoan(TaiKhoanLienKetViewModel account)
         //{
@@ -55,17 +53,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
         }
 
-
-
-
-=======
-        [HttpPost]
-        public IActionResult TinhTrangTaiKhoan(TaiKhoanLienKetViewModel account)
-        {
-            int tinhtrangTK = account.TinhTrangTaiKhoan;
-            firebaseHelper.TinhTrangTaiKhoan(tinhtrangTK, account.TinhTrangTaiKhoan);
-            return RedirectToAction("Index");
-        }
->>>>>>> s3-Tung-QL_LaiSuat
+       
     }
 }
