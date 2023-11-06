@@ -33,10 +33,12 @@ import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.MauChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -45,6 +47,8 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -52,11 +56,12 @@ public class TransferMoneyActivity extends AppCompatActivity {
     // View
     ImageView ivBeneficiary;
     TextView tvSurplus, tvNameBeneficiary, tvSourceAccount;
-    EditText etMoney, etContent, etAccountBeneficiary;
+    TextInputEditText etMoney, etContent, etAccountBeneficiary;
     Button btTransferMoney;
     ProgressBar progressBar;
     Toolbar tbToolbar;
-
+    String MaGD="";
+    MauChuyenTien mauChuyenTien = new MauChuyenTien();
     // Flag
     public static int CHOOSE_SOURCE_ACCOUNT = 101;
 
@@ -66,6 +71,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     ThuHuong thuHuong;
     int flag;
+    int flagSaveBill;
     String maLoaiGGKey;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
@@ -78,7 +84,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         taiKhoanNguonKey = (String) result.getData().getSerializableExtra("taiKhoanNguonKey");
                         tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
                         tvSurplus.setText(String.valueOf(taiKhoanNguon.getSoDu()) + " VNĐ");
-                        etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
+                        if(etContent.getText().toString().trim().isEmpty()){
+                            etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
+                        }
                     }
                 }
             }
@@ -87,8 +95,19 @@ public class TransferMoneyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_money);
-
+        Intent intent = getIntent();
+        flagSaveBill = intent.getIntExtra("flag1",0);
         initUI();
+        long a = intent.getLongExtra("STK123",0);
+        double b = intent.getDoubleExtra("SoTien123",0);
+        String c = String.valueOf(intent.getStringExtra("NoiDung123"));
+        etAccountBeneficiary.setText(String.valueOf(a));
+        etMoney.setText(String.valueOf(b));
+        etContent.setText(c);
+        Log.d(String.valueOf(flagSaveBill), "BiNull roi: ");
+        Log.d(String.valueOf(a), "STK: ");
+        Log.d(String.valueOf(b), "SoTien: ");
+        Log.d(c, "NoiDung:");
         initData();
         initListener();
     }
@@ -98,6 +117,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // ánh xạ view
     public void initUI() {
+        Intent intent = getIntent();
+        flagSaveBill = intent.getIntExtra("flag1",0);
         tbToolbar = findViewById(R.id.tbToolbar);
         progressBar = findViewById(R.id.progressBar);
         tvSourceAccount = findViewById(R.id.tvSourceAccount);
@@ -108,40 +129,19 @@ public class TransferMoneyActivity extends AppCompatActivity {
         etContent = findViewById(R.id.etContent);
         etAccountBeneficiary = findViewById(R.id.etAccountBeneficiary);
         btTransferMoney = findViewById(R.id.btTransferMoney);
+        if(flagSaveBill == 0){
+
+        }
+        else {
+
+
+        }
     }
 
     // khởi tạo dữ liệu
     public void initData() {
         setupToolbar();
-
-        /*// Lấy mã loại giao dịch
-        DbHelper.showProgressDialog(progressBar);
-
-        DbHelper.getTransactionTypeByTransactionTypeCode(ResultCode.CHUYEN_TIEN, new DbHelper.FirebaseListener() {
-            @Override
-            public void onSuccessListener() {
-
-            }
-
-            @Override
-            public void onFailureListener(Exception e) {
-
-            }
-
-            @Override
-            public void onSuccessListener(DataSnapshot snapshot) {
-                LoaiGiaoDich loaiGiaoDich = snapshot.getValue(LoaiGiaoDich.class);
-                maLoaiGGKey = loaiGiaoDich.getKey();
-                DbHelper.dismissProgressDialog();
-            }
-        });
-
-
-        Log.d("firebase", "abc");*/
-
-
         Intent getDataIntent = getIntent();
-
         if (getDataIntent.getData() != null) {
             flag = (int) getDataIntent.getSerializableExtra("flag");
             if (flag == BeneficiaryManagementActivity.USER_NAME) {
@@ -152,9 +152,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
             }
             taiKhoanNguon = new TaiKhoanLienKet();
             taiKhoanHuong = new TaiKhoanLienKet();
-
         }
-
         getIntentFromQRCode();
     }
 
@@ -176,40 +174,44 @@ public class TransferMoneyActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
-                    /*if(accountBeneficiaryString.isEmpty()){
-                        BuildAlertDialog("Không được để trống người thụ hưởng");
-                        tvNameBeneficiary.setText("");
-                    }*/
-
                     // kiểm tra edit text rỗng?
+                    if(accountBeneficiaryString.isEmpty()){
+                        tvNameBeneficiary.setText("");
+                    }
                     if (!accountBeneficiaryString.isEmpty()) {
                         long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
-                        if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
-                            BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
-                            tvNameBeneficiary.setText("");
-                        }
-                        else {
-                            // truy vấn đến TaiKhoanLK theo số tài khoản
-                            Log.d(String.valueOf(accountBeneficiary), "onFocusChange: ");
-                            DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-                                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                                    taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
-                                                    etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
-                                                    tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
-                                                    taiKhoanHuongKey = dataSnapshot.getKey();
+                        if(taiKhoanNguon != null){
+                            if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
+                                BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
+                                tvNameBeneficiary.setText("");
+                            }
+                            else {
+                                // truy vấn đến TaiKhoanLK theo số tài khoản
+                                Log.d(String.valueOf(accountBeneficiary), "onFocusChange: ");
+                                DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
+                                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                if (snapshot.exists()) {
+                                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                                        taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
+                                                        etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
+                                                        tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
+                                                        taiKhoanHuongKey = dataSnapshot.getKey();
+                                                    }
+                                                }
+                                                else {
+                                                    tvNameBeneficiary.setText("");
+                                                    BuildAlertDialog("không tìm thấy người thụ hưởng");
                                                 }
                                             }
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                        }
-                                    });
+                                            }
+                                        });
+                        }
                         }
                     }
 
@@ -231,13 +233,17 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 } else if (accountBeneficiaryString.isEmpty()) {
                     BuildAlertDialog("Vui lòng nhập tài khoản hưởng");
                     checkvalid ++;
+                } else if (accountBeneficiaryString.isEmpty()) {
+                    BuildAlertDialog("Vui lòng nhập người nhận");
+                    checkvalid ++;
                 } else if (moneyString.isEmpty()) { // rỗng
                     BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
                     checkvalid ++;
                 } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
                     BuildAlertDialog("Không đủ tiền để gd");
                     checkvalid++;
-                }else if (GetDate() != taiKhoanNguon.getNgayGD()) {
+                }else if (!GetDate().equals(taiKhoanNguon.getNgayGD())) {
+                    Log.d(String.valueOf(GetDate().equals(taiKhoanNguon.getNgayGD())), "NgayGIaoDich: ");
                     taiKhoanNguon.setNgayGD(GetDate());
                     taiKhoanNguon.setTienDaGD(0);
                 } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
@@ -249,7 +255,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     double money = Double.parseDouble(moneyString);
                     // kiểm tra số tiền phải >= 1k
                     if (money >= 1000) {
-                        transferMoney(money, etContent.getText().toString().trim());
+                        transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
                     } else {
                         toastMessage("Nghèooooooooooooooooooooooooooooo!");
                     }
@@ -301,7 +307,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
         tbToolbar.setTitle("Chuyển tiền");
         tbToolbar.setTitleTextColor(-1);
         setSupportActionBar(tbToolbar);
-
         // kích hoạt nút quay lại trên ActionBar
         if (getSupportActionBar() != null) {
             // Đặt màu trắng cho nút quay lại
@@ -327,11 +332,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
     }
 
     // chuyển tiền
-    private void transferMoney(double money, String noiDungChuyenKhoan) {
-        DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money); // tài khoản nguồn
+    private void transferMoney(double money, String noiDungChuyenKhoan,String ngaygd,double tiendaGD) {
+        DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money,ngaygd,tiendaGD); // tài khoản nguồn
         DbHelper.updateSurplus(taiKhoanHuongKey, taiKhoanHuong.getSoDu() + money); // tài khoản hưởng
-        DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"-AWFo21aLu3212YNBUgf");
-        BuildAlertDialogSuccess();
+        MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"-AWFo21aLu3212YNBUgf");
+        BuildAlertDialogSuccess(taiKhoanNguon.getSoDu() - money);
     }
 
     // Toast
@@ -352,13 +357,20 @@ public class TransferMoneyActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void BuildAlertDialogSuccess(){
+    public void BuildAlertDialogSuccess(double tien){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Chuyển tiền thành công");
-        builder.setMessage("Bấm ok để về trang chủ");
-        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Xác Nhận", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(TransferMoneyActivity.this, MainActivity.class);
+                Intent intent = new Intent(TransferMoneyActivity.this, SaveBillActivity.class);
+                intent.putExtra("NguoiGui",taiKhoanNguon);
+                intent.putExtra("NguoiNhan",taiKhoanHuong);
+                intent.putExtra("NgayGui",GetDate());
+                intent.putExtra("GioGui",GetTime());
+                intent.putExtra("NoiDung",etContent.getText().toString().trim());
+                intent.putExtra("MaGd",MaGD);
+                String tiengd = String.valueOf(taiKhoanNguon.getSoDu() - tien);
+                intent.putExtra("TienGD",tiengd);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -372,6 +384,21 @@ public class TransferMoneyActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = sdf.format(currentDate);
         return formattedDate;
+    }
+    private String GetTime(){
+        LocalTime now = null;
+        String timeString="";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            now = LocalTime.now();
+        }
+        DateTimeFormatter formatter = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            timeString = now.format(formatter);
+        }
+        return timeString;
     }
 
     public void getIntentFromQRCode(){
