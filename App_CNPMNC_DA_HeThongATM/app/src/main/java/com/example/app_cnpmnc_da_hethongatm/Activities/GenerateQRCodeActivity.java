@@ -3,7 +3,6 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +31,7 @@ public class GenerateQRCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_qrcode);
-        Button button = findViewById(R.id.button);
+        Button button = findViewById(R.id.btn_backhome);
         ImageView imageView = findViewById(R.id.qr_code);
         edit_amount = findViewById(R.id.edit_amount);
         edit_message = findViewById(R.id.edit_message);
