@@ -63,7 +63,6 @@ public class ListBillAdapter extends RecyclerView.Adapter<ListBillAdapter.ListBi
                             @Override
                             public void onSuccess(Void unused) {
                                 DbHelper.BuilderXinXo(v.getContext(),"Xóa thành công");
-
                             }
 
                         }).addOnFailureListener(new OnFailureListener() {

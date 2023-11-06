@@ -98,23 +98,26 @@ public class TransferMoneyActivity extends AppCompatActivity {
         initUI();
         initData();
         initListener();
-        Intent intent = getIntent();
-        flagSaveBill = intent.getIntExtra("flag1",0);
-        long a =(long) intent.getSerializableExtra("STK123");
-        double b =(double) intent.getSerializableExtra("SoTien123");
-        String c = (String) intent.getSerializableExtra("NoiDung123");
-        etAccountBeneficiary.setText(String.valueOf(a));
-        etMoney.setText(String.valueOf(b));
-        etContent.setText(c);
+        getIntent();
+        getIntent1();
     }
     private void UpdateTaiKhoanNguon(){
 
     }
-
+    private void getIntent1(){
+            Intent intent = getIntent();
+            flagSaveBill = intent.getIntExtra("flag1",0);
+            if(flagSaveBill !=0){
+                long a =(long) intent.getSerializableExtra("STK123");
+                double b =(double) intent.getSerializableExtra("SoTien123");
+                String c = (String) intent.getSerializableExtra("NoiDung123");
+                etAccountBeneficiary.setText(String.valueOf(a));
+                etMoney.setText(String.valueOf(b));
+                etContent.setText(c);
+            }
+    }
     // ánh xạ view
     public void initUI() {
-        Intent intent = getIntent();
-        flagSaveBill = intent.getIntExtra("flag1",0);
         tbToolbar = findViewById(R.id.tbToolbar);
         progressBar = findViewById(R.id.progressBar);
         tvSourceAccount = findViewById(R.id.tvSourceAccount);
@@ -125,13 +128,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
         etContent = findViewById(R.id.etContent);
         etAccountBeneficiary = findViewById(R.id.etAccountBeneficiary);
         btTransferMoney = findViewById(R.id.btTransferMoney);
-        if(flagSaveBill == 0){
-
-        }
-        else {
-
-
-        }
     }
 
     // khởi tạo dữ liệu

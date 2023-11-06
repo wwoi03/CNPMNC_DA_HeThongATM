@@ -1,6 +1,7 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,12 +34,14 @@ public class ListSaveBillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listsavebill);
         config = new Config(ListSaveBillActivity.this);
         InitUI();
+        RenderLayOut();
         GetListBill();
     }
     private void InitUI(){
         rv_listsavebill= findViewById(R.id.rv_listsavebill);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rv_listsavebill.setLayoutManager(linearLayoutManager);
+    }
+    private void RenderLayOut(){
+        rv_listsavebill.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));;
         mauChuyenTiens = new ArrayList<>();
         listBillAdapter = new ListBillAdapter(mauChuyenTiens);
         rv_listsavebill.setAdapter(listBillAdapter);
@@ -47,11 +50,10 @@ public class ListSaveBillActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("MauChuyenTien");
         Query query = myRef.orderByChild("MaKHKey").equalTo(config.getCustomerKey());
-
         query.addValueEventListener(new ValueEventListener() {
-            List<MauChuyenTien> mau1 = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<MauChuyenTien> mau1 = new ArrayList<>();
                 if(snapshot.exists()){
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                         MauChuyenTien mauChuyenTien = dataSnapshot.getValue(MauChuyenTien.class);
@@ -59,6 +61,7 @@ public class ListSaveBillActivity extends AppCompatActivity {
                     }
                 }
                 if(!mauChuyenTiens.equals(mau1)){
+                    Log.d(String.valueOf(!mauChuyenTiens.equals(mau1)), "co thay doi: ");
                     mauChuyenTiens.clear();
                     mauChuyenTiens.addAll(mau1);
                     listBillAdapter.notifyDataSetChanged();
