@@ -146,7 +146,7 @@
                                 android:layout_weight="1">
 
                                 <ImageView
-                                    android:id="@+id/imgHistory"
+                                    android:id="@+id/imgDeposit"
                                     android:layout_width="30dp"
                                     android:layout_height="40dp"
                                     android:src="@drawable/sack_dollar_solid"

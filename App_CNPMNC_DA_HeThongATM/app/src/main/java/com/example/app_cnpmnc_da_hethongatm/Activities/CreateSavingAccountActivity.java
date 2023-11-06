@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -41,7 +42,7 @@ import java.util.UUID;
 public class CreateSavingAccountActivity extends AppCompatActivity {
     Button SendMoney;
     TextView Source, tvSurplus ;
-    EditText numberMoney,edtcontent;
+    EditText numberMoney;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference taikhoanlienketRef, Laisuatref,SaveMoney, loaiTaiKhoanRef,loaigiaodichRef,transaction;
     FirebaseAuth firebaseAuth;
@@ -71,6 +72,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         Config config = new Config(this);
         String customerkey = config.getCustomerKey();
 
+
         Query loaigiaodich = loaigiaodichRef.orderByChild("key").equalTo((customerkey));
         Query tklienket = taikhoanlienketRef.orderByChild("MaKHKey").equalTo((customerkey));
         //lấy ngày hiện tại
@@ -90,7 +92,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
                     if (loaitk.equals("adoasdlkghqw")) {
                         source = dataSnapshot.child("SoTaiKhoan").getValue().toString();
                         sodu= dataSnapshot.child("SoDu").getValue().toString();
-                        key = dataSnapshot.child("Key").getKey().toString();
+                        key = dataSnapshot.getKey();
                         break;
                     }
 
@@ -101,6 +103,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
                 }
 
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -118,45 +121,70 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
 
             }
         });
-
-
         SendMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UUID uuidGTK = UUID.randomUUID();
                 String guiTietKiemKey = uuidGTK.toString();
-                Random generator = new Random();
-                String tkTietKiem = String.valueOf(generator.nextInt());
+
+                String tkTietKiem =DbHelper.generateUniqueAccountNumber();
+
                 String number = numberMoney.getText().toString();
-                String noidung= edtcontent.getText().toString();
 
                if (Double.valueOf(number)>Double.valueOf(sodu)){
                    Toast.makeText(CreateSavingAccountActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
-               }else {
+
+               }
+               else if(Double.valueOf(sodu) < 3000000){
+                   Toast.makeText(CreateSavingAccountActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
+
+               }
+               else {
                    UUID uuidGD = UUID.randomUUID();
                    String giaoDichKey = uuidGD.toString();
 
-                   SaveMoney.addValueEventListener(new ValueEventListener() {
+                   SaveMoney.addValueEventListener(new ValueEventListener()
+                   {
                        @Override
                        public void onDataChange(@NonNull DataSnapshot snapshot) {
                            Double soDuTKTK=0.0;
-//                           for (DataSnapshot dataSnapshot:snapshot.getChildren()){
-//                               if (dataSnapshot.getKey().equals(guiTietKiemKey)){
-//                                   soDuTKTK = Double.valueOf(dataSnapshot.child("TienGui").getValue().toString());
-//                                   break;
-//                               }
-//                           }
 
                            Double tienLaiToiKy = (Double.valueOf(number) * (Double.valueOf(laiSuat.getTiLe()) / 100)) + Double.valueOf(number);
 
-                           GuiTietKiem guiTietKiem = new GuiTietKiem(guiTietKiemKey,Long.valueOf(tkTietKiem),
-                                   Long.valueOf(Source.getText().toString()),laiSuat.getKey(), ngayGui,tienLaiToiKy,Double.valueOf(number));
+//                           GuiTietKiem guiTietKiem = new GuiTietKiem(guiTietKiemKey,Long.valueOf(tkTietKiem),
+//                                   Long.valueOf(Source.getText().toString()),laiSuat.getKey(), ngayGui,tienLaiToiKy,Double.valueOf(number));
+
+                           HashMap<String, Object> guiTietKiem = new HashMap<>();
+                           guiTietKiem.put("Key",guiTietKiemKey);
+                           guiTietKiem.put("TaiKhoanTietKiem",Long.valueOf(tkTietKiem));
+                           guiTietKiem.put("TaiKhoanNguon",Long.valueOf(Source.getText().toString()));
+                           guiTietKiem.put("LaiSuatKey",laiSuat.getKey());
+                           guiTietKiem.put("NgayGui",ngayGui);
+                           guiTietKiem.put("TienLaiToiKy",tienLaiToiKy);
+                           guiTietKiem.put("TienGui",Double.valueOf(number));
+                           guiTietKiem.put("MaKHkey",customerkey);
+
                            SaveMoney.child(guiTietKiemKey).setValue(guiTietKiem);
 
-                           GiaoDich giaoDich = new GiaoDich(giaoDichKey,Long.valueOf(Source.getText().toString()),Long.valueOf(tkTietKiem),
-                                   ngayGui,gioHienTai,"",Double.valueOf(number),0,
-                                   Double.valueOf(sodu)-Double.valueOf(number), soDuTKTK+Double.valueOf(number) ,keygiaodich);
+//                           GiaoDich giaoDich = new GiaoDich(giaoDichKey,Long.valueOf(Source.getText().toString()),Long.valueOf(tkTietKiem),
+//                                   ngayGui,gioHienTai,"",Double.valueOf(number),0,
+//                                   Double.valueOf(sodu)-Double.valueOf(number), soDuTKTK+Double.valueOf(number) ,keygiaodich);
+//
+                           HashMap<String, Object> giaoDich = new HashMap<>();
+                           giaoDich.put("Key", giaoDichKey);
+                           giaoDich.put("TaiKhoanNguon", Long.valueOf(Source.getText().toString()));
+                           giaoDich.put("TaiKhoanNhan", Long.valueOf(tkTietKiem));
+                           giaoDich.put("NgayGiaoDich", ngayGui);
+                           giaoDich.put("GioGiaoDich", gioHienTai);
+                           giaoDich.put("NoiDungChuyenKhoan", "");
+                           giaoDich.put("SoTienGiaoDich", Double.valueOf(number));
+                           giaoDich.put("PhiGiaoDich", 0);
+                           giaoDich.put("SoDuLucGui",Double.valueOf(sodu)-Double.valueOf(number) );
+                           giaoDich.put("SoDuLucNhan", soDuTKTK+Double.valueOf(number) );
+                           giaoDich.put("LoaiGiaoDichKey", keygiaodich);
+
                            transaction.child(giaoDichKey).setValue(giaoDich);
+                           DbHelper.updateSurplus(key, Double.valueOf(sodu)-Double.valueOf(number));
                        }
 
                        @Override
@@ -195,7 +223,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         //Period=findViewById(R.id.tvPeriod);
         numberMoney=findViewById(R.id.EdtNumberMoney);
         spinner=findViewById(R.id.Spiner);
-        edtcontent=findViewById(R.id.EdtContent);
+
     }
     //xu li spiner
     public void getSpinerdata(){

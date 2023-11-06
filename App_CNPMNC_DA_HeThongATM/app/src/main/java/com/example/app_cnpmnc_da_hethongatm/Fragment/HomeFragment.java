@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.CreateSavingAccountActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.DepositMoreSavingActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
@@ -91,7 +92,7 @@ public class HomeFragment extends Fragment {
     Runnable runnable;
     CardView cvTransferMoney, cvManageAccountAndCard;
     LinearLayout lninterestrate;
-    ImageView imgHistory;
+    ImageView imgDeposit;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -108,7 +109,7 @@ public class HomeFragment extends Fragment {
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
         lninterestrate=view.findViewById(R.id.Lninetrestrate);
-        imgHistory=view.findViewById(R.id.imgHistory);
+        imgDeposit=view.findViewById(R.id.imgDeposit);
     }
 
 
@@ -165,6 +166,14 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        imgDeposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DepositMoreSavingActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         // Xử lý bấm vào quản lý danh sách thẻ và tài khoản

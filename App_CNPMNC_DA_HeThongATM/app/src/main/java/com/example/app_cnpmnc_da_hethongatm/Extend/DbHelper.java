@@ -27,6 +27,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 public class DbHelper {
     public static FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -258,4 +260,14 @@ public class DbHelper {
                     }
                 });
     }
+    public static String generateUniqueAccountNumber() {
+        Random random = new Random();
+        String accountNumber;
+
+        int randomAccountNumber = random.nextInt(900000) + 100000;
+        accountNumber = String.valueOf(randomAccountNumber);
+
+        return accountNumber;
+    }
+
 }

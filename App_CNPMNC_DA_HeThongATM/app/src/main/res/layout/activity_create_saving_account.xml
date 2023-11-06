@@ -235,16 +235,7 @@
                         <!-- Số dư -->
                     </RelativeLayout>
                 </LinearLayout>
-                <EditText
-                    android:id="@+id/EdtContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:hint="nội dung"
-                    android:inputType="text"
-                    android:textSize="20dp"></EditText>
+
                 <Button
                     android:id="@+id/btSendMoney"
                     android:layout_width="match_parent"
