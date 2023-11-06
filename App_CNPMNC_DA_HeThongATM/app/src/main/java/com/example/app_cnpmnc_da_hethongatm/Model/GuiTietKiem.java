@@ -11,7 +11,6 @@ public class GuiTietKiem implements Serializable {
     private String NgayGui;
     private double TienLaiToiKy;
     private double TienGui;
-    private String MaKHKey;
 
 
     public GuiTietKiem(String key, String maKHKey, long taiKhoanTietKiem, long taiKhoanNguon, String laiSuatKey, String ngayGui, double tienLaiToiKy, double tienGui) {
@@ -44,14 +43,6 @@ public class GuiTietKiem implements Serializable {
 
     public void setKey(String key) {
         Key = key;
-    }
-
-    public String getMaKHKey() {
-        return MaKHKey;
-    }
-
-    public void setMaKHKey(String maKHKey) {
-        MaKHKey = maKHKey;
     }
 
     public long getTaiKhoanTietKiem() {

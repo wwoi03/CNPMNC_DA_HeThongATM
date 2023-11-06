@@ -51,6 +51,3 @@
 //        return maloai;
 //    }
 //}
-
-    private String maloai;
-public class spinnerListCardTypeAdapter extends ArrayAdapter<LoaiTheNganHang> {

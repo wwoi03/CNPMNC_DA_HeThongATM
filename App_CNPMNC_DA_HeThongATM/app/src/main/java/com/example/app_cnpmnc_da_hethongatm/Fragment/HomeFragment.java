@@ -92,7 +92,6 @@ public class HomeFragment extends Fragment {
     ArrayList<ImageSlide> imageSlides;
     Handler handler = new Handler();
     Runnable runnable;
-    CardView cvTransferMoney, cvManageAccountAndCard;
     LinearLayout lninterestrate;
     ImageView imgDeposit;
     LinearLayout cvTransferMoney, cvManageAccountAndCard;
