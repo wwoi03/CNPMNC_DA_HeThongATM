@@ -55,6 +55,9 @@
 /* Style table cells */
 .oxd-table-cell {
     text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .oxd-padding-cell {
@@ -214,10 +217,8 @@ body {
 
 .oxd-table-cell-actions {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
     align-items: center;
+    justify-content: center;
 }
 
 text--span {
@@ -241,4 +242,7 @@ text--span {
 
 .oxd-table-cell div {
     text-align: center;
+}
+.reveal{
+    margin-left:11px;
 }

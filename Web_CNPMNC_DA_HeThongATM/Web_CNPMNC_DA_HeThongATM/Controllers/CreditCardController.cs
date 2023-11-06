@@ -20,7 +20,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult GetNameCus(string cccd)
         {
             string PIN = firebaseHelper.CreatePin();
-            string Stk = firebaseHelper.CreateAccountNumbet();
+            string masothe = firebaseHelper.CreateAccountNumbet();
+            string sotaikhoan = firebaseHelper.CreateSotaikhoan();
             KhachHang custommer =  firebaseHelper.GetCustomerbyid(cccd);
             if(custommer == null)
             {
@@ -33,10 +34,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
             var data = new
             {
-                Tenkh = custommer.TenKhachHang,
-                Sdt = custommer.SoDienThoai,
+                Tenkh = custommer.TenKH,             
                 PIN = PIN,
-                Stk = Stk
+                Stk = masothe,
+                sotaikhoan = sotaikhoan
             };
             return Json(data);
         }
@@ -45,17 +46,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult CreateCard(TheNganHangViewModel cardViewModel)
         {
             //lấy khách hàng
-            KhachHang custommer = firebaseHelper.GetCustomerbyid(cardViewModel.MaKH);
+            KhachHang custommer = firebaseHelper.GetCustomerbyid(cardViewModel.CCCD);
             if (cardViewModel == null || custommer == null) return RedirectToAction("Index");
-            //đẩy lên database
-            cardViewModel.MaDangNhap = "1234";
-            cardViewModel.TinhTrangThe = 0;
-            firebaseHelper.CreateCard(cardViewModel, firebaseHelper.GetKeysBycccd(cardViewModel.MaKH));
-            firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel.MaPin, custommer.TenKhachHang, cardViewModel.MaSoThe));
+            //đẩy lên database                 
+            firebaseHelper.CreateCard(cardViewModel.TheNganHang());
+            firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel,custommer));
             TempData["SuccessMessage"] = "You successfully created a card.";
             return RedirectToAction("Index");
-
-        }
+    }
 
 
         //danh sách thẻ atm
@@ -67,22 +65,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             {
                 var list = new ListTheNganHangViewModel
                 {
-                    MaKH = item.MaKH,
-                    TenKhachHang = firebaseHelper.GetNameCustomerbyid(item.MaKH),
-                    MaPin = item.MaPin,
-                    MaDangNhap = item.MaDangNhap,
+                    MaKH = item.MaKHKey,
+                    TenKhachHang = firebaseHelper.GetNameCustomerbyid(item.MaKHKey),
+                    MaPin = item.MaPin,                  
                     MaSoThe = item.MaSoThe,
                     TinhTrangThe = item.TinhTrangThe,
                     NgayMoThe = item.NgayMoThe,
-                    NgayHetHan = item.NgayHetHan,
-                    SDTDangKy = item.SDTDangKy,
-                    LoaiThe = item.LoaiThe,
-                    TenLoaiThe = firebaseHelper.GetNameTypeCard(item.LoaiThe),
+                    NgayHetHan = item.NgayHetHan,     
+                    SoTaiKhoan =item.SoTaiKhoan,
                     
+
 
                 };
                 listThes.Add(list);
-             }
+            }
             ViewData["listCard"] = listThes;
             return View(listThes);
         }
@@ -92,7 +88,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult EditCardATM(long MaSoThe) { 
 
             TheNganHang theNganHang = firebaseHelper.GetTheNganHangById(MaSoThe);
-            ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(theNganHang.MaKH);
+            ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(theNganHang.MaKHKey);
             ViewBag.Details = theNganHang;
             return View();
         }
@@ -109,20 +105,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         //tìm kiếm theo cccd theo sdt theo masothe
         public IActionResult SearchCard(string searchValue)
         {
-           
+
             TheNganHang theNganHangs = firebaseHelper.SearchCard(searchValue);
             ListTheNganHangViewModel ViewThes = new ListTheNganHangViewModel();
-            ViewThes.MaKH=theNganHangs.MaKH;
-            ViewThes.TenKhachHang = firebaseHelper.GetNameCustomerbyid(theNganHangs.MaKH);
-            ViewThes.SDTDangKy = theNganHangs.SDTDangKy;
-            ViewThes.MaDangNhap = theNganHangs.MaDangNhap;
+            ViewThes.MaKH = theNganHangs.MaKHKey;
+            ViewThes.TenKhachHang = firebaseHelper.GetNameCustomerbyid(theNganHangs.MaKHKey);                  
             ViewThes.MaSoThe = theNganHangs.MaSoThe;
             ViewThes.NgayHetHan = theNganHangs.NgayHetHan;
             ViewThes.NgayMoThe = theNganHangs.NgayMoThe;
-            ViewThes.MaPin=theNganHangs.MaPin;
-            ViewThes.TinhTrangThe = theNganHangs.TinhTrangThe;
-            ViewThes.LoaiThe = theNganHangs.LoaiThe;
-            ViewThes.TenLoaiThe = firebaseHelper.GetNameTypeCard(theNganHangs.LoaiThe);
+            ViewThes.MaPin = theNganHangs.MaPin;
+            ViewThes.TinhTrangThe = theNganHangs.TinhTrangThe;                    
             ViewBag.IteamSeach = ViewThes;
             return PartialView("SearchCard", ViewThes);
 

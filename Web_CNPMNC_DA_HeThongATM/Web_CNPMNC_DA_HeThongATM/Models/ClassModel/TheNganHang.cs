@@ -3,7 +3,8 @@
     public class TheNganHang
     {
         public string Key { get; set; }
-        public long MaSoThe { get; set; }
+        public string MaKHKey { get; set; }
+		public long MaSoThe { get; set; }
         public long SoTaiKhoan { get; set; }
         public string MaPin { get; set; }
         public string NgayHetHan { get; set; }

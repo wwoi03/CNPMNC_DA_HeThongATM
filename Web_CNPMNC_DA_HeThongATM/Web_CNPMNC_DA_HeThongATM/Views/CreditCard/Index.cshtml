@@ -51,7 +51,7 @@
             <div class="flexbox">
                 <div class="inputBox">
                     <span>Căn cước công dân</span>
-                    <input type="text" maxlength="16" id="makhachhang" asp-for="MaKH">
+                    <input type="text" maxlength="16" id="makhachhang" asp-for="CCCD">
                 </div>
                 <div class="inputBox">
                     <span>Tên Khách Hàng</span>
@@ -60,25 +60,9 @@
             </div>
             <div class="flexbox">
                 <div class="inputBox">
-                    <span>Số Điện Thoại</span>
-                    <input type="text" maxlength="16" class="sdt" asp-for="SDTDangKy">
-                </div>
-                <div class="inputBox">
                     <span>Ngày Mở Thẻ</span>
                     <input type="text" maxlength="16" id="ngaymothe" asp-for="NgayMoThe">
                 </div>
-            </div>
-             <div class="flexbox">
-                <div class="inputBox">
-                    <span>số thẻ</span>
-                    <input type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
-                </div>
-                <div class="inputBox">
-                    <span>số tài khoản</span>
-                    <input type="text" class="card-holder-input" asp-for="MaSoThe">
-                </div>
-            </div>      
-            <div class="flexbox">
                 <div class="inputBox">
                     <span>Tháng hết hạn</span>
                     <input type="text" id="thanghethan" class="month-input">
@@ -86,30 +70,34 @@
                 <div class="inputBox">
                     <span>Năm hết hạn</span>
                     <input type="text" id="namhethan" class="year-input">
-                    @* <select name="" id="" class="year-input">
-                    <option value="year" selected disabled>year</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-                    </select>*@
                     <input type="hidden" id="ngayhethan" asp-for="NgayHetHan" />
                 </div>
+              
+            </div>
+             <div class="flexbox">               
+                <div class="inputBox">
+                    <span>Mã Pin</span>
+                    <input type="text" class="card-holder-input" asp-for="MaSoThe">
+                </div>
+                <div class="inputBox">
+                    <span>Số tài khoản</span>
+                    <input type="text" class="card-card-input" asp-for="SoTaiKhoan">
+                </div>
+                 <div class="inputBox">
+                    <span>Mã Số Thẻ</span>
+                    <input type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
+                </div>
+            </div>      
+           @*  <div class="flexbox">             
                 <div class="inputBox">
                     <span>Loại Thẻ</span>
-                    <select asp-for="LoaiThe" class="type-card">
+                    <select asp-for="" class="type-card">
                         <option value="Loại" selected disabled>Loại</option>
                         <option value="adkasdglwekb">TD</option>
                         <option value="adkasdglwekb">GN</option>
                     </select>
                 </div>
-            </div>
+            </div> *@
             <input type="submit" value="submit" class="submit-btn">
         </form>
 

@@ -85,11 +85,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.querySelector('.tenkhachhang').value = "";
                     } else {
                         
-                        document.querySelector('.tenkhachhang').value = document.querySelector('.card-name-customer').innerText = data.tenkh;
-                        document.querySelector('.sdt').value = data.sdt;
+                        document.querySelector('.tenkhachhang').value = document.querySelector('.card-name-customer').innerText = data.tenkh;                       
                         document.querySelector('.card-number-input').value = document.querySelector('.card-number-box').innerText = data.pin;
                         document.querySelector('.card-holder-input').value = document.querySelector('.card-holder-name').innerText = data.stk;
-                       
+                        document.querySelector('.card-card-input').value = data.sotaikhoan;
                     }
                 });
             });
