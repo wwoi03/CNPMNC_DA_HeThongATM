@@ -14,10 +14,12 @@ import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.SpinnerDepositAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.SpinnerLaiSuatAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Adapter.SpinnerSourceAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.GuiTietKiem;
 import com.example.app_cnpmnc_da_hethongatm.Model.LaiSuat;
+import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,16 +45,17 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference taikhoanlienketRef,guiTietKiemref,SaveMoney, loaiTaiKhoanRef,loaigiaodichRef,transaction, Laisuatref;
     FirebaseAuth firebaseAuth;
-    Spinner spinner;
+    Spinner spinner, sourceSpinner;
     List<GuiTietKiem> guiTietKiemList;
     GuiTietKiem guiTietKiem;
+    List<TaiKhoanLienKet> lienKetList;
 
     String source,sodu, key,keygiaodich, loaitk,kyhan;
 //ff
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_saving_account);
+        setContentView(R.layout.activity_deposit_more_saving);
 
         initUI();
 
@@ -81,28 +84,56 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
         // Định dạng ngày thành chuỗi ngày/tháng/năm
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGui = dateFormat.format(currentDate);
-        tklienket.addValueEventListener(new ValueEventListener() {
+        loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("thanh toán").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    String loaitk = dataSnapshot.child("LoaiTaiKhoan").getValue().toString();
-                    if (loaitk.equals("adoasdlkghqw")) {
-                        source = dataSnapshot.child("SoTaiKhoan").getValue().toString();
-                        sodu= dataSnapshot.child("SoDu").getValue().toString();
-                        key = dataSnapshot.getKey();
-                        break;
-                    }
+                    loaitk = dataSnapshot.getKey();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        tklienket.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lienKetList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    String loaitk1 = dataSnapshot.child("MaLoaiTKKey").getValue().toString();
+                    if (loaitk1.equals(loaitk)) {
+                        source = dataSnapshot.child("SoTaiKhoan").getValue().toString();
+                        sodu = dataSnapshot.child("SoDu").getValue().toString();
+                        key = dataSnapshot.getKey();
+
+                        TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet(Long.parseLong(source), Double.valueOf(sodu), key);
+                        lienKetList.add(taiKhoanLienKet);
+                    }
                 }
                 if(sodu!= null){
                     tvSurplus.setText(sodu);
-                    Source.setText(source);
+                    SpinnerSourceAdapter spinnerSourceAdapter = new SpinnerSourceAdapter(lienKetList, DepositMoreSavingActivity.this);
+                    sourceSpinner.setAdapter(spinnerSourceAdapter);
                 }
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        sourceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TaiKhoanLienKet taiKhoanLienKet = lienKetList.get(position);
+                tvSurplus.setText(String.format("%.0f", taiKhoanLienKet.getSoDu()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -169,7 +200,7 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
     //ánh xạ view
     public void initUI(){
         SendMoney=findViewById(R.id.btSendMoney);
-        Source=findViewById(R.id.tvSource);
+        sourceSpinner = findViewById(R.id.sourceSpinner);
         tvSurplus = findViewById(R.id.tvSurplus);
         //Period=findViewById(R.id.tvPeriod);
         numberMoney=findViewById(R.id.EdtNumberMoney);
@@ -209,18 +240,6 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("Tài khoản tiết kiệm").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    loaitk = dataSnapshot.getKey();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 }

@@ -55,16 +55,12 @@
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="14dp">
 
-                <TextView
-                    android:id="@+id/tvSource"
+                <Spinner
+                    android:id="@+id/sourceSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:hint="Chọn tài khoản nguồn"
-                    android:inputType="text"
-                    android:textSize="20dp"></TextView>
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:spinnerMode="dropdown"/>
 
 
             </androidx.cardview.widget.CardView>

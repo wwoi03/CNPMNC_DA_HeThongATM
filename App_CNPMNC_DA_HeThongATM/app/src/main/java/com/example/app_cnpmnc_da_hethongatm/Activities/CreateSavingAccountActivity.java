@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.SpinnerLaiSuatAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Adapter.SpinnerSourceAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
@@ -46,11 +47,12 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference taikhoanlienketRef, Laisuatref,SaveMoney, loaiTaiKhoanRef,loaigiaodichRef,transaction;
     FirebaseAuth firebaseAuth;
-    Spinner spinner;
+    Spinner spinner, sourceSpinner;
     List<LaiSuat> ListLaiSuat;
+    List<TaiKhoanLienKet> lienKetList;
     LaiSuat laiSuat;
 
-    String source,sodu, key,keygiaodich, loaitk,kyhan;
+    String sodu, key,keygiaodich, loaitk,kyhan, tknguon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,6 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         loaiTaiKhoanRef = firebaseDatabase.getReference("LoaiTaiKhoan");
         loaigiaodichRef = firebaseDatabase.getReference("LoaiGiaoDich");
         transaction=firebaseDatabase.getReference("GiaoDich");
-
 
         firebaseAuth = FirebaseAuth.getInstance();
         // truy xuat tai khoan nguon
@@ -84,22 +85,39 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         // Định dạng ngày thành chuỗi ngày/tháng/năm
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGui = dateFormat.format(currentDate);
-        tklienket.addValueEventListener(new ValueEventListener() {
+
+        Query queryLoaiTK = loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("thanh toán");
+        queryLoaiTK.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    String loaitk = dataSnapshot.child("LoaiTaiKhoan").getValue().toString();
-                    if (loaitk.equals("adoasdlkghqw")) {
-                        source = dataSnapshot.child("SoTaiKhoan").getValue().toString();
-                        sodu= dataSnapshot.child("SoDu").getValue().toString();
-                        key = dataSnapshot.getKey();
-                        break;
-                    }
+                    loaitk = dataSnapshot.getKey();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+        tklienket.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lienKetList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    String loaitk1 = dataSnapshot.child("MaLoaiTKKey").getValue().toString();
+                    if (loaitk1.equals(loaitk)) {
+                        tknguon = dataSnapshot.child("SoTaiKhoan").getValue().toString();
+                        sodu = dataSnapshot.child("SoDu").getValue().toString();
+                        key = dataSnapshot.getKey();
+
+                        TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet(Long.parseLong(tknguon), Double.valueOf(sodu), key);
+                        lienKetList.add(taiKhoanLienKet);
+                    }
                 }
                 if(sodu!= null){
                     tvSurplus.setText(sodu);
-                    Source.setText(source);
+                    SpinnerSourceAdapter spinnerSourceAdapter = new SpinnerSourceAdapter(lienKetList, CreateSavingAccountActivity.this);
+                    sourceSpinner.setAdapter(spinnerSourceAdapter);
                 }
 
             }
@@ -107,6 +125,18 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        sourceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TaiKhoanLienKet taiKhoanLienKet = lienKetList.get(position);
+                tvSurplus.setText(String.format("%.0f", taiKhoanLienKet.getSoDu()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -135,10 +165,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
                    Toast.makeText(CreateSavingAccountActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
 
                }
-               else if(Double.valueOf(sodu) < 3000000){
-                   Toast.makeText(CreateSavingAccountActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
 
-               }
                else {
                    UUID uuidGD = UUID.randomUUID();
                    String giaoDichKey = uuidGD.toString();
@@ -218,11 +245,11 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
     //ánh xạ view
     public void initUI(){
         SendMoney=findViewById(R.id.btSendMoney);
-        Source=findViewById(R.id.tvSource);
         tvSurplus = findViewById(R.id.tvSurplus);
         //Period=findViewById(R.id.tvPeriod);
         numberMoney=findViewById(R.id.EdtNumberMoney);
         spinner=findViewById(R.id.Spiner);
+        sourceSpinner = findViewById(R.id.sourceSpinner);
 
     }
     //xu li spiner
@@ -254,19 +281,5 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("Tài khoản tiết kiệm").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    loaitk = dataSnapshot.getKey();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 }
