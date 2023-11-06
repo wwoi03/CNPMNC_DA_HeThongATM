@@ -638,12 +638,31 @@ public List<LoaiThe> GetTypesCards()
                 FirebaseResponse response = client.Update("LaiSuat/" + key, updatedLaiSuat);
                 if (response != null)
                 {
-                    // Xử lý khi cập nhật thành công (nếu cần).
+                    
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        //delete lãi suất
+        public void DeleteLaiSuat(string key)
+        {
+            try
+            {
+                
+                var path = "LaiSuat/" + key;
+
+                client.Delete(path);
+
+                // Xóa thành công
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
             }
         }
 

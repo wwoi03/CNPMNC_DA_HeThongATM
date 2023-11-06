@@ -2,6 +2,7 @@
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -63,7 +64,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         // Chỉnh sửa
         public IActionResult EditLaiSuat(string key)
         {
-            // Gọi đến firebaseHelper để lấy thông tin lãi suất dựa trên key.
+            // lấy thông tin lãi suất dựa trên key.
             LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
 
             if (laiSuat == null)
@@ -71,7 +72,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 return View("LaiSuatNotFound");
             }
 
-            return View("EditLaiSuat", laiSuat);
+            return View("Index", laiSuat);
         }
 
         [HttpPost]
@@ -79,15 +80,39 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Gọi đến firebaseHelper để cập nhật thông tin lãi suất bằng Key.
+                // cập nhật thông tin lãi suất bằng Key.
                 firebaseHelper.UpdateLaiSuatByKey(updatedLaiSuat.Key, updatedLaiSuat);
 
                 return RedirectToAction("Index");
             }
 
-            return View("EditLaiSuat", updatedLaiSuat);
+            return View("Index", updatedLaiSuat);
         }
 
+        //Xóa lãi suất
+        
+        public IActionResult ConfirmDelete(string key)
+        {
+            // lấy thông tin lãi suất dựa = key.
+            LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
+
+            if (laiSuat == null)
+            {
+                return View("LaiSuatNotFound");
+            }
+
+            return View("Index", laiSuat);
+        }
+
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(string key)
+        {
+            // Xóa lãi suất bằng key
+            firebaseHelper.DeleteLaiSuat(key);
+            return RedirectToAction("Index");
+        }
 
 
 

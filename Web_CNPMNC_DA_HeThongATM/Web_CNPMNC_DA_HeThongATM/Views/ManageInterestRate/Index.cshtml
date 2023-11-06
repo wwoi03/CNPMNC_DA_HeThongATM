@@ -4,6 +4,7 @@
 @{
     Layout = "_LayoutMain";
     var LaiSuatList = ViewData["LaiSuatList"] as IEnumerable<LaiSuatViewModel>;
+
 }
 <body>
     <div class="col-lg-12">
@@ -47,6 +48,8 @@
             </div> <!-- /.table-stats -->
             <!-----------------------------------------form delete -------------------------------------------------------->
 
+            <form method="post" asp-controller="ManageInterestRate" asp-action="DeleteLaiSuat"
+                      class="formbold-chatbox-form">
             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -61,14 +64,16 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+                            <button asp-controller="ManageInterestRate" asp-action="Delete" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
-
+            </form>
 
             <!-----------------------------------------form edit -------------------------------------------------------->
+            <form method="post" asp-controller="ManageInterestRate" asp-action="EditLaiSuat"
+                      class="formbold-chatbox-form">
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -82,21 +87,22 @@
                             <form id="editForm">
                                 <div class="form-group">
                                     <label for="editKyHan">Kỳ hạn</label>
-                                    <input type="text" class="form-control" id="editKyHan" name="editKyHan">
+                                        <input type="text" asp-for="KyHan" aria-required="true" aria-invalid="false" class="form-control" id="editKyHan" name="editKyHan">
                                 </div>
                                 <div class="form-group">
                                     <label for="editTiLe">Tỉ lệ</label>
-                                    <input type="text" class="form-control" id="editTiLe" name="editTiLe">
+                                        <input type="text" asp-for="TiLe" aria-required="true" aria-invalid="false" class="form-control" id="editTiLe" name="editTiLe">
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="saveButton">Save</button>
+                                <button asp-controller="ManageInterestRate" asp-action="EditLaiSuat" class="btn btn-primary" id="saveButton">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </body>
