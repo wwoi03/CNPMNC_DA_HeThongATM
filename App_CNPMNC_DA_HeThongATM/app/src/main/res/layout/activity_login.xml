@@ -56,7 +56,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    app:hintEnabled="false">
+                    app:hintEnabled="false"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPhone"
@@ -73,7 +75,7 @@
                         android:imeOptions="actionNext"
                         android:minWidth="320dp"
                         android:minHeight="50dp"
-                        android:singleLine="true" />
+                        android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.cardview.widget.CardView>
 
@@ -91,7 +93,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     app:hintEnabled="false"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
 
                     <EditText
                         android:id="@+id/etPassword"
@@ -105,7 +109,8 @@
                         android:drawableLeft="@drawable/ic_lock"
                         android:drawablePadding="12dp"
                         android:hint="Mật khẩu"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
+                        android:nextFocusForward="@id/btLogin"
                         android:inputType="textPassword"
                         android:minWidth="320dp"
                         android:minHeight="50dp" />
@@ -120,7 +125,7 @@
                 android:layout_gravity="right"
                 android:padding="10dp"
                 android:layout_marginRight="24dp"
-                android:text="Quên mật khẩu?" />
+                android:text="Quên mật khẩu?"/>
 
             <Button
                 android:id="@+id/btLogin"
