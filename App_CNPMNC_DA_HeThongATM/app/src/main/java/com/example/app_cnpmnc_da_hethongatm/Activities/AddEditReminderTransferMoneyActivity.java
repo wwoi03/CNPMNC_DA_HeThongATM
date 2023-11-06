@@ -7,11 +7,13 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -93,10 +95,10 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
 
     // khởi tạo dữ liệu
     private void initData() {
-        setupToolbar();
-
         getDataIntent = getIntent();
         flag = (int) getDataIntent.getSerializableExtra("flag");
+
+        setupToolbar();
 
         if (flag == ResultCode.EDIT_REMINDER_TRANSFER_MONEY) {
             editNhacChuyenTien = (NhacChuyenTien) getDataIntent.getSerializableExtra("editNhacChuyenTien");
@@ -115,9 +117,21 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
 
     // setup toolbar
     private void setupToolbar() {
-        tbToolbar.setTitle("Thêm mới nhắc chuyển tiền");
-        tbToolbar.setTitleTextColor(-1);
+        tbToolbar.setTitle("");
         setSupportActionBar(tbToolbar);
+
+        TextView textView = new TextView(this);
+
+        if (flag == ResultCode.EDIT_REMINDER_TRANSFER_MONEY) {
+            textView.setText("Chỉnh sửa nhắc chuyển tiền");
+        } else {
+            textView.setText("Thêm mới nhắc chuyển tiền");
+        }
+
+        textView.setTextSize(20);
+        textView.setTextColor(Color.WHITE);
+        textView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        tbToolbar.addView(textView);
 
         // kích hoạt nút quay lại trên ActionBar
         if (getSupportActionBar() != null) {

@@ -175,7 +175,7 @@
                         android:layout_marginBottom="6dp">
 
                         <!-- Nhập người thụ hưởng -->
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etAccountBeneficiary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
                             android:inputType="number"
                             android:padding="10dp"
                             android:background="@drawable/border_radius_all">
-                        </EditText>
+                        </com.google.android.material.textfield.TextInputEditText>
 
                         <!-- Icon -->
                         <ImageView
@@ -268,7 +268,7 @@
                         android:layout_marginBottom="10dp">
 
                         <!-- Nhập số tiền -->
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etMoney"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -277,7 +277,7 @@
                             android:inputType="number"
                             android:padding="10dp"
                             android:background="@drawable/border_radius_all">
-                        </EditText>
+                        </com.google.android.material.textfield.TextInputEditText>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -291,7 +291,7 @@
                     </RelativeLayout>
 
                     <!-- Phí giao dịch -->
-                    <EditText
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
@@ -300,10 +300,10 @@
                         android:padding="10dp"
                         android:background="@drawable/border_radius_all"
                         android:layout_marginBottom="10dp">
-                    </EditText>
+                    </TextView>
 
                     <!-- Nội dung chuyển tiền -->
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -313,7 +313,7 @@
                         android:padding="10dp"
                         android:background="@drawable/border_radius_all"
                         android:layout_marginBottom="10dp">
-                    </EditText>
+                    </com.google.android.material.textfield.TextInputEditText>
                 </LinearLayout>
 
                 <!-- Đăng nhập -->
