@@ -123,6 +123,7 @@
 
                             <!-- tiêu đề -->
                             <LinearLayout
+                                android:id="@+id/Lninetrestrate"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="bottom|left"
@@ -146,6 +147,7 @@
                                 android:layout_weight="1">
 
                                 <ImageView
+                                    android:id="@+id/imgDeposit"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:src="@drawable/piggy_bank_solid"

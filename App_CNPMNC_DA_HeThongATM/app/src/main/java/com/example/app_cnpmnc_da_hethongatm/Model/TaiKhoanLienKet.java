@@ -32,6 +32,12 @@ public class TaiKhoanLienKet implements Serializable {
         TienGD1Lan = tienGD1Lan;
     }
 
+    public TaiKhoanLienKet  (long soTaiKhoan,  double soDu, String key){
+        SoTaiKhoan = soTaiKhoan;
+        SoDu = soDu;
+        Key = key;
+    }
+
     public String getKey() {
         return Key;
     }

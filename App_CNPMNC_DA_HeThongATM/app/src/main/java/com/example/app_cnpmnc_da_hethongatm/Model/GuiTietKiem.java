@@ -11,9 +11,8 @@ public class GuiTietKiem implements Serializable {
     private String NgayGui;
     private double TienLaiToiKy;
     private double TienGui;
+    private String MaKHKey;
 
-    public GuiTietKiem() {
-    }
 
     public GuiTietKiem(String key, String maKHKey, long taiKhoanTietKiem, long taiKhoanNguon, String laiSuatKey, String ngayGui, double tienLaiToiKy, double tienGui) {
         Key = key;
@@ -24,8 +23,21 @@ public class GuiTietKiem implements Serializable {
         NgayGui = ngayGui;
         TienLaiToiKy = tienLaiToiKy;
         TienGui = tienGui;
+        MaKHKey = maKHKey;
     }
 
+    public String getMaKHKey() {
+        return MaKHKey;
+    }
+
+    public void setMaKHKey(String maKHKey) {
+        MaKHKey = maKHKey;
+    }
+
+    public GuiTietKiem(String key, long taiKhoanTietKiem){
+        this.Key = key;
+        this.TaiKhoanTietKiem = taiKhoanTietKiem;
+    }
     public String getKey() {
         return Key;
     }
