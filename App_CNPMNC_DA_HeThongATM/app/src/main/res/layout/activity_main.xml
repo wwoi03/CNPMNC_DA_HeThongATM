@@ -73,8 +73,8 @@
             <RelativeLayout
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:background="@drawable/circle_shape"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                android:background="@drawable/circle_shape">
 
                 <ImageView
                     android:id="@+id/txt9"
@@ -86,7 +86,7 @@
                     android:gravity="center"
                     android:src="@drawable/universal_access_solid"
                     android:textColor="#ffff"
-                    android:textSize="40sp"
+                    android:textSize="40dp"
                     android:textStyle="bold"
                     app:tint="@color/white" />
 
@@ -105,7 +105,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/baseline_qr_code_scanner_24"
+                        android:src="@drawable/barcode_solid"
                         app:tint="@color/white" />
 
                     <TextView
@@ -132,7 +132,7 @@
                         android:id="@+id/txt2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/baseline_qr_code_scanner_24"
+                        android:src="@drawable/piggy_bank_solid"
                         app:tint="@color/white" />
 
                     <TextView
@@ -160,7 +160,7 @@
                         android:id="@+id/txt3"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/baseline_qr_code_scanner_24"
+                        android:src="@drawable/hand_holding_dollar_solid"
                         app:tint="@color/white" />
 
                     <TextView
@@ -239,7 +239,8 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
         app:itemIconTint="@color/primary_blue_color"
-        app:itemTextColor="@color/primary_blue_color"/>
+        app:itemTextColor="@color/primary_blue_color"
+        android:visibility="visible"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

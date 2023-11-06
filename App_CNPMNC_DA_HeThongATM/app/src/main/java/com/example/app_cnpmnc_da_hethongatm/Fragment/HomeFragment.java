@@ -89,8 +89,7 @@ public class HomeFragment extends Fragment {
     ArrayList<ImageSlide> imageSlides;
     Handler handler = new Handler();
     Runnable runnable;
-    CardView cvTransferMoney, cvManageAccountAndCard;
-    LinearLayout cvHotro;
+    LinearLayout cvTransferMoney, cvManageAccountAndCard;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -107,7 +106,6 @@ public class HomeFragment extends Fragment {
         ci3 = view.findViewById(R.id.ci3);
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
-        cvHotro = view.findViewById(R.id.cvhotro);
     }
 
     // Khởi tạo
@@ -162,13 +160,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ManageAccountAndCardActivity.class);
-                startActivity(intent);
-            }
-        });
-        cvHotro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PhoneActivity.class);
                 startActivity(intent);
             }
         });

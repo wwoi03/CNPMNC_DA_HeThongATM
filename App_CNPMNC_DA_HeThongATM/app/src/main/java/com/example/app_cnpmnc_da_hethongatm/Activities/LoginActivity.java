@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // View
     EditText etPhone, etPassword;
-    Button btLogin;
+    Button btLogin, btRegister;
 
     String fileName = "config"; // dùng để lưu shared_preferences
     SharedPreferences sharedPreferences;
@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         etPassword = findViewById(R.id.etPassword);
         btLogin = findViewById(R.id.btLogin);
+        btRegister = findViewById(R.id.btRegister);
         progressBar = findViewById(R.id.progressBar);
     }
 
