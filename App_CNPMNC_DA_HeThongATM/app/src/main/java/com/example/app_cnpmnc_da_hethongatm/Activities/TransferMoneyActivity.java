@@ -134,6 +134,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     // khởi tạo dữ liệu
     public void initData() {
         setupToolbar();
+
         Intent getDataIntent = getIntent();
         if (getDataIntent.getData() != null) {
             flag = (int) getDataIntent.getSerializableExtra("flag");

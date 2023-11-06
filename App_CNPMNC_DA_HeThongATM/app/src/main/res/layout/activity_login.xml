@@ -1,105 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.LoginActivity"
-    android:layout_margin="24dp">
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    tools:context=".Activities.LoginActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbarThumbHorizontal="@null"
+        android:scrollbarThumbVertical="@null">
 
-        <!-- Hình đại diện -->
         <LinearLayout
+            android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/sacombank_home">
-            </ImageView>
-        </LinearLayout>
-
-        <!-- Email -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/baseline_local_phone_24"
-            android:hint="Số điện thoại"
-            app:boxBackgroundColor="@color/white">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPhone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="phone">
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Mật khẩu -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/baseline_remove_red_eye_24"
-            android:hint="Mật khẩu"
-            app:boxBackgroundColor="@color/white">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword">
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <!-- Đăng nhập -->
-        <Button
-            android:id="@+id/btLogin"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Đăng nhập">
-        </Button>
-
-        <!-- Đăng ký -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical|center_horizontal">
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="32dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/poo_solid"
+                app:tint="@color/primary_blue_color" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn chưa có tài khoản?"
-                android:textSize="16sp">
-            </TextView>
-
-            <TextView
-                android:id="@+id/tvRegister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đăng ký"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="Xin chào, DAO CONG TUAN"
+                android:textColor="#696969"
                 android:textSize="16sp"
-                android:textColor="#437FE6"
-                android:layout_marginStart="6dp">
-            </TextView>
-        </LinearLayout>
-    </LinearLayout>
+                android:textStyle="bold" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-    </ProgressBar>
-</RelativeLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/colorTextInputBackground"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_phone"
+                        android:drawableLeft="@drawable/ic_phone"
+                        android:drawablePadding="12dp"
+                        android:hint="Số điện thoại"
+                        android:imeOptions="actionNext"
+                        android:minWidth="320dp"
+                        android:minHeight="50dp"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="@color/colorTextInputBackground"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:hintEnabled="false"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_lock"
+                        android:drawableLeft="@drawable/ic_lock"
+                        android:drawablePadding="12dp"
+                        android:hint="Mật khẩu"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword"
+                        android:minWidth="320dp"
+                        android:minHeight="50dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                style="@style/TextyButton"
+                android:id="@+id/button_forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="10dp"
+                android:layout_marginRight="24dp"
+                android:text="Quên mật khẩu?" />
+
+            <Button
+                android:id="@+id/btLogin"
+                style="@style/Button1"
+                android:layout_width="342dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="Đăng nhập"
+                android:backgroundTint="@color/primary_blue_color"/>
+
+            <Button
+                style="@style/TextyButton"
+                android:id="@+id/btRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:text="@string/text_signin_signup" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+        </ProgressBar>
+
+    </RelativeLayout>
+</ScrollView>

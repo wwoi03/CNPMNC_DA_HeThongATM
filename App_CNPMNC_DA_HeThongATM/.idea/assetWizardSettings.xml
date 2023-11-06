@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_delete" />
-                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\universal-access-solid.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="poo_solid" />
+                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\poo-solid.svg" />
                           </map>
                         </option>
                       </PersistentState>
