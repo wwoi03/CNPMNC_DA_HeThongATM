@@ -22,8 +22,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             ChucNangViewModel chucNangViewModel = new ChucNangViewModel();
 
-            //ModelState.Clear();
-
             // Kiểm tra xem TempData có chứa dữ liệu không
             if (TempData.ContainsKey("chucNangViewModel"))
             {
@@ -33,9 +31,36 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     // Chuyển đổi JSON thành ChucNangViewModel
                     chucNangViewModel = JsonConvert.DeserializeObject<ChucNangViewModel>(serializedData);
                 }
-            }
 
-            chucNangViewModel.TenChucNang = chucNangViewModel.TenChucNang;
+                if (!TryValidateModel(chucNangViewModel, nameof(chucNangViewModel)))
+                {
+                    if (ModelState.IsValid)
+                    {
+
+                    } 
+                    else
+                    {
+                        var errorList = new List<(string key, string errorMessage)>();
+
+                        foreach (var key in ModelState.Keys)
+                        {
+                            var errors = ModelState[key].Errors;
+
+                            foreach (var error in errors)
+                            {
+                                errorList.Add((key, error.ErrorMessage));
+                            }
+                        }
+
+                        foreach (var error in errorList)
+                        {
+                            ModelState.AddModelError(error.key.Split('.')[1], error.errorMessage);
+                        }
+
+                        return View(chucNangViewModel); 
+                    }
+                }
+            }
 
             return View(chucNangViewModel);
         }
@@ -53,9 +78,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 ChucNang chucNang = chucNangViewModel.ConvertClassModel();
 
                 firebaseHelper.CreateService(chucNang);
+            } else
+            {
+                // Chuyển đổi ChucNangViewModel thành chuỗi JSON và lưu vào TempData
+                string serializedData = JsonConvert.SerializeObject(chucNangViewModel);
+                TempData["chucNangViewModel"] = serializedData;
             }
 
-            return RedirectToAction("Index", new { chucNangViewModel = chucNangViewModel, a = chucNangViewModel.TenChucNang });
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Details(string key)
+        {
+            ChucNangViewModel chucNangViewModel = new ChucNangViewModel();
+            chucNangViewModel.ConvertViewModel(firebaseHelper.GetServiceByKey(key));
+
+            // Chuyển đổi ChucNangViewModel thành chuỗi JSON và lưu vào TempData
+            string serializedData = JsonConvert.SerializeObject(chucNangViewModel);
+            TempData["chucNangViewModel"] = serializedData;
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Edit(string key)
@@ -67,7 +109,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             string serializedData = JsonConvert.SerializeObject(chucNangViewModel);
             TempData["chucNangViewModel"] = serializedData;
 
-            return RedirectToAction("Index", new { chucNangViewModel = chucNangViewModel});
+            return RedirectToAction("Index");
         }
     }
 }

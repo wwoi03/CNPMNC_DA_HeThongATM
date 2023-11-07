@@ -20,6 +20,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         [Required(ErrorMessage = "Vui lòng thêm icon dịch vụ.")]
         [Display(Name = "Icon dịch vụ")]
         public IFormFile ImageFile { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng thêm icon dịch vụ.")]
         public string IconChucNang { get; set; }
 
         public ChucNang ConvertClassModel()
