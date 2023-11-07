@@ -545,5 +545,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return listService;
         }
+
+        // Thêm chức năng
+        public void CreateService(ChucNang chucNang)
+        {
+            PushResponse response = client.Push("ChucNang", chucNang);
+            string newKey = response.Result.name;
+
+            // Gán key vào trường Key của đối tượng Chức năng
+            chucNang.Key = newKey;
+
+            // Cập nhật dữ liệu Nhân viên với key trong Firebase
+            SetResponse setResponse = client.Set("ChucNang/" + newKey, chucNang);
+        }
     }
 }

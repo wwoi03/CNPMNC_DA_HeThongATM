@@ -31,3 +31,7 @@
         position: absolute;
         right: 12px;
     }
+
+.form-edit {
+    display: none;
+}

@@ -1,7 +1,9 @@
-﻿@{
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+@{
 	Layout = "~/Views/Shared/_LayoutMain.cshtml";
 	var listService = ViewBag.listService;
 }
+@model ChucNang
 
 <div>
 	<!-- Start: BreadCrumbsPartial -->
@@ -32,9 +34,11 @@
 								&nbsp;Thêm
 							</a>
 						</div>
+
 						<div class="table-stats order-table ov-h" style="width: 100%; overflow-x: scroll">
 							<!-- Hiển thị danh sách -->
 							<table class="table" style="overflow-x: scroll">
+
 								<!-- Tiêu đề -->
 								<thead>
 									<tr>
@@ -86,42 +90,89 @@
 
 				<!-- Form -->
 				<div class="col-lg-5">
-					<div class="card">
-						<form action="#" method="post" novalidate="novalidate">
-							<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
-								<b>Thêm dịch vụ</b>
+					<div class="form-add-container">
+						<div class="card">
+							<form id="form-add" asp-controller="Service" asp-action="Create" method="post" enctype="multipart/form-data">
+								<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
+									<b>Thêm dịch vụ</b>
 
-								<!-- Lưu -->
-								<a asp-controller="Service" asp-action="Details" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
-									<i class="fa fa-save"></i>
-									&nbsp;Lưu
-								</a>
-							</div>
-
-							<!-- Form nhập -->
-							<div class="card-body">
-								<div class="form-group">
-									<label for="cc-payment" class="control-label mb-1">Tên chức năng</label>
-									<input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="" placeholder="Nhập tên chức năng">
+									<!-- Lưu -->
+									<a id="form-add-btn" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+										<i class="fa fa-save"></i>
+										&nbsp;Lưu
+									</a>
 								</div>
 
-								<div class="form-group has-success">
-									<label for="cc-name" class="control-label mb-1">Mã chức năng</label>
-									<input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" placeholder="Nhập mã chức năng" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name">
-									<span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+								<!-- Form nhập -->
+								<div class="card-body">
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Tên chức năng</label>
+										<input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" asp-for="TenChucNang" placeholder="Nhập tên chức năng">
+										<span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									</div>
+
+									<div class="form-group has-success">
+										<label for="cc-name" class="control-label mb-1">Mã chức năng</label>
+										<input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" asp-for="MaChucNang" placeholder="Nhập mã chức năng" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name">
+										<span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									</div>
+
+									<div class="form-group">
+										<label for="cc-number" class="control-label mb-1">Icon</label>
+										<br />
+										<input id="imageFile" name="imageFile" type="file" asp-for="IconChucNang">
+										<span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="form-edit">
+						<div class="card">
+							<form action="#" method="post" novalidate="novalidate">
+								<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
+									<b>Chỉnh sửa dịch vụ</b>
+
+									<!-- Lưu -->
+									<a asp-controller="Service" asp-action="Details" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+										<i class="fa fa-save"></i>
+										&nbsp;Lưu
+									</a>
 								</div>
 
-								<div class="form-group">
-									<label for="cc-number" class="control-label mb-1">Icon</label>
-									<br />
-									<input id="imageFile" name="imageFile" type="file">
-									<span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+								<!-- Form nhập -->
+								<div class="card-body">
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Key</label>
+										<input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="">
+									</div>
+
+									<div class="form-group">
+										<label for="cc-payment" class="control-label mb-1">Tên chức năng</label>
+										<input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="" placeholder="Nhập tên chức năng">
+									</div>
+
+									<div class="form-group has-success">
+										<label for="cc-name" class="control-label mb-1">Mã chức năng</label>
+										<input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" placeholder="Nhập mã chức năng" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name">
+										<span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+									</div>
+
+									<div class="form-group">
+										<label for="cc-number" class="control-label mb-1">Icon</label>
+										<br />
+										<input id="imageFile" name="imageFile" type="file">
+										<span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+									</div>
 								</div>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script src="~/js/service.js"></script>
