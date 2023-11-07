@@ -190,6 +190,49 @@
                         </ul>
                     </li>
 
+                    <!-- Quản trị hệ thống -->
+					<li class="menu-item-has-children dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-md"></i>Quản trị hệ thống</a>
+						<ul class="sub-menu children dropdown-menu">
+
+							<!-- khách hàng -->
+							<li>
+								<i class="menu-icon fa fa-user"></i>
+								<a asp-controller="Staff" asp-action="Index">Khách hàng</a>
+							</li>
+
+                            <!-- Loại tài khoản -->
+							<li>
+								<i class="menu-icon fa fa-user-md"></i>
+								<a asp-controller="Staff" asp-action="Create">Loại tài khoản</a>
+							</li>
+
+                            <!-- Thống kê -->
+							<li>
+								<i class="menu-icon fa fa-bar-chart-o"></i>
+								<a asp-controller="CreateCard" asp-action="Index">Thống kê</a>
+							</li>
+
+							<!-- Nhân viên -->
+							<li>
+								<i class="menu-icon fa fa-user-md"></i>
+								<a asp-controller="Staff" asp-action="Create">Nhân viên</a>
+							</li>
+
+							<!-- Chi nhánh -->
+							<li>
+								<i class="fa menu-icon fa-edit"></i>
+								<a asp-controller="Staff" asp-action="Index">Chi nhánh</a>
+							</li>
+
+                            <!-- Dịch vụ -->
+							<li>
+								<i class="menu-icon fa fa-gbp"></i>
+								<a asp-controller="Staff" asp-action="Index">Dịch vụ</a>
+							</li>
+						</ul>
+					</li>
+
 					<!-- Nhân viên -->
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-md"></i>Nhân viên</a>
