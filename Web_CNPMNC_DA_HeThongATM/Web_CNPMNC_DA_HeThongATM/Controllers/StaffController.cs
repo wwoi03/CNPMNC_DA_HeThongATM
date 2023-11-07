@@ -15,8 +15,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public static IFirebaseClient client;
         FirebaseHelper firebaseHelper;
 
-
-        
         public StaffController()
         {
             firebaseHelper = new FirebaseHelper();
@@ -73,7 +71,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             NhanVien nhanVien = new NhanVien()
             {
-                ChiNhanh = nhanVienViewModel.ChiNhanh,
+                ChiNhanhKey = nhanVienViewModel.ChiNhanh,
                 ChucVu = nhanVienViewModel.ChucVu,
                 DiaChi = nhanVienViewModel.DiaChi,
                 Email = nhanVienViewModel.Email,
@@ -85,9 +83,5 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper.CreateStaff(nhanVien);
             return RedirectToAction("Index", "Staff");
         }
-
-       
-
-
     }
 }

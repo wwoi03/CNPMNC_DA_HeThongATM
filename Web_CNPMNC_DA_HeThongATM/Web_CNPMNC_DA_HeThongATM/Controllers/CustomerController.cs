@@ -34,18 +34,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
                 };
                 khachHangViewModels.Add(pro);
-
-
             }
 
             ViewData["j"] = khachHangViewModels;
 
             return View();
         }
+
         public IActionResult CreateCustommer()
         {
             return View();
         }
+
         //tạo khách hàng
         [HttpPost]
         public IActionResult CreateCustommer(KhachHangViewModel customer)
@@ -64,6 +64,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View("CreateCustommer", customer);
 
         }
+
         //check cccd
         [HttpGet]
         public async Task<IActionResult> CheckCanCuoc(string cccd)
@@ -82,6 +83,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return Json(CheckSdt);
         }
+
         public IActionResult SearchCustomer(string searchCustomer)
         {
 
@@ -96,7 +98,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewThes.DiaChi = khachHang.DiaChi;
             ViewBag.IteamSeach = ViewThes;
             return PartialView("SearchCustomer");
-
         }
     }
 }

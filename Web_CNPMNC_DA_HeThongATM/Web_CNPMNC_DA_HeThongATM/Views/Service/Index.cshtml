@@ -1,0 +1,127 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutMain.cshtml";
+	var listService = ViewBag.listService;
+}
+
+<div>
+	<!-- Start: BreadCrumbsPartial -->
+	@Html.Partial("_BreadCrumbsPartial")
+	<!-- End: BreadCrumbsPartial -->
+
+	<div class="content" style="background: #F1F2F7;">
+		<div class="animated fadeIn">
+			<div class="row">
+				<!-- Danh sách -->
+				<div class="col-lg-7">
+					<div class="card">
+						<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
+							<b>Danh sách dịch vụ</b>
+
+							<!-- Tìm kiếm -->
+							<form class="search-form">
+								<input class="search-input" placeholder="Nhập tên dịch vụ">
+
+								<a class="search-btn">
+									<i class="fa fa-search"></i>
+								</a>
+							</form>
+
+							<!-- Thêm -->
+							<a asp-controller="Service" asp-action="Details" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+								<i class="fa fa-info-circle"></i>
+								&nbsp;Thêm
+							</a>
+						</div>
+						<div class="table-stats order-table ov-h" style="width: 100%; overflow-x: scroll">
+							<!-- Hiển thị danh sách -->
+							<table class="table" style="overflow-x: scroll">
+								<!-- Tiêu đề -->
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Icon</th>
+										<th>Tên</th>
+										<th>Chức năng</th>
+									</tr>
+								</thead>
+
+								<!-- Render -->
+								<tbody>
+									@for (int i = 0; i < listService.Count; i++)
+									{
+										<tr>
+											<td>@(i + 1).</td>
+
+											<td>
+												<div class="round-img">
+													<a href="#"><img class="rounded-circle" src="images/avatar/1.jpg" style="margin: 0px;" alt=""></a>
+												</div>
+											</td>
+
+											<td style="white-space: nowrap">
+												<span>@listService[i].TenChucNang</span>
+											</td>
+
+											<td style="color: #fff !important; white-space: nowrap">
+												<a asp-controller="Service" asp-action="Details" class="btn btn-sm color-white btn-size" style="background: #17A2B8 !important">
+													<i class="fa fa-info-circle"></i>
+													&nbsp;Xem
+												</a>
+												<a asp-controller="Service" asp-action="Edit" class="btn btn-sm color-white btn-size" style="background: #00C292 !important">
+													<i class="fa fa-edit"></i>
+													&nbsp;Sửa
+												</a>
+												<a asp-controller="Service" asp-action="Delete" class="btn btn-sm color-white btn-size" style="background: #FB9678 !important">
+													<i class="fa fa-trash-o"></i>
+													&nbsp;Xóa
+												</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div> <!-- /.table-stats -->
+					</div>
+				</div>
+
+				<!-- Form -->
+				<div class="col-lg-5">
+					<div class="card">
+						<form action="#" method="post" novalidate="novalidate">
+							<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
+								<b>Thêm dịch vụ</b>
+
+								<!-- Lưu -->
+								<a asp-controller="Service" asp-action="Details" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+									<i class="fa fa-save"></i>
+									&nbsp;Lưu
+								</a>
+							</div>
+
+							<!-- Form nhập -->
+							<div class="card-body">
+								<div class="form-group">
+									<label for="cc-payment" class="control-label mb-1">Tên chức năng</label>
+									<input id="cc-payment" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false" value="" placeholder="Nhập tên chức năng">
+								</div>
+
+								<div class="form-group has-success">
+									<label for="cc-name" class="control-label mb-1">Mã chức năng</label>
+									<input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" placeholder="Nhập mã chức năng" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name">
+									<span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+								</div>
+
+								<div class="form-group">
+									<label for="cc-number" class="control-label mb-1">Icon</label>
+									<br />
+									<input id="imageFile" name="imageFile" type="file">
+									<span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
