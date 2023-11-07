@@ -14,7 +14,7 @@
 		<div class="animated fadeIn">
 			<div class="row">
 				<!-- Danh sách -->
-				<div class="col-lg-7">
+				<div class="col-lg-8">
 					<div class="card">
 						<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
 							<b>Danh sách dịch vụ</b>
@@ -89,7 +89,7 @@
 				</div>
 
 				<!-- Form -->
-				<div class="col-lg-5">
+				<div class="col-lg-4">
 					<!-- Thêm -->
 					@if (Model.Key == null)
 					{
@@ -123,7 +123,7 @@
 										<div class="form-group">
 											<label for="cc-number" class="control-label mb-1">Icon</label>
 											<br />
-											<input id="imageFile" type="file" accept="image/*" asp-for="IconChucNang">
+											<input id="imageFile" type="file" accept="image/*" asp-for="ImageFile">
 											<br />
 											<span class="text-danger" asp-validation-for="@Model.IconChucNang"></span>
 										</div>
@@ -138,22 +138,22 @@
 					{
 						<div class="form-edit-container">
 							<div class="card">
-								<form action="#" method="post" novalidate="novalidate">
+								<form id="form-edit" asp-controller="Service" asp-action="Edit" method="post">
 									<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
-										<b>Chỉnh sửa dịch vụ</b>
+										<b>@ViewBag.titleAction</b>
 
 										<!-- Lưu -->
-									<a asp-controller="Service" asp-action="Details" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+										<a id="form-edit-btn" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
 											<i class="fa fa-save"></i>
 											&nbsp;Lưu
 										</a>
 									</div>
 
 									<!-- Form nhập -->
-								<div class="card-body">
+									<div class="card-body">
 										<div class="form-group">
 											<label for="cc-payment" class="control-label mb-1">Key</label>
-											<input type="text" class="form-control" readonly value="@Model.Key">
+											<input type="text" class="form-control" readonly value="@Model.Key" asp-for="Key">
 										</div>
 
 										<div class="form-group">
@@ -171,7 +171,8 @@
 										<div class="form-group">
 											<label for="cc-number" class="control-label mb-1">Icon</label>
 											<br />
-											<input id="imageFile" type="file" accept="image/*" asp-for="IconChucNang">
+											<input id="imageFile" type="file" accept="image/*" asp-for="ImageFile">
+											<input id="imageFile" hidden asp-for="IconChucNang" value="@Model.IconChucNang">
 											<br />
 											<span class="text-danger" asp-validation-for="IconChucNang"></span>
 										</div>

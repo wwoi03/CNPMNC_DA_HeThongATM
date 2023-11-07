@@ -28,6 +28,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         {
             ChucNang chucNang = new ChucNang()
             {
+                Key = Key,
                 MaChucNang = MaChucNang,
                 TenChucNang = TenChucNang,
                 IconChucNang = IconChucNang

@@ -566,5 +566,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return response.ResultAs<ChucNang>();
         }
+
+        // Sửa chức năng
+        public void UpdateService(ChucNang chucNang)
+        {
+            SetResponse setResponse = client.Set("ChucNang/" + chucNang.Key, chucNang);
+        }
     }
 }
