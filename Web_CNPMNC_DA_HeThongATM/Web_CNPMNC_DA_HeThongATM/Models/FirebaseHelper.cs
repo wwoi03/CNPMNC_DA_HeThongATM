@@ -558,5 +558,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // Cập nhật dữ liệu Nhân viên với key trong Firebase
             SetResponse setResponse = client.Set("ChucNang/" + newKey, chucNang);
         }
+
+        // lấy chức năng bằng key
+        public ChucNang GetServiceByKey(string key)
+        {
+            FirebaseResponse response = client.Get("ChucNang/" + key);
+
+            return response.ResultAs<ChucNang>();
+        }
     }
 }

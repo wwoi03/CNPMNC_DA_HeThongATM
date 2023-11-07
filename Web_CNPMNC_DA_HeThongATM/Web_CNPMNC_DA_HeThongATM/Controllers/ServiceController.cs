@@ -2,6 +2,7 @@
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
+using Newtonsoft.Json;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -16,22 +17,57 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
         public IActionResult Index()
         {
-            @ViewBag.pageTitle = "Dịch Vụ";
+            ViewBag.pageTitle = "Dịch Vụ";
             ViewBag.listService = firebaseHelper.GetListService();
 
-            return View();
+            ChucNangViewModel chucNangViewModel = new ChucNangViewModel();
+
+            //ModelState.Clear();
+
+            // Kiểm tra xem TempData có chứa dữ liệu không
+            if (TempData.ContainsKey("chucNangViewModel"))
+            {
+                string serializedData = TempData["chucNangViewModel"] as string;
+                if (!string.IsNullOrEmpty(serializedData))
+                {
+                    // Chuyển đổi JSON thành ChucNangViewModel
+                    chucNangViewModel = JsonConvert.DeserializeObject<ChucNangViewModel>(serializedData);
+                }
+            }
+
+            chucNangViewModel.TenChucNang = chucNangViewModel.TenChucNang;
+
+            return View(chucNangViewModel);
         }
 
+        // Thêm dịch vụ
         [HttpPost]
         public IActionResult Create(ChucNangViewModel chucNangViewModel)
         {
+            ModelState.Remove("Key");
+            ModelState.Remove("ImageFile");
+            ModelState.Remove("IconChucNang");
+
             if (ModelState.IsValid)
             {
                 ChucNang chucNang = chucNangViewModel.ConvertClassModel();
 
                 firebaseHelper.CreateService(chucNang);
             }
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", new { chucNangViewModel = chucNangViewModel, a = chucNangViewModel.TenChucNang });
+        }
+
+        public IActionResult Edit(string key)
+        {
+            ChucNangViewModel chucNangViewModel = new ChucNangViewModel();
+            chucNangViewModel.ConvertViewModel(firebaseHelper.GetServiceByKey(key));
+
+            // Chuyển đổi ChucNangViewModel thành chuỗi JSON và lưu vào TempData
+            string serializedData = JsonConvert.SerializeObject(chucNangViewModel);
+            TempData["chucNangViewModel"] = serializedData;
+
+            return RedirectToAction("Index", new { chucNangViewModel = chucNangViewModel});
         }
     }
 }

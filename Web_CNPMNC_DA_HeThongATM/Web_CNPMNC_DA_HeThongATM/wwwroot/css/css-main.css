@@ -32,6 +32,6 @@
         right: 12px;
     }
 
-.form-edit {
-    display: none;
+.form-edit-container {
+    display: block;
 }
