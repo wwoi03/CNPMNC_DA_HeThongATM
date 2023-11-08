@@ -62,6 +62,7 @@ public class NewaccountActivity extends AppCompatActivity {
                 String msg;
                 msg = "Bạn vừa cập nhật số tài khoản mới:\n";
                 Intent intent = new Intent(NewaccountActivity.this, AddNewAccount.class);
+                intent.putExtra("TaiKhoanSoDep", String.valueOf(arrayDanhSach.get(i)) );
                 startActivity(intent);
             }
         });
