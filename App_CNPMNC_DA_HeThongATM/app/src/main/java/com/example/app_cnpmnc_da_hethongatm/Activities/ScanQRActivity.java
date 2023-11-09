@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -46,7 +47,7 @@ public class ScanQRActivity extends AppCompatActivity {
                 intent.putExtra("SoTaiKhoan", SoTaiKhoan);
                 intent.putExtra("amount", amount);
                 intent.putExtra("message", message);
-                intent.putExtra("flag", -1 );
+                intent.putExtra("flag", ResultCode.SCAN_QR);
                 startActivity(intent);
             }else {
                 super.onActivityResult(requestCode, resultCode, data);

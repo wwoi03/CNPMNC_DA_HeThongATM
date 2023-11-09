@@ -19,4 +19,11 @@ public class ResultCode {
     // Nhắc chuyển tiền
     public static int ADD_REMINDER_TRANSFER_MONEY = 101; // thêm nhắc chuyển tiền
     public static int EDIT_REMINDER_TRANSFER_MONEY = 102; // sửa nhắc chuyển tiền
+
+    // Mẫu chuyển tiền
+    public static int LUU_MAU_CHUYEN_TIEN = 8123; // thêm nhắc chuyển tiền
+
+    // Quét QR
+    public static int SCAN_QR = 5554; // thêm nhắc chuyển tiền
+
 }
