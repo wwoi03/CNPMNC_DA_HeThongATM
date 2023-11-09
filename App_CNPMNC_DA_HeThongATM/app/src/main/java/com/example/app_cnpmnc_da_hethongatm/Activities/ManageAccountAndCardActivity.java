@@ -99,7 +99,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
                 // Hiển thị button theo loại tài khoản
                 hideButtonAccountType(); // ẩn tất cả button cũ
-                if (currentAccountCardInPage.getMaLoaiTKKey().equals("adoasdlkghqw")) // tạm thời gắn cứng
+                if (currentAccountCardInPage.getMaLoaiTKKey().equals("0")) // tạm thời gắn cứng
                     showButtonPaymentAccountType();
                 else
                     showButtonSavingAccountType();
