@@ -7,8 +7,10 @@ using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using UniqueIdGenerator;
 using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
-using Web_CNPMNC_DA_HeThongATM.Controllers;
-
+using Web_CNPMNC_DA_HeThongATM.Controllers;
+
+
+
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class FirebaseHelper
@@ -161,7 +163,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);        
                 if(data.TryGetValue(values, out KhachHang khachHang))
                 {
-                    return customer.TenKH;
+                    return khachHang.TenKH;
                 }
                 //var customer = data.Values.FirstOrDefault(kh => kh.CCCD == values);
 
@@ -508,52 +510,98 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             //lấy thông tin khách hàng gửi
             FirebaseResponse responseGet = client.Get("KhachHang");
-        }
-        public string GetAccount(long Value)
-        {
-            FirebaseResponse response = client.Get("TaiKhoanLienKet");
-            if (response != null)
-            {
-                Dictionary<string, TaiKhoanLienKetViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKetViewModel>>(response.Body);
-                var accountData = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
-                if (accountData != null)
-                {
-                    return string.Join(",", accountData);
-                }
-            }
-            else
-            {
-                Console.WriteLine(response.StatusCode);
-            }
-            return null;
-
-        }
-
-        public bool NapTien(double soTien, long value)
-        {
-            string info = GetAccount(value);
-            try
-            {
-                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
-
-                // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
-
-                //// Cộng số tiền vào số dư
-                //accountData.SoDu += soTien;
-                Double SoDuHientai = accountData.SoDu + soTien;
-
-
-                // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuHientai);
-
-                return true; // Cập nhật thành công
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
-                return false; // Cập nhật thất bại
-            }
+        }
+
+        public string GetAccount(long Value)
+
+        {
+
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+
+            if (response != null)
+
+            {
+
+                Dictionary<string, TaiKhoanLienKetViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKetViewModel>>(response.Body);
+
+                var accountData = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
+
+                if (accountData != null)
+
+                {
+
+                    return string.Join(",", accountData);
+
+                }
+
+            }
+
+            else
+
+            {
+
+                Console.WriteLine(response.StatusCode);
+
+            }
+
+            return null;
+
+
+
+        }
+
+
+
+        public bool NapTien(double soTien, long value)
+
+        {
+
+            string info = GetAccount(value);
+
+            try
+
+            {
+
+                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+
+
+                // Lấy dữ liệu tài khoản từ Firebase
+
+                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+
+
+                //// Cộng số tiền vào số dư
+
+                //accountData.SoDu += soTien;
+
+                Double SoDuHientai = accountData.SoDu + soTien;
+
+
+
+
+
+                // Cập nhật số dư trên Firebase
+
+                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuHientai);
+
+
+
+                return true; // Cập nhật thành công
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+
+                return false; // Cập nhật thất bại
+
+            }
+
         }
 
         //đừng xóa em đang sửa

@@ -28,7 +28,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     Email = i.Email,
                     GioiTinh = i.GioiTinh,
                     SoDienThoai = i.SoDienThoai,
-                    TenKhachHang = i.TenKH,
+                    TenKH = i.TenKH,
                     NgayTao = i.NgayTao,
 
 
@@ -41,17 +41,27 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult DetailsCustomer(string CCCD)
-        {
-            KhachHang khachhang = firebaseHelper.GetCustomerbyid(CCCD);
-            ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(CCCD);
-            ViewBag.Details = khachhang;
-            return View();
+        public IActionResult DetailsCustomer(string CCCD)
+
+        {
+
+            KhachHang khachhang = firebaseHelper.GetCustomerbyid(CCCD);
+
+            ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(CCCD);
+
+            ViewBag.Details = khachhang;
+
+            return View();
+
         }
-        [HttpPost]
-        public IActionResult DetailsCustomer(KhachHangViewModel khachhang)
-        {
-            return View();
+        [HttpPost]
+
+        public IActionResult DetailsCustomer(KhachHangViewModel khachhang)
+
+        {
+
+            return View();
+
         }
         public IActionResult CreateCustommer()
         {
@@ -102,7 +112,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             KhachHang khachHang = firebaseHelper.SearchCustomer(searchCustomer);
             KhachHangViewModel ViewThes = new KhachHangViewModel();
             ViewThes.CCCD = khachHang.CCCD;
-            ViewThes.TenKhachHang = khachHang.TenKH;
+            ViewThes.TenKH = khachHang.TenKH;
             ViewThes.NgayTao = khachHang.NgayTao;
             ViewThes.Email = khachHang.Email;
             ViewThes.SoDienThoai = khachHang.SoDienThoai;

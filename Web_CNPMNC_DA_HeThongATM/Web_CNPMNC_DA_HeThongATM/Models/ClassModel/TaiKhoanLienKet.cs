@@ -13,9 +13,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
         public int TinhTrangTaiKhoan { get; set; }
         public double HanMucTK { get; set; }
 
-        public long TienDaGD { get; set; }
-        public long TienGD1Lan { get; set; }
-        public double SoTien { get; set; }
+        public long TienDaGD { get; set; }
+
+        public long TienGD1Lan { get; set; }
+
+        //public double SoTien { get; set; }
+
         public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, long MaSoThe)
         {
             TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet();
