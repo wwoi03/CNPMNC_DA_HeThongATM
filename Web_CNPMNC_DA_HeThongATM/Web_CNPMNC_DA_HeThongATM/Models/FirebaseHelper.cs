@@ -7,6 +7,7 @@ using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using UniqueIdGenerator;
 using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+using Web_CNPMNC_DA_HeThongATM.Controllers;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
@@ -214,7 +215,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // Trả về null nếu không tìm thấy khách hàng
             return null;
         }
-
         //-------------------------------------------------------------------------------Nhân Viên---------------------------------------------------
 
         // Tính tổng tài sản ngân hàng

@@ -42,6 +42,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult DetailsCustomer(string CCCD)
+        {
+            KhachHang khachhang = firebaseHelper.GetCustomerbyid(CCCD);
+            ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(CCCD);
+            ViewBag.Details = khachhang;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult DetailsCustomer(KhachHangViewModel khachhang)
+        {
+            return View();
+        }
         public IActionResult CreateCustommer()
         {
             return View();

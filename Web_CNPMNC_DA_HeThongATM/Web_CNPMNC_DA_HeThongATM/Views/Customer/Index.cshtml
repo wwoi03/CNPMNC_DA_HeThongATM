@@ -26,13 +26,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th style="width:10%">Mã</th>
-                            <th style="width:15%">Tên</th>
-                            <th style="width:15%">NgayTao</th>
+                            <th style="width:15%">Mã</th>
+                            <th style="width:20%">Tên</th>
+                            <th style="width:20%%">Giới Tính</th>
                             <th style="width:15%%">Email</th>
                             <th style="width:10%">SDT</th>
-                            <th style="width:15%%">Giới Tính</th>
-                            <th style="width:20%;text-align:left">Địa chỉ</th>
+                            <th style="width:15%;text-align:left">Chức Năng</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,11 +42,23 @@
                             <tr>
                                 <td>@item.CCCD</td>
                                 <td>@item.TenKH</td>
-                                <td>@item.NgayTao</td>
+                                <td>@item.GioiTinh</td>
                                 <td>@item.Email</td>
                                 <td>@item.SoDienThoai</td>
-                                <td>@item.GioiTinh</td>
-                                <td>@item.DiaChi</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-controller="Customer" asp-action="DetailsCustomer" asp-route-CCCD="@item.CCCD">
+                                            
+                                        <i class="far fa-eye"></i>
+                                    </a>
+
+                                    <a class="btn btn-success" asp-controller="Customer" asp-action="Edit" asp-route-CCCD="@item.CCCD">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <a class="btn btn-danger" asp-controller="Customer" asp-action="Delete" asp-route-CCCD="@item.CCCD">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
                             </tr>
                             </tr>
                         }
