@@ -40,7 +40,7 @@ import java.util.UUID;
 public class DepositMoreSavingActivity extends AppCompatActivity {
 
     Button SendMoney;
-    TextView Source, tvSurplus ;
+    TextView tvSurplus ;
     EditText numberMoney;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference taikhoanlienketRef,guiTietKiemref,SaveMoney, loaiTaiKhoanRef,loaigiaodichRef,transaction, Laisuatref;
@@ -152,31 +152,21 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String number = numberMoney.getText().toString();
+                if(number.isEmpty()){
 
-                if (Double.valueOf(number)>Double.valueOf(sodu)){
-                    Toast.makeText(DepositMoreSavingActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
-                } else if (Double.valueOf(number)<100000.0) {
-                    Toast.makeText(DepositMoreSavingActivity.this, "So tien nhap phai >100000", Toast.LENGTH_SHORT).show();
-                    numberMoney.setText("");
-                }else {
-                    SaveMoney.child(guiTietKiem.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String tienGui = snapshot.child("TienGui").getValue().toString();
-                            Double tienGuiMoi = Double.valueOf(tienGui)+Double.valueOf(numberMoney.getText().toString());
-                            HashMap<String, Object> GTKNew = new HashMap<>();
-                            GTKNew.put("TienGui", tienGuiMoi);
-                            SaveMoney.child(guiTietKiem.getKey()).updateChildren(GTKNew);
-                            DbHelper.updateSurplus(key, Double.valueOf(sodu)-Double.valueOf(number));
-                            numberMoney.setText("");
-                            Toast.makeText(DepositMoreSavingActivity.this, "đã nộp thêm thành công ", Toast.LENGTH_SHORT).show();
-                        }
+                    Toast.makeText(DepositMoreSavingActivity.this, "Nhập số tiền vô cu ", Toast.LENGTH_SHORT).show();
+                    return;
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                }
+                else {
+                    if (Double.valueOf(number) > Double.valueOf(sodu)) {
+                        Toast.makeText(DepositMoreSavingActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
+                    } else if (Double.valueOf(number) < 100000.0) {
+                        Toast.makeText(DepositMoreSavingActivity.this, "Mẹ có tiền mà nạp kiểu gì vậy mày", Toast.LENGTH_SHORT).show();
+                        numberMoney.setText("");
+                    } else {
+                        deposit(number);
+                    }
                 }
             }
         });
@@ -195,6 +185,27 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void deposit(String number){
+        SaveMoney.child(guiTietKiem.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String tienGui = snapshot.child("TienGui").getValue().toString();
+                Double tienGuiMoi = Double.valueOf(tienGui)+Double.valueOf(numberMoney.getText().toString());
+                HashMap<String, Object> GTKNew = new HashMap<>();
+                GTKNew.put("TienGui", tienGuiMoi);
+                SaveMoney.child(guiTietKiem.getKey()).updateChildren(GTKNew);
+                DbHelper.updateSurplus(key, Double.valueOf(sodu)-Double.valueOf(number));
+                numberMoney.setText("");
+                Toast.makeText(DepositMoreSavingActivity.this, "đã nộp thêm thành công ", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     //ánh xạ view
