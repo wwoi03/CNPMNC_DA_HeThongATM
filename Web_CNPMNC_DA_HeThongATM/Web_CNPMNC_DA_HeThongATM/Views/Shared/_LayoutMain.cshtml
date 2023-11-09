@@ -100,6 +100,20 @@
 					</li>
 
                     <li style="border-bottom: 1px solid #D8D8D8; margin-bottom: 16px"></li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Đặt lịch hẹn</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li>
+                                <i class="menu-icon fa fa-list-alt"></i>
+                                <a asp-controller="Appointment" asp-action="Create">Đặt lịch hẹn</a>
+                            </li>
+                                
+                            <li>
+                                <i class="menu-icon fa fa-list-alt"></i>
+                                <a asp-controller="Appointment" asp-action="Index">Danh sách lịch hẹn</a>
+                            </li>
+                        </ul>
+                    </li>
 
 					<!-- Khách hàng -->
 					<li class="menu-item-has-children dropdown">
@@ -173,7 +187,7 @@
                             <!-- Nạp tiền -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Nạp tiền</a>
+                                <a asp-controller="Account" asp-action="Index">Nạp tiền</a>
                             </li>
 
                             <!-- Rút tiền -->

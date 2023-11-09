@@ -1,4 +1,4 @@
-﻿using FireSharp.Response;
+using FireSharp.Response;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models;
