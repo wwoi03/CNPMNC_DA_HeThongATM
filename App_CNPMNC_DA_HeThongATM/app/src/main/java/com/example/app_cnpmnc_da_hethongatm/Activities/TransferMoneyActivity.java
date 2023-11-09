@@ -348,7 +348,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private void transferMoney(double money, String noiDungChuyenKhoan,String ngaygd,double tiendaGD) {
         DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money,ngaygd,tiendaGD); // tài khoản nguồn
         DbHelper.updateSurplus(taiKhoanHuongKey, taiKhoanHuong.getSoDu() + money); // tài khoản hưởng
-        MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"-AWFo21aLu3212YNBUgf");
+        MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"0");
         BuildAlertDialogSuccess(taiKhoanNguon.getSoDu() - money);
     }
 
