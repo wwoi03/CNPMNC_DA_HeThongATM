@@ -2,7 +2,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
 {
     public class KhachHang
     {
-
         public string Key { get; set; }
         public string CCCD { get; set; }
         public string TenKH { get; set; }
@@ -14,6 +13,5 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
         public string NgayTao { get; set; } // "DD/MM/YYYY"
         public string MatKhau { get; set; }
         public string MaNhanVienKey { get; set; }
-       
     }
 }
