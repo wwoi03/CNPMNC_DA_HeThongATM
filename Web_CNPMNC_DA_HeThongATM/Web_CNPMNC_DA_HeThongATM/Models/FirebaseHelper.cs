@@ -590,6 +590,7 @@ public List<LoaiThe> GetTypesCards()
             dsLaiSuat = new List<LaiSuat>(data.Values);
             return dsLaiSuat;
         }
+      
 
         //tạo Lãi suất
         public void InsertLaiSuats(LaiSuatViewModel laiSuat)
@@ -670,55 +671,32 @@ public List<LoaiThe> GetTypesCards()
 
 
         //-------------------------------------------------mở khóa tài khoản ---------------------------------------------------------//
+
         public bool TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
         {
             string info = GetAccount(SoTaiKhoan);
+
             try
             {
-                // check tk có tồn tại ko
                 FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
 
                 if (response != null && response.ResultAs<TaiKhoanLienKetViewModel>() != null)
                 {
-                    // Cập nhật trạng thái tài khoản
-                    client.Set("TaiKhoanLienKet/" + info + "/TinhTrangTaiKhoan", tinhTrangTaiKhoan);
-                    return true; // Cập nhật thành công
+                    var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+                    // Kiểm tra giá trị tinhTrangTaiKhoan
+                    if (tinhTrangTaiKhoan == 0 || tinhTrangTaiKhoan == 1)
+                    {
+                        // Mở/khóa tài khoản
+                        accountData.TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+
+                        // Cập nhật trạng thái tài khoản
+                        client.Set("TaiKhoanLienKet/" + info, accountData);
+                        return true; // Cập nhật thành công
+                    }
                 }
-                else
-                {
-                    return false; // Cập nhật thất bại
-                }
-            }
-            catch (Exception ex)
-            {
-                return false; // Cập nhật thất bại
-            }
-        }
 
-
-
-
-
-        //-------------------------------------------------mở khóa tài khoản ---------------------------------------------------------//
-        public bool TinhTrangTaiKhoan(int tinhtrangTK, long value)
-        {
-            string info = GetAccount(value);
-            try
-            {
-                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
-
-                // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
-
-                ////  thay đổi trạng thái
-               
-                int TinhTrangTaiKhoan = accountData.TinhTrangTaiKhoan + tinhtrangTK;
-
-
-                // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/TinhTrangTaiKhoan", TinhTrangTaiKhoan);
-
-                return true; // Cập nhật thành công
+                return false; // Tài khoản không tồn tại hoặc giá trị tinhTrangTaiKhoan không hợp lệ
             }
             catch (Exception ex)
             {
@@ -726,6 +704,68 @@ public List<LoaiThe> GetTypesCards()
                 return false; // Cập nhật thất bại
             }
         }
+
+        public string GetAccountStatusMessage(int tinhTrangTaiKhoan)
+        {
+            switch (tinhTrangTaiKhoan)
+            {
+                case 0:
+                    return "Tài khoản đang hoạt động";
+                case 1:
+                    return "Tài khoản đang bị khóa";
+                default:
+                    return "Trạng thái không xác định";
+            }
+        }
+
+
+
+
+
+
+        //public bool TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
+        //{
+        //    string info = GetAccount(SoTaiKhoan);
+        //    try
+        //    {
+        //        FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+        //        if (response != null && response.ResultAs<TaiKhoanLienKetViewModel>() != null)
+        //        {
+        //            var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+        //            // Kiểm tra giá trị tinhTrangTaiKhoan
+        //            if (tinhTrangTaiKhoan == 1)
+        //            {
+        //                // Mở tài khoản
+        //                accountData.TinhTrangTaiKhoan = 1;
+        //            }
+        //            else if (tinhTrangTaiKhoan == 2)
+        //            {
+        //                // Khóa tài khoản
+        //                accountData.TinhTrangTaiKhoan = 2;
+        //            }
+        //            else
+        //            {
+        //                // Trạng thái không hợp lệ
+        //                return false;
+        //            }
+
+        //            // Cập nhật trạng thái tài khoản
+        //            client.Set("TaiKhoanLienKet/" + info, accountData);
+        //            return true; // Cập nhật thành công
+        //        }
+        //        else
+        //        {
+        //            return false; // Tài khoản không tồn tại
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false; // Cập nhật thất bại
+        //    }
+        //}
+
 
 
     }

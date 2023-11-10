@@ -155,16 +155,7 @@
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="ManageCardTypes" asp-action="CreateTypesCard">Tạo loại thẻ</a>
                             </li>
-                            <!-- Danh sách lãi suất-->
-                            <li>
-                                <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="ManageInterestRate" asp-action="Index">Danh sách lãi suất</a>
-                            </li>
-                            <!-- tạo lãi suất-->
-                            <li>
-                                <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">Tạo lãi suất</a>
-                            </li>
+                           
                             <!-- khóa mở tài khoản-->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
@@ -187,6 +178,22 @@
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="CreateCard" asp-action="Index">Thông kê khách hàng</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- QUản lý lãi suất -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-percent" aria-hidden="true"></i>Quản lý lãi suất</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!-- Danh sách lãi suất-->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ManageInterestRate" asp-action="Index">Danh sách lãi suất</a>
+                            </li>
+                            <!-- tạo lãi suất-->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">Tạo lãi suất</a>
                             </li>
                         </ul>
                     </li>

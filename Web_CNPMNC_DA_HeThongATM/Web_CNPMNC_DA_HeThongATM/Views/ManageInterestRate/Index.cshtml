@@ -3,14 +3,20 @@
 @model LaiSuatViewModel
 @{
     Layout = "_LayoutMain";
-    var LaiSuatList = ViewData["LaiSuatList"] as IEnumerable<LaiSuatViewModel>;
+    var laisuatlist = ViewData["aben"] as IEnumerable<LaiSuatViewModel>;
 
 }
 <body>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Danh sách Lãi suất</strong>
+                <tr>
+                    <th><strong class="card-title">Danh sách Lãi suất</strong></th>
+                    
+                   <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">
+                    <button asp-controller="ManageInterestRate" asp-action="Delete" class="btn btn-primary"> Thêm mới </button> 
+                   </a>
+                </tr>
             </div>
             <div class="table-stats order-table ov-h">
                 <table class="table ">
@@ -23,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in LaiSuatList)
+                        @foreach (var item in laisuatlist)
                         {
                             <tr>
                             <tr>

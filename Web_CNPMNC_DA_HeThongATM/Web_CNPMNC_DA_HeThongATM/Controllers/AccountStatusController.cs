@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
@@ -42,17 +43,35 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
         {
-            if (firebaseHelper.TrangThaiTk(SoTaiKhoan, tinhTrangTaiKhoan))
+            if (tinhTrangTaiKhoan == 0 || tinhTrangTaiKhoan == 1)
             {
-                return RedirectToAction("Index");
+                if (firebaseHelper.TrangThaiTk(SoTaiKhoan, tinhTrangTaiKhoan))
+                {
+                    // Successfully updated the status, get the updated status message
+                    string updatedStatusMessage = firebaseHelper.GetAccountStatusMessage(tinhTrangTaiKhoan);
+
+                    // You can pass the updated status message to the view or use it as needed
+                    ViewBag.StatusMessage = updatedStatusMessage;
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // Xử lý khi thay đổi trạng thái không thành công
+                    return View("Error");
+                }
             }
             else
             {
-                // Xử lý khi thay đổi trạng thái không thành công
+                // Xử lý khi giá trị tinhTrangTaiKhoan không hợp lệ
                 return View("Error");
             }
         }
 
-       
+
+
+
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
+
     // form edit lãi suất
     // JavaScript to handle the "Edit" button click and populate the form
     $(".edit-button").on("click", function () {
@@ -73,6 +74,29 @@
                     {
                         console.log(data);
                         document.getElementById('tenTK').value = data;
+                    }
+                })
+            });
+        });
+    }
+
+    GettrangthaiTK();
+
+    function GettrangthaiTK() {
+        $(document).ready(function () {
+
+            $("#TinhTrangTaiKhoan").change(function () {
+
+                let stk = $(this).val();
+                console.log(stk);
+
+                $.ajax({
+                    url: '/AccountStatus/TrangThaiTk',
+                    type: 'get',
+                    data: { TinhTrangTaiKhoan: tttk },
+                    success: function (data) {
+                        console.log(data);
+                        document.getElementById('tentinhtrangTK').value = data;
                     }
                 })
             });

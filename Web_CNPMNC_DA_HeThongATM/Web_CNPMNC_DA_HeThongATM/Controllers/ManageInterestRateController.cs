@@ -17,26 +17,52 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
 
+
         // Danh sách Lãi suất
+        //public IActionResult Index()
+        //{
+        //    List<LaiSuat> laiSuats = firebaseHelper.GetLaiSuats();
+        //    List<LaiSuatViewModel> LaiSuatViewModel = new List<LaiSuatViewModel>();
+
+        //    foreach (var i in laiSuats)
+        //    {
+        //        var pro = new LaiSuatViewModel
+        //        {
+        //            Key = i.Key,
+        //            KyHan = i.KyHan,
+        //            TiLe = i.TiLe,
+        //        };
+        //        LaiSuatViewModel.Add(pro);
+        //    }
+
+        //    ViewData["LaiSuatList"] = LaiSuatViewModel;
+
+        //    return View();
+        //}
         public IActionResult Index()
         {
-            List<LaiSuat> khachHangs = firebaseHelper.GetLaiSuats();
-            List<LaiSuatViewModel> LaiSuatViewModel = new List<LaiSuatViewModel>();
-            foreach (var i in khachHangs)
+            List<LaiSuat> laiSuats = firebaseHelper.GetLaiSuats();
+            List<LaiSuatViewModel> laiSuatViewModels = new List<LaiSuatViewModel>();
+            foreach (var i in laiSuats)
             {
                 var pro = new LaiSuatViewModel
                 {
                     Key = i.Key,
                     KyHan = i.KyHan,
-                    TiLe = i.TiLe,
+                    TiLe = i.TiLe
+
+
                 };
-                LaiSuatViewModel.Add(pro);
+                laiSuatViewModels.Add(pro);
+
+
             }
 
-            ViewData["LaiSuatList"] = LaiSuatViewModel;
+            ViewData["aben"] = laiSuatViewModels;
 
             return View();
         }
+
         //tạo lãi suất
         public IActionResult CreateLaiSuat()
         {
