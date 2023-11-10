@@ -1,4 +1,4 @@
-﻿namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 {
     public class TaiKhoanLienKetViewModel
     {

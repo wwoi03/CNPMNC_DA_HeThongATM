@@ -121,5 +121,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewBag.IteamSeach = ViewThes;
             return PartialView("SearchCustomer");
         }
+            */
     }
 }

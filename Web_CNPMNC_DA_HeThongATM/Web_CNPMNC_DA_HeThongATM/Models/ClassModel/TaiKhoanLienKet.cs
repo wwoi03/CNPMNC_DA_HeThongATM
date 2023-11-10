@@ -12,6 +12,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
         public string TenTK { get; set; }
         public int TinhTrangTaiKhoan { get; set; }
         public double HanMucTK { get; set; }
+        public double SoTien { get; set; }
 
         public long TienDaGD { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using FireSharp.Config;
+using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Microsoft.AspNetCore.Mvc;
