@@ -51,6 +51,10 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
     List<TaiKhoanLienKet> lienKetList;
     TaiKhoanLienKet taiKhoanLienKet;
     String source,sodu, key,keygiaodich, loaitk,kyhan;
+    int currentPosition=-1;
+    int currentGTKPosition=-1;
+    boolean isDeposit=false;
+    boolean isGTK=false;
 //ff
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
         // Định dạng ngày thành chuỗi ngày/tháng/năm
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGui = dateFormat.format(currentDate);
-        loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("Tài khoản thanh toán").addValueEventListener(new ValueEventListener() {
+        loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("thanh toán").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -116,6 +120,8 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
                     tvSurplus.setText(String.valueOf(taiKhoanLienKet.getSoDu()));
                     SpinnerSourceAdapter spinnerSourceAdapter = new SpinnerSourceAdapter(lienKetList, DepositMoreSavingActivity.this);
                     sourceSpinner.setAdapter(spinnerSourceAdapter);
+                    //lay Spinerdata
+                    getSpinerdata();
                 }
 
             }
@@ -128,13 +134,24 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
         sourceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TaiKhoanLienKet taiKhoanLienKet = lienKetList.get(position);
-                tvSurplus.setText(String.format("%.0f", taiKhoanLienKet.getSoDu()));
+
+                if (currentPosition!=-1&&isDeposit==true){
+                    taiKhoanLienKet = lienKetList.get(currentPosition);
+                    tvSurplus.setText(String.format("%.0f", taiKhoanLienKet.getSoDu()));
+                    sourceSpinner.setSelection(currentPosition);
+                    isDeposit=false;
+                }else {
+                    taiKhoanLienKet = lienKetList.get(position);
+                    tvSurplus.setText(String.format("%.0f", taiKhoanLienKet.getSoDu()));
+                    currentPosition = position;
+                }
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                taiKhoanLienKet = lienKetList.get(0);
+                tvSurplus.setText(String.format("%.0f", taiKhoanLienKet.getSoDu()));
             }
         });
         loaigiaodich.addValueEventListener(new ValueEventListener() {
@@ -171,12 +188,18 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
             }
         });
 
-        //lay Spinerdata
-        getSpinerdata();
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                guiTietKiem = guiTietKiemList.get(position);
+                if (currentGTKPosition!=-1&&isGTK==true){
+                    guiTietKiem = guiTietKiemList.get(currentGTKPosition);
+                    spinner.setSelection(currentGTKPosition);
+                    isGTK=false;
+                }else {
+                    guiTietKiem = guiTietKiemList.get(position);
+                    currentGTKPosition=position;
+                }
             }
 
             @Override
@@ -199,6 +222,8 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
                 DbHelper.updateSurplus(taiKhoanLienKet.getKey(), taiKhoanLienKet.getSoDu()-Double.valueOf(number));
                 numberMoney.setText("");
                 Toast.makeText(DepositMoreSavingActivity.this, "đã nộp thêm thành công ", Toast.LENGTH_SHORT).show();
+                isDeposit=true;
+                isGTK=true;
             }
 
             @Override
@@ -227,7 +252,9 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
                 guiTietKiemList = new ArrayList<>();
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
                     String tkNguon = dataSnapshot.child("TaiKhoanNguon").getValue().toString();
-                    if (String.valueOf(taiKhoanLienKet.getSoTaiKhoan()).equals(tkNguon)) {
+                    int positionGTK = sourceSpinner.getSelectedItemPosition();
+                    String tkNguonSoSanh = String.valueOf(lienKetList.get(positionGTK).getSoTaiKhoan());
+                    if (tkNguonSoSanh.equals(tkNguon)) {
                         String GTKkey = dataSnapshot.getKey();
                         String GTKTKTK = dataSnapshot.child("TaiKhoanTietKiem").getValue().toString();
                         guiTietKiem = new GuiTietKiem(GTKkey, Long.valueOf(GTKTKTK));
@@ -236,7 +263,6 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
 
                 }
                 SpinnerDepositAdapter spinnerDepositAdapter = new SpinnerDepositAdapter(guiTietKiemList, DepositMoreSavingActivity.this);
-
                 spinner.setAdapter(spinnerDepositAdapter);
             }
 

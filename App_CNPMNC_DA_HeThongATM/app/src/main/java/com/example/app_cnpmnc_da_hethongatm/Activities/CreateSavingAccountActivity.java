@@ -87,7 +87,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGui = dateFormat.format(currentDate);
 
-        Query queryLoaiTK = loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("Tài khoản thanh toán");
+        Query queryLoaiTK = loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("thanh toán");
         queryLoaiTK.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
