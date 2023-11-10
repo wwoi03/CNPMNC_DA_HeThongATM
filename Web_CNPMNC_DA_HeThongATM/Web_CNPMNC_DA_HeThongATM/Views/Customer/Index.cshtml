@@ -1,9 +1,10 @@
 ﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
-
+@using PagedList.Mvc;
+@using PagedList;
 @model KhachHangViewModel
 @{
     Layout = "_LayoutMain";
-    var custommerList = ViewData["j"] as IEnumerable<KhachHangViewModel>;
+    var custommerList = ViewData["j"] as IPagedList<KhachHangViewModel>;
 }
 <body>
     <div class="col-lg-12">
@@ -39,7 +40,7 @@
                         @foreach (var item in custommerList)
                         {
 
-                            <tr>
+                            
                             <tr>
                                 <td>@item.CCCD</td>
                                 <td>@item.TenKhachHang</td>
@@ -49,10 +50,26 @@
                                 <td>@item.GioiTinh</td>
                                 <td>@item.DiaChi</td>
                             </tr>
-                            </tr>
+                            
                         }
+                       
                     </tbody>
                 </table>
+                <div>
+                    Page @(custommerList.PageCount < custommerList.PageNumber ? 0 : custommerList.PageNumber) of @custommerList.PageCount
+
+                    @if (custommerList.HasPreviousPage)
+                    {
+                        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("<", "Index", new { page = custommerList.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                    }
+
+                    @if (custommerList.HasNextPage)
+                    {
+                        @Html.ActionLink(">", "Index", new { page = custommerList.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink(">>", "Index", new { page = custommerList.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                    }
+                </div>
             </div>
             <div class="table-stats order-table ov-h" id="SearchCustomerID">
             </div><!-- /.table-stats -->

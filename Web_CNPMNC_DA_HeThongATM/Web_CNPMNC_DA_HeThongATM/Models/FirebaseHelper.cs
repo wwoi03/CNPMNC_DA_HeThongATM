@@ -31,7 +31,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             List<KhachHang> dsKhachHang = new List<KhachHang>();
             FirebaseResponse response = client.Get("KhachHang");
-            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
             dsKhachHang = new List<KhachHang>(data.Values);
             return dsKhachHang;
         }
@@ -153,9 +153,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
         //lấy tên  khách hàng qua id
-        public string GetNameCustomerbyid(string values)
+        public async Task<string> GetNameCustomerbyid(string values)
         {
-            FirebaseResponse response = client.Get("KhachHang");
+            FirebaseResponse response = await client.GetAsync("KhachHang");
             if (response != null)
             {
                 Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);        
@@ -481,9 +481,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         }
         //danh sách thẻ 
-        public List<TheNganHang> getListCard()
+        public async Task<List<TheNganHang>> getListCard()
         {
-            FirebaseResponse response = client.Get("TheNganHang");
+            FirebaseResponse response = await client.GetAsync("TheNganHang");
             if (response != null)
             {
                 Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
