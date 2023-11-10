@@ -550,58 +550,28 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         }
 
-
-
         public bool NapTien(double soTien, long value)
-
         {
-
             string info = GetAccount(value);
-
             try
-
             {
-
                 FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
 
-
-
                 // Lấy dữ liệu tài khoản từ Firebase
-
-                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
-
-
-
-                //// Cộng số tiền vào số dư
-
-                //accountData.SoDu += soTien;
+                var accountData = response.ResultAs<TaiKhoanLienKet>();
 
                 Double SoDuHientai = accountData.SoDu + soTien;
 
-
-
-
-
                 // Cập nhật số dư trên Firebase
-
                 client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuHientai);
-
-
 
                 return true; // Cập nhật thành công
 
             }
-
             catch (Exception ex)
-
             {
-
-                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
-
                 return false; // Cập nhật thất bại
-
             }
-
         }
 
         //đừng xóa em đang sửa

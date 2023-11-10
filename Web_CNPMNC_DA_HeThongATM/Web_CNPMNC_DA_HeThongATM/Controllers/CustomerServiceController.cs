@@ -55,5 +55,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 return Json("Không tìm thấy");
             }
         }
+
+        // Nạp tiền
+        public IActionResult NapTien()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NapTien(TaiKhoanLienKetViewModel account)
+        {
+            double sotien = account.SoTien;
+            firebaseHelper.NapTien(sotien, account.SoTaiKhoan);
+            return RedirectToAction("NapTien");
+        }
     }
 }
