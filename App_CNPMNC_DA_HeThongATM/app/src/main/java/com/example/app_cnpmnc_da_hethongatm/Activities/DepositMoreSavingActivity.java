@@ -49,7 +49,7 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
     List<GuiTietKiem> guiTietKiemList;
     GuiTietKiem guiTietKiem;
     List<TaiKhoanLienKet> lienKetList;
-
+    TaiKhoanLienKet taiKhoanLienKet;
     String source,sodu, key,keygiaodich, loaitk,kyhan;
 //ff
     @Override
@@ -84,7 +84,7 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
         // Định dạng ngày thành chuỗi ngày/tháng/năm
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGui = dateFormat.format(currentDate);
-        loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("thanh toán").addValueEventListener(new ValueEventListener() {
+        loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("Tài khoản thanh toán").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -108,12 +108,12 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
                         sodu = dataSnapshot.child("SoDu").getValue().toString();
                         key = dataSnapshot.getKey();
 
-                        TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet(Long.parseLong(source), Double.valueOf(sodu), key);
+                        taiKhoanLienKet = new TaiKhoanLienKet(Long.parseLong(source), Double.valueOf(sodu), key);
                         lienKetList.add(taiKhoanLienKet);
                     }
                 }
-                if(sodu!= null){
-                    tvSurplus.setText(sodu);
+                if(String.valueOf(taiKhoanLienKet.getSoDu())!= null){
+                    tvSurplus.setText(String.valueOf(taiKhoanLienKet.getSoDu()));
                     SpinnerSourceAdapter spinnerSourceAdapter = new SpinnerSourceAdapter(lienKetList, DepositMoreSavingActivity.this);
                     sourceSpinner.setAdapter(spinnerSourceAdapter);
                 }
@@ -159,7 +159,7 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
 
                 }
                 else {
-                    if (Double.valueOf(number) > Double.valueOf(sodu)) {
+                    if (Double.valueOf(number) >taiKhoanLienKet.getSoDu()) {
                         Toast.makeText(DepositMoreSavingActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
                     } else if (Double.valueOf(number) < 100000.0) {
                         Toast.makeText(DepositMoreSavingActivity.this, "Mẹ có tiền mà nạp kiểu gì vậy mày", Toast.LENGTH_SHORT).show();
@@ -196,7 +196,7 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
                 HashMap<String, Object> GTKNew = new HashMap<>();
                 GTKNew.put("TienGui", tienGuiMoi);
                 SaveMoney.child(guiTietKiem.getKey()).updateChildren(GTKNew);
-                DbHelper.updateSurplus(key, Double.valueOf(sodu)-Double.valueOf(number));
+                DbHelper.updateSurplus(taiKhoanLienKet.getKey(), taiKhoanLienKet.getSoDu()-Double.valueOf(number));
                 numberMoney.setText("");
                 Toast.makeText(DepositMoreSavingActivity.this, "đã nộp thêm thành công ", Toast.LENGTH_SHORT).show();
             }
@@ -227,7 +227,7 @@ public class DepositMoreSavingActivity extends AppCompatActivity {
                 guiTietKiemList = new ArrayList<>();
                 for(DataSnapshot dataSnapshot: snapshot.getChildren()){
                     String tkNguon = dataSnapshot.child("TaiKhoanNguon").getValue().toString();
-                    if (source.equals(tkNguon)) {
+                    if (String.valueOf(taiKhoanLienKet.getSoTaiKhoan()).equals(tkNguon)) {
                         String GTKkey = dataSnapshot.getKey();
                         String GTKTKTK = dataSnapshot.child("TaiKhoanTietKiem").getValue().toString();
                         guiTietKiem = new GuiTietKiem(GTKkey, Long.valueOf(GTKTKTK));

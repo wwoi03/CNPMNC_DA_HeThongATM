@@ -87,7 +87,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGui = dateFormat.format(currentDate);
 
-        Query queryLoaiTK = loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("thanh toán");
+        Query queryLoaiTK = loaiTaiKhoanRef.orderByChild("TenLoaiTaiKhoan").equalTo("Tài khoản thanh toán");
         queryLoaiTK.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -111,12 +111,12 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
                         sodu = dataSnapshot.child("SoDu").getValue().toString();
                         key = dataSnapshot.getKey();
 
-                        TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet(Long.parseLong(tknguon), Double.valueOf(sodu), key);
+                        taiKhoanLienKet = new TaiKhoanLienKet(Long.parseLong(tknguon), Double.valueOf(sodu), key);
                         lienKetList.add(taiKhoanLienKet);
                     }
                 }
-                if(sodu!= null){
-                    tvSurplus.setText(sodu);
+                if(String.valueOf(taiKhoanLienKet.getSoDu())!= null){
+                    tvSurplus.setText(String.valueOf(taiKhoanLienKet.getSoDu()));
                     SpinnerSourceAdapter spinnerSourceAdapter = new SpinnerSourceAdapter(lienKetList, CreateSavingAccountActivity.this);
                     sourceSpinner.setAdapter(spinnerSourceAdapter);
                 }
@@ -205,7 +205,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         UUID uuidGD = UUID.randomUUID();
         String giaoDichKey = uuidGD.toString();
 
-        SaveMoney.addValueEventListener(new ValueEventListener()
+        SaveMoney.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -241,12 +241,12 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
                 giaoDich.put("NoiDungChuyenKhoan", "");
                 giaoDich.put("SoTienGiaoDich", Double.valueOf(number));
                 giaoDich.put("PhiGiaoDich", 0);
-                giaoDich.put("SoDuLucGui",Double.valueOf(sodu)-Double.valueOf(number) );
+                giaoDich.put("SoDuLucGui",taiKhoanLienKet.getSoDu()-Double.valueOf(number) );
                 giaoDich.put("SoDuLucNhan", soDuTKTK+Double.valueOf(number) );
                 giaoDich.put("LoaiGiaoDichKey", keygiaodich);
 
                 transaction.child(giaoDichKey).setValue(giaoDich);
-                DbHelper.updateSurplus(key, Double.valueOf(sodu)-Double.valueOf(number));
+                DbHelper.updateSurplus(taiKhoanLienKet.getKey(), taiKhoanLienKet.getSoDu()-Double.valueOf(number));
             }
 
             @Override
