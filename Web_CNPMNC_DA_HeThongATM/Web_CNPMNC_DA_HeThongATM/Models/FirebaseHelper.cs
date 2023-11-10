@@ -629,6 +629,274 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //    return null;
         //}
 
+        //----------------------------------------------------- Dịch vụ khách hàng -----------------------------------------------------
+        //Chức năng Rút tiền
+        public bool RutTien(double soTien, long soTaiKhoan)
+        {
+            // Lấy thông tin tài khoản từ Firebase bằng số tài khoản
+            string info = GetAccount(soTaiKhoan);
+
+            if (info != null)
+            {
+                try
+                {
+                    // Lấy dữ liệu tài khoản từ Firebase
+                    FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+                    var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+                    // Kiểm tra xem số dư trong tài khoản có đủ để rút không
+                    if (accountData.SoDu >= soTien)
+                    {
+                        // Trừ số tiền vào số dư
+                        double SoDuMoi = accountData.SoDu - soTien;
+
+                        // Cập nhật số dư trên Firebase
+                        client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuMoi);
+
+                        return true; // Rút tiền thành công
+                    }
+                    else
+                    {
+                        // Số dư không đủ để rút
+                        return false; // Rút tiền thất bại
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+                    return false; // Rút tiền thất bại
+                }
+            }
+            else
+            {
+                // Số tài khoản không tồn tại
+                return false; // Rút tiền thất bại
+            }
+        }
+
+        // chuyển tiền
+        public bool ChuyenTien(double soTien, long value)
+        {
+            string info = GetAccount(value);
+            try
+            {
+                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+                // Lấy dữ liệu tài khoản từ Firebase
+                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+                ////  Chuyển tiền xong cộng số tiền vào số dư
+                //accountData.SoDu += soTien;
+                Double SoDu = accountData.SoDu + soTien;
+
+
+                // Cập nhật số dư trên Firebase
+                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDu);
+
+                return true; // Cập nhật thành công
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+                return false; // Cập nhật thất bại
+            }
+        }
+
+        //Lấy tên tài khoản bằng Số tài khoản
+        public TaiKhoanLienKet GetAccountbyid(long sotaikhoan)
+        {
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            if (response != null)
+            {
+                Dictionary<string, TaiKhoanLienKet> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKet>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.SoTaiKhoan == sotaikhoan);
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+
+        //-------------------------------------------------QUản lý lãi suất---------------------------------------------------------//
+
+        //Danh sách LÃI SUẤT
+        public List<LaiSuat> GetLaiSuats()
+        {
+            List<LaiSuat> dsLaiSuat = new List<LaiSuat>();
+            FirebaseResponse response = client.Get("LaiSuat");
+            Dictionary<string, LaiSuat> data = response.ResultAs<Dictionary<string, LaiSuat>>();
+            dsLaiSuat = new List<LaiSuat>(data.Values);
+            return dsLaiSuat;
+        }
+
+
+        //tạo Lãi suất
+        public void InsertLaiSuats(LaiSuatViewModel laiSuat)
+        {
+
+            try
+            {
+                FirebaseResponse response = client.Set("LaiSuat/" + laiSuat.Key, laiSuat);
+                if (response != null)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+        }
+
+        public LaiSuatViewModel GetLaiSuatByKey(string key)
+        {
+            try
+            {
+                FirebaseResponse response = client.Get("LaiSuat/" + key);
+                if (response == null || string.IsNullOrEmpty(response.Body))
+                {
+                    return null;
+                }
+
+                LaiSuatViewModel laiSuat = JsonConvert.DeserializeObject<LaiSuatViewModel>(response.Body);
+                return laiSuat;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        // update lãi suất
+        public void UpdateLaiSuatByKey(string key, LaiSuatViewModel updatedLaiSuat)
+        {
+            try
+            {
+                FirebaseResponse response = client.Update("LaiSuat/" + key, updatedLaiSuat);
+                if (response != null)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        //delete lãi suất
+        public void DeleteLaiSuat(string key)
+        {
+            try
+            {
+
+                var path = "LaiSuat/" + key;
+
+                client.Delete(path);
+
+                // Xóa thành công
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        //-------------------------------------------------mở khóa tài khoản ---------------------------------------------------------//
+        public bool TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
+        {
+            string info = GetAccount(SoTaiKhoan);
+
+            try
+            {
+                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+                if (response != null && response.ResultAs<TaiKhoanLienKetViewModel>() != null)
+                {
+                    var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+                    // Kiểm tra giá trị tinhTrangTaiKhoan
+                    if (tinhTrangTaiKhoan == 0 || tinhTrangTaiKhoan == 1)
+                    {
+                        // Mở/khóa tài khoản
+                        accountData.TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+
+                        // Cập nhật trạng thái tài khoản
+                        client.Set("TaiKhoanLienKet/" + info, accountData);
+                        return true; // Cập nhật thành công
+                    }
+                }
+
+                return false; // Tài khoản không tồn tại hoặc giá trị tinhTrangTaiKhoan không hợp lệ
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+                return false; // Cập nhật thất bại
+            }
+        }
+
+        public string GetAccountStatusMessage(int tinhTrangTaiKhoan)
+        {
+            switch (tinhTrangTaiKhoan)
+            {
+                case 0:
+                    return "Tài khoản đang hoạt động";
+                case 1:
+                    return "Tài khoản đang bị khóa";
+                default:
+                    return "Trạng thái không xác định";
+            }
+        }
+
+        //public bool TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
+        //{
+        //    string info = GetAccount(SoTaiKhoan);
+        //    try
+        //    {
+        //        FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+        //        if (response != null && response.ResultAs<TaiKhoanLienKetViewModel>() != null)
+        //        {
+        //            var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+        //            // Kiểm tra giá trị tinhTrangTaiKhoan
+        //            if (tinhTrangTaiKhoan == 1)
+        //            {
+        //                // Mở tài khoản
+        //                accountData.TinhTrangTaiKhoan = 1;
+        //            }
+        //            else if (tinhTrangTaiKhoan == 2)
+        //            {
+        //                // Khóa tài khoản
+        //                accountData.TinhTrangTaiKhoan = 2;
+        //            }
+        //            else
+        //            {
+        //                // Trạng thái không hợp lệ
+        //                return false;
+        //            }
+
+        //            // Cập nhật trạng thái tài khoản
+        //            client.Set("TaiKhoanLienKet/" + info, accountData);
+        //            return true; // Cập nhật thành công
+        //        }
+        //        else
+        //        {
+        //            return false; // Tài khoản không tồn tại
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false; // Cập nhật thất bại
+        //    }
+        //}
+
         //----------------------------------------------------- Chức năng -----------------------------------------------------
         // Lấy danh sách chức năng
         public List<ChucNang> GetListService()

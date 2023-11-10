@@ -154,10 +154,11 @@
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="CreditCard" asp-action="ListCard">Xem thẻ ngân hàng</a>
                             </li>
+
                             <!-- Khóa thẻ ngân hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreditCard" asp-action="Index">Khóa thẻ ngân hàng</a>
+                                <a asp-controller="ManageCardAndAccount" asp-action="MoKhoaTaiKhoan">Mở/khóa tài khoản</a>
                             </li>
                         </ul>
                     </li>
@@ -180,6 +181,23 @@
                         </ul>
                     </li>
 
+                    <!-- QUản lý lãi suất -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-percent" aria-hidden="true"></i>Quản lý lãi suất</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!-- Danh sách lãi suất-->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ManageInterestRate" asp-action="Index">Danh sách lãi suất</a>
+                            </li>
+                            <!-- tạo lãi suất-->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">Tạo lãi suất</a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <!-- Dịch vụ -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gbp"></i>Dịch vụ</a>
@@ -193,13 +211,13 @@
                             <!-- Rút tiền -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Rút tiền</a>
+                                <a asp-controller="CustomerService" asp-action="RutTien">Rút tiền</a>
                             </li>
 
                             <!-- Chuyển tiền -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Chuyển tiền</a>
+                                <a asp-controller="CustomerService" asp-action="ChuyenTien">Chuyển tiền</a>
                             </li>
 
                             <!-- Mở tiết kiệm -->

@@ -1,0 +1,302 @@
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+
+@model TaiKhoanLienKetViewModel
+@{
+	Layout = "_LayoutMain";
+	var abc = ViewData["abc"] as IEnumerable<TaiKhoanLienKetViewModel>;
+}
+
+<body>
+
+
+	<div class="formbold-main-wrapper">
+		<div class="w-full">
+			<div class="formbold-form-wrapper">
+				<div class="formbold-form-header">
+					<h3>Mở/Khóa tài khoản</h3>
+				</div>
+				<form method="post" asp-controller="ManageCardAndAccount" asp-action="TrangThaiTk"
+					  class="formbold-chatbox-form">
+					<div class="formbold-mb-5">
+						<label for="stk" class="formbold-form-label"> Số tài khoản </label>
+						<input id="SoTaiKhoan" type="text" asp-for="SoTaiKhoan" aria-required="true" aria-invalid="false"
+							   placeholder="Nhập số tài khoản"
+							   class="formbold-form-input" />
+					</div>
+					<div class="formbold-mb-5">
+						<label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản </label>
+						<input id="tenTK" type="text" asp-for="TenTK"
+							   placeholder=""
+							   class="formbold-form-input" readonly>
+					</div>
+
+					<div class="formbold-mb-5">
+						<label for="inputTinhTrang" class="formbold-form-label"> Nhập trạng thái tài khoản (0 hoặc 1) </label>
+						<input id="inputTinhTrang" type="text" asp-for="TinhTrangTaiKhoan" placeholder="" class="formbold-form-input" oninput="showAccountStatus()">
+					</div>
+
+					<div class="formbold-mb-5">
+						<label for="trangthaiTK" class="formbold-form-label"> Trạng thái tài khoản </label>
+						<input id="trangthaiTK" type="text" asp-for="TinhTrangTaiKhoan" placeholder="" class="formbold-form-input" readonly>
+					</div>
+
+					<div>
+						<button asp-controller="ManageCardAndAccount" asp-action="TrangThaiTk" class="formbold-btn w-full">Xác nhận Mở/Khóa</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<style>
+		.formbold-main-wrapper {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 48px;
+		}
+		/*  .formbold-form-wrapper {
+												margin: 0 auto;
+												max-width: 550px;
+												width: 100%;
+												background: white;
+												border: 1px solid #e0e0e0;
+												border-radius: 8px;
+												display: none;
+											  }*/
+
+		.formbold-form-header {
+			background: #6a64f1;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 12px 36px;
+			border-radius: 8px 8px 0px 0px;
+		}
+
+			.formbold-form-header h3 {
+				font-weight: 700;
+				font-size: 20px;
+				color: white;
+			}
+
+		.formbold-chatbox-form {
+			padding: 32px 36px;
+		}
+
+		.formbold-mb-5 {
+			margin-bottom: 20px;
+		}
+
+		.formbold-form-label {
+			display: block;
+			font-weight: 500;
+			font-size: 16px;
+			color: #07074d;
+			margin-bottom: 12px;
+		}
+
+		.formbold-form-label-2 {
+			font-weight: 600;
+			font-size: 20px;
+			margin-bottom: 20px;
+		}
+
+		.formbold-form-input {
+			width: 100%;
+			padding: 12px 24px;
+			border-radius: 6px;
+			border: 1px solid #e0e0e0;
+			background: white;
+			font-weight: 500;
+			font-size: 16px;
+			color: #6b7280;
+			outline: none;
+			resize: none;
+		}
+
+			.formbold-form-input:focus {
+				border-color: #6a64f1;
+				box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+			}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: "Inter", sans-serif;
+		}
+
+		.formbold-pt-3 {
+			padding-top: 12px;
+		}
+
+		.formbold-form-wrapper.active {
+			display: block;
+		}
+
+		.formbold-form-label {
+			display: block;
+			font-weight: 500;
+			font-size: 16px;
+			color: #07074d;
+			margin-bottom: 12px;
+		}
+
+		.formbold-form-label-2 {
+			font-weight: 600;
+			font-size: 20px;
+			margin-bottom: 20px;
+		}
+
+		.formbold-btn {
+			text-align: center;
+			font-size: 16px;
+			border-radius: 6px;
+			padding: 14px 32px;
+			border: none;
+			font-weight: 600;
+			background-color: #6a64f1;
+			color: white;
+			cursor: pointer;
+		}
+
+			.formbold-btn:hover {
+				box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+			}
+
+		.formbold--mx-3 {
+			margin-left: -12px;
+			margin-right: -12px;
+		}
+
+		.formbold-px-3 {
+			padding-left: 12px;
+			padding-right: 12px;
+		}
+
+		.flex {
+			display: flex;
+		}
+
+		.flex-wrap {
+			flex-wrap: wrap;
+		}
+
+		.w-full {
+			width: 50%;
+		}
+
+		.formbold-form-header button {
+			color: white;
+			background: transparent;
+			border: none;
+		}
+
+		.formbold-action-buttons {
+			max-width: 550px;
+			margin-left: auto;
+			margin-right: auto;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			margin-top: 48px;
+		}
+
+		.formbold-action-btn {
+			width: 70px;
+			height: 70px;
+			background: #6a64f1;
+			color: white;
+			border-radius: 50%;
+			margin-left: 20px;
+			border: none;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+			.formbold-action-btn .formbold-cross-icon {
+				display: none;
+			}
+
+			.formbold-action-btn.active .formbold-cross-icon {
+				display: block;
+			}
+
+			.formbold-action-btn.active .formbold-chat-icon {
+				display: none;
+			}
+
+		.formbold-radio-flex {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.formbold-radio-label {
+			font-size: 14px;
+			line-height: 24px;
+			color: #07074d;
+			position: relative;
+			padding-left: 25px;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		.formbold-input-radio {
+			position: absolute;
+			opacity: 0;
+			cursor: pointer;
+		}
+
+		.formbold-radio-checkmark {
+			position: absolute;
+			top: -1px;
+			left: 0;
+			height: 18px;
+			width: 18px;
+			background-color: #ffffff;
+			border: 1px solid #dde3ec;
+			border-radius: 50%;
+		}
+
+		.formbold-radio-label
+		.formbold-input-radio:checked ~ .formbold-radio-checkmark {
+			background-color: #6a64f1;
+		}
+
+		.formbold-radio-checkmark:after {
+			content: '';
+			position: absolute;
+			display: none;
+		}
+
+	</style>
+	<script src="/js/RutChuyenTien.js">
+	</script>
+	<script>
+		function showAccountStatus() {
+			var inputElement = document.getElementById('inputTinhTrang');
+			var statusElement = document.getElementById('trangthaiTK');
+
+			// Assuming TinhTrangTaiKhoan is a property of your model
+			var inputValue = inputElement.value;
+
+			// You can customize this logic based on your requirements
+			if (inputValue === '0') {
+				statusElement.value = 'Mở khóa tài khoản';
+			} else if (inputValue === '1') {
+				statusElement.value = 'Khóa tài khoản';
+			} else {
+				statusElement.value = 'Trạng thái không xác định';
+			}
+		}
+	</script>
+</body>
