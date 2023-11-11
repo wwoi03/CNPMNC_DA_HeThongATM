@@ -3470,7 +3470,8 @@ footer.site-footer {
 }
 
 .container {
-    display: -webkit-inline-box;
+
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-flow: column;
