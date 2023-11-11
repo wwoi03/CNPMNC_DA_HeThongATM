@@ -1,185 +1,167 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
 @{
-    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+	Layout = "~/Views/Shared/_LayoutMain.cshtml";
+	var listRole = ViewBag.listRole;
 }
-<style>
-    .margin-top{
-        margin-top: 30px;
-        margin-left:5%;
-        align-items:center;
-    }
-    .margin-bot{
-        margin-bottom:5px;
-    }
-</style>
+@model RoleViewModel
+
 <body>
-    <div class="col-xs-6 col-sm-6" style="margin-left:25%;background-color:white;height:735px">
+<div>
+	<!-- Start: BreadCrumbsPartial -->
+	@*@Html.Partial("_BreadCrumbsPartial")*@
+	<!-- End: BreadCrumbsPartial -->
 
-    <div class="card-body card-block">
+	<div class="content" style="background: #F1F2F7;">
+		<div class="animated fadeIn">
+			<div class="row">
+				<!-- Danh sách -->
+				<div class="col-lg-8">
+					<div class="card">
+						<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
+							<b>Danh sách Chức vụ </b>
 
-        <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            <div class="card-title">
-                                <h3 class="text-center">Phân Quyền</h3>
-                            </div>
+							<!-- Tìm kiếm -->
+							<form class="search-form">
+								<input asp-for="name" class="search-input" placeholder="Nhập tên chức vụ">
 
-                <div class="form-group">
-                    <label for="cc-payment" class="control-label mb-1">Mã nhân viên</label>
-                    <input onchange="sendData()" id="cccd" name="cc-payment" type="text" class="form-control" aria-required="true" aria-invalid="false">
-                </div>
+								<a class="search-btn">
+									<i class="fa fa-search"></i>
+								</a>
+							</form>
 
-                @*KhachHang****************************************@
-            <div class="row form-group margin-top" >
-                    <div class="col col-md-3">
-                        <input class="KhachHang" type="checkbox" id="KhachHang" name="KhachHang" value="KhachHang" class="form-check-input">     Khách hàng
-                    </div>
-                <div class="col col-md-9">
-                    <div class="form-check">
-                        <div class="checkbox margin-bot">
-                            <label for="checkbox1" class="form-check-label ">
-                                    <input class="KhachHang" type="checkbox" id="DanhSachKH" name="DanhSachKH" value="DachSachKhachHang" class="form-check-input">     Danh sách khách hàng
-                            </label>
-                        </div>
-                        <div class="checkbox margin-bot">
-                            <label for="checkbox2" class="form-check-label ">
-                                    <input class="KhachHang" type="checkbox" id="TaoKH" name="TaoKH" value="TaoKhachHang" class="form-check-input">     Tạo khách hàng
-                            </label>
-                        </div>
-                        <div class="checkbox margin-bot">
-                            <label for="checkbox3" class="form-check-label ">
-                                <input class="KhachHang" type="checkbox" id="SuaKH" name="SuaKH" value="SuaKhachHang" class="form-check-input">     Sửa khách hàng
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+							<!-- Thêm -->
+							<a id="ThemChucVu" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+								<i class="fa fa-info-circle"></i>
+								&nbsp;Thêm
+							</a>
+						</div>
 
-            @********************************************The/TaiKhoan*@
-                <div class="row form-group margin-top">
-                    <div class="col col-md-3">
-                        <input class="The" type="checkbox" id="The" name="The" value="The" class="form-check-input">     Thẻ/Tài khoản
-                    </div>
-                    <div class="col col-md-9">
-                        <div class="form-check">
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox2" class="form-check-label ">
-                                    <input class="The" type="checkbox" id="TaoThe" name="TaoThe" value="TaoThe" class="form-check-input">     Tạo thẻ
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="The" type="checkbox" id="MoKhoaThe" name="MoKhoaThe" value="MoKhoaThe" class="form-check-input">     Mở khóa thẻ
-                                </label>
-                            </div>
-                           
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox3" class="form-check-label ">
-                                    <input class="The" type="checkbox" id="SuaKH" name="SuaKH" value="SuaThe" class="form-check-input">     Mở khóa tài khoản
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @********************************************Thong kê*@
-                <div class="row form-group margin-top">
-                    <div class="col col-md-3">
-                        <input class="ThongKe" type="checkbox" id="ThongKe" name="ThongKe" value="ThongKe" class="form-check-input">     Thống kê
-                    </div>
-                    <div class="col col-md-9">
-                        <div class="form-check">
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox2" class="form-check-label ">
-                                    <input class="ThongKe" type="checkbox" id="TKNganHang" name="TKNganHang" value="TKNganHang" class="form-check-input">     Thống kê Ngân hàng
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="ThongKe" type="checkbox" id="TKKhachHang" name="TKKhachHang" value="TKKhachHang" class="form-check-input">     Thống kê Khách hàng
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @********************************************Dịch vụ*@
-                <div class="row form-group margin-top">
-                    <div class="col col-md-3">
-                        <input class="DichVu" type="checkbox" id="DichVu" name="DichVu" value="DichVu" class="form-check-input">     Dịch vụ
-                    </div>
-                    <div class="col col-md-9">
-                        <div class="form-check">
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox2" class="form-check-label ">
-                                    <input class="DichVu" type="checkbox" id="NapTien" name="NapTien" value="NapTien" class="form-check-input">     Nạp tiền
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="DichVu" type="checkbox" id="RutTien" name="RutTien" value="RutTien" class="form-check-input">     Rút tiền
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="DichVu" type="checkbox" id="ChuyenTien" name="ChuyenTien" value="ChuyenTien" class="form-check-input">     Chuyển tiền
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @********************************************Nhân viên*@
-                <div class="row form-group margin-top">
-                    <div class="col col-md-3">
-                        <input class="NhanVien" type="checkbox" id="NhanVien" name="NhanVien" value="NhanVien" class="form-check-input">     Nhân viên
-                    </div>
-                    <div class="col col-md-9">
-                        <div class="form-check">
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox2" class="form-check-label ">
-                                    <input class="NhanVien" type="checkbox" id="DanhSachNV" name="DanhSachNV" value="DanhSachNV" class="form-check-input">     Danh sách nhân viên
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="NhanVien" type="checkbox" id="PhanQuyen" name="PhanQuyen" value="PhanQuyen" class="form-check-input">     Phân quyền
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="NhanVien" type="checkbox" id="TaoTK" name="TaoTK" value="TaoTK" class="form-check-input">     Tạo tài khoản
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="NhanVien" type="checkbox" id="SuaTK" name="SuaTK" value="SuaTK" class="form-check-input">     Sửa tài khoản
-                                </label>
-                            </div>
-                            <div class="checkbox margin-bot">
-                                <label for="checkbox1" class="form-check-label ">
-                                    <input class="NhanVien" type="checkbox" id="XoaTK" name="XoaTK" value="XoaTK" class="form-check-input">     Xóa tài khoản
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @*<div class="row form-group">
-            <div class="col col-md-3"><label class=" form-control-label">Inline Checkboxes</label></div>
-            <div class="col col-md-9">
-            <div class="form-check-inline form-check">
-            <label for="inline-checkbox1" class="form-check-label ">
-            <input type="checkbox" id="inline-checkbox1" name="inline-checkbox1" value="option1" class="form-check-input">One
-            </label>
-            <label for="inline-checkbox2" class="form-check-label ">
-            <input type="checkbox" id="inline-checkbox2" name="inline-checkbox2" value="option2" class="form-check-input">Two
-            </label>
-            <label for="inline-checkbox3" class="form-check-label ">
-            <input type="checkbox" id="inline-checkbox3" name="inline-checkbox3" value="option3" class="form-check-input">Three
-            </label>
-            </div>
-            </div>
-            </div>*@
+						<div class="table-stats order-table ov-h" style="width: 100%; overflow-x: scroll">
+							<!-- Hiển thị danh sách -->
+							<table class="table" style="overflow-x: scroll">
 
-        </form>
-        </div>
-    </div>
+								<!-- Tiêu đề -->
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Tên</th>
+										<th>Tác vụ</th>
+									</tr>
+								</thead>
+
+								<!-- Render -->
+								<tbody>
+									@for (int i = 0; i < listRole.Count; i++)
+									{
+										<tr>
+											<td>@(i + 1).</td>
+
+										
+
+											<td style="white-space: nowrap">
+												<span>@listRole[i].TenChucVu</span>
+											</td>
+
+											<td style="color: #fff !important; white-space: nowrap">
+												<a asp-controller="Staff" asp-action="Details" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #17A2B8 !important">
+													<i class="fa fa-info-circle"></i>
+													&nbsp;Xem
+												</a>
+												<a asp-controller="Staff" asp-action="Edit" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #00C292 !important">
+													<i class="fa fa-edit"></i>
+													&nbsp;Sửa
+												</a>
+												<a asp-controller="Staff" asp-action="Delete" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #FB9678 !important">
+													<i class="fa fa-trash-o"></i>
+													&nbsp;Xóa
+												</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div> <!-- /.table-stats -->
+					</div>
+				</div>
+
+				<!-- Form -->
+				<div class="col-lg-4">
+					<!-- Thêm -->
+					@if (Model.Key == null )
+					{
+						<div id="ThemTable" style="display:none" class="form-add-container">
+							<div class="card">
+								<form id="form-add" asp-controller="Staff" asp-action="CreateRole" method="post" enctype="multipart/form-data">
+									<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
+										<b>Thêm chức vụ</b>
+
+										<!-- Lưu -->
+										<button type="submit" id="form-add-btn" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+											<i class="fa fa-save"></i>
+											&nbsp;Lưu
+										</button>
+									</div>
+
+									<!-- Form nhập -->
+									<div class="card-body">
+										<div class="form-group">
+											<label for="cc-payment" class="control-label mb-1">Tên chức vụ</label>
+											<input asp-for="name" id="cc-payment" type="text" class="form-control" placeholder="Nhập tên chức vụ">
+											<span class="text-danger" asp-validation-for="@Model.name"></span>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					}
+
+					<!-- Sửa - Chi tiết -->
+					@if (Model.Key != null)
+					{
+						<div  class="form-edit-container">
+							<div class="card">
+								<form id="form-edit" asp-controller="Staff" asp-action="Edit" method="post">
+									<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
+										<b>@ViewBag.titleAction</b>
+
+										<!-- Lưu -->
+										<a id="form-edit-btn" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+											<i class="fa fa-save"></i>
+											&nbsp;Lưu
+										</a>
+									</div>
+
+									<!-- Form nhập -->
+									<div class="card-body">
+										<div class="form-group">
+											<label for="cc-payment" class="control-label mb-1">Key</label>
+											<input type="text" class="form-control" readonly value="@Model.Key" asp-for="Key">
+										</div>
+
+										<div class="form-group">
+											<label for="cc-payment" class="control-label mb-1">Tên chức vụ</label>
+											<input asp-for="name" value="@Model.name" type="text" class="form-control" placeholder="Nhập tên chức năng">
+											<span class="text-danger" asp-validation-for="name"></span>
+										</div>
+
+									
+									</div>
+								</form>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<script>
+		function ThemChucVu (){
+			document.getElementById("ThemTable").style.display= "block";
+		}
+		document.getElementById("ThemChucVu").addEventListener("click",ThemChucVu);
+
+	</script>
 </body>

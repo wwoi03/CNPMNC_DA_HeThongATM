@@ -782,8 +782,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return null;
         }
+        // Chuc vu**********************************************************************
+        public List<ChucVu> GetListRole()
+        {
+            List<ChucVu> roles;
+            FirebaseResponse response = client.Get("ChucVu");
+            Dictionary<string, ChucVu> data = response.ResultAs<Dictionary<string,ChucVu>>();
+            roles = new List<ChucVu>(data.Values);
+            return roles;
+        }
 
+        // Them chuc vu
+        public void AddRole(ChucVu chucVu)
+        {
+            PushResponse response = client.Push("ChucVu", chucVu);
+            string newKey = response.Result.name;
 
+            chucVu.Key = newKey;
+            SetResponse setResponse = client.Set("ChucVu/" + newKey, chucVu);
+        }
     }
 }
 

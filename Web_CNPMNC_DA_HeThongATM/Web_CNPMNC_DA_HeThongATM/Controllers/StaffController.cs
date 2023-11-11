@@ -19,11 +19,54 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             return View();
         }
-        public IActionResult Decentralization()
+        public IActionResult Decentralization(string tittle)
         {
-            return View();
+            ViewBag.pageTitle = "Phân quyền";
+            ViewBag.titleAction =tittle;
+            ViewBag.listRole = firebaseHelper.GetListRole();
+
+            RoleViewModel role = new RoleViewModel();
+
+            return View(role);
         }
-       
+        [HttpPost]
+        public IActionResult CreateRole(RoleViewModel role)
+        {
+            if (ModelState.IsValid)
+            {
+                ChucVu chucVu = new ChucVu
+                {
+                    TenChucVu = role.name,
+                    Key = role.Key
+                };
+                firebaseHelper.AddRole(chucVu);
+            }
+
+            return RedirectToAction("Index");
+
+        }
+        public void AddModelError()
+        {
+            var errorList = new List<(string key, string errorMessage)>();
+
+            foreach (var key in ModelState.Keys)
+            {
+                var errors = ModelState[key].Errors;
+
+                foreach (var error in errors)
+                {
+                    errorList.Add((key, error.ErrorMessage));
+                }
+            }
+
+            foreach (var error in errorList)
+            {
+                if (error.key.Split('.').Length == 2)
+                {
+                    ModelState.AddModelError(error.key.Split('.')[1], error.errorMessage);
+                }
+            }
+        }
         // Thêm nhân viên
         [HttpGet]
         public IActionResult Create()
