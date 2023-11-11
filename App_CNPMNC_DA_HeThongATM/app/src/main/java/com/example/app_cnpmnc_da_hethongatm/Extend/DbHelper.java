@@ -505,4 +505,27 @@ public class DbHelper {
         return accountNumber;
     }
 
+    /*******************************************/
+    private static String soTaiKhoan;
+    public static  String getAcountIDbyCusKey(String cuskey) {
+        FirebaseDatabase firebaseDatabase =FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference=firebaseDatabase.getReference();
+        databaseReference.child("TaiKhoanLienKet")
+                .orderByChild("MaKHKey").equalTo(cuskey)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot snap : snapshot.getChildren()) {
+                            soTaiKhoan = String.valueOf( snap.child("SoTaiKhoan").getValue());
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+        return soTaiKhoan;
+    }
 }
