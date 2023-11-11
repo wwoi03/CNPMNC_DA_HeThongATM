@@ -147,6 +147,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult sendCard([FromBody] inputDatacuaHao input)
         {
+
+
+
             string tinhtrang = "undefined";
             if (firebaseHelper.GetCustomerbyid(input.CCCD) != null && firebaseHelper.getTypeKeybyName(input.LoaiThe) != null)
             {
