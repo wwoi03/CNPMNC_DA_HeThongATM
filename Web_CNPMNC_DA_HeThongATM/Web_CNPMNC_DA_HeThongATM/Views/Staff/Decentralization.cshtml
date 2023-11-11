@@ -31,12 +31,12 @@
 							</form>
 
 							<!-- Thêm -->
-							<a id="ThemChucVu" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+								<a asp-controller="Staff" asp-action="Decentralization" id="ThemChucVu" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
 								<i class="fa fa-info-circle"></i>
 								&nbsp;Thêm
 							</a>
 						</div>
-
+						
 						<div class="table-stats order-table ov-h" style="width: 100%; overflow-x: scroll">
 							<!-- Hiển thị danh sách -->
 							<table class="table" style="overflow-x: scroll">
@@ -64,15 +64,15 @@
 											</td>
 
 											<td style="color: #fff !important; white-space: nowrap">
-												<a asp-controller="Staff" asp-action="Details" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #17A2B8 !important">
+												<a asp-controller="Staff" asp-action="DetailsRole" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #17A2B8 !important">
 													<i class="fa fa-info-circle"></i>
 													&nbsp;Xem
 												</a>
-												<a asp-controller="Staff" asp-action="Edit" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #00C292 !important">
+												<a asp-controller="Staff" asp-action="EditRole" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #00C292 !important">
 													<i class="fa fa-edit"></i>
 													&nbsp;Sửa
 												</a>
-												<a asp-controller="Staff" asp-action="Delete" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #FB9678 !important">
+												<a asp-controller="Staff" asp-action="DeleteRole" asp-route-key="@listRole[i].Key" class="btn btn-sm color-white btn-size" style="background: #FB9678 !important">
 													<i class="fa fa-trash-o"></i>
 													&nbsp;Xóa
 												</a>
@@ -87,10 +87,19 @@
 
 				<!-- Form -->
 				<div class="col-lg-4">
+						@*****************************************************************@
+						<div class="alert alert-danger" id="trungten" role="alert" style="position:relative;display:none">
+							<h4 class="alert-heading">Tên chức vụ bị trùng!</h4>
+							<p>Tên chức vụ bạn nhập đã bị trùng, vui lòng kiểm tra lại!</p>
+							<hr>
+							<button id="notfound" class="btn btn-danger" onclick="handlerNotFound()">Đã hiểu</button>
+						</div>
+
+						@********************************************************************@
 					<!-- Thêm -->
 					@if (Model.Key == null )
 					{
-						<div id="ThemTable" style="display:none" class="form-add-container">
+						<div id="ThemTable" class="form-add-container">
 							<div class="card">
 								<form id="form-add" asp-controller="Staff" asp-action="CreateRole" method="post" enctype="multipart/form-data">
 									<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
@@ -121,15 +130,15 @@
 					{
 						<div  class="form-edit-container">
 							<div class="card">
-								<form id="form-edit" asp-controller="Staff" asp-action="Edit" method="post">
+								<form id="form-edit" asp-controller="Staff" asp-action="EditRole" method="post">
 									<div class="card-header" style="display: flex; align-items: center; justify-content: space-between">
 										<b>@ViewBag.titleAction</b>
 
 										<!-- Lưu -->
-										<a id="form-edit-btn" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
+										<button type="submit" id="form-edit-btn" class="btn btn-sm color-white btn-size" style="background: #007BFF !important">
 											<i class="fa fa-save"></i>
 											&nbsp;Lưu
-										</a>
+										</button>
 									</div>
 
 									<!-- Form nhập -->
@@ -158,10 +167,20 @@
 </div>
 
 	<script>
+		
 		function ThemChucVu (){
 			document.getElementById("ThemTable").style.display= "block";
 		}
 		document.getElementById("ThemChucVu").addEventListener("click",ThemChucVu);
-
+		if(@ViewBag.Check === "False"){
+			document.getElementById("trungten").style.display = "none";
+		}
+		if (@ViewBag.Check === "True"){
+			document.getElementById("trungten").style.display = "block";
+		}
+		function handlerNotFound(){
+			document.getElementById("trungten").style.display = "none";
+		}
+	
 	</script>
 </body>

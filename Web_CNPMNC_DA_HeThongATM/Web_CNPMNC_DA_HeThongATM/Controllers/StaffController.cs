@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
@@ -27,24 +28,111 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             RoleViewModel role = new RoleViewModel();
 
+            if (TempData.ContainsKey("roleMau"))
+            {
+                string serializedData = TempData["roleMau"] as string;
+
+                if (!string.IsNullOrEmpty(serializedData))
+                {
+                    // Chuyển đổi JSON thành RoleViewModel
+                    role = JsonConvert.DeserializeObject<RoleViewModel>(serializedData);
+
+                    // Chạy lại xác thực
+                    if (!TryValidateModel(role, nameof(role)))
+                    {
+                        if (ModelState.IsValid == false)
+                        {
+                            AddModelError();
+                        }
+                    }
+                }
+            }
+            TempData.Clear();
+            ChucVu chucVu = new ChucVu()
+            {
+                TenChucVu = role.name,
+                Key = role.Key,
+            };
+                ViewBag.Check = firebaseHelper.checkRole(chucVu).Result.ToString();
             return View(role);
         }
+
         [HttpPost]
         public IActionResult CreateRole(RoleViewModel role)
         {
+            ModelState.Remove("Key");
             if (ModelState.IsValid)
             {
-                ChucVu chucVu = new ChucVu
+                ChucVu chucVu = new ChucVu()
                 {
                     TenChucVu = role.name,
-                    Key = role.Key
+                    Key = role.Key,
                 };
-                firebaseHelper.AddRole(chucVu);
+                if (!firebaseHelper.checkRole(chucVu).Result)
+                {
+                    firebaseHelper.AddRole(chucVu);
+                }
+               
             }
-
-            return RedirectToAction("Index");
+            else
+            {
+                TempData["roleMau"] = JsonConvert.SerializeObject(role);
+            }
+            return RedirectToAction("Decentralization");
 
         }
+
+        public IActionResult DetailsRole(string key)
+        {
+            RoleViewModel role = new RoleViewModel()
+            {
+                Key = firebaseHelper.getRolebyKey(key).Key,
+                name = firebaseHelper.getRolebyKey(key).TenChucVu,
+            };
+            TempData["roleMau"] = JsonConvert.SerializeObject(role);
+            return RedirectToAction("Decentralization", new { title = "Chi tiết chức vụ" });
+
+        }
+
+        public IActionResult EditRole(string key)
+        {
+            RoleViewModel role = new RoleViewModel()
+            {
+              Key=  firebaseHelper.getRolebyKey(key).Key,
+              name = firebaseHelper.getRolebyKey(key).TenChucVu,
+            };
+            TempData["roleMau"] = JsonConvert.SerializeObject(role);
+            return RedirectToAction("Decentralization", new { title = "Chỉnh sửa chức vụ" });
+
+        }
+        [HttpPost]
+        public IActionResult EditRole(RoleViewModel role)
+        {
+            ModelState.Remove("Key");
+            if (ModelState.IsValid)
+            {
+                ChucVu chucVu = new ChucVu()
+                {
+                    Key = role.Key,
+                    TenChucVu = role.name,
+                };
+                if (!firebaseHelper.checkRole(chucVu).Result)
+                    firebaseHelper.EditRole(chucVu);
+            }
+            else
+            {
+                TempData["roleMau"] = JsonConvert.SerializeObject(role);
+            }
+
+            return RedirectToAction("Decentralization", new { title = "Chỉnh sửa chức vụ" });
+
+        }
+        public IActionResult DeleteRole(string key)
+        {
+            firebaseHelper.DeleteRole(key);
+            return RedirectToAction("Decentralization");
+        }
+
         public void AddModelError()
         {
             var errorList = new List<(string key, string errorMessage)>();

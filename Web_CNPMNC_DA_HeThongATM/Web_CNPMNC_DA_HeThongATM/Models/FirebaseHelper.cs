@@ -789,17 +789,92 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             FirebaseResponse response = client.Get("ChucVu");
             Dictionary<string, ChucVu> data = response.ResultAs<Dictionary<string,ChucVu>>();
             roles = new List<ChucVu>(data.Values);
-            return roles;
+            return roles.OrderBy(p => p.TenChucVu).ToList(); ;
         }
+        public async Task<bool> checkRole(ChucVu chucVu)
+        {
+            try
+            {
 
+                FirebaseResponse response = await client.GetAsync("ChucVu");
+
+                if (response == null || response.Body == "null")
+                {
+                    return false; // Node không tồn tại hoặc trống
+                }
+
+                Dictionary<string, ChucVu> data = response.ResultAs<Dictionary<string, ChucVu>>();
+
+                if (data != null && data.Values.Any(item => item.TenChucVu == chucVu.TenChucVu))
+                {
+                    return true; // Chuc vu tồn tại trong danh sách
+                }
+
+                return false; // Chuc vu không tồn tại trong danh sách
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu có
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
         // Them chuc vu
         public void AddRole(ChucVu chucVu)
         {
+            
+            // Thực hiện Push để lấy key mới
             PushResponse response = client.Push("ChucVu", chucVu);
-            string newKey = response.Result.name;
 
-            chucVu.Key = newKey;
-            SetResponse setResponse = client.Set("ChucVu/" + newKey, chucVu);
+            if (response != null && response.Result != null)
+            {
+                // Lấy key mới
+                string newKey = response.Result.name;
+
+                // Thiết lập key mới cho đối tượng ChucVu
+                chucVu.Key = newKey;
+
+                // Thực hiện Set để thêm dữ liệu vào Firebase
+                client.Set("ChucVu/" + newKey, chucVu);
+          
+
+            }
+            else
+            {
+                // Xử lý khi có lỗi trong quá trình Push
+                Console.WriteLine("Error while pushing data to Firebase.");
+            }
+        }
+        public ChucVu getRolebyKey(string key)
+        {
+            FirebaseResponse response = client.Get("ChucVu");
+            if (response != null)
+            {
+                Dictionary<string, ChucVu> data = JsonConvert.DeserializeObject<Dictionary<string, ChucVu>>(response.Body);
+                ChucVu chucVu = data[key];
+                if (chucVu != null)
+                    return chucVu;
+            }
+            return null;
+        }
+
+        public void EditRole(ChucVu chucVu)
+        {
+           
+            FirebaseResponse response = client.Get("ChucVu");
+            if (response != null)
+            {
+                client.Set("ChucVu/" + chucVu.Key, chucVu);
+            }
+        }
+        public void DeleteRole(string key)
+        {
+            
+            FirebaseResponse response = client.Get("ChucVu");
+            if (response != null)
+            {
+                client.Delete("ChucVu/" + key);
+            }
         }
     }
 }
