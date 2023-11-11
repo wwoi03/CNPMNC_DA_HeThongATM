@@ -20,6 +20,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
 
+        // Đăng nhập
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(NhanVienViewModel nhanVienViewModel)
+        {
+            return View();
+        }
+
         // DANH SÁCH NHÂN VIÊN
         public IActionResult Index()
         {
