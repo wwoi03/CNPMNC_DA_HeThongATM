@@ -460,49 +460,39 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             try
             {
-                // Lấy thông tin về tài khoản từ Firebase
-                var nguoiChuyenResponse = client.Get($"TaiKhoanLienKet/{taiKhoanNguoiChuyen}");
-                var nguoiNhanResponse = client.Get($"TaiKhoanLienKet/{taiKhoanNguoiNhan}");
+                string infoNguoiChuyen = GetAccount(taiKhoanNguoiChuyen);
+                string infoNguoiNhan = GetAccount(taiKhoanNguoiNhan);
 
-                // Kiểm tra xem tài khoản có tồn tại không
-                if (nguoiChuyenResponse != null && nguoiNhanResponse != null)
+                FirebaseResponse responseNguoiChuyen = client.Get("TaiKhoanLienKet/" + infoNguoiChuyen);
+                FirebaseResponse responseNguoiNhan = client.Get("TaiKhoanLienKet/" + infoNguoiNhan);
+
+                if (responseNguoiChuyen != null && responseNguoiNhan != null)
                 {
-                    var nguoiChuyen = nguoiChuyenResponse.ResultAs<TaiKhoanLienKetViewModel>();
-                    var nguoiNhan = nguoiNhanResponse.ResultAs<TaiKhoanLienKetViewModel>();
+                    var nguoiChuyen = responseNguoiChuyen.ResultAs<TaiKhoanLienKetViewModel>();
+                    var nguoiNhan = responseNguoiNhan.ResultAs<TaiKhoanLienKetViewModel>();
 
-                    // Kiểm tra xem người chuyển có đủ số dư không
-                    if (nguoiChuyen.SoDu >= soTien)
-                    {
-                        // Thực hiện việc chuyển tiền
-                        nguoiChuyen.SoDu -= soTien;
-                        nguoiNhan.SoDu += soTien;
+                    // Xử lý chuyển tiền
+                    nguoiChuyen.SoDu -= soTien; // Giả sử trừ số tiền từ tài khoản người chuyển
+                    nguoiNhan.SoDu += soTien;   // Giả sử cộng số tiền vào tài khoản người nhận
 
-                        // Cập nhật thông tin tài khoản trong Firebase
-                        client.Set($"TaiKhoanLienKet/{taiKhoanNguoiChuyen}/SoDu", nguoiChuyen.SoDu);
-                        client.Set($"TaiKhoanLienKet/{taiKhoanNguoiNhan}/SoDu", nguoiNhan.SoDu);
+                    // Cập nhật lại thông tin tài khoản
+                    client.Set("TaiKhoanLienKet/" + infoNguoiChuyen, nguoiChuyen);
+                    client.Set("TaiKhoanLienKet/" + infoNguoiNhan, nguoiNhan);
 
-                        return true; // Chuyển tiền thành công
-                    }
-                    else
-                    {
-                        // Xử lý trường hợp người chuyển không có đủ số dư
-                        // Bạn có thể hiển thị thông báo lỗi hoặc xử lý theo cách mong muốn
-                        return false;
-                    }
+                    return true; // Chuyển tiền thành công
                 }
                 else
                 {
-                    // Xử lý trường hợp một hoặc cả hai tài khoản không tồn tại
-                    // Bạn có thể hiển thị thông báo lỗi hoặc xử lý theo cách mong muốn
-                    return false;
+                    return false; // Tài khoản không tồn tại
                 }
             }
             catch (Exception ex)
             {
-                // Xử lý ngoại lệ (hiển thị thông báo hoặc ghi log)
-                return false; // Chuyển tiền thất bại
+                return false; // Xử lý lỗi nếu có
             }
         }
+
+
 
 
 

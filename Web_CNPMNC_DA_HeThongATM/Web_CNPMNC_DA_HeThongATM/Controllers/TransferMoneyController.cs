@@ -32,19 +32,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult ChuyenTien(TaiKhoanLienKetViewModel account)
+        public IActionResult ChuyenTien(IFormCollection form)
         {
-            double soTien = account.SoTien;
-            long taiKhoanNguoiChuyen = account.SoTaiKhoanNguoiChuyen;
-            long taiKhoanNguoiNhan = account.SoTaiKhoanNguoiNhan;
+            // Lấy dữ liệu từ form
+            double soTien = Convert.ToDouble(form["SoTien"]);
+            long taiKhoanNguoiChuyen = Convert.ToInt64(form["SoTaiKhoanNguoiChuyen"]);
+            long taiKhoanNguoiNhan = Convert.ToInt64(form["SoTaiKhoanNguoiNhan"]);
 
-            // Assuming firebaseHelper is an instance of your FirebaseHelper class
+            // Tiếp tục xử lý chuyển tiền
             firebaseHelper.ChuyenTien(soTien, taiKhoanNguoiChuyen, taiKhoanNguoiNhan);
 
             return RedirectToAction("Index");
         }
-
 
     }
 }

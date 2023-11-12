@@ -4,9 +4,11 @@
 @{
     Layout = "_LayoutMain";
     var aben = ViewData["aben"] as IEnumerable<TaiKhoanLienKetViewModel>;
+    var disableButton = ViewData["aben"] == null;
 }
+
 <body>
-    <script src="/js/RutChuyenTien.js">  </script>
+   
 
     <div class="formbold-main-wrapper">
         <div class="w-full">
@@ -220,4 +222,9 @@
                     display: none;
                 }
         </style>
+
+        <script src="/js/RutChuyenTien.js">
+        
+        </script>
+
 </body>
