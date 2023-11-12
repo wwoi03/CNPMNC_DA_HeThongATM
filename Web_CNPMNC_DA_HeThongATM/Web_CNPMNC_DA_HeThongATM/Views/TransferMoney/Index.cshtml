@@ -18,16 +18,30 @@
                 <form method="post" asp-controller="TransferMoney" asp-action="ChuyenTien"
                       class="formbold-chatbox-form">
                     <div class="formbold-mb-5">
-                        <label for="stk" class="formbold-form-label"> Số tài khoản người nhận </label>
+                        <label for="stk" class="formbold-form-label"> Số tài khoản người chuyển </label>
                         <input id="SoTaiKhoan" type="text" asp-for="SoTaiKhoan" aria-required="true" aria-invalid="false"
                                placeholder="Nhập số tài khoản"
                                class="formbold-form-input" />
                     </div>
                     <div class="formbold-mb-5">
-                        <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản </label>
+                        <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản chuyển </label>
                         <input id="tenTK" type="text" asp-for="TenTK"
                                placeholder=""
                                class="formbold-form-input" readonly>
+                    </div>
+
+                    <div class="formbold-mb-5">
+                        <label for="SoTaiKhoanNhan" class="formbold-form-label"> Số tài khoản người nhận </label>
+                        <input id="SoTaiKhoanNhan" type="text" placeholder="Nhập số tài khoản"
+                               class="formbold-form-input" />
+
+                        <div class="formbold-mb-5">
+                            <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản chuyển </label>
+                            <input id="TenTKNhan" type="text" asp-for="TenTK"
+                                   placeholder=""
+                                   class="formbold-form-input" readonly>
+                        </div>
+                       
                     </div>
 
                     <div class="formbold-mb-5">
@@ -237,7 +251,26 @@
                     display: none;
                 }
         </style>
-        <script src="/js/RutChuyenTien.js" >
-            
+        <script 
+            src="/js/RutChuyenTien.js" >
         </script>
+            
+        <script>
+            // Add event listener to the recipient's account number input
+            document.getElementById('SoTaiKhoanNhan').addEventListener('input', function () {
+                const accountNumber = this.value;
+
+                // Make an API call to fetch the recipient's name
+                fetch(`/TransferMoney/sendAccount?SoTaiKhoan=${accountNumber}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update the recipient's name dynamically
+                        document.getElementById('TenTKNhan').textContent = `Tên người nhận: ${data}`;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching recipient name:', error);
+                    });
+            });
+        </script>
+
 </body>

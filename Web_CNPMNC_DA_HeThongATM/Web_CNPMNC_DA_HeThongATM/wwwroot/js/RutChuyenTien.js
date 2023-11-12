@@ -80,6 +80,8 @@
         });
     }
 
+  
+
     GettrangthaiTK();
 
     function GettrangthaiTK() {

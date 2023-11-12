@@ -6,6 +6,8 @@
         public string MaKHKey { get; set; }
         public string MaLoaiTKKey { get; set; }
         public long SoTaiKhoan { get; set; }
+        public long SoTaiKhoanNguoiChuyen { get; set; }
+        public long SoTaiKhoanNguoiNhan { get; set; }
         public double SoDu { get; set; }
         public string TenTK { get; set; }
         public int TinhTrangTaiKhoan { get; set; }

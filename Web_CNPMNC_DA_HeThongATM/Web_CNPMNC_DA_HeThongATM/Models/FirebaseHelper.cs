@@ -456,44 +456,66 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         //-----------------------------------------------------Chức năng chuyển tiền-----------------------------------------------------//
-        public bool ChuyenTien(double soTien, long value)
+        public bool ChuyenTien(double soTien, long taiKhoanNguoiChuyen, long taiKhoanNguoiNhan)
         {
-            string info = GetAccount(value);
             try
             {
-                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+                // Lấy thông tin về tài khoản từ Firebase
+                var nguoiChuyenResponse = client.Get($"TaiKhoanLienKet/{taiKhoanNguoiChuyen}");
+                var nguoiNhanResponse = client.Get($"TaiKhoanLienKet/{taiKhoanNguoiNhan}");
 
-                // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+                // Kiểm tra xem tài khoản có tồn tại không
+                if (nguoiChuyenResponse != null && nguoiNhanResponse != null)
+                {
+                    var nguoiChuyen = nguoiChuyenResponse.ResultAs<TaiKhoanLienKetViewModel>();
+                    var nguoiNhan = nguoiNhanResponse.ResultAs<TaiKhoanLienKetViewModel>();
 
-                ////  Chuyển tiền xong cộng số tiền vào số dư
-                //accountData.SoDu += soTien;
-                Double SoDu = accountData.SoDu + soTien;
+                    // Kiểm tra xem người chuyển có đủ số dư không
+                    if (nguoiChuyen.SoDu >= soTien)
+                    {
+                        // Thực hiện việc chuyển tiền
+                        nguoiChuyen.SoDu -= soTien;
+                        nguoiNhan.SoDu += soTien;
 
+                        // Cập nhật thông tin tài khoản trong Firebase
+                        client.Set($"TaiKhoanLienKet/{taiKhoanNguoiChuyen}/SoDu", nguoiChuyen.SoDu);
+                        client.Set($"TaiKhoanLienKet/{taiKhoanNguoiNhan}/SoDu", nguoiNhan.SoDu);
 
-                // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDu);
-
-                return true; // Cập nhật thành công
+                        return true; // Chuyển tiền thành công
+                    }
+                    else
+                    {
+                        // Xử lý trường hợp người chuyển không có đủ số dư
+                        // Bạn có thể hiển thị thông báo lỗi hoặc xử lý theo cách mong muốn
+                        return false;
+                    }
+                }
+                else
+                {
+                    // Xử lý trường hợp một hoặc cả hai tài khoản không tồn tại
+                    // Bạn có thể hiển thị thông báo lỗi hoặc xử lý theo cách mong muốn
+                    return false;
+                }
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
-                return false; // Cập nhật thất bại
+                // Xử lý ngoại lệ (hiển thị thông báo hoặc ghi log)
+                return false; // Chuyển tiền thất bại
             }
         }
 
 
-//-------------------------------------------------------------QUản lý loại thẻ-----------------------------------------------//
-/* public List<LoaiThe> GetTypesCards()
- {
-     List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
-     FirebaseResponse response = client.Get("LoaiTheNganHang");
-     List<LoaiThe> data = response.ResultAs<List<LoaiThe>>();
-     dsLoaiThe.AddRange(data);
-     return dsLoaiThe;
- }*/
-public List<LoaiThe> GetTypesCards()
+
+        //-------------------------------------------------------------QUản lý loại thẻ-----------------------------------------------//
+        /* public List<LoaiThe> GetTypesCards()
+         {
+             List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
+             FirebaseResponse response = client.Get("LoaiTheNganHang");
+             List<LoaiThe> data = response.ResultAs<List<LoaiThe>>();
+             dsLoaiThe.AddRange(data);
+             return dsLoaiThe;
+         }*/
+        public List<LoaiThe> GetTypesCards()
         {
             List<LoaiThe> dsLoaiThe = new List<LoaiThe>();
             FirebaseResponse response = client.Get("LoaiTheNganHang");

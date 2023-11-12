@@ -11,6 +11,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         FirebaseHelper firebaseHelper = new FirebaseHelper();
         string TenTK;
         string accountKey;
+        string TenTK1;
         public IActionResult Index()
         {
 
@@ -23,23 +24,27 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             if (firebaseHelper.GetAccountbyid(SoTaiKhoan) != null)
             {
                 TenTK = firebaseHelper.GetAccountbyid(SoTaiKhoan).TenTK;
-                return Json(TenTK);
+                return Json(TenTK);              
             }
             else
             {
                 return Json("Không tìm thấy");
             }
-           
-
         }
 
         [HttpPost]
         public IActionResult ChuyenTien(TaiKhoanLienKetViewModel account)
         {
-            double sotien = account.SoTien;
-            firebaseHelper.ChuyenTien(sotien, account.SoTaiKhoan);
+            double soTien = account.SoTien;
+            long taiKhoanNguoiChuyen = account.SoTaiKhoanNguoiChuyen;
+            long taiKhoanNguoiNhan = account.SoTaiKhoanNguoiNhan;
+
+            // Assuming firebaseHelper is an instance of your FirebaseHelper class
+            firebaseHelper.ChuyenTien(soTien, taiKhoanNguoiChuyen, taiKhoanNguoiNhan);
+
             return RedirectToAction("Index");
         }
-       
+
+
     }
 }
