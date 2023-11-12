@@ -42,8 +42,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             // Tiếp tục xử lý chuyển tiền
             firebaseHelper.ChuyenTien(soTien, taiKhoanNguoiChuyen, taiKhoanNguoiNhan);
 
+            ViewData["ChuyenTienSuccess"] = true;
+
             return RedirectToAction("Index");
         }
 
-    }
+        }
 }

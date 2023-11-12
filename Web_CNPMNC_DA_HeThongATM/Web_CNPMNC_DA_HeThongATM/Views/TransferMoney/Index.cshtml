@@ -5,6 +5,9 @@
     Layout = "_LayoutMain";
     var abc = ViewData["abc"] as IEnumerable<TaiKhoanLienKetViewModel>;
 }
+<header>
+
+</header>
 
 <body>
 
@@ -67,10 +70,43 @@
                     </div>
                 </form>
                 </div>
-
             </div>
         </div>
+       @* form thông báo thành công*@
+    <div id="notification" class="notification">
+        <!-- Nội dung thông báo sẽ được đặt ở đây -->
+        Chuyển tiền thành công!
+        <button id="closeNotification">OK</button>
+    </div>
+
         <style>
+              .notification {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        z-index: 1;
+    }
+
+    #closeNotification {
+        background-color: #45a049;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
             .formbold-main-wrapper {
                 display: flex;
                 align-items: center;
@@ -281,9 +317,8 @@
             });
 
 
-
-           
         </script>
+       
 
 
 </body>
