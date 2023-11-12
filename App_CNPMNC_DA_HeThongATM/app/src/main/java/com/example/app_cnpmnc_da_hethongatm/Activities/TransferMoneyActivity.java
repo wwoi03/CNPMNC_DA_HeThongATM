@@ -416,10 +416,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     public void getIntentFromQRCode(){
         String qrCodeData = getDataIntent.getStringExtra("SoTaiKhoan");
-        long amount = getDataIntent.getLongExtra("amount", 0);
+        String amount = getDataIntent.getStringExtra("amount");
         String message = getDataIntent.getStringExtra("message");
         etAccountBeneficiary.setText(qrCodeData);
         etContent.setText(message);
-        etMoney.setText(String.valueOf(amount));
+        etMoney.setText(amount);
     }
 }

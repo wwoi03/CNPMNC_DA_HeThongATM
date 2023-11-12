@@ -35,10 +35,10 @@ public class ScanQRActivity extends AppCompatActivity {
                 String qrCodeData = intentResult.getContents();
                 String[] parts = qrCodeData.split(",");
                 String SoTaiKhoan = parts[0];
-                long amount = 0;
+                String amount = "";
                 String message = "";
                 if (parts.length > 2) {
-                    amount = Long.parseLong(parts[2]);
+                    amount = parts[2];
                 }
                 if (parts.length > 3) {
                     message = parts[3];

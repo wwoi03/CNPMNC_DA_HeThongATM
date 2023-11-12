@@ -34,7 +34,9 @@ public class GenerateQRCodeActivity extends AppCompatActivity {
         Button button = findViewById(R.id.btn_backhome);
         ImageView imageView = findViewById(R.id.qr_code);
         edit_amount = findViewById(R.id.edit_amount);
+        edit_amount.setCursorVisible(false);
         edit_message = findViewById(R.id.edit_message);
+        edit_message.setCursorVisible(false);
         config = new Config(this);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -53,8 +55,9 @@ public class GenerateQRCodeActivity extends AppCompatActivity {
                                 EditText editAmount = findViewById(R.id.edit_amount);
                                 String amountString = editAmount.getText().toString();
                                 long amount = amountString.isEmpty() ? 0 : Long.parseLong(amountString);
+                                String tien = String.valueOf(amount);
                                 String message = edit_message.getText().toString();
-                                String qrCodeData = SoTaiKhoan + "," + TenKH + "," + amount + "," + message;
+                                String qrCodeData = SoTaiKhoan + "," + TenKH + "," + tien + "," + message;
                                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                                 try {
                                     BitMatrix bitMatrix = multiFormatWriter.encode(qrCodeData, BarcodeFormat.QR_CODE, 200, 200);

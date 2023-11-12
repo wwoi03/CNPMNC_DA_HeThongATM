@@ -108,7 +108,7 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
 
     // Thêm thụ hưởng
     private void addBeneficiary(ThuHuong newThuHuong) {
-        DbHelper.addBeneficiary(newThuHuong, new DbHelper.FirebaseListener() {
+        DbHelper.addBeneficiary(newThuHuong, this ,new DbHelper.FirebaseListener() {
             @Override
             public void onSuccessListener() {
                 Toast.makeText(AddEditBeneficiaryActivity.this, "Đã thêm thành công", Toast.LENGTH_SHORT).show();
