@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
@@ -40,7 +41,7 @@ public class ServiceFuntionAdapter extends FirebaseRecyclerAdapter<ChucNang, Ser
 
     // Xử lý sự kiện
     private void initListener(ServiceFuntionAdapterVH holder, int position, ChucNang model) {
-        holder.tvServiceFunctionName.setOnClickListener(new View.OnClickListener() {
+        holder.cvCardContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.setOnClickItemListener(model, getRef(position));
@@ -64,12 +65,14 @@ public class ServiceFuntionAdapter extends FirebaseRecyclerAdapter<ChucNang, Ser
     class ServiceFuntionAdapterVH extends RecyclerView.ViewHolder {
         ImageView ivIcon;
         TextView tvServiceFunctionName;
+        CardView cvCardContainer;
 
         public ServiceFuntionAdapterVH(@NonNull View itemView) {
             super(itemView);
 
             ivIcon = itemView.findViewById(R.id.ivIcon);
             tvServiceFunctionName = itemView.findViewById(R.id.tvServiceFunctionName);
+            cvCardContainer = itemView.findViewById(R.id.cvCardContainer);
         }
     }
 

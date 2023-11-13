@@ -3,49 +3,35 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 import java.io.Serializable;
 
 public class TheNganHang implements Serializable {
-    public String LoaiThe;
-    public String MaDangNhap;
-    public String MaKH; // key trong bảng "KhachHang"
-    public int MaPin;
-    public long MaSoThe;
-    public String NgayHetHan;
-    public String NgayMoThe;
-    public String SDTDangKy;
-    public int TinhTrangThe;
+    private String Key;
+    private long MaSoThe;
+    private long SoTaiKhoan;
+    private String MaPin;
+    private String NgayHetHan;
+    private String NgayMoThe;
+    private int TinhTrangThe;
+    private String MaKHKey;
 
     public TheNganHang() {
     }
 
-    public String getLoaiThe() {
-        return LoaiThe;
-    }
-
-    public void setLoaiThe(String loaiThe) {
-        LoaiThe = loaiThe;
-    }
-
-    public String getMaDangNhap() {
-        return MaDangNhap;
-    }
-
-    public void setMaDangNhap(String maDangNhap) {
-        MaDangNhap = maDangNhap;
-    }
-
-    public String getMaKH() {
-        return MaKH;
-    }
-
-    public void setMaKH(String maKH) {
-        MaKH = maKH;
-    }
-
-    public int getMaPin() {
-        return MaPin;
-    }
-
-    public void setMaPin(int maPin) {
+    public TheNganHang(String key, long maSoThe, long soTaiKhoan, String maPin, String ngayHetHan, String ngayMoThe, int tinhTrangThe, String maKHKey) {
+        Key = key;
+        MaSoThe = maSoThe;
+        SoTaiKhoan = soTaiKhoan;
         MaPin = maPin;
+        NgayHetHan = ngayHetHan;
+        NgayMoThe = ngayMoThe;
+        TinhTrangThe = tinhTrangThe;
+        MaKHKey = maKHKey;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 
     public long getMaSoThe() {
@@ -54,6 +40,22 @@ public class TheNganHang implements Serializable {
 
     public void setMaSoThe(long maSoThe) {
         MaSoThe = maSoThe;
+    }
+
+    public long getSoTaiKhoan() {
+        return SoTaiKhoan;
+    }
+
+    public void setSoTaiKhoan(long soTaiKhoan) {
+        SoTaiKhoan = soTaiKhoan;
+    }
+
+    public String getMaPin() {
+        return MaPin;
+    }
+
+    public void setMaPin(String maPin) {
+        MaPin = maPin;
     }
 
     public String getNgayHetHan() {
@@ -72,14 +74,6 @@ public class TheNganHang implements Serializable {
         NgayMoThe = ngayMoThe;
     }
 
-    public String getSDTDangKy() {
-        return SDTDangKy;
-    }
-
-    public void setSDTDangKy(String SDTDangKy) {
-        this.SDTDangKy = SDTDangKy;
-    }
-
     public int getTinhTrangThe() {
         return TinhTrangThe;
     }
@@ -88,16 +82,12 @@ public class TheNganHang implements Serializable {
         TinhTrangThe = tinhTrangThe;
     }
 
-    public TheNganHang(String loaiThe, String maDangNhap, String maKH, int maPin, long maSoThe, String ngayHetHan, String ngayMoThe, String SDTDangKy, int tinhTrangThe) {
-        LoaiThe = loaiThe;
-        MaDangNhap = maDangNhap;
-        MaKH = maKH;
-        MaPin = maPin;
-        MaSoThe = maSoThe;
-        NgayHetHan = ngayHetHan;
-        NgayMoThe = ngayMoThe;
-        this.SDTDangKy = SDTDangKy;
-        TinhTrangThe = tinhTrangThe;
+    public String getMaKHKey() {
+        return MaKHKey;
+    }
+
+    public void setMaKHKey(String maKHKey) {
+        MaKHKey = maKHKey;
     }
 }
 

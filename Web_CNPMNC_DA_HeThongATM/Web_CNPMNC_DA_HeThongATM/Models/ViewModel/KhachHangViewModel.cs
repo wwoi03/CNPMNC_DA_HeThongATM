@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
+using UniqueIdGenerator;
 
 
 namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
@@ -16,6 +18,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập email.")]
         public string Email { get; set; }
+        public string NgaySinh { get; set; }
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập giới tính.")]
@@ -24,15 +27,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         // Kiểm tra không được để trống (null) và có ít nhất một số
         [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Số điện thoại phải có ít nhất 10 chữ số.")]
-        public string Sdt { get; set; }
+        public string SoDienThoai { get; set; }
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập tên khách hàng.")]
-        public string TenKh { get; set; }
+        public string TenKH { get; set; }
 
         public string NgayTao { get; set; }
 
-        public string MatKhau { get; set; }
+        public string MatKhau { get; set; }
+
+        public string MaNhanVienKey { get; set; }
+
+
     }
 
 }

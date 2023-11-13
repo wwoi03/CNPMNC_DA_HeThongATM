@@ -2,15 +2,81 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
+        <activity
+            android:name=".Activities.AgreeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddNewAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.NewaccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DepositMoreSavingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CreateSavingAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ConfirmTransferLimitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AdjustMoneyTransferLimitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ScanQRActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.GenerateQRCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.PhoneActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ConfirmReminderTransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddEditReminderTransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ReminderTransferMoneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.EditAccountNicknameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AccountSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SearchServiceFunctionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.UnlockCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LockCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ConfirmLockCardActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.AccountCardActivity"
             android:exported="false" />
@@ -23,9 +89,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity
-            android:name=".Activities.LookCardActivity"
-            android:exported="false" />
         <activity
             android:name=".Activities.BeneficiaryManagementActivity"
             android:exported="false" />
@@ -42,6 +105,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.WithdrawSavingsActivity" />
+        <activity android:name=".Activities.ListAccountSavingsActivity" />
+        <activity android:name=".Activities.NotificationActivity" />
+        <activity android:name=".Activities.ActivityListGD" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
+        <activity android:name=".Activities.SaveBillActivity" />
+        <activity android:name=".Activities.ListSaveBillActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

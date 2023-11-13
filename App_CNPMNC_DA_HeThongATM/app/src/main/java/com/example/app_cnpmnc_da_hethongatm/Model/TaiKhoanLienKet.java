@@ -3,61 +3,63 @@ package com.example.app_cnpmnc_da_hethongatm.Model;
 import java.io.Serializable;
 
 public class TaiKhoanLienKet implements Serializable {
-    private double HanMucThe;
-    private long MaSoThe;
-    private String NgayGD;
-    private double SoDu;
+    private String Key;
+    private String MaKHKey;
+    private String MaLoaiTKKey;
     private long SoTaiKhoan;
-    private String TenTaiKhoan;
+    private double SoDu;
+    private String TenTK;
+    private int TinhTrangTaiKhoan;
+    private double HanMucTK;
+    private String NgayGD;
     private double TienDaGD;
     private double TienGD1Lan;
-    private int TinhTrangTaiKhoan;
 
     public TaiKhoanLienKet() {
     }
 
-    public TaiKhoanLienKet(double hanMucThe, long maSoThe, String ngayGD, double soDu, long soTaiKhoan, String tenTaiKhoan, double tienDaGD, double tienGD1Lan, int tinhTrangTaiKhoan) {
-        HanMucThe = hanMucThe;
-        MaSoThe = maSoThe;
-        NgayGD = ngayGD;
-        SoDu = soDu;
+    public TaiKhoanLienKet(String key, String maKHKey, String maLoaiTKKey, long soTaiKhoan, double soDu, String tenTK, int tinhTrangTaiKhoan, double hanMucTK, String ngayGD, double tienDaGD, double tienGD1Lan) {
+        Key = key;
+        MaKHKey = maKHKey;
+        MaLoaiTKKey = maLoaiTKKey;
         SoTaiKhoan = soTaiKhoan;
-        TenTaiKhoan = tenTaiKhoan;
+        SoDu = soDu;
+        TenTK = tenTK;
+        TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+        HanMucTK = hanMucTK;
+        NgayGD = ngayGD;
         TienDaGD = tienDaGD;
         TienGD1Lan = tienGD1Lan;
-        TinhTrangTaiKhoan = tinhTrangTaiKhoan;
     }
 
-    public double getHanMucThe() {
-        return HanMucThe;
-    }
-
-    public void setHanMucThe(double hanMucThe) {
-        HanMucThe = hanMucThe;
-    }
-
-    public long getMaSoThe() {
-        return MaSoThe;
-    }
-
-    public void setMaSoThe(long maSoThe) {
-        MaSoThe = maSoThe;
-    }
-
-    public String getNgayGD() {
-        return NgayGD;
-    }
-
-    public void setNgayGD(String ngayGD) {
-        NgayGD = ngayGD;
-    }
-
-    public double getSoDu() {
-        return SoDu;
-    }
-
-    public void setSoDu(double soDu) {
+    public TaiKhoanLienKet  (long soTaiKhoan,  double soDu, String key){
+        SoTaiKhoan = soTaiKhoan;
         SoDu = soDu;
+        Key = key;
+    }
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
+    }
+
+    public String getMaKHKey() {
+        return MaKHKey;
+    }
+
+    public void setMaKHKey(String maKHKey) {
+        MaKHKey = maKHKey;
+    }
+
+    public String getMaLoaiTKKey() {
+        return MaLoaiTKKey;
+    }
+
+    public void setMaLoaiTKKey(String maLoaiTKKey) {
+        MaLoaiTKKey = maLoaiTKKey;
     }
 
     public long getSoTaiKhoan() {
@@ -68,12 +70,44 @@ public class TaiKhoanLienKet implements Serializable {
         SoTaiKhoan = soTaiKhoan;
     }
 
-    public String getTenTaiKhoan() {
-        return TenTaiKhoan;
+    public double getSoDu() {
+        return SoDu;
     }
 
-    public void setTenTaiKhoan(String tenTaiKhoan) {
-        TenTaiKhoan = tenTaiKhoan;
+    public void setSoDu(double soDu) {
+        SoDu = soDu;
+    }
+
+    public String getTenTK() {
+        return TenTK;
+    }
+
+    public void setTenTK(String tenTK) {
+        TenTK = tenTK;
+    }
+
+    public int getTinhTrangTaiKhoan() {
+        return TinhTrangTaiKhoan;
+    }
+
+    public void setTinhTrangTaiKhoan(int tinhTrangTaiKhoan) {
+        TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+    }
+
+    public double getHanMucTK() {
+        return HanMucTK;
+    }
+
+    public void setHanMucTK(double hanMucTK) {
+        HanMucTK = hanMucTK;
+    }
+
+    public String getNgayGD() {
+        return NgayGD;
+    }
+
+    public void setNgayGD(String ngayGD) {
+        NgayGD = ngayGD;
     }
 
     public double getTienDaGD() {
@@ -92,11 +126,13 @@ public class TaiKhoanLienKet implements Serializable {
         TienGD1Lan = tienGD1Lan;
     }
 
-    public int getTinhTrangTaiKhoan() {
-        return TinhTrangTaiKhoan;
+    public String getSoDuFormat() {
+        // Sử dụng String.format với định dạng số có dấu phân cách
+        return String.format("%,d", (long) SoDu);
     }
 
-    public void setTinhTrangTaiKhoan(int tinhTrangTaiKhoan) {
-        TinhTrangTaiKhoan = tinhTrangTaiKhoan;
+    public String getNumberFormat(double number) {
+        // Sử dụng String.format với định dạng số có dấu phân cách
+        return String.format("%,d", (long) number);
     }
 }

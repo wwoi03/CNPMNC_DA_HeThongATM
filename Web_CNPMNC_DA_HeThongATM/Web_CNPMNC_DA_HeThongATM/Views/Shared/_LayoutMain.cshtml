@@ -4,81 +4,88 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="">
- <!--<![endif]-->
+<!--<![endif]-->
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Ela Admin - HTML5 Admin Template</title>
-	<meta name="description" content="Ela Admin - HTML5 Admin Template">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ela Admin - HTML5 Admin Template</title>
+    <meta name="description" content="Ela Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
-	<link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-	<link rel="stylesheet" href="/css/cs-skin-elastic.css">
-	<link rel="stylesheet" href="/css/style.css">
-	<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-	<link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
+   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/css-main.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="/css/ListCard.css">
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
-	<link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
-	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
 
-	<!-- Chart -->
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	<!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
 
 	<style>
 		#weatherWidget .currentDesc {
 			color: #ffffff !important;
 		}
 
-		.traffic-chart {
-			min-height: 335px;
-		}
+        .traffic-chart {
+            min-height: 335px;
+        }
 
-		#flotPie1 {
-			height: 150px;
-		}
+        #flotPie1 {
+            height: 150px;
+        }
 
-			#flotPie1 td {
-				padding: 3px;
-			}
+            #flotPie1 td {
+                padding: 3px;
+            }
 
-			#flotPie1 table {
-				top: 20px !important;
-				right: -10px !important;
-			}
+            #flotPie1 table {
+                top: 20px !important;
+                right: -10px !important;
+            }
 
-		.chart-container {
-			display: table;
-			min-width: 270px;
-			text-align: left;
-			padding-top: 10px;
-			padding-bottom: 10px;
-		}
+        .chart-container {
+            display: table;
+            min-width: 270px;
+            text-align: left;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
 
-		#flotLine5 {
-			height: 105px;
-		}
+        #flotLine5 {
+            height: 105px;
+        }
 
-		#flotBarChart {
-			height: 150px;
-		}
+        #flotBarChart {
+            height: 150px;
+        }
 
-		#cellPaiChart {
-			height: 160px;
-		}
+        #cellPaiChart {
+            height: 160px;
+        }
 
-	</style>
+    </style>
 </head>
 
 <body>
@@ -92,11 +99,25 @@
 						<a asp-controller="Statistical" asp-action="Index"><i class="menu-icon fa fa-dashboard"></i>Trang chính</a>
 					</li>
 
-					<li style="border-bottom: 1px solid #D8D8D8; margin-bottom: 16px"></li>
+                    <li style="border-bottom: 1px solid #D8D8D8; margin-bottom: 16px"></li>
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Đặt lịch hẹn</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li>
+                                <i class="menu-icon fa fa-list-alt"></i>
+                                <a asp-controller="Appointment" asp-action="Create">Đặt lịch hẹn</a>
+                            </li>
+                                
+                            <li>
+                                <i class="menu-icon fa fa-list-alt"></i>
+                                <a asp-controller="Appointment" asp-action="Index">Danh sách lịch hẹn</a>
+                            </li>
+                        </ul>
+                    </li>
 
 					<!-- Khách hàng -->
 					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Khách hàng</a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Khách hàng</a>
 						<ul class="sub-menu children dropdown-menu">
 							<!-- Danh sách khách hàng -->
 							<li>
@@ -110,79 +131,114 @@
 								<a asp-controller="CusTomer" asp-action="CreateCustommer">Tạo khách hàng</a>
 							</li>
 
-							<!-- Sửa khách hàng -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Sửa khách hàng</a>
-							</li>
-						</ul>
-					</li>
+                            <!-- Sửa khách hàng -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ReditCard" asp-action="Index">Sửa khách hàng</a>
+                            </li>
+                        </ul>
+                    </li>
 
-					<!-- Thẻ/tài khoản -->
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-credit-card"></i>Thẻ/Tài khoản</a>
-						<ul class="sub-menu children dropdown-menu">
-							<!-- Tạo thẻ ngân hàng -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreditCard" asp-action="Index">Tạo thẻ ngân hàng</a>
-							</li>
+                    <!-- Thẻ/tài khoản -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-credit-card"></i>Thẻ/Tài khoản</a>
+                        <ul class="sub-menu children dropdown-menu">
+                           
+                            <!-- Sửa thẻ ngân hàng -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreditCard" asp-action="Index">Tạo thẻ ngân hàng</a>
+                            </li>
+                            <!-- Tạo thẻ ngân hàng -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreditCard" asp-action="ListCard">Xem thẻ ngân hàng</a>
+                            </li>
 
-							<!-- Sửa thẻ ngân hàng -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Sửa thẻ ngân hàng</a>
-							</li>
+                            <!-- Khóa thẻ ngân hàng -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ManageCardAndAccount" asp-action="MoKhoaTaiKhoan">Mở/khóa tài khoản</a>
+                            </li>
+                        </ul>
+                    </li>
 
-							<!-- Khóa thẻ ngân hàng -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Khóa thẻ ngân hàng</a>
-							</li>
-						</ul>
-					</li>
+                    <!-- Thống kê -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart-o"></i>Thống kê</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!-- Thống kê giao dịch -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreateCard" asp-action="Index">Thông kê giao dịch</a>
+                            </li>
 
-					<!-- Thống kê -->
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart-o"></i>Thống kê</a>
-						<ul class="sub-menu children dropdown-menu">
-							<!-- Thống kê giao dịch -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Thông kê giao dịch</a>
-							</li>
+                            <!-- Thống kê khách hàng -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreateCard" asp-action="Index">Thông kê khách hàng</a>
+                            </li>
+                        </ul>
+                    </li>
 
-							<!-- Thống kê khách hàng -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Thông kê khách hàng</a>
-							</li>
-						</ul>
-					</li>
+                    <!-- QUản lý lãi suất -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-percent" aria-hidden="true"></i>Quản lý lãi suất</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!-- Danh sách lãi suất-->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ManageInterestRate" asp-action="Index">Danh sách lãi suất</a>
+                            </li>
+                            <!-- tạo lãi suất-->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">Tạo lãi suất</a>
+                            </li>
+                        </ul>
+                    </li>
 
-					<!-- Dịch vụ -->
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gbp"></i>Dịch vụ</a>
-						<ul class="sub-menu children dropdown-menu">
-							<!-- Nạp tiền -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Nạp tiền</a>
-							</li>
+                    <!-- Dịch vụ -->
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gbp"></i>Dịch vụ</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <!-- Nạp tiền -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CustomerService" asp-action="NapTien">Nạp tiền</a>
+                            </li>
 
-							<!-- Rút tiền -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Rút tiền</a>
-							</li>
+                            <!-- Rút tiền -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CustomerService" asp-action="RutTien">Rút tiền</a>
+                            </li>
 
-							<!-- Chuyển tiền -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Chuyển tiền</a>
-							</li>
-						</ul>
-					</li>
+                            <!-- Chuyển tiền -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CustomerService" asp-action="ChuyenTien">Chuyển tiền</a>
+                            </li>
+
+                            <!-- Mở tiết kiệm -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreateCard" asp-action="Index">Mở tiết kiệm</a>
+                            </li>
+
+                            <!-- Rút tiết kiệm -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreateCard" asp-action="Index">Rút tiết kiệm</a>
+                            </li>
+
+                            <!-- Nộp tiết kiệm -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreateCard" asp-action="Index">Nộp tiết kiệm</a>
+                            </li>
+                        </ul>
+                    </li>
 
 					<!-- Nhân viên -->
 					<li class="menu-item-has-children dropdown">
@@ -203,13 +259,86 @@
 							<!-- Sửa tài khoản nhân viên -->
 							<li>
 								<i class="fa menu-icon fa-edit"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Sửa tài khoản</a>
+								<a asp-controller="Staff" asp-action="Index">Sửa tài khoản</a>
 							</li>
 
 							<!-- Xóa tài khoản nhân viên -->
 							<li>
 								<i class="fa fa-trash-o menu-icon"></i>
 								<a asp-controller="CreateCard" asp-action="Index">Xóa tài khoản</a>
+							</li>
+						</ul>
+					</li>
+
+                    <!-- Quản lý lịch hẹn -->
+					<li class="menu-item-has-children dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i>Lịch hẹn</a>
+						<ul class="sub-menu children dropdown-menu">
+							<!-- Danh sách nhân viên -->
+							<li>
+								<i class="menu-icon fa fa-list-alt"></i>
+								<a asp-controller="Staff" asp-action="Index">Danh sách nhân viên</a>
+							</li>
+
+							<!-- Tạo tài khoản nhân viên -->
+							<li>
+								<i class="menu-icon fa fa-plus-circle"></i>
+								<a asp-controller="Staff" asp-action="Create">Tạo tài khoản</a>
+							</li>
+
+							<!-- Sửa tài khoản nhân viên -->
+							<li>
+								<i class="fa menu-icon fa-edit"></i>
+								<a asp-controller="Staff" asp-action="Index">Sửa tài khoản</a>
+							</li>
+
+							<!-- Xóa tài khoản nhân viên -->
+							<li>
+								<i class="fa fa-trash-o menu-icon"></i>
+								<a asp-controller="CreateCard" asp-action="Index">Xóa tài khoản</a>
+							</li>
+						</ul>
+					</li>
+
+                    <!-- Quản trị hệ thống -->
+					<li class="menu-item-has-children dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gear"></i>Quản trị hệ thống</a>
+						<ul class="sub-menu children dropdown-menu">
+
+							<!-- khách hàng -->
+							<li>
+								<i class="menu-icon fa fa-users"></i>
+								<a asp-controller="Staff" asp-action="Index">Khách hàng</a>
+							</li>
+
+                            <!-- Loại tài khoản -->
+							<li>
+								<i class="menu-icon fa fa-credit-card"></i>
+								<a asp-controller="Staff" asp-action="Create">Loại tài khoản</a>
+							</li>
+
+                            <!-- Thống kê -->
+							<li>
+								<i class="menu-icon fa fa-bar-chart"></i>
+								<a asp-controller="CreateCard" asp-action="Index">Thống kê</a>
+							</li>
+
+							<!-- Nhân viên -->
+							<li>
+								<i class="menu-icon fa fa-user-md"></i>
+								<a asp-controller="Staff" asp-action="Create">Nhân viên</a>
+							</li>
+
+							<!-- Chi nhánh -->
+							<li>
+								<i class="fa menu-icon fa-sitemap"></i>
+								<a asp-controller="Staff" asp-action="Index">Chi nhánh</a>
+							</li>
+
+                            <!-- Dịch vụ -->
+							<li>
+								<i class="menu-icon fa fa-thumbs-up"></i>
+								<a asp-controller="Service" asp-action="Index">Dịch vụ</a>
 							</li>
 						</ul>
 					</li>
@@ -240,98 +369,117 @@
 							</form>
 						</div>
 
-						<div class="dropdown for-notification">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fa fa-bell"></i>
-								<span class="count bg-danger">3</span>
-							</button>
-							<div class="dropdown-menu" aria-labelledby="notification">
-								<p class="red">You have 3 Notification</p>
-								<a class="dropdown-item media" href="#">
-									<i class="fa fa-check"></i>
-									<p>Server #1 overloaded.</p>
-								</a>
-								<a class="dropdown-item media" href="#">
-									<i class="fa fa-info"></i>
-									<p>Server #2 overloaded.</p>
-								</a>
-								<a class="dropdown-item media" href="#">
-									<i class="fa fa-warning"></i>
-									<p>Server #3 overloaded.</p>
-								</a>
-							</div>
-						</div>
+                        <div class="dropdown for-notification">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bell"></i>
+                                <span class="count bg-danger">3</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="notification">
+                                <p class="red">You have 3 Notification</p>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-check"></i>
+                                    <p>Server #1 overloaded.</p>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-info"></i>
+                                    <p>Server #2 overloaded.</p>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <i class="fa fa-warning"></i>
+                                    <p>Server #3 overloaded.</p>
+                                </a>
+                            </div>
+                        </div>
 
-						<div class="dropdown for-message">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fa fa-envelope"></i>
-								<span class="count bg-primary">4</span>
-							</button>
-							<div class="dropdown-menu" aria-labelledby="message">
-								<p class="red">You have 4 Mails</p>
-								<a class="dropdown-item media" href="#">
-									<span class="photo media-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
-									<div class="message media-body">
-										<span class="name float-left">Jonathan Smith</span>
-										<span class="time float-right">Just now</span>
-										<p>Hello, this is an example msg</p>
-									</div>
-								</a>
-								<a class="dropdown-item media" href="#">
-									<span class="photo media-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
-									<div class="message media-body">
-										<span class="name float-left">Jack Sanders</span>
-										<span class="time float-right">5 minutes ago</span>
-										<p>Lorem ipsum dolor sit amet, consectetur</p>
-									</div>
-								</a>
-								<a class="dropdown-item media" href="#">
-									<span class="photo media-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
-									<div class="message media-body">
-										<span class="name float-left">Cheryl Wheeler</span>
-										<span class="time float-right">10 minutes ago</span>
-										<p>Hello, this is an example msg</p>
-									</div>
-								</a>
-								<a class="dropdown-item media" href="#">
-									<span class="photo media-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
-									<div class="message media-body">
-										<span class="name float-left">Rachel Santos</span>
-										<span class="time float-right">15 minutes ago</span>
-										<p>Lorem ipsum dolor sit amet, consectetur</p>
-									</div>
-								</a>
-							</div>
-						</div>
-					</div>
+                        <div class="dropdown for-message">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-envelope"></i>
+                                <span class="count bg-primary">4</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="message">
+                                <p class="red">You have 4 Mails</p>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/1.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Jonathan Smith</span>
+                                        <span class="time float-right">Just now</span>
+                                        <p>Hello, this is an example msg</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/2.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Jack Sanders</span>
+                                        <span class="time float-right">5 minutes ago</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/3.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Cheryl Wheeler</span>
+                                        <span class="time float-right">10 minutes ago</span>
+                                        <p>Hello, this is an example msg</p>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item media" href="#">
+                                    <span class="photo media-left"><img alt="avatar" src="images/avatar/4.jpg"></span>
+                                    <div class="message media-body">
+                                        <span class="name float-left">Rachel Santos</span>
+                                        <span class="time float-right">15 minutes ago</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-					<div class="user-area dropdown float-right">
-						<a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
-						</a>
+                    <div class="user-area dropdown float-right">
+                      @*   <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
+                        </a> *@
 
-						<div class="user-menu dropdown-menu">
-							<a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
 
-							<a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
+                            <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>Notifications <span class="count">13</span></a>
 
-							<a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
+                            <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
 
-							<a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</header><!-- /header -->
-		<!-- Header-->
-		@RenderBody()
-	</div>
-	<!-- /#right-panel -->
-	<!-- Scripts -->
-	<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-	<script src="/js/main.js"></script>
+                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header><!-- /header -->
+        <!-- Header-->
+       
+        @RenderBody()
+    </div>
+    <!-- /#right-panel -->
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="/js/main.js"></script>
+
+    @*<!--  Chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+
+    <!--Chartist Chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="/js/init/weather-init.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
+    <script src="/js/init/fullcalendar-init.js"></script>*@
 </body>
 </html>

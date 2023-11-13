@@ -7,7 +7,8 @@
         public string DiaChi { get; set; }
         public string Email { get; set; }
         public string MatKhau { get; set; }
-        public string NamSinh { get; set; }
+        public string NgaySinh { get; set; }
+        public string SoDienThoai { get; set; }
         public string Ten { get; set; }
     }
 }

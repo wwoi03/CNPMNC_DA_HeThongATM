@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,10 +16,12 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
 public class BeneficiaryManagementActivity extends AppCompatActivity implements BeneficiaryAdapter.Listener {
@@ -32,6 +35,10 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
     // Flag
     public static int ADD_BENEFICIARY_FLAG = 1;
     public static int EDIT_BENEFICIARY_FLAG = 2;
+
+    public static int USER_NAME = 3123;
+
+    Config config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,9 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
 
     // Khởi tạo dữ liệu
     private void initData() {
-        FirebaseRecyclerOptions<ThuHuong> beneficiaryOptions = DbHelper.getBeneficiaries(DbHelper.MY_CARD);
+        config = new Config(this);
+
+        FirebaseRecyclerOptions<ThuHuong> beneficiaryOptions = DbHelper.getBeneficiaries(config.getCustomerKey());
         beneficiaryAdapter = new BeneficiaryAdapter(beneficiaryOptions, this);
         rvBeneficiary.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvBeneficiary.setAdapter(beneficiaryAdapter);
@@ -97,7 +106,12 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_chuyentien:
-                        Toast.makeText(BeneficiaryManagementActivity.this, "Hệ thống đang cập nhật", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(BeneficiaryManagementActivity.this, TransferMoneyActivity.class);
+                        Log.d("firebase", "dTK: " + thuHuong.getTKThuHuong());
+
+                        intent1.putExtra("flag", USER_NAME);
+                        intent1.putExtra("tkthuhuong", thuHuong);
+                        startActivity(intent1);
                         break;
                     case R.id.action_edit:
                         Intent intent = new Intent(BeneficiaryManagementActivity.this, AddEditBeneficiaryActivity.class);
@@ -121,6 +135,11 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
                                     @Override
                                     public void onFailureListener(Exception e) {
                                         Toast.makeText(BeneficiaryManagementActivity.this,"Hệ thống lỗi. Thao tác thất bại!", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onSuccessListener(DataSnapshot snapshot) {
+
                                     }
                                 });
                             }

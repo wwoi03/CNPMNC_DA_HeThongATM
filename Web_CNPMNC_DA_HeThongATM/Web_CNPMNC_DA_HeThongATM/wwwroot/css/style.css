@@ -1,4 +1,4 @@
-/* This css file is to over write bootstarp css
+﻿/* This css file is to over write bootstarp css
 --------------------------------------------------------- /
 * Theme Name: Ela Admin Template
 * Theme URI: http://demos.jeweltheme.com/
@@ -18,9 +18,15 @@ Googel Fonts  */
 /* Googel Fonts End  
 
 */
+
+.form-control {
+    border-radius: .25rem !important;
+}
+
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
 .bg-flat-color-1 {
-  background: #00c292; }
+    background: #00c292;
+}
 
 .bg-flat-color-2 {
   background: #ab8ce4; }
@@ -2504,3 +2510,443 @@ footer.site-footer {
     right: 20px !important; }
 
 /*# sourceMappingURL=style.css.map */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+              /*  form tạo thẻ*/
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.container {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    padding-bottom: 60px;
+}
+
+    .container form {
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0 10px 15px rgba(0,0,0,.1);
+        padding: 20px;
+        width: 100%;
+        padding-top: 160px;
+    }
+
+        .container form .inputBox {
+            margin-top: 20px;
+        }
+
+            .container form .inputBox span {
+                display: block;
+                color: #999;
+                padding-bottom: 5px;
+            }
+
+            .container form .inputBox input,
+            .container form .inputBox select {
+                width: 100%;
+                padding: 10px;
+                border-radius: 10px;
+                border: 1px solid rgba(0,0,0,.3);
+                color: #444;
+            }
+
+        .container form .flexbox {
+            display: flex;
+            gap: 15px;
+        }
+
+            .container form .flexbox .inputBox {
+                flex: 1 1 150px;
+            }
+
+        .container form .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #0077b6, #0096c7);
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 20px;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .2s linear;
+        }
+
+            .container form .submit-btn:hover {
+                letter-spacing: 2px;
+                opacity: .8;
+            }
+
+    .container .card-container {
+        margin-bottom: -150px;
+        position: relative;
+        height: 250px;
+        width: 400px;
+    }
+
+        .container .card-container .front {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(45deg, #0077b6, #0096c7);
+            border-radius: 5px;
+            backface-visibility: hidden;
+            box-shadow: 0 15px 25px rgba(0,0,0,.2);
+            padding: 20px;
+            transform: perspective(1000px) rotateY(0deg);
+            transition: transform .4s ease-out;
+        }
+
+            .container .card-container .front .image {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 10px;
+            }
+
+                .container .card-container .front .image img {
+                    height: 50px;
+                }
+
+            .container .card-container .front .card-number-box {
+                padding: 30px 0;
+                font-size: 22px;
+                color: #fff;
+            }
+
+            .container .card-container .front .flexbox {
+                display: flex;
+            }
+
+                .container .card-container .front .flexbox .box:nth-child(1) {
+                    margin-right: auto;
+                }
+
+                .container .card-container .front .flexbox .box {
+                    font-size: 15px;
+                    color: #fff;
+                }
+
+        .container .card-container .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(45deg, #0077b6, #0096c7);
+            border-radius: 5px;
+            padding: 20px 0;
+            text-align: right;
+            backface-visibility: hidden;
+            box-shadow: 0 15px 25px rgba(0,0,0,.2);
+            transform: perspective(1000px) rotateY(180deg);
+            transition: transform .4s ease-out;
+        }
+
+            .container .card-container .back .stripe {
+                background: #000;
+                width: 100%;
+                margin: 10px 0;
+                height: 50px;
+            }
+
+            .container .card-container .back .box {
+                padding: 0 20px;
+            }
+
+                .container .card-container .back .box span {
+                    color: #fff;
+                    font-size: 15px;
+                }
+
+                .container .card-container .back .box .cvv-box {
+                    height: 50px;
+                    padding: 10px;
+                    margin-top: 5px;
+                    color: #333;
+                    background: #fff;
+                    border-radius: 5px;
+                    width: 100%;
+                }
+
+                .container .card-container .back .box img {
+                    margin-top: 30px;
+                    height: 30px;
+                }
+             /*   //thẻ span validate*/
+.text-validation{
+    font-size:15px;
+}
+
+/*-------------------listcard*/
+
+
+/* Style the container */
+.orangehrm-container {
+    background-color: #e8eaef;
+    padding: 0.5rem;
+}
+
+
+
+/* Style the table */
+.oxd-table {
+    color: var(--oxd-interface-gray-darken-1-color, #64728c);
+    font-family: Nunito Sans, sans-serif;
+    font-size: .75rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style table header */
+.oxd-table-header {
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+}
+
+    .oxd-table-header th {
+        text-align: left;
+    }
+
+/* Style table rows */
+.oxd-table-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+   
+}
+
+    /* Style alternating rows */
+.backgr oxd-table-row {
+    background-color: #f2f2f2;
+}
+
+/* Style table cells */
+.oxd-table-cell {
+    text-align: left;
+}
+
+.oxd-padding-cell {
+    padding: 5px;
+}
+
+.oxd-table-body {
+    font-weight: 400;
+    display: grid;
+    grid-gap: 5px;
+}
+
+.oxd-table-card {
+    min-height: 45px;
+    border-radius: 1.2rem;
+    background-color: var(--oxd-white-color, #fff);
+}
+
+.oxd-table-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.oxd-table-body {
+    font-weight: 400;
+    display: grid;
+    grid-gap: 5px;
+}
+
+/* Style checkboxes */
+.oxd-checkbox-wrapper {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.oxd-checkbox-input-icon {
+    color: var(--oxd-primary-font-color, #fff);
+    font-size: 1rem;
+    position: absolute;
+    line-height: 1.5;
+    align-self: center;
+}
+
+/* Style icons */
+.oxd-icon {
+    font-size: 16px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/* Style buttons */
+
+.oxd-icon-button {
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: var(--oxd-interface-gray-darken-1-color, #64728c);
+    background-color: var(--oxd-interface-gray-darken-1-alpha-10-color, rgba(100, 114, 140, .1));
+}
+
+.oxd-table-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.orangehrm-bottom-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding: 25px;
+    background-color: #befeee;
+}
+
+.orangehrm-paper-container {
+    background-color: #befeee;
+    border-radius: 1.2rem;
+}
+
+.oxd-table-cell {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.oxd-padding-cell {
+    padding: 5px;
+}
+
+.oxd-table-card-cell-checkbox {
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.oxd-checkbox-wrapper label {
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    font-family: Nunito Sans, sans-serif;
+    color: #64728c;
+    font-size: 12px;
+    font-weight: 400;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.oxd-divider {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.oxd-divider {
+    border: 0;
+    border-top: 1px solid var(--oxd-interface-gray-lighten-2-color, #e8eaef);
+}
+
+.orangehrm-horizontal-margin {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.orangehrm-vertical-padding {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.orangehrm-horizontal-padding {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+body {
+    color: var(--oxd-interface-gray-darken-1-color, #64728c);
+    font-family: Nunito Sans, sans-serif;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.oxd-table-cell-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+}
+
+text--span {
+    color: var(--oxd-interface-gray-darken-1-color, #64728c);
+}
+
+.oxd-tex {
+    font-family: Nunito Sans, sans-serif;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.content {
+    width:100%;
+    text-transform: inherit;
+}
+
+.oxd-table-cell oxd-padding-cell {
+    padding: 5px;
+    
+}
+.oxd-table-cell div {
+    text-align: center;
+}
+/*-------------------------------------------------------------------------------------------dilog---------------------------------------------------*/
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 280px;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: visible;
+    transition: opacity linear 0.2s;
+}
+.overlay {
+    background-color: #d9d9d9;
+}
+.dialog-body{
+    max-width:600px;
+    position:relative;
+    background-color:aliceblue;
+    padding:16px;
+}

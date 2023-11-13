@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddNewAccountActivity"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="42dp"
+            android:layout_marginBottom="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
+
+            <!-- Thông tin mở tài khoản thanh toán số chọn -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+
+                <!-- Tiêu đề -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mở tài khoản thanh toán số chọn"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <!-- Tiều đề -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tài khoản nguồn"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="10dp">
+                </TextView>
+
+                <!-- Tài khoản nguồn -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    app:cardCornerRadius="14dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/tvSourceAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:textSize="20dp"
+                        android:gravity="center_vertical"
+                        android:hint="Chọn tài khoản nguồn"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white">
+                    </TextView>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_arrow_drop_down_24"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="right|center_vertical">
+                    </ImageView>
+
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <!-- Tiêu đề -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số dư khả dụng"
+                        android:textSize="20dp">
+                    </TextView>
+
+                    <!-- Số dư -->
+                    <TextView
+                        android:id="@+id/tvSurplus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="20dp"
+                        android:gravity="right"
+                        android:layout_alignParentRight="true">
+                    </TextView>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <!-- Thông tin giao dịch -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+
+                <!-- Tiêu đề -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_text_snippet_24"
+                        android:layout_marginEnd="10dp">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thông tin tài khoản mở mới"
+                        android:textSize="20dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold">
+                    </TextView>
+                </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    app:cardCornerRadius="14dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:text=""
+                        android:textSize="20dp">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white"
+                        android:hint="Số tài khoản mở mới"
+                        android:inputType="numberDecimal"
+                        android:textSize="20dp">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </androidx.cardview.widget.CardView>
+                <!-- Nội dung chuyển khoản -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    app:cardCornerRadius="14dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etConten"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:textSize="20dp"
+                        android:hint="Tên khách hàng"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white">
+                    </com.google.android.material.textfield.TextInputEditText>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Tài khoản nhận -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    app:cardCornerRadius="14dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="numberDecimal"
+                        android:textSize="20dp"
+                        android:hint="Giá niêm yết"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white">
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5,000,000VND"
+                        android:textSize="20dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="right|center_vertical">
+                    </TextView>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Tài khoản nhận -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    app:cardCornerRadius="14dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:textSize="20dp"
+                        android:text="VAT"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="500,000VND"
+                        android:textSize="20dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="right|center_vertical">
+                    </TextView>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    app:cardCornerRadius="14dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="text"
+                        android:textSize="20dp"
+                        android:text="Số tiền thanh toán"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5,500,000VND"
+                        android:textSize="20dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="right|center_vertical">
+                    </TextView>
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loại tiền:"
+                android:textSize="20dp"
+                android:layout_marginBottom="10dp">
+            </TextView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                app:cardCornerRadius="14dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/tvSourceAccoun"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:textSize="20dp"
+                    android:gravity="center_vertical"
+                    android:hint="VND"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/white">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_arrow_drop_down_24"
+                    android:layout_marginEnd="16dp"
+                    android:layout_gravity="right|center_vertical">
+                </ImageView>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Đăng nhập -->
+            <Button
+                android:id="@+id/btTransferMoney"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:padding="4dp"
+                android:text="Tiếp tục"
+                android:background="@drawable/coner_radius_button">
+            </Button>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+    </ProgressBar>
+</RelativeLayout>

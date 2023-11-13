@@ -9,15 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.google.firebase.database.DataSnapshot;
 
 public class AddEditBeneficiaryActivity extends AppCompatActivity {
     // View
     EditText etNameBeneficiary, etAccountBeneficiary;
     Button btEdit;
-
+    Config config;
     ThuHuong thuHuong;
     String thuHuongKey;
     int flag; // biến cờ kiểm tra thao tác Thêm (1) /Sửa (2)
@@ -41,6 +43,8 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
 
     // Khởi tạo dữ liệu
     public void initData() {
+        config = new Config(this);
+
         // Bắt intent
         Intent getDataIntent = getIntent();
         flag = (int) getDataIntent.getSerializableExtra("flag");
@@ -66,7 +70,7 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
                 String newName = etNameBeneficiary.getText().toString().trim();
                 long newAccount = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
 
-                ThuHuong newThuHuong = new ThuHuong(DbHelper.MY_CARD, newAccount, newName);
+                ThuHuong newThuHuong = new ThuHuong(null, config.getCustomerKey(), newAccount, newName);
 
                 // Sửa thụ hưởng
                 if (flag == BeneficiaryManagementActivity.EDIT_BENEFICIARY_FLAG) {
@@ -94,6 +98,11 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
             public void onFailureListener(Exception e) {
                 Toast.makeText(AddEditBeneficiaryActivity.this, "Chỉnh sửa thất bại. Vui lòng thử lại", Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+
+            }
         });
     }
 
@@ -109,6 +118,11 @@ public class AddEditBeneficiaryActivity extends AppCompatActivity {
             @Override
             public void onFailureListener(Exception e) {
                 Toast.makeText(AddEditBeneficiaryActivity.this, "Thêm thất bại. Vui lòng thử lại", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+
             }
         });
     }
