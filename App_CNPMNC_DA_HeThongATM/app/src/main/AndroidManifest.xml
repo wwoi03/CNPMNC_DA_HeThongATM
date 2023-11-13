@@ -116,6 +116,8 @@
             tools:replace="android:screenOrientation" />
         <activity android:name=".Activities.SaveBillActivity" />
         <activity android:name=".Activities.ListSaveBillActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.GetOTPActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.VerifyOTPActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
