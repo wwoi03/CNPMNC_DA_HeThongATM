@@ -6,13 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".Activities.AccountCardActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAccountCard"
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/height_tool_bar"
+        android:background="@color/primary_blue_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </androidx.recyclerview.widget.RecyclerView>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAccountCard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbToolbar"></androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

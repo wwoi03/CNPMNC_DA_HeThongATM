@@ -18,9 +18,15 @@ Googel Fonts  */
 /* Googel Fonts End  
 
 */
+
+.form-control {
+    border-radius: .25rem !important;
+}
+
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
 .bg-flat-color-1 {
-  background: #00c292; }
+    background: #00c292;
+}
 
 .bg-flat-color-2 {
   background: #ab8ce4; }

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
 {
@@ -13,19 +13,24 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
         public int TinhTrangTaiKhoan { get; set; }
         public double HanMucTK { get; set; }
 
-        /*public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, long MaSoThe)
+        public long TienDaGD { get; set; }
+
+        public long TienGD1Lan { get; set; }
+
+        //public double SoTien { get; set; }
+
+        public static TaiKhoanLienKet DefaultCard(string Stk, string TenTaiKhoan, long MaSoThe)
         {
             TaiKhoanLienKet taiKhoanLienKet = new TaiKhoanLienKet();
             taiKhoanLienKet.SoDu = 50000;
-            taiKhoanLienKet.NgayGD = "abc";
-            taiKhoanLienKet.SoTaiKhoan = Stk;
-            taiKhoanLienKet.TienDaGD = 0;
-            taiKhoanLienKet.TienGD1Lan = 0;
+            //taiKhoanLienKet.NgayGD = "abc";
+            taiKhoanLienKet.SoTaiKhoan = long.Parse(Stk);
+            //taiKhoanLienKet.TienDaGD = 0;
+            //taiKhoanLienKet.TienGD1Lan = 0;
             taiKhoanLienKet.TinhTrangTaiKhoan = 1;
-            taiKhoanLienKet.TenTaiKhoan = TenTaiKhoan;
-            taiKhoanLienKet.MaSoThe = MaSoThe;
-            taiKhoanLienKet.HanMucThe = 1000000000;
+            taiKhoanLienKet.TenTK = TenTaiKhoan;
+            taiKhoanLienKet.HanMucTK = 1000000000;
             return taiKhoanLienKet;
-        }*/
+        }
     }
 }

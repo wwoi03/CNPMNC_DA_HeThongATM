@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:background="@drawable/bottom_border">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!--Ten thong bao-->
+            <TextView
+                android:id="@+id/tvAccountNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1026112233"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSurplus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="300,000 VND"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_Popup"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:padding="2dp"
+            android:src="@drawable/circle_check_solid">
+        </ImageView>
+    </LinearLayout>
+</LinearLayout>

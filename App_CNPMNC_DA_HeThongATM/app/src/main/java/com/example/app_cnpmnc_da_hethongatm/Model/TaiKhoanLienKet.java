@@ -32,6 +32,12 @@ public class TaiKhoanLienKet implements Serializable {
         TienGD1Lan = tienGD1Lan;
     }
 
+    public TaiKhoanLienKet  (long soTaiKhoan,  double soDu, String key){
+        SoTaiKhoan = soTaiKhoan;
+        SoDu = soDu;
+        Key = key;
+    }
+
     public String getKey() {
         return Key;
     }
@@ -123,5 +129,10 @@ public class TaiKhoanLienKet implements Serializable {
     public String getSoDuFormat() {
         // Sử dụng String.format với định dạng số có dấu phân cách
         return String.format("%,d", (long) SoDu);
+    }
+
+    public String getNumberFormat(double number) {
+        // Sử dụng String.format với định dạng số có dấu phân cách
+        return String.format("%,d", (long) number);
     }
 }

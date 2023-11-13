@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment">
+    tools:context=".Fragment.HomeFragment"
+    android:background="@color/bg_color">
 
     <!-- scroll -->
     <androidx.core.widget.NestedScrollView
@@ -54,15 +55,15 @@
                     android:padding="4dp">
 
                     <!-- Ô 1 -->
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:id="@+id/cvManageAccountAndCard"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="12dp"
-                        app:cardBackgroundColor="@color/primary_orange_color">
+                        android:background="@drawable/border_radius_all"
+                        android:backgroundTint="@color/primary_orange_color">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -95,24 +96,24 @@
                                 android:layout_weight="1">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:src="@drawable/baseline_credit_card_24"
-                                    android:tintMode="@color/white">
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/credit_card_solid"
+                                    app:tint="@color/white">
                                 </ImageView>
                             </LinearLayout>
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
                     <!-- Ô 2 -->
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="12dp"
-                        app:cardBackgroundColor="@color/primary_blue_color">
+                        android:background="@drawable/border_radius_all"
+                        android:backgroundTint="@color/primary_blue_color">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -122,6 +123,7 @@
 
                             <!-- tiêu đề -->
                             <LinearLayout
+                                android:id="@+id/Lninetrestrate"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="bottom|left"
@@ -130,7 +132,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Vay\ntiêu dùng"
+                                    android:text="Gửi\ntiết kiệm"
                                     android:textSize="16dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/white">
@@ -145,25 +147,26 @@
                                 android:layout_weight="1">
 
                                 <ImageView
+                                    android:id="@+id/imgDeposit"
                                     android:layout_width="30dp"
-                                    android:layout_height="40dp"
-                                    android:src="@drawable/sack_dollar_solid"
-                                    android:tintMode="@color/white">
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/piggy_bank_solid"
+                                    app:tint="@color/white">
                                 </ImageView>
                             </LinearLayout>
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
                     <!-- Ô 3 -->
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:id="@+id/cvTransferMoney"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
                         android:layout_margin="12dp"
-                        app:cardBackgroundColor="@color/primary_blue_color"
-                        app:cardCornerRadius="8dp">
+                        android:background="@drawable/border_radius_all"
+                        android:backgroundTint="@color/primary_blue_color">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -195,23 +198,24 @@
                                 android:gravity="right">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:src="@drawable/baseline_credit_card_24"
-                                    android:tintMode="@color/white"></ImageView>
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/hand_holding_dollar_solid"
+                                    app:tint="@color/white">
+                                </ImageView>
                             </LinearLayout>
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </LinearLayout>
 
                     <!-- Ô 4 -->
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_rowWeight="1"
                         android:layout_columnWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_margin="12dp"
-                        app:cardBackgroundColor="@color/primary_orange_color">
+                        android:background="@drawable/border_radius_all"
+                        android:backgroundTint="@color/primary_orange_color">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -229,7 +233,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Mở tài khoản thanh toán"
+                                    android:text="Mở tài khoản\nthanh toán"
                                     android:textSize="16dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/white">
@@ -244,14 +248,14 @@
                                 android:layout_weight="1">
 
                                 <ImageView
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:src="@drawable/baseline_credit_card_24"
-                                    android:tintMode="@color/white">
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/money_bills_solid"
+                                    app:tint="@color/white">
                                 </ImageView>
                             </LinearLayout>
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </LinearLayout>
                 </GridLayout>
 
                 <!-- Chức năng nổi bật -->
@@ -266,7 +270,6 @@
 
                     <!-- OR Code -->
                     <LinearLayout
-                        android:id="@+id/cvhotro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -274,54 +277,22 @@
                         android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="65dp"
                             app:cardCornerRadius="8dp"
-                            android:layout_margin="1dp">
+                            android:layout_margin="1dp"
+                            android:background="@drawable/border_radius_all"
+                            android:gravity="center">
 
                             <!-- hình ảnh -->
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/baseline_qr_code_scanner_24">
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/baseline_qr_code_scanner_24"
+                                app:tint="@color/primary_blue_color">
                             </ImageView>
-                        </androidx.cardview.widget.CardView>
-
-                        <!-- Tiêu đề -->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:textSize="16dp"
-                            android:textColor="@color/black"
-                            android:text="Trang hỗ trợ"
-                            android:paddingTop="4dp">
-                        </TextView>
-                    </LinearLayout>
-
-                    <!-- OR Code -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginStart="12dp"
-                        android:orientation="vertical">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="65dp"
-                            app:cardCornerRadius="8dp"
-                            android:layout_margin="1dp">
-
-                            <!-- hình ảnh -->
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/baseline_qr_code_scanner_24">
-                            </ImageView>
-                        </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
                         <!-- Tiêu đề -->
                         <TextView
@@ -344,19 +315,22 @@
                         android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="65dp"
                             app:cardCornerRadius="8dp"
-                            android:layout_margin="1dp">
+                            android:layout_margin="1dp"
+                            android:background="@drawable/border_radius_all"
+                            android:gravity="center">
 
                             <!-- hình ảnh -->
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/baseline_qr_code_scanner_24">
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/baseline_qr_code_scanner_24"
+                                app:tint="@color/primary_blue_color">
                             </ImageView>
-                        </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
                         <!-- Tiêu đề -->
                         <TextView
@@ -379,19 +353,60 @@
                         android:layout_marginStart="12dp"
                         android:orientation="vertical">
 
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="65dp"
                             app:cardCornerRadius="8dp"
-                            android:layout_margin="1dp">
+                            android:layout_margin="1dp"
+                            android:background="@drawable/border_radius_all"
+                            android:gravity="center">
 
                             <!-- hình ảnh -->
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/baseline_qr_code_scanner_24">
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/baseline_qr_code_scanner_24"
+                                app:tint="@color/primary_blue_color">
                             </ImageView>
-                        </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                        <!-- Tiêu đề -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:textSize="16dp"
+                            android:textColor="@color/black"
+                            android:text="QR Code"
+                            android:paddingTop="4dp">
+                        </TextView>
+                    </LinearLayout>
+
+                    <!-- OR Code -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="65dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="1dp"
+                            android:background="@drawable/border_radius_all"
+                            android:gravity="center">
+
+                            <!-- hình ảnh -->
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/baseline_qr_code_scanner_24"
+                                app:tint="@color/primary_blue_color">
+                            </ImageView>
+                        </LinearLayout>
 
                         <!-- Tiêu đề -->
                         <TextView

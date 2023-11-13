@@ -5,9 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
@@ -21,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 public class AccountCardActivity extends AppCompatActivity implements AccountCardAdapter.Listener {
     // View
     RecyclerView rvAccountCard;
+    Toolbar tbToolbar;
 
     // Adapter
     AccountCardAdapter accountCardAdapter;
@@ -39,13 +44,22 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     // ánh xạ view
     public void initUI() {
         rvAccountCard = findViewById(R.id.rvAccountCard);
+        tbToolbar = findViewById(R.id.tbToolbar);
     }
 
     // khởi tạo dữ liệu
     public void initData() {
-        Intent intent = getIntent();
         config = new Config(this);
+
+        setupToolbar();
+
+        Intent intent = getIntent();
+        if (intent.getData() != null) {
+
+        }
+
         flag = intent.getIntExtra("flag",0);
+
         FirebaseRecyclerOptions<TaiKhoanLienKet> affiliateAccountOptions = DbHelper.getAffiliateAccounts(config.getCustomerKey());
         accountCardAdapter = new AccountCardAdapter(affiliateAccountOptions, this);
         rvAccountCard.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -55,6 +69,36 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     // xử lý sự kiện
     public void initListener() {
 
+    }
+
+    // setup toolbar
+    private void setupToolbar() {
+        tbToolbar.setTitle("Danh sách tài khoản");
+        tbToolbar.setTitleTextColor(-1);
+        setSupportActionBar(tbToolbar);
+
+        // kích hoạt nút quay lại trên ActionBar
+        if (getSupportActionBar() != null) {
+            // Đặt màu trắng cho nút quay lại
+            final Drawable upArrow = getResources().getDrawable(R.drawable.baseline_chevron_left_24);
+            upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+            getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+            // Hiển thị nút quay lại
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+
+    }
+
+    // xử lý sự kiện ấn nút quay lại
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();  // Kết thúc Activity hiện tại và quay lại Activity trước đó
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -68,6 +112,7 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
         super.onStop();
         accountCardAdapter.stopListening();
     }
+
     // Xử lý sự kiện bấm vào từng thẻ
     @Override
     public void setOnClickItemListener(TaiKhoanLienKet model, DatabaseReference databaseReference) {

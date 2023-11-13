@@ -5,12 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -80,9 +83,15 @@ public class ReminderTransferMoneyActivity extends AppCompatActivity implements 
     }
 
     private void setupToolbar() {
-        tbToolbar.setTitle("Nhắc chuyển tiền");
-        tbToolbar.setTitleTextColor(-1);
+        tbToolbar.setTitle("");
         setSupportActionBar(tbToolbar);
+
+        TextView textView = new TextView(this);
+        textView.setText("Nhắc chuyển tiền");
+        textView.setTextSize(20);
+        textView.setTextColor(Color.WHITE);
+        textView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        tbToolbar.addView(textView);
 
         // kích hoạt nút quay lại trên ActionBar
         if (getSupportActionBar() != null) {
