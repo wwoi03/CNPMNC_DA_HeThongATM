@@ -13,13 +13,16 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.CreateSavingAccountActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.DepositMoreSavingActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.PhoneActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
-import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ImageSlide;
 import com.example.app_cnpmnc_da_hethongatm.R;
 
@@ -89,6 +92,8 @@ public class HomeFragment extends Fragment {
     ArrayList<ImageSlide> imageSlides;
     Handler handler = new Handler();
     Runnable runnable;
+    LinearLayout lninterestrate;
+    ImageView imgDeposit;
     LinearLayout cvTransferMoney, cvManageAccountAndCard;
 
     @Override
@@ -106,7 +111,10 @@ public class HomeFragment extends Fragment {
         ci3 = view.findViewById(R.id.ci3);
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
+        lninterestrate=view.findViewById(R.id.Lninetrestrate);
+        imgDeposit=view.findViewById(R.id.imgDeposit);
     }
+
 
     // Khởi tạo
     private void initData() {
@@ -154,6 +162,22 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        lninterestrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateSavingAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+        imgDeposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DepositMoreSavingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         // Xử lý bấm vào quản lý danh sách thẻ và tài khoản
         cvManageAccountAndCard.setOnClickListener(new View.OnClickListener() {

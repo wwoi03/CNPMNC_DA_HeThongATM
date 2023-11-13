@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,7 +36,7 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
     public static int ADD_BENEFICIARY_FLAG = 1;
     public static int EDIT_BENEFICIARY_FLAG = 2;
 
-    public static int USER_NAME = 1;
+    public static int USER_NAME = 3123;
 
     Config config;
 
@@ -106,6 +107,8 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
                 switch (item.getItemId()) {
                     case R.id.action_chuyentien:
                         Intent intent1 = new Intent(BeneficiaryManagementActivity.this, TransferMoneyActivity.class);
+                        Log.d("firebase", "dTK: " + thuHuong.getTKThuHuong());
+
                         intent1.putExtra("flag", USER_NAME);
                         intent1.putExtra("tkthuhuong", thuHuong);
                         startActivity(intent1);

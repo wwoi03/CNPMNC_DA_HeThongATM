@@ -30,6 +30,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ListBeneficiaryAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
@@ -74,6 +75,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
     int flag;
     int flagSaveBill;
     String maLoaiGGKey;
+    Config config;
+
+    Intent getDataIntent;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -99,24 +103,22 @@ public class TransferMoneyActivity extends AppCompatActivity {
         initUI();
         initData();
         initListener();
-        getIntent();
-        getIntent1();
     }
     private void UpdateTaiKhoanNguon(){
 
     }
-    private void getIntent1(){
-            Intent intent = getIntent();
-            flagSaveBill = intent.getIntExtra("flag1",0);
-            if(flagSaveBill !=0){
-                long a =(long) intent.getSerializableExtra("STK123");
-                double b =(double) intent.getSerializableExtra("SoTien123");
-                String c = (String) intent.getSerializableExtra("NoiDung123");
-                etAccountBeneficiary.setText(String.valueOf(a));
-                etMoney.setText(String.valueOf(b));
-                etContent.setText(c);
-            }
-    }
+    /*private void getIntent1(){
+        Intent intent = getIntent();
+        flagSaveBill = intent.getIntExtra("flag1",0);
+        if(flagSaveBill != 0){
+            long a =(long) intent.getSerializableExtra("STK123");
+            double b =(double) intent.getSerializableExtra("SoTien123");
+            String c = (String) intent.getSerializableExtra("NoiDung123");
+            etAccountBeneficiary.setText(String.valueOf(a));
+            etMoney.setText(String.valueOf(b));
+            etContent.setText(c);
+        }
+    }*/
     // ánh xạ view
     public void initUI() {
         tbToolbar = findViewById(R.id.tbToolbar);
@@ -133,21 +135,30 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // khởi tạo dữ liệu
     public void initData() {
+        config = new Config(this);
         setupToolbar();
 
-        Intent getDataIntent = getIntent();
-        if (getDataIntent.getData() != null) {
-            flag = (int) getDataIntent.getSerializableExtra("flag");
-            if (flag == BeneficiaryManagementActivity.USER_NAME) {
-                thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
-                long tkThuHuongLong = thuHuong.getTKThuHuong(); // Lưu giá trị long
-                String tkThuHuongStr = Long.toString(tkThuHuongLong); // Chuyển đổi thành chuỗi khi cần hiển thị
-                etAccountBeneficiary.setText(tkThuHuongStr);
-            }
-            taiKhoanNguon = new TaiKhoanLienKet();
-            taiKhoanHuong = new TaiKhoanLienKet();
+        getDataIntent = getIntent();
+
+        flag = (int) getDataIntent.getSerializableExtra("flag");
+
+        if (flag == BeneficiaryManagementActivity.USER_NAME) {
+            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
+            etAccountBeneficiary.setText(String.valueOf(thuHuong.getTKThuHuong()));
+        } else if (flag == ResultCode.LUU_MAU_CHUYEN_TIEN) {
+            long a =(long) getDataIntent.getSerializableExtra("STK123");
+            double b =(double) getDataIntent.getSerializableExtra("SoTien123");
+            String c = (String) getDataIntent.getSerializableExtra("NoiDung123");
+            etAccountBeneficiary.setText(String.valueOf(a));
+            etMoney.setText(String.valueOf(b));
+            etContent.setText(c);
+        } else if (flag == ResultCode.SCAN_QR) {
+            getIntentFromQRCode();
         }
-        getIntentFromQRCode();
+
+        taiKhoanNguon = new TaiKhoanLienKet();
+        taiKhoanHuong = new TaiKhoanLienKet();
+
     }
 
 
@@ -262,7 +273,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseRecyclerOptions<ThuHuong> options =
                         new FirebaseRecyclerOptions.Builder<ThuHuong>()
-                                .setQuery(FirebaseDatabase.getInstance().getReference().child("ThuHuong"), ThuHuong.class)
+                                .setQuery(FirebaseDatabase.getInstance().getReference().child("ThuHuong").orderByChild("MaKHKey").equalTo(config.getCustomerKey()), ThuHuong.class)
                                 .build();
 
                 ListBeneficiaryAdapter listBeneficiaryAdapter = new ListBeneficiaryAdapter(options);
@@ -337,7 +348,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private void transferMoney(double money, String noiDungChuyenKhoan,String ngaygd,double tiendaGD) {
         DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money,ngaygd,tiendaGD); // tài khoản nguồn
         DbHelper.updateSurplus(taiKhoanHuongKey, taiKhoanHuong.getSoDu() + money); // tài khoản hưởng
-        MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"-AWFo21aLu3212YNBUgf");
+        MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"0");
         BuildAlertDialogSuccess(taiKhoanNguon.getSoDu() - money);
     }
 
@@ -404,10 +415,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
     }
 
     public void getIntentFromQRCode(){
-        Intent intent = getIntent();
-        String qrCodeData = intent.getStringExtra("SoTaiKhoan");
-        long amount = intent.getLongExtra("amount", 0);
-        String message = intent.getStringExtra("message");
+        String qrCodeData = getDataIntent.getStringExtra("SoTaiKhoan");
+        long amount = getDataIntent.getLongExtra("amount", 0);
+        String message = getDataIntent.getStringExtra("message");
         etAccountBeneficiary.setText(qrCodeData);
         etContent.setText(message);
         etMoney.setText(String.valueOf(amount));

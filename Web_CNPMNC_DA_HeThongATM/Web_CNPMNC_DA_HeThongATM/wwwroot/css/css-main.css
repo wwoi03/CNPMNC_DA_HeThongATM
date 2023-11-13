@@ -1,0 +1,39 @@
+﻿.color-white {
+    color: #fff;
+}
+
+.btn-size {
+    width: 80px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-right: 30px;
+}
+
+    .search-form .search-input {
+        padding: 2.5px 12px;
+        display: block;
+        width: 250px;
+        font-size: 1rem;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    .search-form .search-btn {
+        position: absolute;
+        right: 12px;
+    }
+
+.form-edit-container {
+    display: block;
+}
+
+.

@@ -18,6 +18,21 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.AgreeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddNewAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.NewaccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DepositMoreSavingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CreateSavingAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.ConfirmTransferLimitActivity"
             android:exported="false" />
         <activity
@@ -99,8 +114,8 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             tools:replace="android:screenOrientation" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.SaveBillActivity" />
-        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.ListSaveBillActivity" />
+        <activity android:name=".Activities.SaveBillActivity" />
+        <activity android:name=".Activities.ListSaveBillActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

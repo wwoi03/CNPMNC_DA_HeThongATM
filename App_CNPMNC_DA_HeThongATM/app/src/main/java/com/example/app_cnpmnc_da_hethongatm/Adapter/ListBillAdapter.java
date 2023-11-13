@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.Model.MauChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -81,7 +82,7 @@ public class ListBillAdapter extends RecyclerView.Adapter<ListBillAdapter.ListBi
             @Override
             public void onClick(View v) {
                 Intent intent12 = new Intent(v.getContext(), TransferMoneyActivity.class);
-                intent12.putExtra("flag1",1000);
+                intent12.putExtra("flag", ResultCode.LUU_MAU_CHUYEN_TIEN);
                 intent12.putExtra("STK123",mauChuyenTien.getTaiKhoanNhan());
                 Log.d(String.valueOf(mauChuyenTien.getTaiKhoanNhan()), "TestTrcIntent: ");
                 intent12.putExtra("NoiDung123",mauChuyenTien.getNoiDung());

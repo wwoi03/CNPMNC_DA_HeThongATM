@@ -41,6 +41,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 public class DbHelper {
     static ProgressBar progressBar;
@@ -492,5 +494,38 @@ public class DbHelper {
 
                     }
                 });
+    }
+    public static String generateUniqueAccountNumber() {
+        Random random = new Random();
+        String accountNumber;
+
+        int randomAccountNumber = random.nextInt(900000) + 100000;
+        accountNumber = String.valueOf(randomAccountNumber);
+
+        return accountNumber;
+    }
+
+    /*******************************************/
+    private static String soTaiKhoan;
+    public static  String getAcountIDbyCusKey(String cuskey) {
+        FirebaseDatabase firebaseDatabase =FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference=firebaseDatabase.getReference();
+        databaseReference.child("TaiKhoanLienKet")
+                .orderByChild("MaKHKey").equalTo(cuskey)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot snap : snapshot.getChildren()) {
+                            soTaiKhoan = String.valueOf( snap.child("SoTaiKhoan").getValue());
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+        return soTaiKhoan;
     }
 }
