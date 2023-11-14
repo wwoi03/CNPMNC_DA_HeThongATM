@@ -602,7 +602,28 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             dsLaiSuat = new List<LaiSuat>(data.Values);
             return dsLaiSuat;
         }
-      
+
+        //Tìm lãi suất
+        //public LaiSuat SearchLaiSuat(string key)
+        //{
+        //    try
+        //    {
+        //        FirebaseResponse response = client.Get("LaiSuat/" + key);
+        //        if (response == null || string.IsNullOrEmpty(response.Body))
+        //        {
+        //            return null;
+        //        }
+
+        //        LaiSuat laiSuat = JsonConvert.DeserializeObject<LaiSuat>(response.Body);
+        //        return laiSuat;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        return null;
+        //    }
+        //}
+
 
         //tạo Lãi suất
         public void InsertLaiSuats(LaiSuatViewModel laiSuat)
@@ -642,42 +663,40 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return null;
             }
         }
-
-        // update lãi suất
-        public void UpdateLaiSuatByKey(string key, LaiSuatViewModel updatedLaiSuat)
-        {
-            try
-            {
-                FirebaseResponse response = client.Update("LaiSuat/" + key, updatedLaiSuat);
-                if (response != null)
-                {
-                    
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        //delete lãi suất
+        //xóa
         public void DeleteLaiSuat(string key)
         {
             try
             {
-                
                 var path = "LaiSuat/" + key;
-
                 client.Delete(path);
-
                 // Xóa thành công
             }
             catch (Exception ex)
             {
-                
-                throw;
+                Console.WriteLine(ex.Message);
+                // Xử lý lỗi nếu cần
             }
         }
+        //sửa
+        //Thêm phương thức sau vào lớp FirebaseHelper
+        public void UpdateLaiSuatByKey(string key, LaiSuatViewModel updatedLaiSuat)
+        {
+            try
+            {
+                var path = "LaiSuat/" + key;
+                client.Update(path, updatedLaiSuat);
+                // Cập nhật thành công
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                // Xử lý lỗi nếu cần
+            }
+        }
+
+
+
 
 
 

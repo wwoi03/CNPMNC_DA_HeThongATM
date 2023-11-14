@@ -16,3 +16,21 @@ html {
 body {
   margin-bottom: 60px;
 }
+/* Trong mã CSS c?a b?n */
+#confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+
+.modal-content {
+    text-align: center;
+}
+
+/* Các b?n có th? thêm các style ph? thu?c vào thi?t k? c?a trang web c?a b?n */

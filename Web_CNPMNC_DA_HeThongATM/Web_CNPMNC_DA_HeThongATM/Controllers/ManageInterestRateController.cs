@@ -1,44 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
-using Web_CNPMNC_DA_HeThongATM.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class ManageInterestRateController : Controller
     {
-       
-
-        FirebaseHelper firebaseHelper;
+        private FirebaseHelper firebaseHelper;
 
         public ManageInterestRateController()
         {
             firebaseHelper = new FirebaseHelper();
         }
 
-
-        // Danh sách Lãi suất
-        //public IActionResult Index()
-        //{
-        //    List<LaiSuat> laiSuats = firebaseHelper.GetLaiSuats();
-        //    List<LaiSuatViewModel> LaiSuatViewModel = new List<LaiSuatViewModel>();
-
-        //    foreach (var i in laiSuats)
-        //    {
-        //        var pro = new LaiSuatViewModel
-        //        {
-        //            Key = i.Key,
-        //            KyHan = i.KyHan,
-        //            TiLe = i.TiLe,
-        //        };
-        //        LaiSuatViewModel.Add(pro);
-        //    }
-
-        //    ViewData["LaiSuatList"] = LaiSuatViewModel;
-
-        //    return View();
-        //}
+        // Danh sách lãi suất
         public IActionResult Index()
         {
             List<LaiSuat> laiSuats = firebaseHelper.GetLaiSuats();
@@ -50,12 +26,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     Key = i.Key,
                     KyHan = i.KyHan,
                     TiLe = i.TiLe
-
-
                 };
                 laiSuatViewModels.Add(pro);
-
-
             }
 
             ViewData["aben"] = laiSuatViewModels;
@@ -63,7 +35,24 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View();
         }
 
-        //tạo lãi suất
+
+        // Tìm lãi suất
+        //public IActionResult SearchLaiSuat(string searchLaiSuat)
+        //{
+        //    LaiSuat laiSuat = firebaseHelper.SearchLaiSuat(searchLaiSuat);
+        //    LaiSuatViewModel ViewThes = new LaiSuatViewModel();
+
+        //    if (laiSuat != null)
+        //    {
+        //        ViewThes.Key = laiSuat.Key;
+        //        ViewThes.KyHan = laiSuat.KyHan;
+        //        ViewThes.TiLe = laiSuat.TiLe;
+        //    }
+
+        //    return PartialView("SearchLaiSuat", ViewThes);
+        //}
+
+        // Tạo lãi suất
         public IActionResult CreateLaiSuat()
         {
             return View();
@@ -72,54 +61,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult CreateLaiSuat(LaiSuatViewModel laiSuat)
         {
-
-            /* loaiThe.MaLoaiTNH = firebaseHelper.PassRandom();
-             ModelState.Remove("loaiThe");*/
             if (ModelState.IsValid)
             {
-
                 firebaseHelper.InsertLaiSuats(laiSuat);
-
                 return RedirectToAction("Index");
             }
 
             return View("CreateLaiSuat", laiSuat);
-
         }
-
-        // Chỉnh sửa
-        public IActionResult EditLaiSuat(string key)
-        {
-            // lấy thông tin lãi suất dựa trên key.
-            LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
-
-            if (laiSuat == null)
-            {
-                return View("LaiSuatNotFound");
-            }
-
-            return View("Index", laiSuat);
-        }
-
-        [HttpPost]
-        public IActionResult EditLaiSuatPost(LaiSuatViewModel updatedLaiSuat)
-        {
-            if (ModelState.IsValid)
-            {
-                // cập nhật thông tin lãi suất bằng Key.
-                firebaseHelper.UpdateLaiSuatByKey(updatedLaiSuat.Key, updatedLaiSuat);
-
-                return RedirectToAction("Index");
-            }
-
-            return View("Index", updatedLaiSuat);
-        }
-
-        //Xóa lãi suất
-        
+        // Xác nhận xóa lãi suất
         public IActionResult ConfirmDelete(string key)
         {
-            // lấy thông tin lãi suất dựa = key.
+            // Lấy thông tin lãi suất dựa trên key.
             LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
 
             if (laiSuat == null)
@@ -127,10 +80,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 return View("LaiSuatNotFound");
             }
 
-            return View("Index", laiSuat);
+            return View("ConfirmDelete", laiSuat);
         }
 
-       
+
+
+        //Xóa lãi suất
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(string key)
@@ -139,6 +94,31 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper.DeleteLaiSuat(key);
             return RedirectToAction("Index");
         }
+        //sửa lãi suất
+        public IActionResult EditLaiSuat(string key)
+        {
+            LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
+
+            if (laiSuat == null)
+            {
+                return View("LaiSuatNotFound");
+            }
+
+            return View("EditLaiSuat", laiSuat);
+        }
+
+        [HttpPost]
+        public IActionResult EditLaiSuat(LaiSuatViewModel updatedLaiSuat)
+        {
+            if (ModelState.IsValid)
+            {
+                firebaseHelper.UpdateLaiSuatByKey(updatedLaiSuat.Key, updatedLaiSuat);
+                return RedirectToAction("Index");
+            }
+
+            return View("EditLaiSuat", updatedLaiSuat);
+        }
+
 
 
 
