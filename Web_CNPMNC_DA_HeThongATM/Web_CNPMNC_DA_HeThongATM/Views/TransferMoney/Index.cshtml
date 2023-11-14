@@ -291,23 +291,23 @@
                 }
         </style>
         <script>
-            // Function to update the name field based on the entered account number
+            // Hàm để cập nhật trường tên dựa trên số tài khoản được nhập
             function updateName(accountNumberInput, nameFieldId) {
                 const accountNumber = accountNumberInput.value;
 
-                // Make an API call to fetch the account holder's name
+                // Thực hiện cuộc gọi API để lấy tên chủ tài khoản
                 fetch(`/TransferMoney/sendAccount?SoTaiKhoan=${accountNumber}`)
                     .then(response => response.json())
                     .then(data => {
-                        // Update the corresponding name field dynamically
+                        // Cập nhật động trường tên tương ứng
                         document.getElementById(nameFieldId).value = data;
                     })
                     .catch(error => {
-                        console.error('Error fetching account holder name:', error);
+                        console.error('Lỗi khi truy xuất tên chủ tài khoản:', error);
                     });
             }
 
-            // Add event listeners to the sender and recipient account number inputs
+            // Thêm sự kiện nhận biết số tài khoản người gửi và người nhận
             document.getElementById('SoTaiKhoanNguoiChuyen').addEventListener('input', function () {
                 updateName(this, 'tenTKChuyen');
             });
@@ -315,10 +315,6 @@
             document.getElementById('SoTaiKhoanNguoiNhan').addEventListener('input', function () {
                 updateName(this, 'TenTKNhan');
             });
-
-
         </script>
-       
-
 
 </body>
