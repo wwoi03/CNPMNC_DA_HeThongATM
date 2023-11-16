@@ -88,7 +88,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         taiKhoanNguon = (TaiKhoanLienKet) result.getData().getSerializableExtra("taiKhoanNguon");
                         taiKhoanNguonKey = (String) result.getData().getSerializableExtra("taiKhoanNguonKey");
                         tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
-                        tvSurplus.setText(String.valueOf(taiKhoanNguon.getSoDu()) + " VNĐ");
+                        tvSurplus.setText(taiKhoanNguon.getSoDuFormat() + " VNĐ");
                         if(etContent.getText().toString().trim().isEmpty()){
                             etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
                         }
@@ -138,27 +138,28 @@ public class TransferMoneyActivity extends AppCompatActivity {
         config = new Config(this);
         setupToolbar();
 
-        getDataIntent = getIntent();
-
-        flag = (int) getDataIntent.getSerializableExtra("flag");
-
-        if (flag == BeneficiaryManagementActivity.USER_NAME) {
-            thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
-            etAccountBeneficiary.setText(String.valueOf(thuHuong.getTKThuHuong()));
-        } else if (flag == ResultCode.LUU_MAU_CHUYEN_TIEN) {
-            long a =(long) getDataIntent.getSerializableExtra("STK123");
-            double b =(double) getDataIntent.getSerializableExtra("SoTien123");
-            String c = (String) getDataIntent.getSerializableExtra("NoiDung123");
-            etAccountBeneficiary.setText(String.valueOf(a));
-            etMoney.setText(String.valueOf(b));
-            etContent.setText(c);
-        } else if (flag == ResultCode.SCAN_QR) {
-            getIntentFromQRCode();
-        }
-
         taiKhoanNguon = new TaiKhoanLienKet();
         taiKhoanHuong = new TaiKhoanLienKet();
 
+        getDataIntent = getIntent();
+
+        if (getDataIntent.hasExtra("flag") == true) {
+            flag = (int) getDataIntent.getSerializableExtra("flag");
+
+            if (flag == BeneficiaryManagementActivity.USER_NAME) {
+                thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
+                etAccountBeneficiary.setText(String.valueOf(thuHuong.getTKThuHuong()));
+            } else if (flag == ResultCode.LUU_MAU_CHUYEN_TIEN) {
+                long a =(long) getDataIntent.getSerializableExtra("STK123");
+                double b =(double) getDataIntent.getSerializableExtra("SoTien123");
+                String c = (String) getDataIntent.getSerializableExtra("NoiDung123");
+                etAccountBeneficiary.setText(String.valueOf(a));
+                etMoney.setText(String.valueOf(b));
+                etContent.setText(c);
+            } else if (flag == ResultCode.SCAN_QR) {
+                getIntentFromQRCode();
+            }
+        }
     }
 
 
