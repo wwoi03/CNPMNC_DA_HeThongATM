@@ -218,23 +218,7 @@
   }
  
 </style>
-        @RenderSection("scripts", required: false)
-        @section scripts {
-            <script>
-                function validateForm() {
-                    var key = document.getElementById("Key").value;
-                    var kyHan = document.getElementById("KyHan").value;
-                    var tiLe = document.getElementById("TiLe").value;
-
-                    if (key.trim() === "" || kyHan.trim() === "" || tiLe.trim() === "") {
-                        alert("Vui lòng nhập đầy đủ thông tin!");
-                        return false;
-                    }
-
-                    return true;
-                }
-            </script>
-        }
+      
 
 
 </body>
