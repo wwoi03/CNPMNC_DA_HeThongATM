@@ -1294,5 +1294,44 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 client.Delete("ChucVu/" + key);
             }
         }
+
+        //-------------------------------------------------LOẠI TÀI KHOẢN---------------------------------------------------------------
+
+        // TẠO LOẠI TÀI KHOẢN
+        public void CreateAccount(LoaiTaiKhoan loaiTaiKhoan)
+        {
+            //FirebaseResponse response = client.Push("NhanVien", nhanVien);
+
+            PushResponse response = client.Push("LoaiTaiKhoan", loaiTaiKhoan);
+            string newKey = response.Result.name;
+
+            // Gán key vào trường Key của đối tượng NhanVien
+            loaiTaiKhoan.Key = newKey;
+
+            // Cập nhật dữ liệu Nhân viên với key trong Firebase
+            SetResponse setResponse = client.Set("LoaiTaiKhoan/" + newKey, loaiTaiKhoan);
+        }
+
+        //LẤY DANH SÁCH lOẠI TÀI KHOẢN LẪN KEY
+        public Dictionary<string, LoaiTaiKhoan> GetAccWithKey()
+        {
+            FirebaseResponse response = client.Get("LoaiTaiKhoan");
+            Dictionary<string, LoaiTaiKhoan> data = response.ResultAs<Dictionary<string, LoaiTaiKhoan>>();
+            return data;
+        }
+
+        //UPDATE LOẠI TÀI KHOẢN 
+        public void UpdateAcc(LoaiTaiKhoan editedAcc)
+        {
+            // Gửi yêu cầu cập nhật nhân viên tới Firebase bằng cách sử dụng key
+            SetResponse setResponse = client.Set("LoaiTaiKhoan/" + editedAcc.Key, editedAcc);
+        }
+
+        //XÓA LOẠI TÀI KHOẢN
+        public void DeleteAcc(string accKey)
+        {
+            // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
+            FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
+        }
     }
 }
