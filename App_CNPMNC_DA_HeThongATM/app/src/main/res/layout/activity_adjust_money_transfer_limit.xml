@@ -9,6 +9,7 @@
 
     <!-- Container -->
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -25,8 +26,7 @@
             android:background="@color/primary_blue_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </androidx.appcompat.widget.Toolbar>
+            app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
 
         <!-- Form -->
         <RelativeLayout
@@ -41,61 +41,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:padding="16dp"
                 android:background="@drawable/border_radius_all"
                 android:backgroundTint="@color/white"
                 android:orientation="vertical"
+                android:padding="16dp"
                 android:visibility="gone">
 
                 <!-- Hạn mức hiện tại -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
-                    android:background="@drawable/bottom_border">
+                    android:background="@drawable/bottom_border"
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Hạn mức hiện tại"
-                        android:textSize="18dp">
-                    </TextView>
+                        android:textSize="18dp"></TextView>
 
                     <TextView
                         android:id="@+id/tvTransferLimitCurrent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:text="3,000,000,000 VNĐ"
                         android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:layout_alignParentRight="true">
-                    </TextView>
+                        android:textStyle="bold"></TextView>
                 </RelativeLayout>
 
                 <!-- Tổng số tiền đã chuyển -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bottom_border"
                     android:paddingTop="10dp"
-                    android:paddingBottom="16dp"
-                    android:background="@drawable/bottom_border">
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tổng số tiền đã chuyển"
-                        android:textSize="18dp">
-                    </TextView>
+                        android:textSize="18dp"></TextView>
 
                     <TextView
                         android:id="@+id/tvTotalTransferMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:text="1,000,000 VNĐ"
                         android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:layout_alignParentRight="true">
-                    </TextView>
+                        android:textStyle="bold"></TextView>
                 </RelativeLayout>
 
                 <!-- Hạn mức còn lại -->
@@ -108,18 +104,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Hạn mức còn lại"
-                        android:textSize="18dp">
-                    </TextView>
+                        android:textSize="18dp"></TextView>
 
                     <TextView
                         android:id="@+id/tvRemainingLimit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:text="2,999,000,000 VNĐ"
                         android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:layout_alignParentRight="true">
-                    </TextView>
+                        android:textStyle="bold"></TextView>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -128,9 +122,9 @@
                 android:id="@+id/ll1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/llInfoAccount"
                 android:layout_marginBottom="4dp"
-                android:orientation="vertical"
-                android:layout_below="@+id/llInfoAccount">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -219,15 +213,14 @@
             </LinearLayout>
 
             <TextView
-                android:layout_below="@+id/ll2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Quý khách vui lòng lựa chọn hạn mức giao dịch\nchuyển tiền tối đa có thể thực hiện trong 01 ngày trên DCTBank."
+                android:layout_below="@+id/ll2"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
+                android:text="Quý khách vui lòng lựa chọn hạn mức giao dịch\nchuyển tiền tối đa có thể thực hiện trong 01 ngày trên DCTBank."
                 android:textColor="@color/black"
-                android:textSize="16dp"
-                android:layout_marginTop="8dp">
-            </TextView>
+                android:textSize="16dp"></TextView>
 
             <!-- Button -->
             <Button
@@ -241,4 +234,15 @@
                 android:textSize="16dp"></Button>
         </RelativeLayout>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ProgressBar>
 </androidx.constraintlayout.widget.ConstraintLayout>

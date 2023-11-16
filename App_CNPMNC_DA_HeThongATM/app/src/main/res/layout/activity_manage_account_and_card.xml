@@ -8,6 +8,7 @@
     android:background="@color/bg_color">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,8 +31,7 @@
                 android:background="@color/primary_blue_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </androidx.appcompat.widget.Toolbar>
+                app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
 
             <!-- view -->
             <LinearLayout
@@ -43,16 +43,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="42dp">
+                    android:layout_marginTop="42dp"
+                    android:orientation="vertical">
 
                     <!-- image -->
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/vp2AccountsAndCards"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal">
-                    </androidx.viewpager2.widget.ViewPager2>
+                        android:layout_gravity="center_horizontal"></androidx.viewpager2.widget.ViewPager2>
 
                     <!-- circle indicator -->
                     <me.relex.circleindicator.CircleIndicator3
@@ -60,8 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
-                        app:ci_drawable="@drawable/bg_indicator_3">
-                    </me.relex.circleindicator.CircleIndicator3>
+                        app:ci_drawable="@drawable/bg_indicator_3"></me.relex.circleindicator.CircleIndicator3>
                 </LinearLayout>
 
                 <!-- Tùy chỉnh thẻ/TK -->
@@ -69,36 +67,33 @@
                     android:id="@+id/llSettingCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
                     android:background="@color/white"
                     android:backgroundTint="@color/item_color"
+                    android:orientation="horizontal"
                     android:padding="12dp"
-                    android:layout_marginTop="2dp"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/baseline_settings_24">
-                    </ImageView>
+                        android:src="@drawable/baseline_settings_24"></ImageView>
 
                     <TextView
-                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Tùy chỉnh thẻ/TK"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:text="Tùy chỉnh thẻ/TK"
                         android:textColor="@color/black"
-                        android:layout_weight="1">
-                    </TextView>
+                        android:textSize="16sp"></TextView>
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/baseline_chevron_right_24"
-                        app:tint="@color/normal_color">
-                    </ImageView>
+                        app:tint="@color/normal_color"></ImageView>
                 </LinearLayout>
 
                 <!-- Lịch sử giao dịch -->
@@ -106,36 +101,33 @@
                     android:id="@+id/llHistoryTransferMoney"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
                     android:background="@color/white"
                     android:backgroundTint="@color/item_color"
+                    android:orientation="horizontal"
                     android:padding="12dp"
-                    android:layout_marginTop="2dp"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/baseline_history_24">
-                    </ImageView>
+                        android:src="@drawable/baseline_history_24"></ImageView>
 
                     <TextView
-                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Lịch sử giao dịch"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:text="Lịch sử giao dịch"
                         android:textColor="@color/black"
-                        android:layout_weight="1">
-                    </TextView>
+                        android:textSize="16sp"></TextView>
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/baseline_chevron_right_24"
-                        app:tint="@color/normal_color">
-                    </ImageView>
+                        app:tint="@color/normal_color"></ImageView>
                 </LinearLayout>
 
                 <!-- Sao kê -->
@@ -143,36 +135,33 @@
                     android:id="@+id/llStatement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
                     android:background="@color/white"
                     android:backgroundTint="@color/item_color"
+                    android:orientation="horizontal"
                     android:padding="12dp"
-                    android:layout_marginTop="2dp"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/file_lines_regular">
-                    </ImageView>
+                        android:src="@drawable/file_lines_regular"></ImageView>
 
                     <TextView
-                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Sao kê"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:text="Sao kê"
                         android:textColor="@color/black"
-                        android:layout_weight="1">
-                    </TextView>
+                        android:textSize="16sp"></TextView>
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/baseline_chevron_right_24"
-                        app:tint="@color/normal_color">
-                    </ImageView>
+                        app:tint="@color/normal_color"></ImageView>
                 </LinearLayout>
 
                 <!-- Nộp tiết kiệm -->
@@ -180,36 +169,33 @@
                     android:id="@+id/llSaving"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
                     android:background="@color/white"
                     android:backgroundTint="@color/item_color"
+                    android:orientation="horizontal"
                     android:padding="12dp"
-                    android:layout_marginTop="2dp"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/piggy_bank_solid">
-                    </ImageView>
+                        android:src="@drawable/piggy_bank_solid"></ImageView>
 
                     <TextView
-                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Nộp tiết kiệm"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:text="Nộp tiết kiệm"
                         android:textColor="@color/black"
-                        android:layout_weight="1">
-                    </TextView>
+                        android:textSize="16sp"></TextView>
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/baseline_chevron_right_24"
-                        app:tint="@color/normal_color">
-                    </ImageView>
+                        app:tint="@color/normal_color"></ImageView>
                 </LinearLayout>
 
                 <!-- Rút tiết kiệm -->
@@ -217,36 +203,33 @@
                     android:id="@+id/llWithdrawSaving"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
                     android:background="@color/white"
                     android:backgroundTint="@color/item_color"
+                    android:orientation="horizontal"
                     android:padding="12dp"
-                    android:layout_marginTop="2dp"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/hand_holding_dollar_solid">
-                    </ImageView>
+                        android:src="@drawable/hand_holding_dollar_solid"></ImageView>
 
                     <TextView
-                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Rút tiết kiệm"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:text="Rút tiết kiệm"
                         android:textColor="@color/black"
-                        android:layout_weight="1">
-                    </TextView>
+                        android:textSize="16sp"></TextView>
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/baseline_chevron_right_24"
-                        app:tint="@color/normal_color">
-                    </ImageView>
+                        app:tint="@color/normal_color"></ImageView>
                 </LinearLayout>
 
                 <!-- Lịch sử lãi suất -->
@@ -254,38 +237,48 @@
                     android:id="@+id/llHistoryInterestRate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp"
                     android:background="@color/white"
                     android:backgroundTint="@color/item_color"
+                    android:orientation="horizontal"
                     android:padding="12dp"
-                    android:layout_marginTop="2dp"
                     android:visibility="gone">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/baseline_history_24">
-                    </ImageView>
+                        android:src="@drawable/baseline_history_24"></ImageView>
 
                     <TextView
-                        android:layout_marginStart="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Lịch sử lãi suất"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:textSize="16sp"
+                        android:text="Lịch sử lãi suất"
                         android:textColor="@color/black"
-                        android:layout_weight="1">
-                    </TextView>
+                        android:textSize="16sp"></TextView>
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/baseline_chevron_right_24"
-                        app:tint="@color/normal_color">
-                    </ImageView>
+                        app:tint="@color/normal_color"></ImageView>
                 </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </ProgressBar>
 </androidx.constraintlayout.widget.ConstraintLayout>

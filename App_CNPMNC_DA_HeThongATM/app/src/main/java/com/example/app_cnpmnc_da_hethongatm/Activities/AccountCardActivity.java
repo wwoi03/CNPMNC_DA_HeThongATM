@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
@@ -26,6 +28,7 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     // View
     RecyclerView rvAccountCard;
     Toolbar tbToolbar;
+    ProgressBar progressBar;
 
     // Adapter
     AccountCardAdapter accountCardAdapter;
@@ -36,6 +39,7 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_card);
+
         initUI();
         initData();
         initListener();
@@ -43,6 +47,7 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
 
     // ánh xạ view
     public void initUI() {
+        progressBar = findViewById(R.id.progressBar);
         rvAccountCard = findViewById(R.id.rvAccountCard);
         tbToolbar = findViewById(R.id.tbToolbar);
     }
@@ -134,5 +139,10 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
             }
         }
 
+    }
+
+    @Override
+    public void adapterOnDataChange() {
+        progressBar.setVisibility(View.GONE);
     }
 }

@@ -62,7 +62,15 @@ public class AccountCardAdapter extends FirebaseRecyclerAdapter<TaiKhoanLienKet,
         }
     }
 
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+
+        listener.adapterOnDataChange();
+    }
+
     public interface Listener {
         void setOnClickItemListener(TaiKhoanLienKet model, DatabaseReference databaseReference);
+        void adapterOnDataChange();
     }
 }

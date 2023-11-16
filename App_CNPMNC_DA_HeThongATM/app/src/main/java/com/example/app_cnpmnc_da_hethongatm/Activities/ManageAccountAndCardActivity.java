@@ -1,5 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
@@ -25,7 +27,9 @@ import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -35,15 +39,18 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     CircleIndicator3 ci3;
     LinearLayout llSettingCard, llHistoryTransferMoney, llStatement, llSaving, llWithdrawSaving, llHistoryInterestRate;
     Toolbar tbToolbar;
+    ProgressBar progressBar;
 
     // Adapter
     ManageAccountAndCardAdapter manageAccountAndCardAdapter;
 
-    //
+    // var
+    FirebaseRecyclerOptions<TaiKhoanLienKet> danhSachTaiKhoanLienKet;
     TaiKhoanLienKet currentAccountCardInPage;
     String taiKhoanKey;
 
     Config config;
+    String loaiTKKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +73,21 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         llSaving = findViewById(R.id.llSaving);
         llWithdrawSaving = findViewById(R.id.llWithdrawSaving);
         llHistoryInterestRate = findViewById(R.id.llHistoryInterestRate);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     // Khởi tạo dữ liệu
     public void initData() {
+        GetAccountTypeByName("thanh toán");
+
         setupToolbar();
 
         config = new Config(this);
 
-        FirebaseRecyclerOptions<TaiKhoanLienKet> danhSachTaiKhoanLienKet = DbHelper.getAffiliateAccounts(config.getCustomerKey());
+        danhSachTaiKhoanLienKet = DbHelper.getAffiliateAccounts(config.getCustomerKey());
         manageAccountAndCardAdapter = new ManageAccountAndCardAdapter(danhSachTaiKhoanLienKet, this);
         vp2AccountsAndCards.setAdapter(manageAccountAndCardAdapter);
         ci3.setViewPager(vp2AccountsAndCards);
-
-        //Log.d("firebase", "Data First: " + manageAccountAndCardAdapter.getSnapshots().size());
     }
 
     // Xử lý sự kiện
@@ -99,7 +107,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
                 // Hiển thị button theo loại tài khoản
                 hideButtonAccountType(); // ẩn tất cả button cũ
-                if (currentAccountCardInPage.getMaLoaiTKKey().equals("0")) // tạm thời gắn cứng
+                if (currentAccountCardInPage.getMaLoaiTKKey().equals(loaiTKKey))
                     showButtonPaymentAccountType();
                 else
                     showButtonSavingAccountType();
@@ -128,15 +136,13 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
             // Hiển thị nút quay lại
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
     }
 
     // xử lý sự kiện ấn nút quay lại
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();  // Kết thúc Activity hiện tại và quay lại Activity trước đó
+            finish();  // Kết thúc Activity hiện tại và quay lại  Activity trước đó
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -154,6 +160,29 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         manageAccountAndCardAdapter.stopListening();
     }
 
+    // lấy loại tài khoản
+    public void GetAccountTypeByName(String accountTypeName) {
+        DbHelper.firebaseDatabase.getReference("LoaiTaiKhoan")
+                .orderByChild("TenLoaiTaiKhoan")
+                .equalTo(accountTypeName.toLowerCase().trim())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                LoaiTaiKhoan loaiTaiKhoan = dataSnapshot.getValue(LoaiTaiKhoan.class);
+                                loaiTKKey = loaiTaiKhoan.getKey();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
     // Xử lý sự kiện khi bấm vào icon hiển thị số dư
     @Override
     public void setOnClickIconSurplusListener(ImageView iconSurplus, TextView tvSurplus, TaiKhoanLienKet taiKhoanLienKet) {
@@ -165,6 +194,11 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
             tvSurplus.setText("*******đ");
             iconSurplus.setImageResource(R.drawable.baseline_remove_red_eye_24);
         }
+    }
+
+    @Override
+    public void adapterOnDataChange() {
+        progressBar.setVisibility(View.GONE);
     }
 
     // Hiển thị button theo loại thẻ thanh toán

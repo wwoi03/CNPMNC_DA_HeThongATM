@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -93,7 +94,15 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
         }
     }
 
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+
+        listener.adapterOnDataChange();
+    }
+
     public interface Listener {
         void setOnClickIconSurplusListener(ImageView iconSurplus, TextView tvSurplus, TaiKhoanLienKet taiKhoanLienKet);
+        void adapterOnDataChange();
     }
 }
