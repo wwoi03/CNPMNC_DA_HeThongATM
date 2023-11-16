@@ -645,30 +645,39 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         // chuyển tiền
-        public bool ChuyenTien(double soTien, long value)
+        public bool ChuyenTien(double soTien, long taiKhoanNguoiChuyen, long taiKhoanNguoiNhan)
         {
-            string info = GetAccount(value);
             try
             {
-                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+                string infoNguoiChuyen = GetAccount(taiKhoanNguoiChuyen);
+                string infoNguoiNhan = GetAccount(taiKhoanNguoiNhan);
 
-                // Lấy dữ liệu tài khoản từ Firebase
-                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+                FirebaseResponse responseNguoiChuyen = client.Get("TaiKhoanLienKet/" + infoNguoiChuyen);
+                FirebaseResponse responseNguoiNhan = client.Get("TaiKhoanLienKet/" + infoNguoiNhan);
 
-                ////  Chuyển tiền xong cộng số tiền vào số dư
-                //accountData.SoDu += soTien;
-                Double SoDu = accountData.SoDu + soTien;
+                if (responseNguoiChuyen != null && responseNguoiNhan != null)
+                {
+                    var nguoiChuyen = responseNguoiChuyen.ResultAs<TaiKhoanLienKetViewModel>();
+                    var nguoiNhan = responseNguoiNhan.ResultAs<TaiKhoanLienKetViewModel>();
 
+                    // Xử lý chuyển tiền
+                    nguoiChuyen.SoDu -= soTien; // Giả sử trừ số tiền từ tài khoản người chuyển
+                    nguoiNhan.SoDu += soTien;   // Giả sử cộng số tiền vào tài khoản người nhận
 
-                // Cập nhật số dư trên Firebase
-                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDu);
+                    // Cập nhật lại thông tin tài khoản
+                    client.Set("TaiKhoanLienKet/" + infoNguoiChuyen, nguoiChuyen);
+                    client.Set("TaiKhoanLienKet/" + infoNguoiNhan, nguoiNhan);
 
-                return true; // Cập nhật thành công
+                    return true; // Chuyển tiền thành công
+                }
+                else
+                {
+                    return false; // Tài khoản không tồn tại
+                }
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
-                return false; // Cập nhật thất bại
+                return false; // Xử lý lỗi nếu có
             }
         }
 
@@ -700,6 +709,27 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             dsLaiSuat = new List<LaiSuat>(data.Values);
             return dsLaiSuat;
         }
+
+        //Tìm lãi suất
+        //public LaiSuat SearchLaiSuat(string key)
+        //{
+        //    try
+        //    {
+        //        FirebaseResponse response = client.Get("LaiSuat/" + key);
+        //        if (response == null || string.IsNullOrEmpty(response.Body))
+        //        {
+        //            return null;
+        //        }
+
+        //        LaiSuat laiSuat = JsonConvert.DeserializeObject<LaiSuat>(response.Body);
+        //        return laiSuat;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        return null;
+        //    }
+        //}
 
 
         //tạo Lãi suất
@@ -740,40 +770,35 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return null;
             }
         }
-
-        // update lãi suất
-        public void UpdateLaiSuatByKey(string key, LaiSuatViewModel updatedLaiSuat)
-        {
-            try
-            {
-                FirebaseResponse response = client.Update("LaiSuat/" + key, updatedLaiSuat);
-                if (response != null)
-                {
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        //delete lãi suất
+        //xóa
         public void DeleteLaiSuat(string key)
         {
             try
             {
-
                 var path = "LaiSuat/" + key;
-
                 client.Delete(path);
-
                 // Xóa thành công
             }
             catch (Exception ex)
             {
-
-                throw;
+                Console.WriteLine(ex.Message);
+                // Xử lý lỗi nếu cần
+            }
+        }
+        //sửa
+        //Thêm phương thức sau vào lớp FirebaseHelper
+        public void UpdateLaiSuatByKey(string key, LaiSuatViewModel updatedLaiSuat)
+        {
+            try
+            {
+                var path = "LaiSuat/" + key;
+                client.Update(path, updatedLaiSuat);
+                // Cập nhật thành công
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                // Xử lý lỗi nếu cần
             }
         }
 

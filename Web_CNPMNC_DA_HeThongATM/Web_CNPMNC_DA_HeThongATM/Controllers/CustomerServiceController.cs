@@ -26,19 +26,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return RedirectToAction("RutTien");
         }
 
-        // Chuyển tiền
-        [HttpGet]
-        public IActionResult ChuyenTien()
+        public IActionResult ChuyenTien(IFormCollection form)
         {
-            return View();
-        }
+            // Lấy dữ liệu từ form
+            double soTien = Convert.ToDouble(form["SoTien"]);
+            long taiKhoanNguoiChuyen = Convert.ToInt64(form["SoTaiKhoanNguoiChuyen"]);
+            long taiKhoanNguoiNhan = Convert.ToInt64(form["SoTaiKhoanNguoiNhan"]);
 
-        [HttpPost]
-        public IActionResult ChuyenTien(TaiKhoanLienKetViewModel account)
-        {
-            double sotien = account.SoTien;
-            firebaseHelper.ChuyenTien(sotien, account.SoTaiKhoan);
-            return RedirectToAction("ChuyenTien");
+            // Tiếp tục xử lý chuyển tiền
+            firebaseHelper.ChuyenTien(soTien, taiKhoanNguoiChuyen, taiKhoanNguoiNhan);
+
+            ViewData["ChuyenTienSuccess"] = true;
+
+            return View();
         }
 
         [HttpGet]

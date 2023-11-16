@@ -3,112 +3,196 @@
 @model LaiSuatViewModel
 @{
     Layout = "_LayoutMain";
-    var laisuatlist = ViewData["aben"] as IEnumerable<LaiSuatViewModel>;
+    var laiSuats = ViewData["aben"] as IEnumerable<LaiSuatViewModel>;
 
 }
 <body>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <tr>
-                    <th><strong class="card-title">Danh sách Lãi suất</strong></th>
-                    
-                   <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">
-                    <button asp-controller="ManageInterestRate" asp-action="Delete" class="btn btn-primary"> Thêm mới </button> 
-                   </a>
-                </tr>
+                <strong style="margin-block-end:20%" class="card-title">Danh sách lãi suất</strong>
+                <div class="card-search col col-md-8" style="margin-right:100px">
+                  
+                        <div class="input-group-btn">
+                            <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat"
+                                type="submit" class="btn btn-info" id="search-button">
+                                <i class="fa-solid fa-plus" style="color: #000000;"></i> Tạo thêm
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="table-stats order-table ov-h">
-                <table class="table ">
+            <div class="table-stats order-table ov-h" id="CustomerList">
+
+                <table class="table">
                     <thead>
                         <tr>
-                            <th style="width:10%">Mã lãi suất</th>
-                            <th style="width:15%">Kỳ hạn</th>
-                            <th style="width:15%">Tỉ lệ</th>
-                            <th style="width:3.2%">Chức năng</th>
+                            <th style="width:25%">Mã</th>
+                            <th style="width:35%">kỳ hạn</th>
+                            <th style="width:35%%">Tỉ lệ</th>
+                            <th style="width:10%;text-align:left">Chức Năng</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in laisuatlist)
+                    @foreach (var item in laiSuats)
                         {
+
                             <tr>
                             <tr>
                                 <td>@item.Key</td>
                                 <td>@item.KyHan</td>
                                 <td>@item.TiLe</td>
+                                
                                 <td>
-                                    <div class="oxd-table-cell-actions" style="flex: 1 1 0%;">
-                                        <button type="button" class="oxd-icon-button delete-button" data-toggle="modal" data-target="#deleteModal">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                        <button type="button" class="oxd-icon-button edit-button" data-toggle="modal" data-target="#editModal">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                        </button>
-                                    </div>
+
+
+                                <a class="btn btn-success" onclick="editLaiSuat('@item.Key', '@item.KyHan', '@item.TiLe')">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+
+                                <a class="btn btn-danger btn-sm" onclick="openConfirmationModal('@item.Key', '@item.KyHan', '@item.TiLe')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                               
                                 </td>
                             </tr>
                             </tr>
                         }
                     </tbody>
                 </table>
-            </div> <!-- /.table-stats -->
-            <!-----------------------------------------form delete -------------------------------------------------------->
-
-            <form method="post" asp-controller="ManageInterestRate" asp-action="DeleteLaiSuat"
-                      class="formbold-chatbox-form">
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Xóa lãi suất</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Có chắc là muốn xóa không?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button asp-controller="ManageInterestRate" asp-action="Delete" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
-                        </div>
-                    </div>
-                </div>
             </div>
-            </form>
-
-            <!-----------------------------------------form edit -------------------------------------------------------->
-            <form method="post" asp-controller="ManageInterestRate" asp-action="EditLaiSuat"
-                      class="formbold-chatbox-form">
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Chỉnh sửa lãi suất</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="editForm">
-                                <div class="form-group">
-                                    <label for="editKyHan">Kỳ hạn</label>
-                                        <input type="text" asp-for="KyHan" aria-required="true" aria-invalid="false" class="form-control" id="editKyHan" name="editKyHan">
-                                </div>
-                                <div class="form-group">
-                                    <label for="editTiLe">Tỉ lệ</label>
-                                        <input type="text" asp-for="TiLe" aria-required="true" aria-invalid="false" class="form-control" id="editTiLe" name="editTiLe">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button asp-controller="ManageInterestRate" asp-action="EditLaiSuat" class="btn btn-primary" id="saveButton">Save</button>
-                        </div>
-                    </div>
+            <div class="table-stats order-table ov-h" id="SearchCustomerID">
+            </div><!-- /.table-stats -->
+    </div>
+    @*form xóa*@
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <!-- Nội dung của form xác nhận -->
+            <p>Bạn có chắc chắn muốn xóa lãi suất này đây không?</p>
+            <form asp-controller="ManageInterestRate" asp-action="Delete" method="post">
+                <input type="hidden" name="key" id="confirm-delete-key" />
+                <div>
+                    <label for="confirm-delete-ky-han">Kỳ hạn:</label>
+                    <span id="confirm-delete-ky-han"></span>
                 </div>
-            </div>
+                <div>
+                    <label for="confirm-delete-ti-le">Tỉ lệ:</label>
+                    <span id="confirm-delete-ti-le"></span>
+                </div>
+                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
             </form>
+            <button class="btn btn-secondary btn-sm" onclick="closeConfirmationModal()">Hủy</button>
         </div>
     </div>
+   <!-- Form sửa -->
+<div class="modal" tabindex="-1" role="dialog" id="editLaiSuatModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sửa Lãi Suất</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-danger">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="ManageInterestRate" asp-action="EditLaiSuat" method="post">
+                    <input type="hidden" id="editKey" name="Key" />
+
+                    <div class="form-group">
+                        <label for="editKyHan">Kỳ hạn:</label>
+                        <input type="text" class="form-control" id="editKyHan" name="KyHan" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editTiLe">Tỉ lệ:</label>
+                        <input type="text" class="form-control" id="editTiLe" name="TiLe" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <style>
+        #confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            width:50%;
+        }
+
+        .modal-content {
+            text-align: center;
+            width:100%;
+            
+        }
+
+        #editLaiSuatModal {
+            text-align: center;
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .modal-content {
+            display: inline-block;
+            text-align: left;
+        }
+    </style>
+    <script>
+        function openConfirmationModal(key, kyHan, tiLe) {
+            document.getElementById('confirm-delete-key').value = key;
+            document.getElementById('confirm-delete-ky-han').innerText = kyHan;
+            document.getElementById('confirm-delete-ti-le').innerText = tiLe;
+            document.getElementById('confirmation-modal').style.display = 'block';
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('confirm-delete-key').value = '';
+            document.getElementById('confirm-delete-ky-han').innerText = '';
+            document.getElementById('confirm-delete-ti-le').innerText = '';
+            document.getElementById('confirmation-modal').style.display = 'none';
+        }
+        function editLaiSuat(key, kyHan, tiLe) {
+            // Điền thông tin lãi suất vào modal
+            $('#editKey').val(key);
+            $('#editKyHan').val(kyHan);
+            $('#editTiLe').val(tiLe);
+
+            // Hiển thị modal sửa giữa màn hình
+            $('#editLaiSuatModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    <!-- Thư viện jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+
+   
 </body>
