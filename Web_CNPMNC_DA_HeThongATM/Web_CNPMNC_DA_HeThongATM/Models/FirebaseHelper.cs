@@ -8,8 +8,7 @@ using UniqueIdGenerator;
 using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Controllers;
-
-
+using System.Globalization;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
@@ -929,6 +928,371 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         public void UpdateService(ChucNang chucNang)
         {
             SetResponse setResponse = client.Set("ChucNang/" + chucNang.Key, chucNang);
+        }
+        //----------------------------------------------------------LOAI THE NGAN HANG------------------------------------------------
+        // Lấy danh sách loại thẻ
+        public List<LoaiTaiKhoan> GetTypes()
+        {
+            List<LoaiTaiKhoan> cardtypes;
+            FirebaseResponse response = client.Get("LoaiTaiKhoan");
+            Dictionary<string, LoaiTaiKhoan> data = response.ResultAs<Dictionary<string, LoaiTaiKhoan>>();
+            cardtypes = new List<LoaiTaiKhoan>(data.Values);
+            return cardtypes;
+        }
+        // Lấy key loại thẻ bằng tên 
+        public string getTypeKeybyName(string loaithe)
+        {
+            FirebaseResponse response = client.Get("LoaiTaiKhoan");
+            if (response != null)
+            {
+                Dictionary<string, LoaiTaiKhoan> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiTaiKhoan>>(response.Body);
+                var keys = data.Where(entry => entry.Value.TenLoaiTaiKhoan == loaithe).Select(entry => entry.Key).ToList();
+                if (keys != null)
+                {
+                    return string.Join(",", keys);
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            return "null";
+        }
+
+        //Đổi trạng thái khóa thẻ
+        public void ChangeCardStatus(long masothe)
+        {
+            Dictionary<string, object> updates;
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                if (getCardbyID(masothe).TinhTrangThe == 1 || getCardbyID(masothe).TinhTrangThe == 2)
+                {
+                    updates = new Dictionary<string, object>
+                    {
+                        {"TinhTrangThe" , 0},
+                    };
+                }
+                else
+                {
+                    updates = new Dictionary<string, object>
+                    {
+                        {"TinhTrangThe" , 2},
+                    };
+                }
+                string path = $"TheNganHang/{getKeyCardbyMaSo(masothe)}";
+                client.Update(path, updates);
+            }
+        }
+        //Lay the = stk
+        public TheNganHang getCardbyAccountID(long stk)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.SoTaiKhoan == stk);
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+        //Lấy thẻ bằng mã số 
+        public TheNganHang getCardbyID(long maso)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.MaSoThe == maso);
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+        //Lấy key thẻ bằng mã số
+        public string getKeyCardbyMaSo(long maso)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                var keys = data.Where(entry => entry.Value.MaSoThe == maso).Select(entry => entry.Key).ToList();
+                if (keys != null)
+                {
+                    return string.Join(",", keys);
+                }
+            }
+            else
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            return "null";
+        }
+        //----------------------------------------------------------LICH SU GIAO DICH------------------------------------------------
+        //Lay tk = cccd
+        public TaiKhoanLienKet getAccountbyCusKey(string key)
+        {
+
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            if (response != null)
+            {
+                Dictionary<string, TaiKhoanLienKet> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKet>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.MaKHKey == key);
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+
+        //TKLK == SoTK
+        public TaiKhoanLienKet getAccountbyKey(long stk)
+        {
+
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            if (response != null)
+            {
+                Dictionary<string, TaiKhoanLienKet> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKet>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.SoTaiKhoan == stk);
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+        //Lay LichSuGD tren STK 
+        public GiaoDich getHistorybySTK(long stk)
+        {
+
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            if (response != null)
+            {
+                Dictionary<string, GiaoDich> data = JsonConvert.DeserializeObject<Dictionary<string, GiaoDich>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.TaiKhoanNguon == stk || c.TaiKhoanNhan == stk);
+                if (a != null)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+        //DSLSGD tang
+        public List<GiaoDich> getListHistoryUPbySTK(long stk)
+        {
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+            history = data.Values.Where(item => item.TaiKhoanNhan == stk).ToList();
+            return history;
+        }
+        //DSLSGD giam
+        public List<GiaoDich> getListHistoryDownbySTK(long stk)
+        {
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+            history = data.Values.Where(item => item.TaiKhoanNguon == stk).ToList();
+            return history;
+        }
+        //DSLSGD drftghyhgfdsfdghgfdesdfghnmhjgfrghjmhgytrfghyjhytghj
+        public List<GiaoDich> getListHistorybySTK(long stk)
+        {
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+            history = data.Values.Where(item => item.TaiKhoanNguon == stk || item.TaiKhoanNhan == stk).ToList();
+            return history;
+        }
+        //DSGIUIKGJHJBVGBJBKLIHGBVJKBfdtttr***************************************************************
+        public List<GiaoDich> getListHistory()
+        {
+            List<GiaoDich> history;
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+            history = new List<GiaoDich>(data.Values);
+            return history;
+        }
+        public List<ThongKeViewModel> danhsachLSGD()
+        {
+            List<ThongKeViewModel> LSGD = new List<ThongKeViewModel>();
+            foreach (GiaoDich item in getListHistory())
+            {
+                string datetime = $"{item.NgayGiaoDich} {item.GioGiaoDich}";
+                DateTime date = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                string tenKH = getCusbyKey(getAccountbyKey(item.TaiKhoanNguon).MaKHKey).TenKH;
+                string tenKH2 = getCusbyKey(getAccountbyKey(item.TaiKhoanNhan).MaKHKey).TenKH;
+                ThongKeViewModel ls = new ThongKeViewModel(item, "Chuyển khoản", date, tenKH, tenKH2);
+                LSGD.Add(ls);
+
+            }
+            // Sắp xếp danh sách theo trường DateTime
+            LSGD = LSGD.OrderByDescending(item => item.date).ToList();
+            return LSGD;
+        }
+
+        //Saoke tr oi met qua************************************************
+        public List<GiaoDichViewModel> getLSGD(long stk, DateTime from, DateTime to)
+        {
+            List<GiaoDichViewModel> LSGD = new List<GiaoDichViewModel>();
+            DateTime fromDate = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
+            DateTime toDate = new DateTime(to.Year, to.Month, to.Day, 23, 59, 59);
+
+            string tenKH = getCusbyKey(getAccountbyKey(stk).MaKHKey).TenKH;
+            foreach (GiaoDich item in getListHistorybySTK(stk))
+            {
+                string datetime = $"{item.NgayGiaoDich} {item.GioGiaoDich}";
+                DateTime date = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                double sodu = 0;
+                if (date >= fromDate && date <= toDate)
+                {
+                    string status = "";
+                    string tenKH2 = "";
+                    if (stk == item.TaiKhoanNguon)
+                    {
+                        tenKH2 = getCusbyKey(getAccountbyKey(item.TaiKhoanNhan).MaKHKey).TenKH;
+                        status = "Chuyển đi";
+                        sodu = item.SoDuLucGui;
+                    }
+                    else if (stk == item.TaiKhoanNhan)
+                    {
+                        status = "Nhận về";
+                        tenKH2 = getCusbyKey(getAccountbyKey(item.TaiKhoanNguon).MaKHKey).TenKH;
+                        sodu = item.SoDuLucNhan;
+                    }
+
+                    GiaoDichViewModel ls = new GiaoDichViewModel(item, status, date, tenKH, tenKH2, sodu);
+                    LSGD.Add(ls);
+                }
+            }
+            // Sắp xếp danh sách theo trường DateTime
+            LSGD = LSGD.OrderByDescending(item => item.date).ToList();
+            return LSGD;
+        }
+
+        ////Kiem tra lich su giao dich
+        //public bool checkGiaoDich(long stk)
+        //{
+        //    GiaoDich gd = getHistorybySTK(stk);
+        //    if(gd.SoTaiKhoan)
+        //}
+        //Lay customer by key
+        public KhachHang getCusbyKey(string key)
+        {
+            FirebaseResponse response = client.Get("KhachHang");
+            if (response != null)
+            {
+                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
+                KhachHang khachHang = data[key];
+                if (khachHang != null)
+                    return khachHang;
+            }
+            return null;
+        }
+        // Chuc vu**********************************************************************
+        public List<ChucVu> GetListRole()
+        {
+            List<ChucVu> roles;
+            FirebaseResponse response = client.Get("ChucVu");
+            Dictionary<string, ChucVu> data = response.ResultAs<Dictionary<string, ChucVu>>();
+            roles = new List<ChucVu>(data.Values);
+            return roles.OrderBy(p => p.TenChucVu).ToList(); ;
+        }
+        public async Task<bool> checkRole(ChucVu chucVu)
+        {
+            try
+            {
+
+                FirebaseResponse response = await client.GetAsync("ChucVu");
+
+                if (response == null || response.Body == "null")
+                {
+                    return false; // Node không tồn tại hoặc trống
+                }
+
+                Dictionary<string, ChucVu> data = response.ResultAs<Dictionary<string, ChucVu>>();
+
+                if (data != null && data.Values.Any(item => item.TenChucVu == chucVu.TenChucVu))
+                {
+                    return true; // Chuc vu tồn tại trong danh sách
+                }
+
+                return false; // Chuc vu không tồn tại trong danh sách
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu có
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+        // Them chuc vu
+        public void AddRole(ChucVu chucVu)
+        {
+
+            // Thực hiện Push để lấy key mới
+            PushResponse response = client.Push("ChucVu", chucVu);
+
+            if (response != null && response.Result != null)
+            {
+                // Lấy key mới
+                string newKey = response.Result.name;
+
+                // Thiết lập key mới cho đối tượng ChucVu
+                chucVu.Key = newKey;
+
+                // Thực hiện Set để thêm dữ liệu vào Firebase
+                client.Set("ChucVu/" + newKey, chucVu);
+
+
+            }
+            else
+            {
+                // Xử lý khi có lỗi trong quá trình Push
+                Console.WriteLine("Error while pushing data to Firebase.");
+            }
+        }
+        public ChucVu getRolebyKey(string key)
+        {
+            FirebaseResponse response = client.Get("ChucVu");
+            if (response != null)
+            {
+                Dictionary<string, ChucVu> data = JsonConvert.DeserializeObject<Dictionary<string, ChucVu>>(response.Body);
+                ChucVu chucVu = data[key];
+                if (chucVu != null)
+                    return chucVu;
+            }
+            return null;
+        }
+
+        public void EditRole(ChucVu chucVu)
+        {
+
+            FirebaseResponse response = client.Get("ChucVu");
+            if (response != null)
+            {
+                client.Set("ChucVu/" + chucVu.Key, chucVu);
+            }
+        }
+        public void DeleteRole(string key)
+        {
+
+            FirebaseResponse response = client.Get("ChucVu");
+            if (response != null)
+            {
+                client.Delete("ChucVu/" + key);
+            }
         }
     }
 }

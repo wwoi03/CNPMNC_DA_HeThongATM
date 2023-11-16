@@ -1,0 +1,39 @@
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var listLSGD = ViewBag.LSGD;
+    var check = ViewBag.check;
+
+}
+@model CustomerStatementViewModel
+
+<body>
+<div class="row" style="width: 100%;min-height:735px;">
+    <div class="col-lg-12" style="margin-top: 7%;background-color: whitesmoke;position:relative;">
+        <div class="card-body" >
+            <!-- <canvas id="TrafficChart"></canvas>   -->
+            <canvas id="traffic-chart" class="traffic-chart" style="padding:50px"></canvas>
+        </div>
+    </div>
+</div> <!-- /.row -->
+
+<script>
+        const labels = Utils.months({ count: 7 });
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First Dataset',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.01
+            }]
+        };
+        const config = {
+            type: 'line',
+            data: data,
+        };
+        new Chart(document.getElementById('traffic-chart'), config)
+</script>
+
+</body>

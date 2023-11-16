@@ -160,6 +160,12 @@
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="ManageCardAndAccount" asp-action="MoKhoaTaiKhoan">Mở/khóa tài khoản</a>
                             </li>
+
+                            <!-- Khóa/ mở thẻ ngân hàng -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreditCard" asp-action="CardControl">Mở/Khóa thẻ ngân hàng</a>
+                            </li>
                         </ul>
                     </li>
 
@@ -170,13 +176,13 @@
                             <!-- Thống kê giao dịch -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Thông kê giao dịch</a>
+                                <a asp-controller="Statement" asp-action="BankStatement">Thống kê giao dịch</a>
                             </li>
 
                             <!-- Thống kê khách hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Thông kê khách hàng</a>
+                                <a asp-controller="Statement" asp-action="CustomerStatement">Sao kê khách hàng</a>
                             </li>
                         </ul>
                     </li>
@@ -267,6 +273,12 @@
 								<i class="fa fa-trash-o menu-icon"></i>
 								<a asp-controller="CreateCard" asp-action="Index">Xóa tài khoản</a>
 							</li>
+
+                            <!-- Phân quyền nhân viên -->
+                            <li>
+                                <i class="menu-icon fa fa-list-alt"></i>
+                                <a asp-controller="Staff" asp-action="Decentralization">Quyền hạn nhân viên</a>
+                            </li>
 						</ul>
 					</li>
 
