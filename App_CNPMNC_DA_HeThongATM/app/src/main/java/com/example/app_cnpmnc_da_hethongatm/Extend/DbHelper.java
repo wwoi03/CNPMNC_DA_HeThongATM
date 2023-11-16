@@ -131,29 +131,53 @@ public class DbHelper {
     }
 
     // Thêm người thụ hưởng
-    public static void addBeneficiary(ThuHuong thuHuong, FirebaseListener firebaseListener) {
-        String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("Key", newKey);
-        map.put("TKThuHuong", (long) thuHuong.getTKThuHuong());
-        map.put("MaKHKey", thuHuong.getMaKHKey());
-        map.put("TenNguoiThuHuong", thuHuong.getTenNguoiThuHuong());
-
-
-        firebaseDatabase.getReference("ThuHuong").child(newKey).setValue(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+    public static void addBeneficiary(ThuHuong thuHuong, Context context, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(thuHuong.getTKThuHuong())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        if (firebaseListener != null)
-                            firebaseListener.onSuccessListener();
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // Tạo bản ghi mới nếu SoTaiKhoan tồn tại
+                            String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey();
+
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("Key", newKey);
+                            map.put("TKThuHuong", (long) thuHuong.getTKThuHuong());
+                            map.put("MaKHKey", thuHuong.getMaKHKey());
+                            map.put("TenNguoiThuHuong", thuHuong.getTenNguoiThuHuong());
+
+                            firebaseDatabase.getReference("ThuHuong").child(newKey).setValue(map)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            if (firebaseListener != null)
+                                                firebaseListener.onSuccessListener();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            if (firebaseListener != null)
+                                                firebaseListener.onFailureListener(e);
+                                        }
+                                    });
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Tài khoản không tồn tại");
+                            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
+
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if (firebaseListener != null)
-                            firebaseListener.onFailureListener(e);
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Xử lý lỗi
+                        System.out.println("Lỗi: " + databaseError.getMessage());
                     }
                 });
     }
