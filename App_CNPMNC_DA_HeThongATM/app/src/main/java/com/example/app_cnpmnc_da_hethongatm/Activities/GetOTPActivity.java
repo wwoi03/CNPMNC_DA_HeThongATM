@@ -61,7 +61,6 @@ public class GetOTPActivity extends AppCompatActivity {
                                         btn_getotp.setVisibility(View.VISIBLE);
                                         Log.d("onVerificationCompleted", "onVerificationCompleted: ");
                                     }
-
                                     @Override
                                     public void onVerificationFailed(@NonNull FirebaseException e) {
                                         wait_otp.setVisibility(View.GONE);

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_register">
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="Đăng Ký"
+        android:textColor="#ffffff"
+        android:textSize="35dp"/>
+    <EditText
+        android:id="@+id/edt_tenkh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView13"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:hint="Tên Khách Hàng"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:drawableLeft="@drawable/baseline_person_24"
+        android:padding="20dp"></EditText>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_tenkh"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+        <RadioButton
+            android:id="@+id/radio_nam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Nam"
+            android:textColor="@color/white"></RadioButton>
+        <RadioButton
+            android:id="@+id/radio_nu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Nữ"
+            android:textColor="@color/white"></RadioButton>
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Ngày Sinh"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/radio_group"
+        android:layout_below="@id/edt_tenkh"
+        >
+    </TextView>
+    <EditText
+        android:id="@+id/edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radio_group"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:hint="  Email"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:padding="20dp"></EditText>
+    <EditText
+        android:id="@+id/edt_diachi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_email"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:hint="  Địa Chỉ"
+        android:drawableLeft="@drawable/baseline_home_24"
+        android:padding="20dp"></EditText>
+    <EditText
+        android:id="@+id/edt_cccd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_diachi"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30ffffff"
+        android:hint="  Số CCCD/CMND"
+        android:inputType="number"
+        android:drawableLeft="@drawable/card_white"
+        android:padding="20dp"></EditText>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_cccd"
+        android:gravity="center"
+        android:text="Tiếp 2/3"
+        android:layout_marginLeft="150dp"></Button>
+</RelativeLayout>
