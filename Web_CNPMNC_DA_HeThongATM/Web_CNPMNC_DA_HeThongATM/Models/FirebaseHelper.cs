@@ -31,7 +31,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             List<KhachHang> dsKhachHang = new List<KhachHang>();
             FirebaseResponse response = client.Get("KhachHang");
-            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
             dsKhachHang = new List<KhachHang>(data.Values);
             return dsKhachHang;
         }
@@ -153,9 +153,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
         //lấy tên  khách hàng qua id
-        public string GetNameCustomerbyid(string values)
+        public async Task<string> GetNameCustomerbyid(string values)
         {
-            FirebaseResponse response = client.Get("KhachHang");
+            FirebaseResponse response = await client.GetAsync("KhachHang");
             if (response != null)
             {
                 Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);        
@@ -178,26 +178,19 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         //Kiểm tra Sdt nhập vào form
         public bool CheckSdt(string values)
-        {
-
-
-
+        {
+
             FirebaseResponse response = client.Get("KhachHang");
             if (response != null && response.Body != null)
             {
-                Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-
+                Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
                 if (data.Values.Any(c => c.SoDienThoai == values))
                     return true;
-                return false;
-
-
-
-            }
-
+                return false;
+
+            }
             return false;
-        }
-
+        }
         public KhachHang SearchCustomer(string searchCustomer)
         {
             FirebaseResponse response = client.Get("KhachHang");
@@ -205,16 +198,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             {
                 Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
 
-                var card = data.Values.FirstOrDefault(c => c.CCCD == searchCustomer);
-
-
-
-                return card;
-
-
-
-                //// Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-
+                var card = data.Values.FirstOrDefault(c => c.CCCD == searchCustomer);
+
+                return card;
+
+                //// Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
                 //if (card == null)
                 //{
                 //    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
@@ -250,15 +238,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         // Tính tổng giao dịch
         public long GetTotalTransaction()
         {
-            long totalTransaction = 0;
-
-
-
+            long totalTransaction = 0;
+
             FirebaseResponse response = client.Get("LichSuGiaoDich");
-            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
-
-
-
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
             totalTransaction = data.Values.Count;
 
             return totalTransaction;
@@ -283,12 +267,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             Dictionary<string, int> quantityCustomerByMonth = new Dictionary<string, int>();
 
             FirebaseResponse response = client.Get("KhachHang");
-            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-
-
-
-            // tính số lượng khách hàng theo từng tháng trong năm "year"
-
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
             for (int i = 1; i <= 12; i++)
             {
                 int count = data.Values.Count(item => int.Parse(item.NgayTao.Split("/")[1]) == i && int.Parse(item.NgayTao.Split("/")[2]) == year);
@@ -296,16 +277,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
 
             return quantityCustomerByMonth;
-        }
-
-
-
-        // Lấy số lượng thẻ VISA và ATM
-
-
-
-        // Tạo tài khoản nhân viên
-
+        }
+
+        // Lấy số lượng thẻ VISA và ATM
+
+        // Tạo tài khoản nhân viên
         public void CreateStaff(NhanVien nhanVien)
         {
             FirebaseResponse response = client.Push("NhanVien", nhanVien);
@@ -323,10 +299,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 digits += randomNumber.ToString();
             }
 
-            return digits;
-
-
-
+            return digits;
+
         }
 
         //tự động tạo mã số thẻ
@@ -375,10 +349,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 }
 
             }
-            return stk;
-
-
-
+            return stk;
+
         }
         public string CreateSotaikhoan()
         {
@@ -393,10 +365,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 }
 
             }
-            return stk;
-
-
-
+            return stk;
+
         }
 
 
@@ -481,15 +451,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         }
         //danh sách thẻ 
-        public List<TheNganHang> getListCard()
+        public async Task<List<TheNganHang>> getListCard()
         {
-            FirebaseResponse response = client.Get("TheNganHang");
+            FirebaseResponse response = await client.GetAsync("TheNganHang");
             if (response != null)
             {
                 Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
                 List<TheNganHang> theNganHangs = new List<TheNganHang>(data.Values);
-                return theNganHangs;
-
+                return theNganHangs;
             }
             return null;
         }
@@ -523,12 +492,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
 
                 // Thử tìm theo CCCD (Căn cước công dân)
-                var card = data.Values.FirstOrDefault(c => c.Key == searchValue);
-
-
-
-                // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-
+                var card = data.Values.FirstOrDefault(c => c.Key == searchValue);
+
+                // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
                 if (card == null)
                 {
                     card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SoTaiKhoan == long.Parse(searchValue));
@@ -569,10 +535,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // lấy thông tin khách hàng chuyển
             FirebaseResponse responseSend = client.Get("KhachHang" + numberSend);
             if (responseSend != null)
-            {
-
-
-
+            {
+
             }
             //lấy thông tin khách hàng gửi
             FirebaseResponse responseGet = client.Get("KhachHang");

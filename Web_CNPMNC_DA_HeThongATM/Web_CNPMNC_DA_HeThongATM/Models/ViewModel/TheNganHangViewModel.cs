@@ -18,7 +18,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         public int TinhTrangThe { get; set; }
 
         public string CCCD { get; set; }
-
+        public string MaKH { get; internal set; }
+        public string TenKhachHang { get;  set; }
 
         public TheNganHang TheNganHang()
         {

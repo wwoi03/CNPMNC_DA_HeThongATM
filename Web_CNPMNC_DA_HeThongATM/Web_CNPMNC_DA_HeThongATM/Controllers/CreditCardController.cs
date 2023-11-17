@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+using PagedList;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -57,29 +59,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
 
         //danh sách thẻ atm
-        public IActionResult ListCard()
+        public async Task<IActionResult> ListCard(int? page)
         {
-            List<TheNganHang> theNganHangs = firebaseHelper.getListCard();
-            List<ListTheNganHangViewModel> listThes = new List<ListTheNganHangViewModel>();
-            foreach (var item in theNganHangs)
+           
+            List<TheNganHang> theNganHangs = await firebaseHelper.getListCard();
+            
+           
+            int pageSize = 10;
+            int pageeNumber = (page ?? 1);
+            List<ListTheNganHangViewModel> listThes = (await Task.WhenAll(theNganHangs.Select(async item => new ListTheNganHangViewModel
             {
-                var list = new ListTheNganHangViewModel
-                {
-                    MaKH = item.MaKHKey,
-                    TenKhachHang = firebaseHelper.GetNameCustomerbyid(item.MaKHKey),
-                    MaPin = item.MaPin,                  
-                    MaSoThe = item.MaSoThe,
-                    TinhTrangThe = item.TinhTrangThe,
-                    NgayMoThe = item.NgayMoThe,
-                    NgayHetHan = item.NgayHetHan,     
-                    SoTaiKhoan =item.SoTaiKhoan,
-                    
-
-
-                };
-                listThes.Add(list);
-            }
-            ViewData["listCard"] = listThes;
+                MaKH = item.MaKHKey,
+                TenKhachHang = await firebaseHelper.GetNameCustomerbyid(item.MaKHKey),
+                MaPin = item.MaPin,
+                MaSoThe = item.MaSoThe,
+                TinhTrangThe = item.TinhTrangThe,
+                NgayMoThe = item.NgayMoThe,
+                NgayHetHan = item.NgayHetHan,
+                SoTaiKhoan = item.SoTaiKhoan,
+            }))).ToList();
+            ViewData["listCard"] = listThes.ToPagedList(pageeNumber,pageSize);
             return View(listThes);
         }
 
@@ -103,13 +102,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
 
         //tìm kiếm theo cccd theo sdt theo masothe
-        public IActionResult SearchCard(string searchValue)
+        public async Task<IActionResult> SearchCard(string searchValue)
         {
 
             TheNganHang theNganHangs = firebaseHelper.SearchCard(searchValue);
             ListTheNganHangViewModel ViewThes = new ListTheNganHangViewModel();
             ViewThes.MaKH = theNganHangs.MaKHKey;
-            ViewThes.TenKhachHang = firebaseHelper.GetNameCustomerbyid(theNganHangs.MaKHKey);                  
+            ViewThes.TenKhachHang = await firebaseHelper.GetNameCustomerbyid(theNganHangs.MaKHKey);                  
             ViewThes.MaSoThe = theNganHangs.MaSoThe;
             ViewThes.NgayHetHan = theNganHangs.NgayHetHan;
             ViewThes.NgayMoThe = theNganHangs.NgayMoThe;

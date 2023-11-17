@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using PagedList;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -15,30 +17,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
         // Danh sách khách hàng
-        public IActionResult Index()
+        public  IActionResult Index(int? page)
         {
-            List<KhachHang> khachHangs = firebaseHelper.GetCustomers();
-            List<KhachHangViewModel> khachHangViewModels = new List<KhachHangViewModel>();
-            foreach (var i in khachHangs)
-            {
-                var pro = new KhachHangViewModel
-                {
-                    CCCD = i.CCCD,
-                    DiaChi = i.DiaChi,
-                    Email = i.Email,
-                    GioiTinh = i.GioiTinh,
-                    SoDienThoai = i.SoDienThoai,
-                    TenKhachHang = i.TenKH,
-                    NgayTao = i.NgayTao,
+            List<KhachHang> khachHangs = firebaseHelper.GetCustomers();          
+            int pageSize = 10;
+            int pageeNumber = (page ?? 1);
+            List<KhachHangViewModel> khachHangViewModels = khachHangs
+             .Select(i => new KhachHangViewModel
+             {
+                 CCCD = i.CCCD,
+                 DiaChi = i.DiaChi,
+                 Email = i.Email,
+                 GioiTinh = i.GioiTinh,
+                 SoDienThoai = i.SoDienThoai,
+                 TenKhachHang = i.TenKH,
+                 NgayTao = i.NgayTao,
+             })
+             .ToList();
 
-
-                };
-                khachHangViewModels.Add(pro);
-
-
-            }
-
-            ViewData["j"] = khachHangViewModels;
+            ViewData["j"] =  khachHangViewModels.ToPagedList(pageeNumber, pageSize); 
 
             return View();
         }
