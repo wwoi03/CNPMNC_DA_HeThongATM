@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -48,7 +49,8 @@ public class GetOTPActivity extends AppCompatActivity {
                     if(input_phone.getText().toString().trim().length() == 9){
                         wait_otp.setVisibility(View.VISIBLE);
                         btn_getotp.setVisibility(View.INVISIBLE);
-                        PhoneAuthOptions.newBuilder(mauth)
+                        Log.d("phonenumber", "onClick: "+"+84"+input_phone.getText());
+                        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(mauth)
                                 .setPhoneNumber("+84"+input_phone.getText())
                                 .setTimeout(60L,TimeUnit.SECONDS)
                                 .setActivity(GetOTPActivity.this)
@@ -68,17 +70,16 @@ public class GetOTPActivity extends AppCompatActivity {
                                     }
                                     public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                                         super.onCodeSent(s, forceResendingToken);
-                                        Log.d("onCodeSent", "onCodeSent: ");
                                         wait_otp.setVisibility(View.GONE);
                                         btn_getotp.setVisibility(View.VISIBLE);
                                         Intent intent = new Intent(getApplicationContext(),VerifyOTPActivity.class);
                                         intent.putExtra("mobile",input_phone.getText().toString());
                                         intent.putExtra("OTP",s);
+                                        Log.d("onCodeSent", "onCodeSent: "+s);
                                         startActivity(intent);
                                     }
-                                });
-
-
+                                }).build();
+                                PhoneAuthProvider.verifyPhoneNumber(options);
                     }
                     else {
                         Toast.makeText(GetOTPActivity.this,"Vui lòng nhập đúng định dạng sdt",Toast.LENGTH_SHORT).show();
