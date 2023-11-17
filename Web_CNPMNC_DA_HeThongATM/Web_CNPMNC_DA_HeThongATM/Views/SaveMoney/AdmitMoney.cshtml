@@ -5,7 +5,6 @@
     var laixuat = ViewBag.OpenSavingsHome;
 }
 
-
 @if (TempData["Message"] != null)
 {
     <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
@@ -16,7 +15,7 @@
         </button>
     </div>
 }
-else if(TempData["Fail"]!= null)
+else if (TempData["Fail"] != null)
 {
     <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
         <span class="badge badge-pill badge-danger">Thất Bại</span>
@@ -26,80 +25,40 @@ else if(TempData["Fail"]!= null)
         </button>
     </div>
 }
-
 <div class="col-md-12" style=" height:100vh;">
     <h6 class="title col-md-12">
-        MỞ TÀI KHOẢN TIẾT KIỆM
+       Nạp Tiền Tiết Kiệm
     </h6>
     <div class="container col-md-7" style="display:-webkit-inline-box;">
-        <form method="post" asp-controller="SaveMoney" asp-action="SaveMoney" style="padding-top:0px ; background-color:#ffff">
+        <form method="post" asp-controller="SaveMoney" asp-action="AdmitMoney" style="padding-top:0px ; background-color:#ffff">
 
             <div class="flexbox">
 
                 <div class="inputBox">
                     <span>
-                        Tài Khoản Nguồn
+                        Tài Khoản Nguồn/Tiết Kiệm
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
 
                 </div>
                 <div class="inputBox">
-                    <input asp-for="TaiKhoanNguon"  value="" type="text" maxlength="16" id="InputTaiKhoanNguon">
+                    <input asp-for="TaiKhoanNguon" value="" type="text" maxlength="16" id="InputTaiKhoanNguon">
                     <span asp-validation-for="TaiKhoanNguon" class="text-danger"></span>
                 </div>
-            </div>
+            </div>         
             <div class="flexbox">
 
                 <div class="inputBox">
                     <span>
-                        Kỳ hạn gửi
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </span>
-
-                </div>
-                <div class="inputBox">           
-                    <select asp-for="LaiSuatKey" class="type-card">
-                        <option selected disabled>Chọn lãi suất</option>
-                        @foreach(var item in laixuat)
-                        {
-                            string name = item.KyHan + " (" + item.TiLe + "%)";
-                            <option value="@item.Key">@name</option>
-                        }
-                        
-                    </select>
-                    <span asp-validation-for="LaiSuatKey" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="flexbox">
-
-                <div class="inputBox">
-                    <span>
-                        Số tiền gửi
+                        Số tiền nạp
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
 
                 </div>
                 <div class="inputBox">
-                    <input asp-for="TienGui" id="sotiengui" value="" type="text" maxlength="16" >
+                    <input asp-for="TienGui" id="sotiengui" value="" type="text" maxlength="16">
                     <span asp-validation-for="TienGui" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="flexbox">
-
-                <div class="inputBox">
-                    <span>
-                        Hình thức trả lãi
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </span>
-
-                </div>
-                <div class="inputBox">
-                    <select class="type-card">
-                        <option value="Loại" selected disabled>Loại</option>
-                        <option>lãi nhập góc</option>
-                        <option>lãi trả vào tài khoản tiền gửi khi đến hạn trả lãi</option>
-                    </select>
-                </div>
+                </div>    
                 </div>
             <div class="flexbox">
 
@@ -111,28 +70,28 @@ else if(TempData["Fail"]!= null)
 
                 </div>
                 <div class="inputBox">
-                    <input  value="" type="text" maxlength="16">
+                    <input value="" type="text" maxlength="16">
                 </div>
             </div>
             <div class="flexbox">
                 <input id="datataikhoan" asp-for="TaiKhoanLienKet" hidden type="text" />
-                <input type="submit" value="submit" class="submit-btn">
+                <input type="submit" value="Nạp tiền" class="submit-btn">
             </div>
-          
+
         </form>
         @* //card *@
         <div class="card col-md-8 name-label">
             <div class="twt-feed blue-bg">
-       
+
                 <div class="media">
                     <a href="#">
                         <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="/images/admin.jpg">
                     </a>
                     <div class="media-body">
-                        <h3 class="text-white display-6"><span class="ti-user"></span> KHÁCH HÀNG</h3>                     
+                        <h3 class="text-white display-6"><span class="ti-user"></span> KHÁCH HÀNG</h3>
                         <h6 class="text-light" id="tenkhachhang"></h6>
-                       
-                        
+
+
                     </div>
                 </div>
             </div>
@@ -141,24 +100,42 @@ else if(TempData["Fail"]!= null)
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <a href="#">
-                        Số tài khoản:&nbsp;&nbsp;&nbsp;
-                        <span id="sotaikhoan"></span></a>
+                        Số tài khoản tiết kiệm:&nbsp;&nbsp;
+                        <span id="sotaikhoan"></span>
+                    </a>
                 </li>
                 <li class="list-group-item">
                     <a href="#">
-                        Số dư khả dụng: &nbsp;&nbsp;&nbsp;
+                        Số tiền gửi: &nbsp;&nbsp;&nbsp;
                         <span id="sodu"></span>
                     </a>
                 </li>
-               
+                <li class="list-group-item">
+                    <a href="#">
+                        Ngày Gửi: &nbsp;&nbsp;&nbsp;
+                        <span id="NgayGui"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Kỳ Hạn: &nbsp;&nbsp;&nbsp;
+                        <span id="kyhan"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Tỉ Lệ: &nbsp;&nbsp;&nbsp;
+                        <span id="tile"></span>
+                    </a>
+                </li>
             </ul>
         </div>
 
     </div>
-   </div>
+</div>
 
-    <script src="/js/LaiSuat.js">
-       
-    </script>
+<script src="~/js/AdmitMoney.js">
+
+</script>
 
 

@@ -4,7 +4,26 @@
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
 }
 <body>
-
+    @if (TempData["Message"] != null)
+    {
+        <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+            <span class="badge badge-pill badge-primary">Thành Công</span>
+            @TempData["Message"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    }
+    else if (TempData["Fail"] != null)
+    {
+        <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+            <span class="badge badge-pill badge-danger">Thất Bại</span>
+            @TempData["Fail"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    }
     <div id="custom-dialog" title="Thông báo" style="display: none;"></div>
 
     <form method="post" asp-controller="Customer" asp-action="CreateCustommer" >

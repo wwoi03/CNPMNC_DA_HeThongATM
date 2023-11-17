@@ -254,7 +254,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
 
-            FirebaseResponse response = client.Get("LichSuGiaoDich");
+            FirebaseResponse response = client.Get("GiaoDich");
             Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
 
 
@@ -636,6 +636,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return null;
         }
 
+        public LaiSuat GetLaiSuat(string key)
+        {
+            FirebaseResponse response = client.Get("LaiSuat");
+            if (response != null)
+            {
+                Dictionary<string, LaiSuat> data = JsonConvert.DeserializeObject<Dictionary<string, LaiSuat>>(response.Body);
+                return data.Values.FirstOrDefault(x => x.Key == key);  
+            }
+            return null;
+        }
+
         public TaiKhoanLienKet GetTaiKhoanLienKetSTK(long stk)
         {
             FirebaseResponse response = client.Get("TaiKhoanLienKet");
@@ -649,7 +660,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
         public void GuiTietKiem(GuiTietKiem guiTietKiem,TaiKhoanLienKet taiKhoanLien)
         {
-
+            guiTietKiem.TaiKhoanTietKiem = long.Parse(TaiKhoanTietKiem());
             FirebaseResponse response = client.Push("GuiTietKiem",guiTietKiem);
             if (response != null)
             {
@@ -664,7 +675,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
                 if (updateResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    ChuyenTien(guiTietKiem.TienGui*-1, taiKhoanLien.SoTaiKhoan);
+                    ChuyenTien(guiTietKiem.TienGui*(-1), taiKhoanLien.SoTaiKhoan);
                     Console.WriteLine("thanh công");
                 }
                 else
@@ -672,7 +683,83 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                     Console.WriteLine(updateResponse.StatusCode);
                 }
             }
-        } 
+        }
+
+        public string TaiKhoanTietKiem()
+        {
+            string stk = AccountNumber("sotaikhoan");
+            FirebaseResponse response = client.Get("GuiTietKiem");
+            if (response != null && response.Body != "null")
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                if (data.ContainsKey(stk))
+                {
+                    return TaiKhoanTietKiem();
+                }
+
+            }
+            return stk;
+
+
+
+        }
+
+      //  lấy tài khoản tiết kiệm
+        public GuiTietKiem GetAccontSaveMoney(long stk)
+        {
+            FirebaseResponse response = client.Get("GuiTietKiem");
+           
+            if (response != null && response.Body != "null" )
+            {
+                Dictionary<string, GuiTietKiem> data = JsonConvert.DeserializeObject<Dictionary<string, GuiTietKiem>>(response.Body);
+               
+                return data.Values.FirstOrDefault(p => p.TaiKhoanTietKiem == stk || p.TaiKhoanNguon == stk);
+
+            }
+            return null;
+        }
+
+        //nạy tiền tiết kiệm
+        public bool AdmitSaveMoney(double number, string key)
+        {
+            FirebaseResponse responsetien = client.Get("GuiTietKiem/" + key);
+            if (responsetien != null)
+            {
+                JObject pss = JObject.Parse(responsetien.Body.ToString());
+                double tien = (double)pss["TienGui"]+ number;
+
+                FirebaseResponse response = client.Set("GuiTietKiem/" + key + "/TienGui", tien);
+                if (response != null && response.Body != "null")
+                {
+
+                    return true;
+                }
+            }
+          
+            return false;
+        }
+
+        //lưu giao dịch
+        public bool LichSuGD(string key,GiaoDich giaoDich)
+        {
+            FirebaseResponse response = client.Push("GiaoDich", giaoDich);
+            if (response != null)
+            {
+                // Phân tích chuỗi JSON để lấy key
+                var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
+                string newKey = data["name"];
+
+
+
+                // Cập nhật đối tượng GuiTietKiem với Key mới
+                FirebaseResponse updateResponse = client.Set("GuiTietKiem/" + newKey + "/Key", newKey);
+                if (updateResponse != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
 }
