@@ -5,5 +5,8 @@ function GetdataValue(event: Event) {
     console.log(data);
     }
 
-
+function nextPage(url: string) {
+   
+    window.location.href = url; 
+}
 

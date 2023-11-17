@@ -40,7 +40,7 @@
                         @foreach (var item in custommerList)
                         {
 
-                            
+
                             <tr>
                                 <td>@item.CCCD</td>
                                 <td>@item.TenKhachHang</td>
@@ -50,26 +50,35 @@
                                 <td>@item.GioiTinh</td>
                                 <td>@item.DiaChi</td>
                             </tr>
-                            
+
                         }
-                       
+
                     </tbody>
                 </table>
-                <div>
-                    Page @(custommerList.PageCount < custommerList.PageNumber ? 0 : custommerList.PageNumber) of @custommerList.PageCount
+                <div style="text-align:center">
+                    Trang @(custommerList.PageCount < custommerList.PageNumber ? 0 : custommerList.PageNumber) / @custommerList.PageCount
 
                     @if (custommerList.HasPreviousPage)
                     {
-                        @Html.ActionLink("<<", "Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
-                        @Html.ActionLink("<", "Index", new { page = custommerList.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angles-right fa-rotate-180"></i>
+                        </button>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angle-right fa-rotate-180"></i>
+                        </button>
                     }
 
                     @if (custommerList.HasNextPage)
                     {
-                        @Html.ActionLink(">", "Index", new { page = custommerList.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
-                        @Html.ActionLink(">>", "Index", new { page = custommerList.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </button>
                     }
                 </div>
+
             </div>
             <div class="table-stats order-table ov-h" id="SearchCustomerID">
             </div><!-- /.table-stats -->

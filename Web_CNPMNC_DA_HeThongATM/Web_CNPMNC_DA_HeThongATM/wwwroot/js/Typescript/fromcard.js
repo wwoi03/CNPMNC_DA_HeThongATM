@@ -3,3 +3,6 @@ function GetdataValue(event) {
     var data = button.getAttribute('data');
     console.log(data);
 }
+function nextPage(url) {
+    location.href = url;
+}
