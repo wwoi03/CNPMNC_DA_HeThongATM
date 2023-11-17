@@ -1,39 +1,157 @@
-﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
-@{
+﻿@{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
-    var listLSGD = ViewBag.LSGD;
-    var check = ViewBag.check;
-
+    var year = DateTime.Now.Year;
 }
-@model CustomerStatementViewModel
 
-<body>
-<div class="row" style="width: 100%;min-height:735px;">
-    <div class="col-lg-12" style="margin-top: 7%;background-color: whitesmoke;position:relative;">
-        <div class="card-body" >
-            <!-- <canvas id="TrafficChart"></canvas>   -->
-            <canvas id="traffic-chart" class="traffic-chart" style="padding:50px"></canvas>
+<!-- Content -->
+<div class="content" style="background: #F1F2F7; height: calc(100vh - 55px); margin:0">
+    <!-- Animated -->
+    <div class="animated fadeIn">
+        <!-- Widgets  -->
+        <div class="row">
+            <!-- Nhân viên -->
+            <div class="col-lg-3 col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="stat-widget-five">
+                            <label for="fromDate">Năm:</label>
+                            <input type="number" min="1900" max="@year" id="year" name="year" style="background-color:beige" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="stat-widget-five">
+                            <label for="fromDate">Tháng:</label>
+                            <input type="number" min="1" max="12" id="month" name="month" style="background-color:beige">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- /Widgets -->
+        <!--  Traffic  -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="box-title">Traffic </h4>
+                    </div>    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-body">
+                                <!-- <canvas id="TrafficChart"></canvas>   -->
+                                <canvas id="traffic-chart" class="traffic-chart"></canvas>
+                            </div>
+                        </div>
+                    @*    <div class="col-lg-4">
+                            <div class="card-body">
+                                <canvas id="card-type"></canvas>
+                            </div> <!-- /.card-body -->
+                        </div>*@
+                    </div> <!-- /.row -->
+                    <div class="card-body"></div>
+                </div>
+            </div><!-- /# column -->
+        </div>
+        <!--  /Traffic -->
+        <div class="clearfix"></div>
+     
     </div>
-</div> <!-- /.row -->
+    <!-- .animated -->
+</div>
 
 <script>
-        const labels = Utils.months({ count: 7 });
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'My First Dataset',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.01
-            }]
-        };
-        const config = {
-            type: 'line',
-            data: data,
-        };
-        new Chart(document.getElementById('traffic-chart'), config)
-</script>
+    document.addEventListener('DOMContentLoaded', function () {
+        main();
 
-</body>
+        function main() {
+            customerStatistics();
+            //cardTypeStatistics();
+        }
+
+        // Thống kê khách hàng
+        function customerStatistics() {
+            // Lấy ngày hiện tại
+            var today = new Date();
+            var date = today.getFullYear();
+
+            $.ajax({
+                type: "GET",
+                url: "../../Statistical/GetQuantityCustomerByMonth",
+                success: function (data) {
+                    var listMonth = [Object.keys(data)][0];
+                    var listQuantity = [Object.values(data)][0];
+
+                    // render
+                    const customerChart = document.getElementById('traffic-chart');
+                    new Chart(customerChart, {
+                        type: "line",
+                        data: {
+                            labels: listMonth,
+                            datasets: [
+                                {
+                                    label: "Số lượng khách hàng năm " + date,
+                                    data: listQuantity,
+                                },
+                            ],
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function (value, index, values) {
+                                            // Định dạng giá trị là số nguyên
+                                            return parseInt(value);
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    });
+                },
+                error: function () {
+                    alert("Đã xảy ra lỗi khi lấy thông tin");
+                }
+            });
+        }
+
+        //// Thống kê loại thẻ
+        //function cardTypeStatistics() {
+        //    // init data
+        //    const data = {
+        //        labels: ['Thẻ ATM', 'Thẻ VISA'],
+        //        datasets: [
+        //            {
+        //                label: 'Số lượng thẻ',
+        //                data: [14, 34],
+        //                fill: true,
+        //                backgroundColor: ['#00C294', '#FF957D'],
+        //            }
+        //        ]
+        //    };
+
+        //    // render
+        //    const doughnutCardType = document.getElementById('card-type');
+        //    new Chart(doughnutCardType, {
+        //        type: 'doughnut',
+        //        data,
+        //        options: {
+        //            responsive: true,
+        //            plugins: {
+        //                legend: {
+        //                    position: 'top',
+        //                },
+        //                title: {
+        //                    display: true,
+        //                    text: 'Loại thẻ'
+        //                }
+        //            }
+        //        }
+        //    });
+        //}
+    })
+</script>
