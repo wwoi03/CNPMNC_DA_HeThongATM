@@ -61,6 +61,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     // Nếu tìm thấy email và mật khẩu trùng khớp trong danh sách, đăng nhập thành công
                     if (enteredEmail == userEmailFromFirebase && enteredPass == userPasswordFromFirebase)
                     {
+                        
+                        //Xác nhận chức vụ
+                        HttpContext.Session.SetString("Role", entry.Value.ChucVu);
+
                         HttpContext.Session.SetString("NhanVienID", entry.Key);
                         HttpContext.Session.SetString("TenNhanVien", entry.Value.TenNhanVien);
                         HttpContext.Session.SetString("TenNhanVien", entry.Value.Email);

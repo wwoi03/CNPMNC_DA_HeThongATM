@@ -4,15 +4,17 @@
 @{
     Layout = "_LayoutMain";
     var laiSuats = ViewData["aben"] as IEnumerable<LaiSuatViewModel>;
-
+    var role = Context.Session.GetString("Role");
 }
 <body>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <strong style="margin-block-end:20%" class="card-title">Danh sách lãi suất</strong>
+                @if (role == "AD")
+                {
                 <div class="card-search col col-md-8" style="margin-right:100px">
-                  
+                   
                         <div class="input-group-btn">
                             <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat"
                                 type="submit" class="btn btn-info" id="search-button">
@@ -20,6 +22,7 @@
                             </a>
                         </div>
                     </div>
+                    }
                 </div>
             </div>
             <div class="table-stats order-table ov-h" id="CustomerList">
@@ -30,8 +33,11 @@
                             <th style="width:25%">Mã</th>
                             <th style="width:35%">kỳ hạn</th>
                             <th style="width:35%%">Tỉ lệ</th>
+                             @if (role == "AD")
+                        {
                             <th style="width:10%;text-align:left">Chức Năng</th>
-                        </tr>
+                        }
+                    </tr>
                     </thead>
                     <tbody>
                     @foreach (var item in laiSuats)
@@ -42,20 +48,23 @@
                                 <td>@item.Key</td>
                                 <td>@item.KyHan</td>
                                 <td>@item.TiLe</td>
-                                
-                                <td>
+
+                                @if (role == "AD")
+                                {
+                                    <td>
 
 
-                                <a class="btn btn-success" onclick="editLaiSuat('@item.Key', '@item.KyHan', '@item.TiLe')">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                        <a class="btn btn-success" onclick="editLaiSuat('@item.Key', '@item.KyHan', '@item.TiLe')">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
 
 
-                                <a class="btn btn-danger btn-sm" onclick="openConfirmationModal('@item.Key', '@item.KyHan', '@item.TiLe')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                               
-                                </td>
+                                        <a class="btn btn-danger btn-sm" onclick="openConfirmationModal('@item.Key', '@item.KyHan', '@item.TiLe')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+
+                                    </td>
+                                }
                             </tr>
                             </tr>
                         }
