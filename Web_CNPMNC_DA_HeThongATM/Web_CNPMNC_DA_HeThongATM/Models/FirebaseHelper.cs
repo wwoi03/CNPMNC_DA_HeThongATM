@@ -284,6 +284,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             List<NhanVien> staffs = data.Values.ToList();
             return staffs;
         }
+
+        //LẤY DANH SÁCH LOAI TAI KHOAN
+        public List<LoaiTaiKhoan> GetAcc()
+        {
+            FirebaseResponse response = client.Get("LoaiTaiKhoan");
+            Dictionary<string, LoaiTaiKhoan> data = response.ResultAs<Dictionary<string, LoaiTaiKhoan>>();
+            List<LoaiTaiKhoan> loaiTaiKhoans = data.Values.ToList();
+            return loaiTaiKhoans;
+        }
+
         //LẤY DANH SÁCH NHÂN VIÊN LẪN KEY
         public Dictionary<string, NhanVien> GetStaffsWithKey()
         {
@@ -291,6 +301,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
             return data;
         }
+
+
 
         // TẠO TÀI KHOẢN NHÂN VIÊN
         public void CreateStaff(NhanVien nhanVien)
@@ -312,6 +324,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             // Gửi yêu cầu cập nhật nhân viên tới Firebase bằng cách sử dụng key
             SetResponse setResponse = client.Set("NhanVien/" + editedNhanVien.Key, editedNhanVien);
+        }
+
+        //XÓA TÀI KHOẢN NHÂN VIÊN
+        public void DeleteStaff(string accKey)
+        {
+            // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
+            FirebaseResponse setResponse = client.Delete("NhanVien/" + accKey);
         }
 
         //--------------------------------------------------------------------------THẺ NGÂN HÀNG ----------------------------------------------------------------------------------
