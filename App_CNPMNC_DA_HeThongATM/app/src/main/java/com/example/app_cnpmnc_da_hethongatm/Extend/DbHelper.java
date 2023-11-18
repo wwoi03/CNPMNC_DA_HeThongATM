@@ -528,4 +528,36 @@ public class DbHelper {
                 });
         return soTaiKhoan;
     }
+    public static void RegisterNewUser(KhachHang khachHang){
+        String newKey = firebaseDatabase.getReference("KhachHang").push().getKey(); // tạo key
+        Map<String, Object> map = new HashMap<>();
+        map.put("Key", newKey);
+        map.put("DiaChi",khachHang.getDiaChi());
+        map.put("CCCD",khachHang.getCCCD());
+        map.put("GioiTinh",khachHang.getGioiTinh());
+        map.put("MaNhanVienKey",0);
+        map.put("MatKhau",khachHang.getMatKhau());
+        map.put("NgaySinh",khachHang.getNgaySinh());
+        map.put("NgayTao",DbHelper.GetDataForm());
+        map.put("SoDienThoai",khachHang.getSoDienThoai());
+        map.put("TenKH",khachHang.getTenKH());
+        firebaseDatabase.getReference("KhachHang").child(newKey).setValue(map);
+    }
+    public static void NewTaiKhoanLienKet(KhachHang khachHang){
+        String newKey = firebaseDatabase.getReference("TaiKhoanLienKet").push().getKey();
+        Map<String, Object> map = new HashMap<>();
+        map.put("HanMucTk", 50000000);
+        map.put("Key",newKey);
+        map.put("MaKHKey",newKey);
+        map.put("MaLoaiTKKey",0);
+        map.put("NgayGD",DbHelper.GetDataForm());
+        map.put("SoDu",0);
+        map.put("SoTaiKhoan",khachHang.getSoDienThoai());
+        map.put("SoTien",0);
+        map.put("TenTK",khachHang.getTenKH());
+        map.put("TienDaGD",0);
+        map.put("TienGD1Lan",0);
+        map.put("TinhTrangTaiKhoan",0);
+        firebaseDatabase.getReference("KhachHang").child(newKey).setValue(map);
+    }
 }

@@ -118,6 +118,7 @@
         <activity android:name=".Activities.ListSaveBillActivity" />
         <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.GetOTPActivity" />
         <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.VerifyOTPActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.formUserRegister" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,8 +88,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                btn_submit.setVisibility(View.VISIBLE);
                                wait_submit.setVisibility(View.GONE);
                                if(task.isSuccessful()){
-                                   Intent intent1 = new Intent(getApplicationContext(),LoginActivity.class);
-                                   Toast.makeText(VerifyOTPActivity.this,"tạo tại khoản thành công",Toast.LENGTH_SHORT).show();
+                                   Intent intent1 = new Intent(getApplicationContext(),formUserRegister.class);
+                                   Toast.makeText(VerifyOTPActivity.this,"xác thực thành công",Toast.LENGTH_SHORT).show();
+                                   intent1.putExtra("MatKhau",OTP);
+                                   intent1.putExtra("Sdt","0"+intent.getStringExtra("mobile"));
                                    startActivity(intent1);
                                }
                                else {

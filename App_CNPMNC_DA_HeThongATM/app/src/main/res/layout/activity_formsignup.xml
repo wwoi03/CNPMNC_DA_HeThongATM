@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_register">
-
     <TextView
         android:id="@+id/textView13"
         android:layout_width="match_parent"
@@ -42,35 +41,38 @@
         android:layout_below="@id/edt_tenkh"
         android:orientation="horizontal"
         android:paddingLeft="10dp">
+
         <RadioButton
             android:id="@+id/radio_nam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:fontFamily="@font/roboto_bold"
-            android:text="Nam"
+            android:text="Male"
             android:textColor="@color/white"></RadioButton>
+
         <RadioButton
             android:id="@+id/radio_nu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="Nữ"
+            android:text="Female"
             android:textColor="@color/white"></RadioButton>
     </RadioGroup>
+
     <TextView
+        android:id="@+id/tv_ngaysinh"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Ngày Sinh"
+        android:layout_below="@id/edt_tenkh"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/radio_group"
         android:background="#30ffffff"
         android:gravity="center"
-        android:layout_toRightOf="@+id/radio_group"
-        android:layout_below="@id/edt_tenkh"
-        >
-    </TextView>
+        android:text="Ngày Sinh"></TextView>
     <EditText
         android:id="@+id/edt_email"
         android:layout_width="match_parent"
@@ -117,11 +119,13 @@
         android:inputType="number"
         android:drawableLeft="@drawable/card_white"
         android:padding="20dp"></EditText>
+
     <Button
+        android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_cccd"
+        android:layout_marginLeft="150dp"
         android:gravity="center"
-        android:text="Tiếp 2/3"
-        android:layout_marginLeft="150dp"></Button>
+        android:text="Tiếp 2/3"></Button>
 </RelativeLayout>
