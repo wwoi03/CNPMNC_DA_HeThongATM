@@ -653,7 +653,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             if (response != null)
             {
                 Dictionary<string,TaiKhoanLienKet> data = JsonConvert.DeserializeObject<Dictionary<string,TaiKhoanLienKet>>(response.Body);
-                return data.Values.FirstOrDefault(p => p.SoTaiKhoan == stk);
+                return data.Values.FirstOrDefault(p => p.SoTaiKhoan == stk );
             }
             return null;
         }
@@ -667,13 +667,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 // Phân tích chuỗi JSON để lấy key
                 var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
                 string newKey = data["name"];
+                double laixuat = TienLai(guiTietKiem.LaiSuatKey,guiTietKiem.TienGui);
 
 
 
                 // Cập nhật đối tượng GuiTietKiem với Key mới
                 FirebaseResponse updateResponse = client.Set("GuiTietKiem/" + newKey + "/Key", newKey);
-
-                if (updateResponse.StatusCode == HttpStatusCode.OK)
+                FirebaseResponse updatetienlai = client.Set("GuiTietKiem/" + newKey + "/TienLaiToiKy", laixuat);          
+                if (updateResponse.StatusCode == HttpStatusCode.OK && updatetienlai.StatusCode == HttpStatusCode.OK)
                 {
                     ChuyenTien(guiTietKiem.TienGui*(-1), taiKhoanLien.SoTaiKhoan);
                     Console.WriteLine("thanh công");
@@ -727,8 +728,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             {
                 JObject pss = JObject.Parse(responsetien.Body.ToString());
                 double tien = (double)pss["TienGui"]+ number;
-
+                double tienlai = TienLai((string)pss["LaiSuatKey"], tien);
                 FirebaseResponse response = client.Set("GuiTietKiem/" + key + "/TienGui", tien);
+                FirebaseResponse rptienlai = client.Set("GuiTietKiem/" + key + "/TienLaiToiKy",tienlai );
                 if (response != null && response.Body != "null")
                 {
 
@@ -738,7 +740,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
           
             return false;
         }
+       public double TienLai(string key,double tiengui)
+        {
+            FirebaseResponse response = client.Get("LaiSuat/"+key);
+            if(response != null && response.Body != "null")
+            {
+                JObject pss = JObject.Parse(response.Body.ToString());
+                string str = (string)pss["KyHan"];              
+                string[] parts = str.Split(' ');
+                string numberPart = parts[0];
 
+                return tiengui * double.Parse(numberPart) / 12 * (double)pss["TiLe"] / 100;
+            }
+           return 0;
+        }
+       
         //lưu giao dịch
         public bool LichSuGD(string key,GiaoDich giaoDich)
         {
