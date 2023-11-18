@@ -119,19 +119,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 if (firebaseHelper.AdmitSaveMoney((double)guiTietKiemView.TienGui, (string)data["guiTietKiem"]["key"]))
                 {
 
-                    
+
                     GiaoDich giaoDich = new GiaoDich
                     {
                         Key = "",
-                        GioGiaoDich = DateTime.Now.ToString("dd/MM/yyyy"),
+                        GioGiaoDich = DateTime.Now.ToString("HH:mm:ss"),
                         NgayGiaoDich = Day(),
                         LoaiGiaoDichKey = "1",
                         NoiDungChuyenKhoan = "Nạp tiền tài khoản tiết kiệm",
                         PhiGiaoDich = 0,
                         SoDuLucGui = (double)data["guiTietKiem"]["tienGui"],
                         SoDuLucNhan = (double)data["guiTietKiem"]["tienGui"] + (double)guiTietKiemView.TienGui,
+                        SoTienGiaoDich = (double)guiTietKiemView.TienGui,
                         TaiKhoanNguon = (long)data["guiTietKiem"]["taiKhoanNguon"],
-                        TaiKhoanNhan = 0,
+                        TaiKhoanNhan = (long)data["guiTietKiem"]["taiKhoanTietKiem"],
                     };
                     firebaseHelper.LichSuGD("1", giaoDich);
                     TempData["Message"] = "Gửi tiết kiệm";

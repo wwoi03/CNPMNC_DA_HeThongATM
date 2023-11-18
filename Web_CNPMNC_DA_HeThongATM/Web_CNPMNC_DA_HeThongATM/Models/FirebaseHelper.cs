@@ -752,7 +752,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
 
                 // Cập nhật đối tượng GuiTietKiem với Key mới
-                FirebaseResponse updateResponse = client.Set("GuiTietKiem/" + newKey + "/Key", newKey);
+                FirebaseResponse updateResponse = client.Set("GiaoDich/" + newKey + "/Key", newKey);
                 if (updateResponse != null)
                 {
                     return true;
