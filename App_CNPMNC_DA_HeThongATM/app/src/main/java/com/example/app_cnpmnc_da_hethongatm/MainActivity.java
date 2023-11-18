@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // nav menu
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Sacombank");
+        toolbar.setTitle("DCTBank");
         setSupportActionBar(toolbar);
 
         navigationView = findViewById(R.id.nav_view);

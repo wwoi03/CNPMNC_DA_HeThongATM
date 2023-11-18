@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
     Runnable runnable;
     LinearLayout lninterestrate;
     ImageView imgDeposit;
-    LinearLayout cvTransferMoney, cvManageAccountAndCard;
+    LinearLayout cvTransferMoney, cvManageAccountAndCard, cvManageSaving;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -111,8 +111,7 @@ public class HomeFragment extends Fragment {
         ci3 = view.findViewById(R.id.ci3);
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
-        lninterestrate=view.findViewById(R.id.Lninetrestrate);
-        imgDeposit=view.findViewById(R.id.imgDeposit);
+        cvManageSaving=view.findViewById(R.id.cvManageSaving);
     }
 
 
@@ -162,24 +161,17 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        lninterestrate.setOnClickListener(new View.OnClickListener() {
+
+        // SỔ tiết kiệm
+        cvManageSaving.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateSavingAccountActivity.class);
                 startActivity(intent);
             }
         });
-        imgDeposit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DepositMoreSavingActivity.class);
-                startActivity(intent);
-            }
-        });
 
-
-
-        // Xử lý bấm vào quản lý danh sách thẻ và tài khoản
+        // quản lý thẻ và tài khoản
         cvManageAccountAndCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

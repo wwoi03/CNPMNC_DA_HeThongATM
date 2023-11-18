@@ -107,6 +107,7 @@
 
                     <!-- Ô 2 -->
                     <LinearLayout
+                        android:id="@+id/cvManageSaving"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_rowWeight="1"

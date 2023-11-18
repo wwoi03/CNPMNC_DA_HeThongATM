@@ -36,20 +36,55 @@
             android:layout_marginTop="8dp">
         </TextView>
 
-        <!-- Số thẻ/tài khoản -->
-        <TextView
-            android:id="@+id/tvAccountNumber"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1234 123* **** 1234"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="20dp"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:gravity="center">
+            android:orientation="vertical">
+
+            <!-- tài khoản -->
+            <TextView
+                android:id="@+id/tvAccountNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1223334444"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:gravity="center">
+            </TextView>
+
+            <!-- Số thẻ -->
+            <TextView
+                android:id="@+id/tvCardNumber"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1234 123* **** 1234"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:gravity="center">
+            </TextView>
+        </LinearLayout>
+
+        <!-- loại thẻ -->
+        <TextView
+            android:id="@+id/tvCardType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Napas"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic"
+            android:textSize="14dp"
+            android:layout_gravity="bottom|left"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone">
         </TextView>
 
-        <!-- loại thẻ/tài khoản -->
+        <!-- loại tài khoản -->
         <TextView
             android:id="@+id/tvAccountType"
             android:layout_width="wrap_content"

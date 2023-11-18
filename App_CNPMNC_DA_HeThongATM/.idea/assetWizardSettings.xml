@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_text_snippet_24" />
-                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\poo-solid.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="sliders_solid" />
+                            <entry key="sourceFile" value="C:\Users\tuand\Downloads\sliders-solid.svg" />
                           </map>
                         </option>
                       </PersistentState>

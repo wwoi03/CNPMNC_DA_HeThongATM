@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -37,7 +38,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     // View
     ViewPager2 vp2AccountsAndCards;
     CircleIndicator3 ci3;
-    LinearLayout llSettingCard, llHistoryTransferMoney, llStatement, llSaving, llWithdrawSaving, llHistoryInterestRate;
+    LinearLayout llSettingCard, llHistoryTransferMoney, llTransferMoney, llSaving, llWithdrawSaving, llHistoryInterestRate;
     Toolbar tbToolbar;
     ProgressBar progressBar;
 
@@ -69,7 +70,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         ci3 = findViewById(R.id.ci3);
         llSettingCard = findViewById(R.id.llSettingCard);
         llHistoryTransferMoney = findViewById(R.id.llHistoryTransferMoney);
-        llStatement = findViewById(R.id.llStatement);
+        llTransferMoney = findViewById(R.id.llTransferMoney);
         llSaving = findViewById(R.id.llSaving);
         llWithdrawSaving = findViewById(R.id.llWithdrawSaving);
         llHistoryInterestRate = findViewById(R.id.llHistoryInterestRate);
@@ -92,6 +93,8 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
     // Xử lý sự kiện
     public void initListener() {
+
+        // xử lý khi đổi viewpaper
         vp2AccountsAndCards.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -111,6 +114,55 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
                     showButtonPaymentAccountType();
                 else
                     showButtonSavingAccountType();
+            }
+        });
+
+        // tùy chỉnh thẻ
+        llSettingCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageAccountAndCardActivity.this, AccountAndCardSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // lịch sử giao dịch
+        llHistoryTransferMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // chuyển tiền
+        llTransferMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // nộp tiết kiệm
+        llSaving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // rút tiết kiệm
+        llWithdrawSaving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // Lịch sử lãi suất
+        llHistoryInterestRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -205,7 +257,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     public void showButtonPaymentAccountType() {
         llSettingCard.setVisibility(View.VISIBLE);
         llHistoryTransferMoney.setVisibility(View.VISIBLE);
-        llStatement.setVisibility(View.VISIBLE);
+        llTransferMoney.setVisibility(View.VISIBLE);
     }
 
     // Hiển thị button theo loại thẻ tiết kiệm
@@ -219,7 +271,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     public void hideButtonAccountType() {
         llSettingCard.setVisibility(View.GONE);
         llHistoryTransferMoney.setVisibility(View.GONE);
-        llStatement.setVisibility(View.GONE);
+        llTransferMoney.setVisibility(View.GONE);
         llSaving.setVisibility(View.GONE);
         llWithdrawSaving.setVisibility(View.GONE);
         llHistoryInterestRate.setVisibility(View.GONE);

@@ -1,5 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Adapter;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
+import com.example.app_cnpmnc_da_hethongatm.Model.TheNganHang;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -37,6 +39,34 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
     @Override
     protected void onBindViewHolder(@NonNull ManageAccountAndCardAdapterVH holder, int position, @NonNull TaiKhoanLienKet model) {
         holder.tvAccountNumber.setText(String.valueOf(model.getSoTaiKhoan()));
+
+        // Lấy thẻ ngân hàng
+        DbHelper.GetCardByAccountNumber(model.getSoTaiKhoan(), new DbHelper.FirebaseListener() {
+            @Override
+            public void onSuccessListener() {
+
+            }
+
+            @Override
+            public void onFailureListener(Exception e) {
+
+            }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    TheNganHang theNganHang = dataSnapshot.getValue(TheNganHang.class);
+
+                    holder.tvCardNumber.setVisibility(View.VISIBLE);
+                    holder.tvCardType.setVisibility(View.VISIBLE);
+
+                    holder.tvCardNumber.setText(theNganHang.hideCardNumber(theNganHang.getMaSoThe()));
+                    holder.tvCardType.setText("Napas");
+
+                    break;
+                }
+            }
+        });
 
         // lấy loại tài khoản theo key
         DbHelper.getAccountTypeByKey(model.getMaLoaiTKKey(), new DbHelper.FirebaseListener() {
@@ -79,7 +109,7 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
     }
 
     class ManageAccountAndCardAdapterVH extends RecyclerView.ViewHolder {
-        TextView tvAccountNumber, tvAccountType, tvSurplus;
+        TextView tvAccountNumber, tvAccountType, tvSurplus, tvCardNumber, tvCardType;
         ImageView ivIconSurplus;
         LinearLayout llLayoutCard;
 
@@ -89,6 +119,8 @@ public class ManageAccountAndCardAdapter extends FirebaseRecyclerAdapter<TaiKhoa
             tvAccountNumber = itemView.findViewById(R.id.tvAccountNumber);
             tvAccountType = itemView.findViewById(R.id.tvAccountType);
             tvSurplus = itemView.findViewById(R.id.tvSurplus);
+            tvCardNumber = itemView.findViewById(R.id.tvCardNumber);
+            tvCardType = itemView.findViewById(R.id.tvCardType);
             ivIconSurplus = itemView.findViewById(R.id.ivIconSurplus);
             llLayoutCard = itemView.findViewById(R.id.llLayoutCard);
         }

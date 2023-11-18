@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sacombank"
+        android:text="@string/text_app_name"
         android:textSize="44dp"
         android:textColor="@color/white"
         android:textStyle="bold|italic"
