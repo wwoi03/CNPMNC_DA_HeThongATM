@@ -1,0 +1,19 @@
+﻿﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+
+@{
+    ViewData["Title"] = "AddRole";
+    List<string> roleNames = new List<string>(){
+        "ADF", "BCC", "CLQ"
+    };
+    var allRoles = new SelectList(roleNames);
+}
+@model RoleViewModel
+<div class="card">
+   <form asp-controller="Staff" asp-action="AddRole">
+       <div class="form-range">
+            @Html.ListBoxFor(m => m.name, allRoles)
+            <button type="submit">Add</button>
+
+       </div>
+   </form>
+</div>

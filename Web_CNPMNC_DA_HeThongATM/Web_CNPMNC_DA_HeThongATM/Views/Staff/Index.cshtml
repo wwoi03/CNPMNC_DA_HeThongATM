@@ -39,7 +39,11 @@
                            <td>@nhanVien.DiaChi</td>
                            <td>@nhanVien.Email</td>
                            <td>@nhanVien.ChiNhanhKey</td>                     
-                           <td>@nhanVien.ChucVu</td>
+                           <td>
+                               <a asp-controller="Staff" asp-action="AddRole">
+                                @nhanVien.ChucVu
+                           </a>
+                              </td>
                            <td>@nhanVien.MatKhau</td>
 
                            <td>

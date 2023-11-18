@@ -1333,5 +1333,54 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
             FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
         }
+
+        //Danh sách đếm giao dịch****************************************************************
+        public int CountGiaoDichMonth(string y, string m)
+        {
+            int year = int.Parse(y);
+            int month = int.Parse(m);
+           
+
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+                int count1 = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[2]) == year && int.Parse(item.NgayGiaoDich.Split("/")[1])==month);
+            
+          
+            return count1;
+        }
+        public int CountGiaoDichYear(string y)
+        {
+            int year = int.Parse(y);
+          
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
+
+            int count1 = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[2]) == year);
+        
+
+            return count1;
+        }
+
+        // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
+        public Dictionary<string, int> GetQuantityCustomerByk(int year)
+        {
+            Dictionary<string, int> quantityCustomerByMonth = new Dictionary<string, int>();
+
+            FirebaseResponse response = client.Get("KhachHang");
+            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+
+
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+            for (int i = 1; i <= 12; i++)
+            {
+                int count = data.Values.Count(item => int.Parse(item.NgayTao.Split("/")[1]) == i && int.Parse(item.NgayTao.Split("/")[2]) == year);
+                quantityCustomerByMonth.Add("Tháng " + i.ToString(), count);
+            }
+
+            return quantityCustomerByMonth;
+        }
     }
 }

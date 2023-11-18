@@ -1,6 +1,7 @@
 ﻿using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,6 +11,7 @@ using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
+    [Authorize]
     public class StaffController : Controller
     {
         public static IFirebaseClient client;
@@ -94,6 +96,11 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             };
             firebaseHelper.CreateStaff(nhanVien);
             return RedirectToAction("Index", "Staff");
+        }
+        //Thêm chức vụ 
+        public IActionResult AddRole()
+        {
+            return View();
         }
 
         public IActionResult Decentralization(string tittle)

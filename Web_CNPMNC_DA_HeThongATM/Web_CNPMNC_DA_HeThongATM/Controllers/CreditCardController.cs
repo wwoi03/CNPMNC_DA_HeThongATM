@@ -1,4 +1,5 @@
 using FireSharp.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models;
@@ -7,10 +8,13 @@ using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
+    [Authorize]
     public class CreditCardController : Controller
     {
+        
         FirebaseHelper firebaseHelper = new FirebaseHelper();
         //view tao the
+       
         public  IActionResult Index()
         {
 
