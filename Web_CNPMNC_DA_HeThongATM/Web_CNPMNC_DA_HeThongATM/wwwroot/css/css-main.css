@@ -1,4 +1,8 @@
-﻿.color-white {
+﻿* {
+    text-transform: unset !important;
+}
+
+.color-white {
     color: #fff;
 }
 

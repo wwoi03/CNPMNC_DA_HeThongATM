@@ -20,16 +20,45 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
 
-        // Đăng nhập
+        //LOGIN VIEW
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        //XỬ LÝ LOGIN
         [HttpPost]
         public IActionResult Login(NhanVienViewModel nhanVienViewModel)
         {
-            return View();
+            Dictionary<string, NhanVien> danhSachNhanVien = firebaseHelper.GetStaffsWithKey();
+            ViewBag.danhSachNhanVien = danhSachNhanVien;
+
+            // Kiểm tra xem danh sách có dữ liệu hay không
+            if (danhSachNhanVien?.Any() == true)
+            {
+                // Lấy thông tin đăng nhập từ người dùng
+                string enteredEmail = nhanVienViewModel.Email;
+                string enteredPass = nhanVienViewModel.MatKhau;
+
+                // Kiểm tra đăng nhập trong danh sách nhân viên
+                foreach (var entry in danhSachNhanVien)
+                {
+                    string userEmailFromFirebase = entry.Value.Email;
+                    string userPasswordFromFirebase = entry.Value.MatKhau;
+
+                    // Nếu tìm thấy email và mật khẩu trùng khớp trong danh sách, đăng nhập thành công
+                    if (enteredEmail == userEmailFromFirebase && enteredPass == userPasswordFromFirebase)
+                    {
+                        HttpContext.Session.SetString("NhanVienKey", entry.Key);
+                        HttpContext.Session.SetString("TenNhanVien", entry.Value.TenNhanVien);
+                        HttpContext.Session.SetString("NhanVienEmail", entry.Value.Email);
+
+                        return RedirectToAction("Index", "Statistical");
+                    }
+                }
+            }
+            return RedirectToAction("Login", "Staff");
         }
 
         // DANH SÁCH NHÂN VIÊN
