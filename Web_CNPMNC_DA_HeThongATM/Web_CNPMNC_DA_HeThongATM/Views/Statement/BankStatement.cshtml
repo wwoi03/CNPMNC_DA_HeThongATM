@@ -1,7 +1,14 @@
 ﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+
 @{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     var year = DateTime.Now.Year;
+    var count = "0";
+    if (Context.Session.GetString("count") != null)
+    {
+        count = Context.Session.GetString("count");
+    }
+    
 }
 @model BankStatement
 
@@ -12,28 +19,26 @@
     <div class="animated fadeIn">
         <!-- Widgets  -->
         <div class="row">
+             <form asp-controller="Statement" asp-action="Count" method="post">
             <!-- nam -->
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-12 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="stat-widget-five">
                             <label for="fromDate">Năm:</label>
-                            <input asp-for="year" type="number" min="1900" max="@year" id="year" name="year" style="background-color:beige" onclick="CountYear()" onchange="CountYear()">
+                            <input asp-for="year" type="number" min="1900" max="@year" id="year" name="year" style="background-color:beige" >
+                                    <label for="fromDate">Tháng:</label>
+                                    <input asp-for="month" type="number" min="1" max="12" id="month" name="month" style="background-color:beige">
                         </div>
+                                 <button  type="submit" class="btn btn-lg btn-info btn-block" >
+
+                            <span id="payment-button-amount" style="color:white">Xác nhận</span>
+                            <span id="payment-button-sending" style="display:none;">Sending…</span>
+                        </button>
                     </div>
                 </div>
-            </div>
-            @*thang*@
-            <div class="col-lg-3 col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-five">
-                            <label for="fromDate">Tháng:</label>
-                                <input asp-for="month" type="number" min="1" max="12" id="month" name="month" style="background-color:beige" onclick="CountMonth()" onchange="CountMonth()">
-                        </div>
-                    </div>
                 </div>
-            </div>
+                </form>
             <!-- Giao dịch -->
             <div class="col-lg-3 col-md-6" id="GiaoDich" >
                 <div class="card">
@@ -44,7 +49,7 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count" id="count">2</span></div>
+                                        <div class="stat-text"><span class="count" id="count">@count</span></div>
                                     <div class="stat-heading">Giao dịch</div>
                                 </div>
                             </div>
@@ -88,56 +93,53 @@
 
 <script>
 
-        function CountYear() {
-            var year = document.getElementById("year").value;
+    //    function CountYear() {
+    //        var year = document.getElementById("year").value;
            
            
-            $.ajax({
-                type: "GET",
-                url: "../../Statement/CountYear",
-                contentType: "application/json",
-                data: JSON.stringify(year),
-                success: function (data) {
+    //        $.ajax({
+    //            type: "GET",
+    //            url: "../../Statement/CountYear",
+    //            contentType: "application/json",
+    //            data: JSON.stringify(year),
+    //            success: function (data) {
 
 
-                    document.getElementById("count").innerHTML = data;
-                    document.getElementById("GiaoDich").style.display = "block";
+    //                document.getElementById("count").innerHTML = data;
+    //                document.getElementById("GiaoDich").style.display = "block";
 
 
-                },
-                error: function () {
-                    alert("Ngu vcl");
-                }
-            });
-        }
+    //            },
+    //            error: function () {
+    //                alert("Ngu vcl");
+    //            }
+    //        });
+    //    }
 
 
-    function CountMonth() {
-        var year = document.getElementById("year").value;
-        var month = document.getElementById("month").value;
+    //function CountMonth() {
+    //    var year = document.getElementById("year").value;
+    //    var month = document.getElementById("month").value;
       
-        var inputData = {
-            year: 2023,
-            month: 0,
-        };
-        $.ajax({
-            type: "GET",
-            url: "../../Statement/CountMonth",
-            contentType: "application/json",
-            data: JSON.stringify(inputData),
-            success: function (data) {
+       
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "../../Statement/CountMonth",
+    //        contentType: "application/json",
+    //        data: JSON.stringify(inputData),
+    //        success: function (data) {
               
 
-                document.getElementById("count").innerHTML = data;
-                document.getElementById("GiaoDich").style.display = "block";
+    //            document.getElementById("count").innerHTML = data;
+    //            document.getElementById("GiaoDich").style.display = "block";
 
 
-            },
-             error: function () {
-                    alert("Ngu vcl");
-                }
-        });
-    }
+    //        },
+    //         error: function () {
+    //                alert("Ngu vcl");
+    //            }
+    //    });
+    //}
 
     document.addEventListener('DOMContentLoaded', function () {
         main();

@@ -54,33 +54,29 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         // bank
         public IActionResult BankStatement()
         {
-            ViewBag.count = 0;
+            //if (TempData.ContainsKey("count"))
+            //{
+            //    ViewBag.count = HttpContext.Session.GetString("count");
+            //}
+            //else ViewBag.count = 100;
             ViewBag.check = "ok";
+            TempData.Clear();
             return View();
         }
 
-        [HttpGet]
-        public IActionResult CountMonth([FromBody] BankStatement bankStatement)
+        [HttpPost]
+        public IActionResult Count( BankStatement bankStatement)
         {
             if (bankStatement != null)
             {
-                    int month = firebaseHelper.CountGiaoDichMonth(bankStatement.year, bankStatement.month);
-                    return Json(month);
-                
+                //int month = firebaseHelper.CountGiaoDichMonth(bankStatement.year, bankStatement.month);
+                HttpContext.Session.SetString("count", bankStatement.year) ;
+                return RedirectToAction("BankStatement");
+
             }
-           return Json(5);
+            return View(bankStatement);
 
         }
-        [HttpGet]
-        public IActionResult CountYear([FromBody] string year)
-        {
-            if (year != null && year !="")
-            {
-                    int y = firebaseHelper.CountGiaoDichYear(year);
-                    return Json(y);
-            }
-            return Json(year);
-
-        }
+      
     }
 }
