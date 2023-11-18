@@ -24,6 +24,7 @@ public class DatLichHen {
         MaNhanVienKey = maNhanVienKey;
         NgayDenHen = ngayDenHen;
         TrangThai = trangThai;
+        //moi
     }
 
     public String getKey() {
