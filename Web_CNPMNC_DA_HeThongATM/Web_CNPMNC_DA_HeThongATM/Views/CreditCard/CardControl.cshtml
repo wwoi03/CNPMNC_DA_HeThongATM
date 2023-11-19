@@ -80,7 +80,7 @@
                             <div>
                                 <button id="xacnhan" type="submit" class="btn btn-lg btn-info btn-block" asp-controller="CreditCard" asp-action="CardControl">
 
-                                    <span id="payment-button-amount" style="color:white">Xác nhận</span>
+                                    <span id="payment-button-amount" style="color:white">@ViewBag.name</span>
                                     <span id="payment-button-sending" style="display:none;">Sending…</span>
                                 </button>
                             </div>
@@ -94,12 +94,18 @@
 
 
     <script>
+
+        if(document.getElementById("cccd").value === ""){
+            document.getElementById("xacnhan").disabled = true;
+        }
+
         function sendData(){
             var CCCD = document.getElementById("cccd").value;
             var LoaiThe = document.getElementById("loaithe").value;
-
-
-
+            if (document.getElementById("cccd").value !== "") {
+                document.getElementById("xacnhan").disabled = false;
+            }
+         
 
             findData(CCCD, LoaiThe, function (data) {
 
@@ -150,10 +156,7 @@
                             document.getElementById("ngaymothe").value = '';
                             document.getElementById("ngayhethan").value = '';
                         }
-                        // Gọi callback với dữ liệu trả về
-                        if (typeof callback === "function") {
-                            callback(data);
-                        }
+                      
                     }
                     else{
                         // Hiển thị nút xác nhận khi có thông báo không tìm thấy
@@ -174,8 +177,8 @@
             });
         }
         function handlerNotFound(){
+                document.getElementById("xacnhan").disabled = true;
             document.getElementById('khongtimthay').style.display ='none';
-
         }
     </script>
 

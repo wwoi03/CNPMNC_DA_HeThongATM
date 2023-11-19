@@ -138,6 +138,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult CardControl()
         {
             ViewBag.get = firebaseHelper.GetTypes();
+           
+            ViewBag.name = "Xác nhận";
+            TempData.Clear();
             return View();
         }
         [HttpPost]
@@ -159,9 +162,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     {
                         case 0:
                             tinhtrang = "Hoạt động";
+
                             break;
                         case 1:
                             tinhtrang = "Người dùng đang";
+
+
                             break;
                         case 2:
                             tinhtrang = "Ngân hàng đang khóa";
