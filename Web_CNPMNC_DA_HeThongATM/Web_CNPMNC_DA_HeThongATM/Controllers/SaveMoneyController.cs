@@ -113,23 +113,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult SettlementOfSavings(GuiTietKiemViewModel guiTietKiemView)
         {
-            JObject data = JObject.Parse(guiTietKiemView.TaiKhoanLienKet);
+            
             ModelState.Remove("Key");
             ModelState.Remove("NgayGui");
             ModelState.Remove("TienLaiKyHan");
             ModelState.Remove("TaiKhoanLienKet");
             ModelState.Remove("LaiSuatKey");
             ModelState.Remove("TienLaiKyHan");
-            ModelState.Remove("TaiKhoanNguon");
+            ModelState.Remove("TienGui");
             if (ModelState.IsValid)
             {
-
+                JObject data = JObject.Parse(guiTietKiemView.TaiKhoanLienKet);
                 //lấy kì hạn
                 string kihan = (string)data["laiSuat"]["kyHan"];
                 //lấy ngày gửi theo số tài khoản tiết kiểm
-                string ngaygui = (string)data["guiTietKiem"]["tienGui"];
+                string ngaygui = (string)data["guiTietKiem"]["ngayGui"];
                 //bước lấy số tiền tiết kiệm tiền lãi + tới kỳ
-                double tienrut = (double)data["guiTietKiem"]["tienGui"];
+                double tienrut = (double)data["guiTietKiem"]["tienGui"] + (double)data["guiTietKiem"]["tienLaiToiKy"];
                 //kiểm tra ngày gửi đúng lấy số tiền lãi sai thì thông báo không thể tất toán đợi đến ngày .... 
                 //nếu rút thành công thì lưu lịch sử và xóa sổ tiết kiệm
                 DateTime futureDate;
@@ -140,11 +140,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 else
                 {
                     TempData["Fail"]="Chỉ rút được sau ngày " + futureDate.ToString();
+                    View("SettlementOfSavings", guiTietKiemView);
                 }
                 
 
             }
-            return View(guiTietKiemView);
+            return View("SettlementOfSavings",guiTietKiemView);
         }
         //nạp tiết kiệm
         [HttpGet]
