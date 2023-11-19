@@ -47,7 +47,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     ViewBag.LSDG = LSDG;
                     ViewBag.check = "undefined";
                 }
-                return RedirectToAction("CustomerStatement");
             }
             return View(cus);
         }
