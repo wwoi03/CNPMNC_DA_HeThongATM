@@ -85,7 +85,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
     Intent getDataIntent;
     Context context;
 
-    boolean checkvalid;
+    String moneyString;
+    boolean isCheckvalid;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -237,8 +238,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
         btTransferMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkThuHuong();
+
                 // kiểm tra tổng
-                String moneyString = etMoney.getText().toString().trim();
+                moneyString = etMoney.getText().toString().trim();
                 String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
                 if (taiKhoanNguonKey.isEmpty()) {
                     UtilityClass.showDialogError(context, "Lỗi", "Vui lòng chọn tài khoản nguồn!");
@@ -253,15 +256,13 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 }else if (!GetDate().equals(taiKhoanNguon.getNgayGD())) {
                     taiKhoanNguon.setNgayGD(GetDate());
                     taiKhoanNguon.setTienDaGD(0);
-                } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
+                } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() > taiKhoanNguon.getHanMucTK()) {
                     UtilityClass.showDialogError(context, "Lỗi", "Số tiền giao dịch vuợt quá hạn mức!");
-                } else { // không rỗng
-                    double money = Double.parseDouble(moneyString);
-                    if (money >= 1000) {
-                        transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
-                    } else {
-                        UtilityClass.showDialogError(context, "Lỗi", "Nghèo vậy thằng lol!");
-                    }
+                } else if (Double.parseDouble(moneyString) < 1000) { // không rỗng
+                    UtilityClass.showDialogError(context, "Lỗi", "Nghèo vậy thằng lol!");
+                } else {
+                    isCheckvalid = true;
+                    checkThuHuong();
                 }
             }
         });
@@ -456,11 +457,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     private void checkThuHuong(){
         String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
-        checkvalid = false;
         // kiểm tra edit text rỗng?
         if(accountBeneficiaryString.isEmpty()){
             tvNameBeneficiary.setText("");
-            checkvalid =false;
         }
         if (!accountBeneficiaryString.isEmpty()) {
             long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
@@ -468,7 +467,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
                     BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
                     tvNameBeneficiary.setText("");
-                    checkvalid =false;
+                    isCheckvalid = false;
                 }
                 else {
                     // truy vấn đến TaiKhoanLK theo số tài khoản
@@ -483,19 +482,22 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                             etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
                                             tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
                                             taiKhoanHuongKey = dataSnapshot.getKey();
-                                            Log.d("checkvalid trc khi set", "checkvalid trc khi set: "+checkvalid);
-                                            Log.d("checkvalid sau khi set", "checkvalid trc khi set: "+checkvalid);
+
+                                            if (isCheckvalid == true) {
+                                                double money = Double.parseDouble(moneyString);
+                                                transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
+                                            }
                                         }
                                     }
                                     else {
                                         tvNameBeneficiary.setText("");
                                         BuildAlertDialog("không tìm thấy người thụ hưởng");
-                                        checkvalid =false;
+                                        isCheckvalid = false;
                                     }
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-                                    checkvalid =false;
+                                    isCheckvalid =false;
                                 }
                             });
                 }

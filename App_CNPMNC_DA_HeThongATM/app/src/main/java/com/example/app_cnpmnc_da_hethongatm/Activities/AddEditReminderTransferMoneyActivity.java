@@ -413,9 +413,7 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
                     }
                 } else { // không tồn tại
                     hiddenInfoBeneficiary();
-
                     showDialogError("Lỗi", "Tài khoản không tồn tại!");
-
                     BENEFICIARY_EXISTS = false;
                 }
             }
