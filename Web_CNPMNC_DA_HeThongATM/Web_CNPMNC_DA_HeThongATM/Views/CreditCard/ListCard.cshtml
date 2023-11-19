@@ -1,8 +1,12 @@
 ﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@using PagedList.Mvc;
+@using PagedList;
 @{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
-    var listcard = ViewData["listcard"] as IEnumerable<ListTheNganHangViewModel>;
+    var listcard = ViewData["listcard"] as IPagedList<ListTheNganHangViewModel>;
+   
 }
+
 <body>
     <div class="content">
         <div class="orangehrm-paper-container">
@@ -112,7 +116,32 @@
                             }
 
 
-                           
+                            <div style="text-align: center;">
+                                Trang @(listcard.PageCount < listcard.PageNumber ? 0 : listcard.PageNumber) / @listcard.PageCount
+
+                                @if (listcard.HasPreviousPage)
+                                {
+                                    <button class="btn btn-success" onclick="location.href='@Url.Action("ListCard", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                                        <i class="fa-solid fa-angles-right fa-rotate-180"></i>
+                                    </button>
+
+                                    <button class="btn btn-success" onclick="location.href='@Url.Action("ListCard", new { page = listcard.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                                        <i class="fa-solid fa-angle-right fa-rotate-180"></i>
+                                    </button>
+                                }
+
+                                @if (listcard.HasNextPage)
+                                {
+                                    <button class="btn btn-success" onclick="location.href='@Url.Action("ListCard", new { page = listcard.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </button>
+
+                                    <button class="btn btn-success" onclick="location.href='@Url.Action("ListCard", new { page = listcard.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </button>
+                                }
+                            </div>
+
                         </div>
                         <div class="oxd-table-body" id="CardListContainer">
                             <!-- Partial View sẽ được hiển thị ở đây -->

@@ -4,7 +4,26 @@
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
 }
 <body>
-
+    @if (TempData["Message"] != null)
+    {
+        <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+            <span class="badge badge-pill badge-primary">Thành Công</span>
+            @TempData["Message"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    }
+    else if (TempData["Fail"] != null)
+    {
+        <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+            <span class="badge badge-pill badge-danger">Thất Bại</span>
+            @TempData["Fail"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    }
     <div id="custom-dialog" title="Thông báo" style="display: none;"></div>
 
     <form method="post" asp-controller="Customer" asp-action="CreateCustommer" >
@@ -17,15 +36,21 @@
                         <label for="company" class=" form-control-label">Mã Căn Cước Công Dân</label>
                         <input type="number" asp-for="CCCD" id="cccd" class="form-control">
                     </div>
+                   
                     <span asp-validation-for="CCCD" class="text-danger text-validation"></span>
                     <div class="row form-group">
-                        <div class="col-md-8">
+                       
+                        <div class="col-md-6">
                             <label for="vat" class="form-control-label">Tên Khách Hàng</label>
                             <input type="text" asp-for="TenKH" class="form-control">
                             <span asp-validation-for="TenKH" class="text-danger text-validation"></span>
                         </div>
-
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label for="vat" class="form-control-label">Ngày Sinh</label>
+                            <input type="date" asp-for="NgaySinh" class="form-control">
+                            <span asp-validation-for="NgaySinh" class="text-danger text-validation"></span>
+                        </div>
+                        <div class="col-md-3">
                             <div>
                                 <label class=" form-control-label">Giới tính</label>
 

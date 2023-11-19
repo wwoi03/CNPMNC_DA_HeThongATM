@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using PagedList;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
@@ -15,7 +17,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             firebaseHelper = new FirebaseHelper();
         }
         // Danh sách khách hàng
-        public IActionResult Index()
+        public  IActionResult Index(int? page)
         {
             List<KhachHang> khachHangs = firebaseHelper.GetCustomers();
             List<KhachHangViewModel> khachHangViewModels = new List<KhachHangViewModel>();
@@ -31,6 +33,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     TenKH = i.TenKH,
                     NgayTao = i.NgayTao,
 
+            ViewData["j"] =  khachHangViewModels.ToPagedList(pageeNumber, pageSize); 
 
                 };
                 khachHangViewModels.Add(pro);

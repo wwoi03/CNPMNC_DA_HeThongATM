@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 {
@@ -17,14 +17,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         [Required(ErrorMessage = "Ngày mở thẻ không được để trống.")]
         public string NgayMoThe { get; set; }
 
-        [Required(ErrorMessage = "Ngày hết hạn không được để trống.")]
-        public string NgayHetHan { get; set; }
+        public string CCCD { get; set; }
+        public string MaKH { get; internal set; }
+        public string TenKhachHang { get;  set; }
 
-        [Required(ErrorMessage = "Số điện thoại đăng ký không được để trống.")]
-        public string SDTDangKy { get; set; }
-
-        [Required(ErrorMessage = "Tình trạng thẻ không được để trống.")]
-        public int TinhTrangThe { get; set; }
+        public TheNganHang TheNganHang()
+        {
+            return new TheNganHang
+            {
+                Key = this.Key,
+                MaKHKey = firebaseHelper.GetKeysBycccd(this.CCCD),
+                MaSoThe = this.MaSoThe,
+                SoTaiKhoan = this.SoTaiKhoan,
+                MaPin = this.MaPin,
+                NgayHetHan = this.NgayHetHan,
+                NgayMoThe = this.NgayMoThe,
+                TinhTrangThe = this.TinhTrangThe,
+            };
+        }
+    }
+}
 
         [Required(ErrorMessage = "Loại thẻ không được để trống.")]
         public string LoaiThe { get; set; }

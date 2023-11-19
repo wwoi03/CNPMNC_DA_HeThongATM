@@ -1,0 +1,142 @@
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@model GuiTietKiemViewModel
+@{
+    Layout = "_LayoutMain";
+    var laixuat = ViewBag.OpenSavingsHome;
+}
+
+
+ 
+
+<div class="col-md-12" style=" height:100vh;">
+    <h6 class="title col-md-12">
+        MỞ TÀI KHOẢN TIẾT KIỆM
+    </h6>
+    <div class="container col-md-7">
+        <form method="post" asp-controller="SaveMoney" asp-action="SaveMoney" style="padding-top:0px ; background-color:#ffff">
+
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Tài Khoản Nguồn
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">
+                    <input  value="" type="text" maxlength="16" id="InputTaiKhoanNguon">
+                </div>
+            </div>
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Kỳ hạn gửi
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">           
+                    <select  class="type-card">
+                        <option value="Chọn lãi suất" selected disabled>Chọn lãi suất</option>
+                        @foreach(var item in laixuat)
+                        {
+                            string name = item.KyHan + " (" + item.TiLe + "%)";
+                            <option>@name</option>
+                        }
+                        
+                    </select>              
+                </div>
+            </div>
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Số tiền gửi
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">
+                    <input asp-for="TienGui" id="sotiengui" value="" type="text" maxlength="16" >
+                </div>
+            </div>
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Hình thức trả lãi
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">
+                    <select class="type-card">
+                        <option value="Loại" selected disabled>Loại</option>
+                        <option>lãi nhập góc</option>
+                        <option>lãi trả vào tài khoản tiền gửi khi đến hạn trả lãi</option>
+                    </select>
+                </div>
+                </div>
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Nhập Mật Khẩu Nhân Viên
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">
+                    <input  value="" type="text" maxlength="16">
+                </div>
+            </div>
+            <div class="flexbox">
+                <input id="datataikhoan" asp-for="TaiKhoanLienKet" hidden type="text" />
+                <input type="submit" value="submit" class="submit-btn">
+            </div>
+
+        </form>
+        @* //card *@
+        <div class="card col-md-8 name-label">
+            <div class="twt-feed blue-bg">
+       
+                <div class="media">
+                    <a href="#">
+                        <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="/images/quan.jpg">
+                    </a>
+                    <div class="media-body">
+                        <h3 class="text-white display-6"><span class="ti-user"></span> KHÁCH HÀNG</h3>                     
+                        <h6 class="text-light" id="tenkhachhang"></h6>
+                       
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="#">
+                        Số tài khoản:&nbsp;&nbsp;&nbsp;
+                        <span id="sotaikhoan">10000</span></a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Số dư khả dụng: &nbsp;&nbsp;&nbsp;
+                        <span id="sodu">10</span>
+                    </a>
+                </li>
+               
+            </ul>
+        </div>
+
+    </div>
+   </div>
+    
+    <script src="/js/LaiSuat.js">
+       
+    </script>
+
+

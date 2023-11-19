@@ -1,5 +1,6 @@
 @using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
-
+@using PagedList.Mvc;
+@using PagedList;
 @model KhachHangViewModel
 @{
     Layout = "_LayoutMain";
@@ -38,7 +39,7 @@
                         @foreach (var item in custommerList)
                         {
 
-                            <tr>
+
                             <tr>
                                 <td>@item.CCCD</td>
                                 <td>@item.TenKH</td>
@@ -56,14 +57,40 @@
                                     </a>
                                 </td>
                             </tr>
-                            </tr>
+
                         }
+
                     </tbody>
                 </table>
+                <div style="text-align:center">
+                    Trang @(custommerList.PageCount < custommerList.PageNumber ? 0 : custommerList.PageNumber) / @custommerList.PageCount
+
+                    @if (custommerList.HasPreviousPage)
+                    {
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angles-right fa-rotate-180"></i>
+                        </button>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angle-right fa-rotate-180"></i>
+                        </button>
+                    }
+
+                    @if (custommerList.HasNextPage)
+                    {
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </button>
+                    }
+                </div>
+
             </div>
             <div class="table-stats order-table ov-h" id="SearchCustomerID">
             </div><!-- /.table-stats -->
         </div>
     </div>
     <script src="/js/ListCustomer.js"></script>
+    <script src="/js/Typescript/fromcard.js"></script>
 </body>
