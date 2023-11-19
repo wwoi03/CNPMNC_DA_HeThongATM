@@ -127,11 +127,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 //lấy kì hạn
                 string kihan = (string)data["laiSuat"]["kyHan"];
                 //lấy ngày gửi theo số tài khoản tiết kiểm
-                string ngaygui = (string)data["guiTietKiem"]["tienGui"];              
+                string ngaygui = (string)data["guiTietKiem"]["tienGui"];
                 //bước lấy số tiền tiết kiệm tiền lãi + tới kỳ
-
+                double tienrut = (double)data["guiTietKiem"]["tienGui"];
                 //kiểm tra ngày gửi đúng lấy số tiền lãi sai thì thông báo không thể tất toán đợi đến ngày .... 
                 //nếu rút thành công thì lưu lịch sử và xóa sổ tiết kiệm
+                DateTime futureDate;
+                if (CompareDate(ngaygui, kihan,out futureDate))
+                {
+
+                }
+                else
+                {
+                    TempData["Fail"]="Chỉ rút được sau ngày " + futureDate.ToString();
+                }
+                
 
             }
             return View(guiTietKiemView);
@@ -208,17 +218,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         }
 
         //check ngày để rút
-        public bool CompareDate(string dateString, string kihan)
+        public bool CompareDate(string dateString, string kihan, out DateTime futureDate)
         {
             DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
             dtfi.ShortDatePattern = "MM/dd/yyyy";
             dtfi.DateSeparator = "/";
             DateTime objDate = Convert.ToDateTime(dateString, dtfi);
-            
+
             string[] parts = kihan.Split(' ');
             string numberPart = parts[0];
             // Thêm tháng vào ngày
-            DateTime futureDate = objDate.AddMonths(int.Parse(numberPart));
+            futureDate = objDate.AddMonths(int.Parse(numberPart));
 
             // So sánh với ngày hiện tại
             if (futureDate > DateTime.Now)
@@ -230,5 +240,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 return false;
             }
         }
+
     }
 }
