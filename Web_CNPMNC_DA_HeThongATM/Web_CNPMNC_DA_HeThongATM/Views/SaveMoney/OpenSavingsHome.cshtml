@@ -6,13 +6,32 @@
 }
 
 
- 
+@if (TempData["Message"] != null)
+{
+    <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+        <span class="badge badge-pill badge-primary">Thành Công</span>
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+}
+else if(TempData["Fail"]!= null)
+{
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+        <span class="badge badge-pill badge-danger">Thất Bại</span>
+        @TempData["Fail"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+}
 
 <div class="col-md-12" style=" height:100vh;">
     <h6 class="title col-md-12">
         MỞ TÀI KHOẢN TIẾT KIỆM
     </h6>
-    <div class="container col-md-7">
+    <div class="container col-md-7" style="display:-webkit-inline-box;">
         <form method="post" asp-controller="SaveMoney" asp-action="SaveMoney" style="padding-top:0px ; background-color:#ffff">
 
             <div class="flexbox">
@@ -25,7 +44,8 @@
 
                 </div>
                 <div class="inputBox">
-                    <input  value="" type="text" maxlength="16" id="InputTaiKhoanNguon">
+                    <input asp-for="TaiKhoanNguon"  value="" type="text" maxlength="16" id="InputTaiKhoanNguon">
+                    <span asp-validation-for="TaiKhoanNguon" class="text-danger"></span>
                 </div>
             </div>
             <div class="flexbox">
@@ -38,15 +58,16 @@
 
                 </div>
                 <div class="inputBox">           
-                    <select  class="type-card">
-                        <option value="Chọn lãi suất" selected disabled>Chọn lãi suất</option>
+                    <select asp-for="LaiSuatKey" class="type-card">
+                        <option selected disabled>Chọn lãi suất</option>
                         @foreach(var item in laixuat)
                         {
                             string name = item.KyHan + " (" + item.TiLe + "%)";
-                            <option>@name</option>
+                            <option value="@item.Key">@name</option>
                         }
                         
-                    </select>              
+                    </select>
+                    <span asp-validation-for="LaiSuatKey" class="text-danger"></span>
                 </div>
             </div>
             <div class="flexbox">
@@ -60,6 +81,7 @@
                 </div>
                 <div class="inputBox">
                     <input asp-for="TienGui" id="sotiengui" value="" type="text" maxlength="16" >
+                    <span asp-validation-for="TienGui" class="text-danger"></span>
                 </div>
             </div>
             <div class="flexbox">
@@ -96,7 +118,7 @@
                 <input id="datataikhoan" asp-for="TaiKhoanLienKet" hidden type="text" />
                 <input type="submit" value="submit" class="submit-btn">
             </div>
-
+          
         </form>
         @* //card *@
         <div class="card col-md-8 name-label">
@@ -104,7 +126,7 @@
        
                 <div class="media">
                     <a href="#">
-                        <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="/images/quan.jpg">
+                        <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="/images/admin.jpg">
                     </a>
                     <div class="media-body">
                         <h3 class="text-white display-6"><span class="ti-user"></span> KHÁCH HÀNG</h3>                     
@@ -120,12 +142,12 @@
                 <li class="list-group-item">
                     <a href="#">
                         Số tài khoản:&nbsp;&nbsp;&nbsp;
-                        <span id="sotaikhoan">10000</span></a>
+                        <span id="sotaikhoan"></span></a>
                 </li>
                 <li class="list-group-item">
                     <a href="#">
                         Số dư khả dụng: &nbsp;&nbsp;&nbsp;
-                        <span id="sodu">10</span>
+                        <span id="sodu"></span>
                     </a>
                 </li>
                
@@ -134,9 +156,8 @@
 
     </div>
    </div>
-    
+
     <script src="/js/LaiSuat.js">
        
     </script>
-
 

@@ -31,14 +31,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
         // Kiểm tra không được để trống (null)
         [Required(ErrorMessage = "Vui lòng nhập tên khách hàng.")]
-        public string TenKhachHang { get; set; }
-        [Required(ErrorMessage = "Vui lòng nhập ngày sinh.")]
-        public string NgaySinh { get; set; }
+        public string TenKH { get; set; }
         public string NgayTao { get; set; }
-
         public string MatKhau { get; set; }
-
-
+        public string MaNhanVienKey { get; set; }
     }
 
 }

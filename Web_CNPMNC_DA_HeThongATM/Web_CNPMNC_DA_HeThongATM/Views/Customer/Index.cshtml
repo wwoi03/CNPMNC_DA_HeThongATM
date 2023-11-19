@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
                 <div style="text-align:center">
-                    Trang @(custommerList.PageCount < custommerList.PageNumber ? 0 : custommerList.PageNumber) / @custommerList.PageCount
+                    @*Trang @(custommerList.PageCount < custommerList.PageNumber ? 0 : custommerList.PageNumber) / @custommerList.PageCount
 
                     @if (custommerList.HasPreviousPage)
                     {
@@ -83,7 +83,7 @@
                         <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
                             <i class="fa-solid fa-angles-right"></i>
                         </button>
-                    }
+                    }*@
                 </div>
 
             </div>

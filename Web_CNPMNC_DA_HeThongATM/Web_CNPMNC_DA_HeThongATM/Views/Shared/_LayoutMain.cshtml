@@ -143,18 +143,19 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-credit-card"></i>Thẻ/Tài khoản</a>
                         <ul class="sub-menu children dropdown-menu">
-                           
-                            <!-- Sửa thẻ ngân hàng -->
-                            <li>
-                                <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreditCard" asp-action="Index">Tạo thẻ ngân hàng</a>
-                            </li>
-                            <!-- Tạo thẻ ngân hàng -->
+
+                            <!-- Xem thẻ ngân hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="CreditCard" asp-action="ListCard">Xem thẻ ngân hàng</a>
                             </li>
 
+                            <!-- Tạo thẻ ngân hàng -->
+                            <li>
+                                <i class="fa fa-puzzle-piece"></i>
+                                <a asp-controller="CreditCard" asp-action="Index">Tạo thẻ ngân hàng</a>
+                            </li>
+                            
                             <!-- Khóa thẻ ngân hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
@@ -229,19 +230,19 @@
                             <!-- Mở tiết kiệm -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Mở tiết kiệm</a>
+                                <a asp-controller="SaveMoney" asp-action="OpenSavingsHome">Mở tiết kiệm</a>
                             </li>
 
                             <!-- Rút tiết kiệm -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Rút tiết kiệm</a>
+                                <a asp-controller="SaveMoney" asp-action="SettlementOfSavings">Rút tiết kiệm</a>
                             </li>
 
                             <!-- Nộp tiết kiệm -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="CreateCard" asp-action="Index">Nộp tiết kiệm</a>
+                                <a asp-controller="SaveMoney" asp-action="AdmitMoney">Nộp tiết kiệm</a>
                             </li>
                         </ul>
                     </li>
