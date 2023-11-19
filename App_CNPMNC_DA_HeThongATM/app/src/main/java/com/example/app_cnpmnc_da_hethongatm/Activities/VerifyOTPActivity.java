@@ -90,8 +90,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                if(task.isSuccessful()){
                                    Intent intent1 = new Intent(getApplicationContext(),formUserRegister.class);
                                    Toast.makeText(VerifyOTPActivity.this,"xác thực thành công",Toast.LENGTH_SHORT).show();
-                                   intent1.putExtra("MatKhau",OTP);
+                                   intent1.putExtra("MatKhau",enterCode);
                                    intent1.putExtra("Sdt","0"+intent.getStringExtra("mobile"));
+                                   Log.d("Mat khau", "onComplete: "+OTP);
+                                   Log.d("Sdt", "onComplete: "+"0"+intent.getStringExtra("mobile"));
                                    startActivity(intent1);
                                }
                                else {

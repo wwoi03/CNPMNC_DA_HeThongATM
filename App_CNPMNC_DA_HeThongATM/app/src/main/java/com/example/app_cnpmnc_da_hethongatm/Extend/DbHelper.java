@@ -534,6 +534,7 @@ public class DbHelper {
         map.put("Key", newKey);
         map.put("DiaChi",khachHang.getDiaChi());
         map.put("CCCD",khachHang.getCCCD());
+        map.put("Email",khachHang.getEmail());
         map.put("GioiTinh",khachHang.getGioiTinh());
         map.put("MaNhanVienKey",0);
         map.put("MatKhau",khachHang.getMatKhau());
@@ -558,6 +559,6 @@ public class DbHelper {
         map.put("TienDaGD",0);
         map.put("TienGD1Lan",0);
         map.put("TinhTrangTaiKhoan",0);
-        firebaseDatabase.getReference("KhachHang").child(newKey).setValue(map);
+        firebaseDatabase.getReference("TaiKhoanLienKet").child(newKey).setValue(map);
     }
 }
