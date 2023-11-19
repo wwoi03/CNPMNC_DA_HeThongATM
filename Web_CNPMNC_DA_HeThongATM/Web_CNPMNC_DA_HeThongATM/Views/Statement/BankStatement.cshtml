@@ -1,7 +1,11 @@
 ﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+
 @{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     var year = DateTime.Now.Year;
+  
+
+
 }
 @model BankStatement
 
@@ -12,28 +16,26 @@
         <div class="animated fadeIn">
             <!-- Widgets  -->
             <div class="row">
-                <!-- nam -->
-                <div class="col-lg-3 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <label for="fromDate">Năm:</label>
-                                <input asp-for="year" type="number" min="1900" max="@year" id="year" name="year" style="background-color:beige" onclick="CountYear()" onchange="CountYear()">
+                <form asp-controller="Statement" asp-action="Count" method="post">
+                    <!-- nam -->
+                    <div class="col-lg-12 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <label for="year">Năm:</label>
+                                    <input asp-for="year" value="@ViewBag.year" type="number" min="1900" max="@year" id="year" name="year" style="background-color:beige" onchange="check()" >
+                                    <label for="month">Tháng:</label>
+                                    <input asp-for="month" value="@ViewBag.month" type="number" min="1" max="12" id="month" name="month" style="background-color:beige" onchange="check()" >
+                                </div>
+                                <button id="submit" type="submit" class="btn btn-sm btn-info btn-block">
+
+                                    <span id="payment-button-amount" style="color:white">Xác nhận</span>
+                                    <span id="payment-button-sending" style="display:none;">Sending…</span>
+                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
-                @*thang*@
-                <div class="col-lg-3 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="stat-widget-five">
-                                <label for="fromDate">Tháng:</label>
-                                <input asp-for="month" type="number" min="1" max="12" id="month" name="month" style="background-color:beige" onclick="CountMonth()" onchange="CountMonth()">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
                 <!-- Giao dịch -->
                 <div class="col-lg-3 col-md-6" id="GiaoDich">
                     <div class="card">
@@ -44,7 +46,7 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count" id="count">2</span></div>
+                                        <div class="stat-text"><span class="count" id="count">@ViewBag.count</span></div>
                                         <div class="stat-heading">Giao dịch</div>
                                     </div>
                                 </div>
@@ -60,7 +62,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="box-title">Thống kê giao dịch </h4>
+                            <h4 class="box-title">Thống kê giao dịch tháng @ViewBag.month năm @ViewBag.year </h4>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
@@ -87,119 +89,152 @@
     </div>
 
     <script>
+        function check(){
+            var inputValue = document.getElementById('year').value;
+            var inputValue2 = document.getElementById('month').value;
 
-        function CountYear() {
-            var year = document.getElementById("year").value;
+            // Kiểm tra xem trường input có giá trị không
+            if (inputValue.trim() === "" || inputValue2.trim() === "") {
+                alert("Trường input không được để trống");
 
-
-            $.ajax({
-                type: "GET",
-                url: "../../Statement/CountYear",
-                contentType: "application/json",
-                data: JSON.stringify(year),
-                success: function (data) {
-
-
-                    document.getElementById("count").innerHTML = data;
-                    document.getElementById("GiaoDich").style.display = "block";
-
-
-                },
-                error: function () {
-                    alert("Ngu vcl");
-                }
-            });
+                document.getElementById("submit").disabled = true;
+                return; // Dừng lại nếu trường input rỗng
+            }
+            else document.getElementById("submit").disabled = false;
         }
+        //    function CountYear() {
+        //        var year = document.getElementById("year").value;
 
 
-        function CountMonth() {
-            var year = document.getElementById("year").value;
-            var month = document.getElementById("month").value;
-
-            var inputData = {
-                year: 2023,
-                month: 0,
-            };
-            $.ajax({
-                type: "GET",
-                url: "../../Statement/CountMonth",
-                contentType: "application/json",
-                data: JSON.stringify(inputData),
-                success: function (data) {
+        //        $.ajax({
+        //            type: "GET",
+        //            url: "../../Statement/CountYear",
+        //            contentType: "application/json",
+        //            data: JSON.stringify(year),
+        //            success: function (data) {
 
 
-                    document.getElementById("count").innerHTML = data;
-                    document.getElementById("GiaoDich").style.display = "block";
+        //                document.getElementById("count").innerHTML = data;
+        //                document.getElementById("GiaoDich").style.display = "block";
 
 
-                },
-                error: function () {
-                    alert("Ngu vcl");
-                }
-            });
-        }
+        //            },
+        //            error: function () {
+        //                alert("Ngu vcl");
+        //            }
+        //        });
+        //    }
+
+
+        //function CountMonth() {
+        //    var year = document.getElementById("year").value;
+        //    var month = document.getElementById("month").value;
+
+
+        //    $.ajax({
+        //        type: "GET",
+        //        url: "../../Statement/CountMonth",
+        //        contentType: "application/json",
+        //        data: JSON.stringify(inputData),
+        //        success: function (data) {
+
+
+        //            document.getElementById("count").innerHTML = data;
+        //            document.getElementById("GiaoDich").style.display = "block";
+
+
+        //        },
+        //         error: function () {
+        //                alert("Ngu vcl");
+        //            }
+        //    });
+        //}
 
         document.addEventListener('DOMContentLoaded', function () {
             main();
 
-
+          
             function main() {
+                
                 customerStatistics();
+                
                 //cardTypeStatistics();
+                
             }
-
-            // Thống kê khách hàng
             function customerStatistics() {
                 // Lấy ngày hiện tại
-                var today = new Date();
-                var date = today.getFullYear();
+            
+                var listDay, listIn;
 
+                // Ajax lấy dữ liệu MoneyIn
                 $.ajax({
                     type: "GET",
-                    url: "../../Statement/BankStatement",
+                    url: "../../Statement/Money",
                     success: function (data) {
-                        //var listMonth = [Object.keys(data)][0];
-                        //var listQuantity = [Object.values(data)][0];
-
-                        // render
-                        const customerChart = document.getElementById('traffic-chart');
-                        new Chart(customerChart, {
-                            type: "line",
-                            data: {
-                                labels: ['1', '2', '3', '4', '5', '6', '7'],
-                                datasets: [
-                                    {
-                                        fillColor: "rgba(220,220,220,0.2)",
-                                        strokeColor: "rgba(220,220,220,1)",
-                                        data: [65, 59, 80, 81, 56, 55, 40]
-                                    },
-                                    {
-                                        fillColor: "rgba(151,187,205,0.2)",
-                                        strokeColor: "rgba(151,187,205,1)",
-                                        data: [28, 48, 40, 19, 86, 27, 90]
-                                    }
-                                ],
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true,
-                                        ticks: {
-                                            callback: function (value, index, values) {
-                                                // Định dạng giá trị là số nguyên
-                                                return parseInt(value);
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        });
+                        listDay = Object.keys(data);
+                        listIn = [Object.values(data)][0];
+                        RenderChart(listDay, listIn);
                     },
                     error: function () {
                         alert("Đã xảy ra lỗi khi lấy thông tin");
                     }
                 });
+
+                // //Ajax lấy dữ liệu MoneyOut
+                //$.ajax({
+                //    type: "GET",
+                //    url: "../../Statement/MoneyOut",
+                //    success: function (data) {
+                //        listOut = [Object.values(data)][0];
+                //         //Gọi hàm để vẽ biểu đồ và xử lý dữ liệu
+                //        RenderChart(listDay, listIn, listOut);
+                //    },
+                //    error: function () {
+                //        alert("Đã xảy ra lỗi khi lấy thông tin");
+                //    }
+                //});
             }
+
+            function RenderChart(listDay, listIn) {
+                const customerChart = document.getElementById('traffic-chart');
+                new Chart(customerChart, {
+                    type: "line",
+                    data: {
+                        labels: listDay,
+                        datasets: [
+                            {
+                                label: "Số lần giao dịch ",
+                                fillColor: "rgba(220,20,220,0.2)",
+                                strokeColor: "rgba(220,220,220,1)",
+                                data: listIn,
+                                fill: true,
+                                borderColor: 'rgb(75, 192, 192)',
+                                tension: 0.3,
+                                backgroundColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(54, 162, 235)',
+                                    'rgb(255, 205, 86)'
+                                ],
+                            },
+                           
+                        ],
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value, index, values) {
+                                        // Định dạng giá trị là số nguyên
+                                        return parseInt(value);
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+            }
+
 
 
         })

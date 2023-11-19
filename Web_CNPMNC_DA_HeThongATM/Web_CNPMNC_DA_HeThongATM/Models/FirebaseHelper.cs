@@ -1353,10 +1353,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
         }
         //Danh sách đếm giao dịch****************************************************************
-        public int CountGiaoDichMonth(string y, string m)
+        public int CountGiaoDichMonth(int year, int month)
         {
-            int year = int.Parse(y);
-            int month = int.Parse(m);
+           
 
 
             FirebaseResponse response = client.Get("GiaoDich");
@@ -1368,9 +1367,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return count1;
         }
-        public int CountGiaoDichYear(string y)
+        public int CountGiaoDichYear(int year)
         {
-            int year = int.Parse(y);
+           
 
             FirebaseResponse response = client.Get("GiaoDich");
             Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
@@ -1382,23 +1381,46 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return count1;
         }
 
-        // Lấy số lượng khách hàng theo năm hiện tại và theo từng tháng
-        public Dictionary<string, int> GetQuantityCustomerByk(int year)
+        // lấy tổng giao dịch trong ngày 
+        public Dictionary<string, int> Money(BankStatement bankStatement)
         {
-            Dictionary<string, int> quantityCustomerByMonth = new Dictionary<string, int>();
+            Dictionary<string, int> Sum = new Dictionary<string, int>();
 
-            FirebaseResponse response = client.Get("KhachHang");
-            Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
 
 
             // tính số lượng khách hàng theo từng tháng trong năm "year"
-            for (int i = 1; i <= 12; i++)
+            for (int i = 1; i <= DateTime.DaysInMonth(bankStatement.year, bankStatement.month); i++)
             {
-                int count = data.Values.Count(item => int.Parse(item.NgayTao.Split("/")[1]) == i && int.Parse(item.NgayTao.Split("/")[2]) == year);
-                quantityCustomerByMonth.Add("Tháng " + i.ToString(), count);
+                int money = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[1]) == bankStatement.month && int.Parse(item.NgayGiaoDich.Split("/")[2]) == bankStatement.year && int.Parse(item.NgayGiaoDich.Split("/")[0]) == i);
+               
+                Sum.Add(i.ToString(), money);
             }
 
-            return quantityCustomerByMonth;
+            return Sum;
         }
+
+        // lấy tổng giao dịch trong ngày 
+        public Dictionary<string, int> MoneyOut(BankStatement bankStatement)
+        {
+            Dictionary<string, int> Sum = new Dictionary<string, int>();
+
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
+
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+            for (int i = 1; i <= DateTime.DaysInMonth(bankStatement.year, bankStatement.month); i++)
+            {
+                int money = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[1]) == bankStatement.month && int.Parse(item.NgayGiaoDich.Split("/")[2]) == bankStatement.year && int.Parse(item.NgayGiaoDich.Split("/")[0]) == i
+                 && (item.LoaiGiaoDichKey == "2" || item.LoaiGiaoDichKey == "3" || item.LoaiGiaoDichKey == "5"));
+               
+                Sum.Add(i.ToString(), money);
+            }
+
+            return Sum;
+        }
+     
     }
 }

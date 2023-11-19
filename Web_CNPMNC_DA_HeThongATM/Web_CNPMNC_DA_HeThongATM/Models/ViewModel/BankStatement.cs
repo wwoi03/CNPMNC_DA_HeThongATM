@@ -2,7 +2,7 @@
 {
     public class BankStatement
     {
-        public string year;
-        public string month;
+        public int year { get; set; }
+        public int month { get; set; }
     }
 }

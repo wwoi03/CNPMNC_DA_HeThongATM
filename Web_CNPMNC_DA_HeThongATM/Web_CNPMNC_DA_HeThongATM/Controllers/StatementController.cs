@@ -45,42 +45,143 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     List<GiaoDichViewModel> LSDG = new List<GiaoDichViewModel>();
                     ViewBag.LSDG = LSDG;
                     ViewBag.check = "undefined";
-                    return View(cus);
                 }
-                return View(cus);
+                return RedirectToAction("CustomerStatement");
             }
             return View(cus);
         }
         // bank
         public IActionResult BankStatement()
         {
-            ViewBag.count = 0;
-            ViewBag.check = "ok";
+            ViewBag.year = DateTime.Now.Year;
+            ViewBag.month = DateTime.Now.Month;
+            ViewBag.count = firebaseHelper.CountGiaoDichMonth(DateTime.Now.Year, DateTime.Now.Month);
+            if (TempData.ContainsKey("year") && TempData.ContainsKey("month"))
+            {
+                BankStatement bank = new BankStatement()
+                {
+                    year = int.Parse(TempData.Peek("year").ToString()),
+                    month = int.Parse(TempData.Peek("month").ToString()),
+                };
+                ViewBag.year = bank.year;
+                ViewBag.month = bank.month;
+            }
+            if (TempData.ContainsKey("count"))
+            {
+                ViewBag.count = TempData["count"];
+            }
+        
+
+            DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             return View();
         }
 
-        [HttpGet]
-        public IActionResult CountMonth([FromBody] BankStatement bankStatement)
+        [HttpPost]
+        public IActionResult Count(BankStatement bankStatement)
         {
-            if (bankStatement != null)
+
+            if (ModelState.IsValid)
             {
-                int month = firebaseHelper.CountGiaoDichMonth(bankStatement.year, bankStatement.month);
-                return Json(month);
+                TempData["year"] = bankStatement.year;
+                TempData["month"] = bankStatement.month;
+                TempData["count"] = firebaseHelper.CountGiaoDichMonth(bankStatement.year, bankStatement.month);
+             
+              
+                return RedirectToAction("BankStatement");
 
             }
-            return Json(5);
+            return View(bankStatement);
 
         }
         [HttpGet]
-        public IActionResult CountYear([FromBody] string year)
+        public IActionResult Money()
         {
-            if (year != null && year != "")
-            {
-                int y = firebaseHelper.CountGiaoDichYear(year);
-                return Json(y);
-            }
-            return Json(year);
 
+            if (TempData.ContainsKey("year") && TempData.ContainsKey("month"))
+            {
+                BankStatement bank2 = new BankStatement()
+                {
+                    year = int.Parse(TempData.Peek("year").ToString()),
+                    month = int.Parse(TempData.Peek("month").ToString()),
+                };
+                var moneyin2 = firebaseHelper.Money(bank2);
+               
+                return Json(moneyin2);
+            }
+         
+            BankStatement bank = new BankStatement()
+            {
+                year = DateTime.Now.Year,
+                month = DateTime.Now.Month,
+            };
+            var moneyin = firebaseHelper.Money(bank);
+           
+            return Json(moneyin);
         }
+        //[HttpGet]
+        //public IActionResult MoneyOut()
+        //{
+
+        //    if (TempData.ContainsKey("year") && TempData.ContainsKey("month"))
+        //    {
+        //        BankStatement bank2 = new BankStatement()
+        //        {
+        //            year = int.Parse(TempData.Peek("year").ToString()),
+        //            month = int.Parse(TempData.Peek("month").ToString()),
+        //        };
+        //        var moneyout2 = firebaseHelper.MoneyOut(bank2);
+
+        //        return Json(moneyout2);
+        //    }
+
+        //    BankStatement bank = new BankStatement()
+        //    {
+        //        year = DateTime.Now.Year,
+        //        month = DateTime.Now.Month,
+        //    };
+        //    var moneyout = firebaseHelper.MoneyOut(bank);
+        //    return Json(moneyout);
+        //}
+
+
+        //public class ThongKe
+        //{
+        //    public object MNI { get; set; }
+        //    public object MNO { get; set; }
+        //}
+        //[HttpGet]
+        //public IActionResult CountYear(int year)
+        //{
+
+
+        //        return Json(year);
+
+
+
+        //}
+        //[HttpGet]
+        //public IActionResult CountMonth(BankStatement bankStatement)
+        //{
+
+
+        //        return Json(firebaseHelper.CountGiaoDichMonth(bankStatement.year,bankStatement.month));
+
+
+
+        //}
+        //[HttpPost]
+        //public IActionResult Count(int year)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        HttpContext.Session.SetString("count", year.ToString());
+        //        return RedirectToAction("BankStatement");
+
+        //    }
+        //    return View();
+
+        //}
     }
 }
