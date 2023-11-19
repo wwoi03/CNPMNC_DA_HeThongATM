@@ -1172,7 +1172,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                         sodu = item.SoDuLucNhan;
                     }
 
-                    GiaoDichViewModel ls = new GiaoDichViewModel(item, status, date, tenKH, tenKH2, sodu);
+                    GiaoDichViewModel ls = new GiaoDichViewModel(item, status, date, tenKH, tenKH2, sodu, item.Key);
                     LSGD.Add(ls);
                 }
             }

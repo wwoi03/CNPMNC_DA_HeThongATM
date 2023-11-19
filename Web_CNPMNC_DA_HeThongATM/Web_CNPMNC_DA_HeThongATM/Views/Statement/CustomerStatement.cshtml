@@ -364,6 +364,10 @@
                                         <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
                                             <div>@item.status</div>
                                         </div>
+                                        <div>
+                                            <a id="details" name="@item.Key" class="btn btn-primary" onclick="Details()">Xem thông tin</a>
+                                            @*<a href="@Url.Action("DeleteStaff", "Staff", new { DeleteKey = @key})" class="btn btn-danger">Xóa</a>*@
+                                        </div>
                                     </div>
                                 }
                             }
@@ -413,6 +417,34 @@
                 document.getElementById('khongtimthay').style.display = 'none';
                 document.getElementById("search-button").disabled = false;
             }
+        }
+            function Details(){
+            var key = document.getElementById("details").getAttribute("name");
+            
+            $.ajax({
+                url: "../../Statement/Details", // Đường dẫn của Controller và Action xử lý yêu cầu
+                type: "GET",
+                contentType: "application/json",
+                data: JSON.stringify(key),
+                success: function (data) {
+                    document.getElementById("name1").value = @Context.Session.GetString("nguon");
+                    document.getElementById("name2").value = @Context.Session.GetString("nhan");
+                    document.getElementById("time").value = data.NgayGiaoDich + " " + data.GioGiaoDich;
+                    document.getElementById("kind").value = @Context.Session.GetString("loai");
+                    document.getElementById("note").value = data.NoiDungChuyenKhoan;
+                    document.getElementById("money").value = data.SoTienGiaoDich;
+                    document.getElementById("cost").value = data.PhiGiaoDich;
+
+                    document.getElementById("ViewDetails").style.display = "block";
+                },
+                error: function (error) {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    console.error("Lỗi khi gửi yêu cầu", error);
+                }
+            });
+        }
+        function Hide(){
+            document.getElementById("ViewDetails").style.display = "none";
         }
 
     </script>
