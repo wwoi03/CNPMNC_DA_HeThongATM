@@ -127,7 +127,6 @@ public class formUserRegister extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    Log.d("CCCD", "CCCD: "+edt_cccd.getText().toString().trim());
                     DbHelper.firebaseDatabase.getReference("KhachHang").orderByChild("CCCD").equalTo(edt_cccd.getText().toString().trim())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override

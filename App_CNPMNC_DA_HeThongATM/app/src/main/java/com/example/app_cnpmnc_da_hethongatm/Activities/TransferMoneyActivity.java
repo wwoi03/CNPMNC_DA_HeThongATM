@@ -17,6 +17,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -76,6 +77,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     int flagSaveBill;
     String maLoaiGGKey;
     Config config;
+    boolean checkvalid = false;
 
     Intent getDataIntent;
 
@@ -107,19 +109,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private void UpdateTaiKhoanNguon(){
 
     }
-    /*private void getIntent1(){
-        Intent intent = getIntent();
-        flagSaveBill = intent.getIntExtra("flag1",0);
-        if(flagSaveBill != 0){
-            long a =(long) intent.getSerializableExtra("STK123");
-            double b =(double) intent.getSerializableExtra("SoTien123");
-            String c = (String) intent.getSerializableExtra("NoiDung123");
-            etAccountBeneficiary.setText(String.valueOf(a));
-            etMoney.setText(String.valueOf(b));
-            etContent.setText(c);
-        }
-    }*/
-    // ánh xạ view
     public void initUI() {
         tbToolbar = findViewById(R.id.tbToolbar);
         progressBar = findViewById(R.id.progressBar);
@@ -177,50 +166,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
-                    // kiểm tra edit text rỗng?
-                    if(accountBeneficiaryString.isEmpty()){
-                        tvNameBeneficiary.setText("");
-                        return;
-                    }
-                    if (!accountBeneficiaryString.isEmpty()) {
-                        long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
-                        if(taiKhoanNguon != null){
-                            if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
-                                BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
-                                tvNameBeneficiary.setText("");
-                                return;
-                            }
-                            else {
-                                // truy vấn đến TaiKhoanLK theo số tài khoản
-                                Log.d(String.valueOf(accountBeneficiary), "onFocusChange: ");
-                                DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if (snapshot.exists()) {
-                                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                                        taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
-                                                        etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
-                                                        tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
-                                                        taiKhoanHuongKey = dataSnapshot.getKey();
-                                                    }
-                                                }
-                                                else {
-                                                    tvNameBeneficiary.setText("");
-                                                    BuildAlertDialog("không tìm thấy người thụ hưởng");
-                                                    return;
-                                                }
-                                            }
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-                        }
-                        }
-                    }
-
+                    checkThuHuong();
                 }
             }
         });
@@ -232,37 +178,48 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 // kiểm tra tổng
                 String moneyString = etMoney.getText().toString().trim();
                 String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
-                if (taiKhoanNguonKey.isEmpty()) {
-                    BuildAlertDialog("Vui lòng chọn tài khoản nguồn");
-                    return;
-                } else if (accountBeneficiaryString.isEmpty()) {
-                    BuildAlertDialog("Vui lòng nhập tài khoản hưởng");
-                    return;
-                } else if (accountBeneficiaryString.isEmpty()) {
-                    BuildAlertDialog("Vui lòng nhập người nhận");
-                    return;
-                } else if (moneyString.isEmpty()) { // rỗng
-                    BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
-                    return;
-                } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
-                    BuildAlertDialog("Không đủ tiền để gd");
-                    return;
-                }else if (!GetDate().equals(taiKhoanNguon.getNgayGD())) {
-                    Log.d(String.valueOf(GetDate().equals(taiKhoanNguon.getNgayGD())), "NgayGIaoDich: ");
-                    taiKhoanNguon.setNgayGD(GetDate());
-                    taiKhoanNguon.setTienDaGD(0);
-                } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
-                    BuildAlertDialog("Số tiền giao dịch vuợt quá hạn mức");
-                    return;
-                }
-                else {
-                    double money = Double.parseDouble(moneyString);
-                    if (money >= 1000) {
-                        transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
-                    } else {
-                        toastMessage("Nghèooooooooooooooooooooooooooooo!");
+                String TKNGUON = tvSourceAccount.getText().toString().trim();
+                checkThuHuong();
+                Log.d("checkvalid", "checkvalid: "+checkvalid);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(checkvalid == true){
+                            if (taiKhoanNguonKey.isEmpty()) {
+                                BuildAlertDialog("Vui lòng chọn tài khoản nguồn");
+                                return;
+                            } else if (TKNGUON.isEmpty()) {
+                                BuildAlertDialog("Vui lòng nhập tài khoản hưởng");
+                                return;
+                            } else if (accountBeneficiaryString.isEmpty()) {
+                                BuildAlertDialog("Vui lòng nhập người nhận");
+                                return;
+                            } else if (moneyString.isEmpty()) { // rỗng
+                                BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
+                                return;
+                            } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
+                                BuildAlertDialog("Không đủ tiền để gd");
+                                return;
+                            }else if (!GetDate().equals(taiKhoanNguon.getNgayGD())) {
+                                Log.d(String.valueOf(GetDate().equals(taiKhoanNguon.getNgayGD())), "NgayGIaoDich: ");
+                                taiKhoanNguon.setNgayGD(GetDate());
+                                taiKhoanNguon.setTienDaGD(0);
+                            } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
+                                BuildAlertDialog("Số tiền giao dịch vuợt quá hạn mức");
+                                return;
+                            }
+                            else {
+                                double money = Double.parseDouble(moneyString);
+                                Log.d("da chuyen tien thanh cong", "check avsadasd: ");
+                                if (money >= 1000) {
+                                    transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
+                                } else {
+                                    toastMessage("Nghèooooooooooooooooooooooooooooo!");
+                                }
+                            }
+                        }
                     }
-                }
+                },2000);
             }
         });
 
@@ -301,7 +258,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                         dialogPlus.dismiss();// đóng dialogplus
                     }
                 });
-
                 dialogPlus.show();
             }
         });
@@ -370,6 +326,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     public void BuildAlertDialogSuccess(double tien){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        long sodu = (long) taiKhoanNguon.getSoDu();
         builder.setTitle("Chuyển tiền thành công");
         builder.setPositiveButton("Xác Nhận", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -380,7 +337,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 intent.putExtra("GioGui",GetTime());
                 intent.putExtra("NoiDung",etContent.getText().toString().trim());
                 intent.putExtra("MaGd",MaGD);
-                String tiengd = String.valueOf(taiKhoanNguon.getSoDu() - tien);
+                String tiengd = String.valueOf(sodu - tien);
                 intent.putExtra("TienGD",tiengd);
                 startActivity(intent);
                 dialog.dismiss();
@@ -419,5 +376,53 @@ public class TransferMoneyActivity extends AppCompatActivity {
         etAccountBeneficiary.setText(qrCodeData);
         etContent.setText(message);
         etMoney.setText(String.valueOf(amount));
+    }
+    private void checkThuHuong(){
+        String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
+        checkvalid = false;
+        // kiểm tra edit text rỗng?
+        if(accountBeneficiaryString.isEmpty()){
+            tvNameBeneficiary.setText("");
+            checkvalid =false;
+        }
+        if (!accountBeneficiaryString.isEmpty()) {
+            long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
+            if(taiKhoanNguon != null){
+                if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
+                    BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
+                    tvNameBeneficiary.setText("");
+                    checkvalid =false;
+                }
+                else {
+                    // truy vấn đến TaiKhoanLK theo số tài khoản
+                    DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                            checkvalid = true;
+                                            taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
+                                            etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
+                                            tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
+                                            taiKhoanHuongKey = dataSnapshot.getKey();
+                                            Log.d("checkvalid trc khi set", "checkvalid trc khi set: "+checkvalid);
+                                            Log.d("checkvalid sau khi set", "checkvalid trc khi set: "+checkvalid);
+                                        }
+                                    }
+                                    else {
+                                        tvNameBeneficiary.setText("");
+                                        BuildAlertDialog("không tìm thấy người thụ hưởng");
+                                        checkvalid =false;
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    checkvalid =false;
+                                }
+                            });
+                }
+            }
+        }
     }
 }

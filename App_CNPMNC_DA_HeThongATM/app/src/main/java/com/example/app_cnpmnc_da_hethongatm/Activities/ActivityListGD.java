@@ -24,6 +24,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ActivityListGD extends AppCompatActivity {
@@ -74,6 +76,7 @@ public class ActivityListGD extends AppCompatActivity {
                 if(!giaoDiches.equals(gd1)){
                     giaoDiches.clear();
                     giaoDiches.addAll(gd1);
+                    Collections.reverse(giaoDiches);
                     giaoDichAdapter.notifyDataSetChanged();
                 }
             }

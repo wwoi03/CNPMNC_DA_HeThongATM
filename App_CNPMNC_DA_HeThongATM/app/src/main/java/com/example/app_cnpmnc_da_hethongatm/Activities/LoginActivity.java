@@ -119,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
             if (snapshot.exists()) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
-
                     Log.d("firebase", khachHang.getCCCD());
                     if (khachHang != null) {
                         // Kiểm tra mật khẩu
