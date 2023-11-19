@@ -210,6 +210,7 @@
 
                     <!-- Ô 4 -->
                     <LinearLayout
+                        android:id="@+id/cvOpenNewAccount"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_rowWeight="1"

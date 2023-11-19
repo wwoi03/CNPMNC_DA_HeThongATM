@@ -249,6 +249,17 @@
                     android:text="Tiếp tục"
                     android:layout_marginTop="12dp"></Button>
 
+                <!-- Button tiếp tục -->
+                <Button
+                    android:id="@+id/btTransferMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_radius_all"
+                    android:text="Chuyển tiền"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone">
+                </Button>
+
                 <!-- Edit -->
                 <LinearLayout
                     android:id="@+id/llEditButtonContainer"

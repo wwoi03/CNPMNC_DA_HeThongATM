@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AccountCardActivity">
+    tools:context=".Activities.AccountCardActivity"
+    android:background="@color/bg_color">
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar

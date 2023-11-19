@@ -1,6 +1,7 @@
 package com.example.app_cnpmnc_da_hethongatm.Model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 public class TaiKhoanLienKet implements Serializable {
     private String Key;
@@ -134,5 +135,11 @@ public class TaiKhoanLienKet implements Serializable {
     public String getNumberFormat(double number) {
         // Sử dụng String.format với định dạng số có dấu phân cách
         return String.format("%,d", (long) number);
+    }
+
+    public String decimalFormat() {
+        DecimalFormat decimalFormat = new DecimalFormat("#");
+        decimalFormat.setMaximumFractionDigits(0);
+        return decimalFormat.format(SoDu);
     }
 }

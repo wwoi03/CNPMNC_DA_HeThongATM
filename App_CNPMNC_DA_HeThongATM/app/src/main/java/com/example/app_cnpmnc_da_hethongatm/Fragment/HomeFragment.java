@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.AddNewAccountActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.CreateSavingAccountActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.DepositMoreSavingActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.NewaccountActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.PhoneActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.TransferMoneyActivity;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ImageSlideAdapter;
@@ -94,7 +96,7 @@ public class HomeFragment extends Fragment {
     Runnable runnable;
     LinearLayout lninterestrate;
     ImageView imgDeposit;
-    LinearLayout cvTransferMoney, cvManageAccountAndCard, cvManageSaving;
+    LinearLayout cvTransferMoney, cvManageAccountAndCard, cvManageSaving, cvOpenNewAccount;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -112,6 +114,7 @@ public class HomeFragment extends Fragment {
         cvTransferMoney = view.findViewById(R.id.cvTransferMoney);
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
         cvManageSaving=view.findViewById(R.id.cvManageSaving);
+        cvOpenNewAccount=view.findViewById(R.id.cvOpenNewAccount);
     }
 
 
@@ -176,6 +179,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ManageAccountAndCardActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // quản lý thẻ và tài khoản
+        cvOpenNewAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NewaccountActivity.class);
                 startActivity(intent);
             }
         });

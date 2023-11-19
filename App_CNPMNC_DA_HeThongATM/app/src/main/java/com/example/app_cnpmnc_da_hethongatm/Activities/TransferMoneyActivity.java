@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -33,9 +35,11 @@ import com.example.app_cnpmnc_da_hethongatm.Adapter.ListBeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
 import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
+import com.example.app_cnpmnc_da_hethongatm.Extend.UtilityClass;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
 import com.example.app_cnpmnc_da_hethongatm.Model.MauChuyenTien;
+import com.example.app_cnpmnc_da_hethongatm.Model.NhacChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -67,9 +71,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
     // Flag
     public static int CHOOSE_SOURCE_ACCOUNT = 101;
 
-    //
+    // var
     String taiKhoanNguonKey = "", taiKhoanHuongKey;
     TaiKhoanLienKet taiKhoanNguon, taiKhoanHuong;
+    NhacChuyenTien nhacChuyenTien;
 
     ThuHuong thuHuong;
     int flag;
@@ -78,6 +83,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     Config config;
 
     Intent getDataIntent;
+    Context context;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -86,12 +92,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == CHOOSE_SOURCE_ACCOUNT) {
                         taiKhoanNguon = (TaiKhoanLienKet) result.getData().getSerializableExtra("taiKhoanNguon");
-                        taiKhoanNguonKey = (String) result.getData().getSerializableExtra("taiKhoanNguonKey");
-                        tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
-                        tvSurplus.setText(taiKhoanNguon.getSoDuFormat() + " VNĐ");
-                        if(etContent.getText().toString().trim().isEmpty()){
-                            etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
-                        }
+
+                        checkSourceAccount(taiKhoanNguon.getSoTaiKhoan());
                     }
                 }
             }
@@ -104,21 +106,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
         initData();
         initListener();
     }
+
     private void UpdateTaiKhoanNguon(){
 
     }
-    /*private void getIntent1(){
-        Intent intent = getIntent();
-        flagSaveBill = intent.getIntExtra("flag1",0);
-        if(flagSaveBill != 0){
-            long a =(long) intent.getSerializableExtra("STK123");
-            double b =(double) intent.getSerializableExtra("SoTien123");
-            String c = (String) intent.getSerializableExtra("NoiDung123");
-            etAccountBeneficiary.setText(String.valueOf(a));
-            etMoney.setText(String.valueOf(b));
-            etContent.setText(c);
-        }
-    }*/
+
     // ánh xạ view
     public void initUI() {
         tbToolbar = findViewById(R.id.tbToolbar);
@@ -136,6 +128,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
     // khởi tạo dữ liệu
     public void initData() {
         config = new Config(this);
+
+        context = TransferMoneyActivity.this;
+
         setupToolbar();
 
         taiKhoanNguon = new TaiKhoanLienKet();
@@ -146,18 +141,28 @@ public class TransferMoneyActivity extends AppCompatActivity {
         if (getDataIntent.hasExtra("flag") == true) {
             flag = (int) getDataIntent.getSerializableExtra("flag");
 
-            if (flag == BeneficiaryManagementActivity.USER_NAME) {
+            if (flag == BeneficiaryManagementActivity.USER_NAME) { // thụ hưởng
                 thuHuong = (ThuHuong) getDataIntent.getSerializableExtra("tkthuhuong");
                 etAccountBeneficiary.setText(String.valueOf(thuHuong.getTKThuHuong()));
-            } else if (flag == ResultCode.LUU_MAU_CHUYEN_TIEN) {
+            } else if (flag == ResultCode.LUU_MAU_CHUYEN_TIEN) { // mẫu chuyển tiền
                 long a =(long) getDataIntent.getSerializableExtra("STK123");
                 double b =(double) getDataIntent.getSerializableExtra("SoTien123");
                 String c = (String) getDataIntent.getSerializableExtra("NoiDung123");
                 etAccountBeneficiary.setText(String.valueOf(a));
                 etMoney.setText(String.valueOf(b));
                 etContent.setText(c);
-            } else if (flag == ResultCode.SCAN_QR) {
+            } else if (flag == ResultCode.SCAN_QR) { // quét QR
                 getIntentFromQRCode();
+            } else if (flag == ResultCode.ACCOUNT_TRANSFER_MONEY) { // tài khoản chuyển tiền
+                long soTaiKhoan = (long) getDataIntent.getSerializableExtra("soTaiKhoan");
+
+                checkSourceAccount(soTaiKhoan);
+            } else if (flag == ResultCode.TRANSFER_MONEY_REMINDER) {
+                nhacChuyenTien = (NhacChuyenTien) getDataIntent.getSerializableExtra("nhacChuyenTien");
+
+                etMoney.setText(String.valueOf(nhacChuyenTien.getSoTienNhacChuyen()));
+                etAccountBeneficiary.setText(String.valueOf(nhacChuyenTien.getTaiKhoanNhan()));
+                etContent.setText(nhacChuyenTien.getNoiDungNhac());
             }
         }
     }
@@ -234,41 +239,40 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 String moneyString = etMoney.getText().toString().trim();
                 String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
                 if (taiKhoanNguonKey.isEmpty()) {
-                    BuildAlertDialog("Vui lòng chọn tài khoản nguồn");
+                    UtilityClass.showDialogError(context, "Lỗi", "Vui lòng chọn tài khoản nguồn!");
                     checkvalid ++;
                 } else if (accountBeneficiaryString.isEmpty()) {
-                    BuildAlertDialog("Vui lòng nhập tài khoản hưởng");
+                    UtilityClass.showDialogError(context, "Lỗi", "Vui lòng nhập tài khoản hưởng!");
                     checkvalid ++;
                 } else if (accountBeneficiaryString.isEmpty()) {
-                    BuildAlertDialog("Vui lòng nhập người nhận");
+                    UtilityClass.showDialogError(context, "Lỗi", "Vui lòng nhập người nhận!");
                     checkvalid ++;
                 } else if (moneyString.isEmpty()) { // rỗng
-                    BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
+                    UtilityClass.showDialogError(context, "Lỗi", "Vui lòng nhập số tiền cần chuyển!");
                     checkvalid ++;
                 } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
-                    BuildAlertDialog("Không đủ tiền để gd");
+                    UtilityClass.showDialogError(context, "Lỗi", "Số dư không đủ giao dịch!");
                     checkvalid++;
                 }else if (!GetDate().equals(taiKhoanNguon.getNgayGD())) {
-                    Log.d(String.valueOf(GetDate().equals(taiKhoanNguon.getNgayGD())), "NgayGIaoDich: ");
                     taiKhoanNguon.setNgayGD(GetDate());
                     taiKhoanNguon.setTienDaGD(0);
                 } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
-                    BuildAlertDialog("Số tiền giao dịch vuợt quá hạn mức");
+                    UtilityClass.showDialogError(context, "Lỗi", "Số tiền giao dịch vuợt quá hạn mức!");
                     checkvalid ++;
                 }
-                Log.d(String.valueOf(checkvalid), "checkvalid: ");
                 if(checkvalid == 0){ // không rỗng
                     double money = Double.parseDouble(moneyString);
                     // kiểm tra số tiền phải >= 1k
                     if (money >= 1000) {
                         transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
                     } else {
-                        toastMessage("Nghèooooooooooooooooooooooooooooo!");
+                        UtilityClass.showDialogError(context, "Lỗi", "Nghèo vậy thằng lol!");
                     }
                 }
             }
         });
 
+        // bấm icon thụ hưởng
         ivBeneficiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -331,8 +335,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
             // Hiển thị nút quay lại
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
     }
 
     // xử lý sự kiện ấn nút quay lại
@@ -422,5 +424,39 @@ public class TransferMoneyActivity extends AppCompatActivity {
         etAccountBeneficiary.setText(qrCodeData);
         etContent.setText(message);
         etMoney.setText(amount);
+    }
+
+    // kiểm tra tài khoản nguồn
+    public void checkSourceAccount(long soTaiKhoan) {
+        DbHelper.getAccountByAccountNumber(soTaiKhoan, new DbHelper.FirebaseListener() {
+            @Override
+            public void onSuccessListener() {
+
+            }
+
+            @Override
+            public void onFailureListener(Exception e) {
+
+            }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        taiKhoanNguon = dataSnapshot.getValue(TaiKhoanLienKet.class);
+
+                        taiKhoanNguonKey = taiKhoanNguon.getKey();
+
+                        tvSourceAccount.setText(String.valueOf(taiKhoanNguon.getSoTaiKhoan()));
+                        tvSurplus.setText(taiKhoanNguon.getSoDuFormat() + " VNĐ");
+                        if(etContent.getText().toString().trim().isEmpty()){
+                            etContent.setText(taiKhoanNguon.getTenTK() + " chuyen tien");
+                        }
+
+                        break;
+                    }
+                }
+            }
+        });
     }
 }

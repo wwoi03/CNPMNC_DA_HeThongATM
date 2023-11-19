@@ -525,7 +525,7 @@ public class DbHelper {
         Random random = new Random();
         String accountNumber;
 
-        int randomAccountNumber = random.nextInt(900000) + 100000;
+        long randomAccountNumber = 1000000000L + ((long)random.nextInt(900000000) * 10) + random.nextInt(10);
         accountNumber = String.valueOf(randomAccountNumber);
 
         return accountNumber;

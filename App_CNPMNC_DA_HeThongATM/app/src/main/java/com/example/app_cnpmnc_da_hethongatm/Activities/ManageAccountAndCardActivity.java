@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -79,7 +80,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
     // Khởi tạo dữ liệu
     public void initData() {
-        GetAccountTypeByName("thanh toán");
+        getAccountTypeByName("thanh toán");
 
         setupToolbar();
 
@@ -93,7 +94,6 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
     // Xử lý sự kiện
     public void initListener() {
-
         // xử lý khi đổi viewpaper
         vp2AccountsAndCards.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -130,7 +130,9 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         llHistoryTransferMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ManageAccountAndCardActivity.this, ActivityListGD.class);
+                intent.putExtra("taiKhoanNguon", currentAccountCardInPage.getSoTaiKhoan());
+                startActivity(intent);
             }
         });
 
@@ -138,7 +140,10 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         llTransferMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(ManageAccountAndCardActivity.this, TransferMoneyActivity.class);
+                intent.putExtra("flag", ResultCode.ACCOUNT_TRANSFER_MONEY);
+                intent.putExtra("soTaiKhoan", currentAccountCardInPage.getSoTaiKhoan());
+                startActivity(intent);
             }
         });
 
@@ -213,7 +218,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     }
 
     // lấy loại tài khoản
-    public void GetAccountTypeByName(String accountTypeName) {
+    public void getAccountTypeByName(String accountTypeName) {
         DbHelper.firebaseDatabase.getReference("LoaiTaiKhoan")
                 .orderByChild("TenLoaiTaiKhoan")
                 .equalTo(accountTypeName.toLowerCase().trim())

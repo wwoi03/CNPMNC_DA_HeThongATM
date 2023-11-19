@@ -52,7 +52,7 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
     EditText etContent, etMoney, etBeneficiary, etDateLimit;
     TextView tvBeneficiaryName;
     ImageView ivDateLimitIcon;
-    Button btNext, btUpdate, btDelete;
+    Button btNext, btUpdate, btDelete, btTransferMoney;
     RelativeLayout rlInfoBeneficiary;
     ConstraintLayout clMainLayout;
     LinearLayout llEditButtonContainer;
@@ -94,11 +94,13 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
         rlInfoBeneficiary = findViewById(R.id.rlInfoBeneficiary);
         tvBeneficiaryName = findViewById(R.id.tvBeneficiaryName);
         llEditButtonContainer = findViewById(R.id.llEditButtonContainer);
+        btTransferMoney = findViewById(R.id.btTransferMoney);
     }
 
     // khởi tạo dữ liệu
     private void initData() {
         getDataIntent = getIntent();
+
         flag = (int) getDataIntent.getSerializableExtra("flag");
 
         setupToolbar();
@@ -116,6 +118,7 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
         onClickButtonNext();
         onClickButtonUpdate();
         onClickButtonDelete();
+        onClickButtonTransferMoney();
     }
 
     // setup toolbar
@@ -167,7 +170,11 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
         checkExistsBeneficiary();
 
         btNext.setVisibility(View.GONE);
-        llEditButtonContainer.setVisibility(View.VISIBLE);
+
+        if (editNhacChuyenTien.getTrangThai() == ResultCode.CHUA_DEN_HAN) {
+            llEditButtonContainer.setVisibility(View.VISIBLE);
+            btTransferMoney.setVisibility(View.VISIBLE);
+        }
     }
 
     // xử lý khi bấm nút "Tiếp tục"
@@ -186,6 +193,19 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkValidation();
+            }
+        });
+    }
+
+    // xử lý sự kiện khi bấm vào nút cập nhật
+    private void onClickButtonTransferMoney() {
+        btTransferMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddEditReminderTransferMoneyActivity.this, TransferMoneyActivity.class);
+                intent.putExtra("flag", ResultCode.TRANSFER_MONEY_REMINDER);
+                intent.putExtra("nhacChuyenTien", editNhacChuyenTien);
+                startActivity(intent);
             }
         });
     }
@@ -246,47 +266,10 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {@Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         if (deleteOrUpdate == DELETE_REMINDER_TRANSFER_MONEY) { // xóa
-                            DbHelper.deleteReminderTransferMoney(editNhacChuyenTien.getKey(), new DbHelper.FirebaseListener() {
-                                @Override
-                                public void onSuccessListener() {
-                                    Toast.makeText(AddEditReminderTransferMoneyActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-
-                                @Override
-                                public void onFailureListener(Exception e) {
-
-                                }
-
-                                @Override
-                                public void onSuccessListener(DataSnapshot snapshot) {
-
-                                }
-                            });
+                            deleteReminderTransferMoney();
                         }
                         if (deleteOrUpdate == UPDATE_REMINDER_TRANSFER_MONEY) { // cập nhật
-                            editNhacChuyenTien.setNoiDungNhac(content);
-                            editNhacChuyenTien.setSoTienNhacChuyen(money);
-                            editNhacChuyenTien.setNgayHetHan(dateLimit);
-                            editNhacChuyenTien.setTaiKhoanNhan(Long.parseLong(beneficiary));
-
-                            DbHelper.updateReminderTransferMoney(editNhacChuyenTien, new DbHelper.FirebaseListener() {
-                                @Override
-                                public void onSuccessListener() {
-                                    Toast.makeText(AddEditReminderTransferMoneyActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-
-                                @Override
-                                public void onFailureListener(Exception e) {
-
-                                }
-
-                                @Override
-                                public void onSuccessListener(DataSnapshot snapshot) {
-
-                                }
-                            });
+                            updateReminderTransferMoney();
                         }
                         sweetAlertDialog.dismissWithAnimation();
                     }
@@ -298,6 +281,53 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    // xóa nhắc chuyển tiền
+    private void deleteReminderTransferMoney() {
+        DbHelper.deleteReminderTransferMoney(editNhacChuyenTien.getKey(), new DbHelper.FirebaseListener() {
+            @Override
+            public void onSuccessListener() {
+                Toast.makeText(AddEditReminderTransferMoneyActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailureListener(Exception e) {
+
+            }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+
+            }
+        });
+    }
+
+    // cập nhật nhắc chuyển tiền
+    private void updateReminderTransferMoney() {
+        editNhacChuyenTien.setNoiDungNhac(content);
+        editNhacChuyenTien.setSoTienNhacChuyen(money);
+        editNhacChuyenTien.setNgayHetHan(dateLimit);
+        editNhacChuyenTien.setTaiKhoanNhan(Long.parseLong(beneficiary));
+
+        DbHelper.updateReminderTransferMoney(editNhacChuyenTien, new DbHelper.FirebaseListener() {
+            @Override
+            public void onSuccessListener() {
+                Toast.makeText(AddEditReminderTransferMoneyActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailureListener(Exception e) {
+
+            }
+
+            @Override
+            public void onSuccessListener(DataSnapshot snapshot) {
+
+            }
+        });
     }
 
     // kiểm tra nhập hợp lệ
@@ -416,33 +446,6 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*// dialog
-    public void buildAlertDialog(String text) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        if (text != null || text.equals("")) {
-            builder.setTitle("Có Lỗi");
-            builder.setMessage(text);
-        } else {
-            builder.setTitle("Thành công");
-        }
-
-        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (text != null || text.equals("")) {
-
-                } else {
-                    finish();
-                }
-
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }*/
 
     // kiểm tra quá đến hạn
     public boolean checkDateLimitAfterCurrentDate(String dateLimitString) {
