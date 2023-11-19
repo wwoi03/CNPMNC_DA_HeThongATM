@@ -123,6 +123,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
             public void onClick(View v) {
                 Intent intent = new Intent(ManageAccountAndCardActivity.this, AccountAndCardSettingsActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -133,6 +134,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
                 Intent intent = new Intent(ManageAccountAndCardActivity.this, ActivityListGD.class);
                 intent.putExtra("taiKhoanNguon", currentAccountCardInPage.getSoTaiKhoan());
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -144,6 +146,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
                 intent.putExtra("flag", ResultCode.ACCOUNT_TRANSFER_MONEY);
                 intent.putExtra("soTaiKhoan", currentAccountCardInPage.getSoTaiKhoan());
                 startActivity(intent);
+                finish();
             }
         });
 

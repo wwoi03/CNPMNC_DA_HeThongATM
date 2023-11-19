@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.Extend.UtilityClass;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
@@ -119,22 +120,23 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
         if (model.getMaLoaiTKKey().equals(loaiTKKey)) {
             UtilityClass.showDialogError(context, "Lỗi", "Vui lòng chọn tài khoản thanh toán!");
         } else {
-            if(model.getTinhTrangTaiKhoan() == 1){
+            if (model.getTinhTrangTaiKhoan() == 1){
                 UtilityClass.showDialogError(context, "Lỗi", "Khóa thẻ rồi thằng lol!");
-            }
-            else {
-                if(flag == 10){
-                    Intent intent = new Intent(AccountCardActivity.this, ActivityListGD.class);
-                    intent.putExtra("taiKhoanNguon", model.getSoTaiKhoan());
-                    startActivity(intent);
-                }
-                else {
-                    Intent intent = getIntent();
-                    intent.putExtra("taiKhoanNguon", model);
-                    intent.putExtra("taiKhoanNguonKey", databaseReference.getKey());
-                    setResult(TransferMoneyActivity.CHOOSE_SOURCE_ACCOUNT, intent);
-                    finish();
-                }
+            } else if (flag == 10) {
+                Intent intent = new Intent(AccountCardActivity.this, ActivityListGD.class);
+                intent.putExtra("taiKhoanNguon", model.getSoTaiKhoan());
+                startActivity(intent);
+            } else if (flag == ResultCode.EDIT_NICKNAME) {
+                Intent intent = getIntent();
+                intent.putExtra("taiKhoanNguon", model);
+                setResult(ResultCode.EDIT_NICKNAME, intent);
+                finish();
+            } else {
+                Intent intent = getIntent();
+                intent.putExtra("taiKhoanNguon", model);
+                intent.putExtra("taiKhoanNguonKey", databaseReference.getKey());
+                setResult(TransferMoneyActivity.CHOOSE_SOURCE_ACCOUNT, intent);
+                finish();
             }
         }
     }

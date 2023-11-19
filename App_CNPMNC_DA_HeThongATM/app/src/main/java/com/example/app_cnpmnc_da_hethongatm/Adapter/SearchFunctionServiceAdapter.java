@@ -25,7 +25,7 @@ public class SearchFunctionServiceAdapter extends FirebaseRecyclerAdapter<ChucNa
 
     @Override
     protected void onBindViewHolder(@NonNull SearchFunctionServiceAdapterVH holder, int position, @NonNull ChucNang model) {
-        holder.tvServiceFunctionName.setText(model.getTenChucNang());
+        holder.tvName.setText(model.getTenChucNang());
 
         initListener(holder, position, model);
     }
@@ -33,34 +33,32 @@ public class SearchFunctionServiceAdapter extends FirebaseRecyclerAdapter<ChucNa
     @NonNull
     @Override
     public SearchFunctionServiceAdapterVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fragment_transaction_service_function, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, parent, false);
         return new SearchFunctionServiceAdapterVH(view);
     }
 
     // Xử lý sự kiện
     private void initListener(SearchFunctionServiceAdapterVH holder, int position, ChucNang model) {
-        holder.tvServiceFunctionName.setOnClickListener(new View.OnClickListener() {
+        holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.setOnClickItemListener(model, getRef(position));
+                listener.setOnClickItemListener(model);
             }
         });
     }
 
 
     class SearchFunctionServiceAdapterVH extends RecyclerView.ViewHolder {
-        ImageView ivIcon;
-        TextView tvServiceFunctionName;
+        TextView tvName;
 
         public SearchFunctionServiceAdapterVH(@NonNull View itemView) {
             super(itemView);
 
-            ivIcon = itemView.findViewById(R.id.ivIcon);
-            tvServiceFunctionName = itemView.findViewById(R.id.tvServiceFunctionName);
+            tvName = itemView.findViewById(R.id.tvName);
         }
     }
 
     public interface Listener {
-        void setOnClickItemListener(ChucNang serviceFunction, DatabaseReference databaseReference);
+        void setOnClickItemListener(ChucNang serviceFunction);
     }
 }

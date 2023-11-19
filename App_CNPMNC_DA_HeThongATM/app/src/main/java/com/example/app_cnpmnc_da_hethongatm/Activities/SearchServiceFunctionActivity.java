@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.SearchFunctionServiceAdapter;
+import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.R;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 public class SearchServiceFunctionActivity extends AppCompatActivity {
     // View
@@ -14,6 +17,7 @@ public class SearchServiceFunctionActivity extends AppCompatActivity {
 
     // Adapter
     SearchFunctionServiceAdapter searchFunctionServiceAdapter;
+    FirebaseRecyclerOptions<ChucNang> chucNangFirebaseRecyclerOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class SearchServiceFunctionActivity extends AppCompatActivity {
 
     // khởi tạo dữ liệu
     public void initData() {
-
+        chucNangFirebaseRecyclerOptions = DbHelper.getServiceFunctions();
     }
 
     // xử lý sự kiện

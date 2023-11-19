@@ -29,4 +29,7 @@ public class ResultCode {
 
     // Chuyển tiền từ tài khoản
     public static int ACCOUNT_TRANSFER_MONEY = 5142;
+
+    // đổi nickname
+    public static int EDIT_NICKNAME = 7000;
 }

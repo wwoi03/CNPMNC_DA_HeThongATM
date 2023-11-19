@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app_cnpmnc_da_hethongatm.Extend.UtilityClass;
 import com.example.app_cnpmnc_da_hethongatm.Model.GuiTietKiem;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
@@ -120,15 +121,7 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
                                 Double tiengui = dataSnapshot.child("TienGui").getValue(double.class);
                                 // Kiểm tra nếu tiengui = 0
                                 if (tiengui == 0) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("Không đủ tiền để rút");
-                                    builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                    AlertDialog dialog = builder.create();
-                                    dialog.show();
+                                    UtilityClass.showDialogError(WithdrawSavingsActivity.this, "Lỗi", "Không đủ tiền để rút!");
                                     return; // Thoát ra khỏi phương thức
                                 }
                                 Long taikhoannguon = dataSnapshot.child("TaiKhoanNguon").getValue(Long.class);
