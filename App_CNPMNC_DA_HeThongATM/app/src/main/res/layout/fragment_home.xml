@@ -278,12 +278,13 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/cvAppointment"
                             android:layout_width="match_parent"
-                            android:layout_height="65dp"
-                            app:cardCornerRadius="8dp"
+                            android:layout_height="62dp"
                             android:layout_margin="1dp"
                             android:background="@drawable/border_radius_all"
-                            android:gravity="center">
+                            android:gravity="center"
+                            app:cardCornerRadius="8dp">
 
                             <!-- hình ảnh -->
                             <ImageView
@@ -296,12 +297,13 @@
 
                         <!-- Tiêu đề -->
                         <TextView
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical|center_horizontal"
                             android:textSize="16dp"
                             android:textColor="@color/black"
-                            android:text="QR Code"
+                            android:text="Đặt lịch hẹn"
                             android:paddingTop="4dp">
                         </TextView>
                     </LinearLayout>

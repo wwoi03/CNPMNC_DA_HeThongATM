@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.ApoimentActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.AppointmentActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.CreateSavingAccountActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.DepositMoreSavingActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.ManageAccountAndCardActivity;
@@ -94,7 +97,7 @@ public class HomeFragment extends Fragment {
     Runnable runnable;
     LinearLayout lninterestrate;
     ImageView imgDeposit;
-    LinearLayout cvTransferMoney, cvManageAccountAndCard;
+    LinearLayout cvTransferMoney, cvManageAccountAndCard,cvAppointment;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -113,6 +116,7 @@ public class HomeFragment extends Fragment {
         cvManageAccountAndCard = view.findViewById(R.id.cvManageAccountAndCard);
         lninterestrate=view.findViewById(R.id.Lninetrestrate);
         imgDeposit=view.findViewById(R.id.imgDeposit);
+        cvAppointment=view.findViewById(R.id.cvAppointment);
     }
 
 
@@ -187,7 +191,17 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        cvAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ApoimentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
+
 
     // lấy danh sách image slide
     private ArrayList<ImageSlide> getImageSlides() {

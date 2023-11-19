@@ -18,6 +18,27 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
+<<<<<<< Updated upstream
+=======
+            android:name=".Activities.ApoimentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.OseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AgreeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AddNewAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.NewaccountActivity"
+            android:exported="false" />
+        <activity
+>>>>>>> Stashed changes
             android:name=".Activities.DepositMoreSavingActivity"
             android:exported="false" />
         <activity
