@@ -15,13 +15,13 @@
 						<div class="form-group">
 							<label for="inputSTK" asp-for="SoTaiKhoan">Số Tài Khoản</label>
 							<input type="text" id="inputSTK" class="form-control" asp-for="SoTaiKhoan">
-							<span asp-validation-for="@Model.SoTaiKhoan" class="text-danger"></span>
+							<span asp-validation-for="SoTaiKhoan" class="text-danger text-validation"></span>
 						</div>
 
 						<div class="form-group">
 							<label for="inputMoney" asp-for="SoTien">Số Tiền</label>
 							<input type="text" id="inputMoney" class="form-control" asp-for="SoTien" />
-							<span asp-validation-for="@Model.SoTien" class="text-danger"></span>
+							<span asp-validation-for="SoTien" class="text-danger text-validation"></span>
 						</div>
 					</div>
 					<!-- /.card-body -->

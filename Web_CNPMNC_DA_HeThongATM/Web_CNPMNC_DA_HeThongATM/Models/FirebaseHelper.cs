@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Controllers;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
@@ -209,20 +210,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
                 return card;
 
-
-
-                //// Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-
-                //if (card == null)
-                //{
-                //    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
-                //}
-
-                //// Nếu tìm thấy thẻ, trả về thông tin của họ
-                //if (card != null)
-                //{
-                //    return card;
-                //}
             }
 
             // Trả về null nếu không tìm thấy khách hàng
@@ -273,6 +260,28 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
 
             return quantityCustomerByMonth;
+        }
+        public bool EditCustomer(KhachHangViewModel khachHang, string CCCD)
+        {
+            //string status = GetStatus(value);
+            try
+            {
+                FirebaseResponse response = client.Set("KhachHang/" + CCCD , khachHang);
+                if (response != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false; // Cập nhật thất bại
+            }
         }
 
         //---------------------------------------------------------------NHÂN VIÊN--------------------------------------------------------
@@ -588,6 +597,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             catch (Exception ex)
             {
+				Console.WriteLine(ex.Message);
                 return false; // Cập nhật thất bại
             }
         }
@@ -1351,6 +1361,126 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
             FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
+        }
+        //-------------------------------------------------Đăt lịch hẹn---------------------------------------------------------------
+        public List<DatLichHen> GetAppointent()
+        {
+            List<DatLichHen> dslichhen = new List<DatLichHen>();
+            FirebaseResponse response = client.Get("DatLichHen");
+            Dictionary<string, DatLichHen> data = response.ResultAs<Dictionary<string, DatLichHen>>();
+            dslichhen = new List<DatLichHen>(data.Values);
+            return dslichhen;
+        }
+        public void InsertAppointment(DatLichHenViewModel datLichHen)
+        {
+            //FirebaseResponse response = client.Push("NhanVien", nhanVien);
+
+            PushResponse response = client.Push("DatLichHen", datLichHen);
+            string newKey = response.Result.name;
+
+            // Gán key vào trường Key của đối tượng NhanVien
+            datLichHen.Key = newKey;
+
+            // Cập nhật dữ liệu Nhân viên với key trong Firebase
+            SetResponse setResponse = client.Set("DatLichHen/" + newKey, datLichHen);
+        }
+       
+        public DatLichHen GetLichHenByKey(string key)
+        {
+            try
+            {
+                FirebaseResponse response = client.Get("DatLichHen/" + key);
+                if (response == null || string.IsNullOrEmpty(response.Body))
+                {
+                    return null;
+                }
+
+                //DatLichHenViewModel datLichHen = JsonConvert.DeserializeObject<DatLichHenViewModel>(response.Body);
+                Dictionary<string, DatLichHen> data = JsonConvert.DeserializeObject<Dictionary<string, DatLichHen>>(response.Body);
+                return data.Values.FirstOrDefault(p => p.Key == key)   ;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        
+        public string GetStatus(long Value)
+
+        {
+
+            FirebaseResponse response = client.Get("DatLichHen");
+
+            if (response != null)
+
+            {
+
+                Dictionary<string, DatLichHenViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, DatLichHenViewModel>>(response.Body);
+
+                var statusData = data.Select(entry => entry.Key).ToList();
+
+                if (statusData != null)
+
+                {
+
+                    return string.Join(",", statusData);
+
+                }
+
+            }
+
+            else
+
+            {
+
+                Console.WriteLine(response.StatusCode);
+
+            }
+
+            return null;
+
+
+
+        }
+        public bool TrangThai(int trangThai, string key)
+        {
+            //string status = GetStatus(value);
+            try
+            {
+                FirebaseResponse response = client.Set("DatLichHen/" + key + "/TrangThai", trangThai);
+                if (response != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false; // Cập nhật thất bại
+            }
+        }
+        public DatLichHen GetAppointmentbyKey(string values)
+        {
+
+            FirebaseResponse response = client.Get("DatLichHen");
+            if (response != null)
+            {
+                Dictionary<string, DatLichHen> data = JsonConvert.DeserializeObject<Dictionary<string, DatLichHen>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.Key == values);
+                if (a != null)
+                {
+                    return a;
+                }
+
+            }
+            return null;
         }
     }
 }

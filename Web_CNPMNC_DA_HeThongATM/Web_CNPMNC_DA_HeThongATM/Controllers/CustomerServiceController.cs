@@ -21,8 +21,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult RutTien(TaiKhoanLienKetViewModel account)
         {
-            double sotien = account.SoTien;
-            firebaseHelper.RutTien(sotien, account.SoTaiKhoan);
+            double sotien = (double)account.SoTien;
+            firebaseHelper.RutTien(sotien, (long)account.SoTaiKhoan);
             return RedirectToAction("RutTien");
         }
 
@@ -65,9 +65,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult NapTien(TaiKhoanLienKetViewModel account)
         {
-            double sotien = account.SoTien;
-            firebaseHelper.NapTien(sotien, account.SoTaiKhoan);
-            return RedirectToAction("NapTien");
+            ModelState.Remove("Key");
+            ModelState.Remove("MaKHKey");
+            ModelState.Remove("MaLoaiTKKey");
+            ModelState.Remove("TenTK");
+			if (ModelState.IsValid)
+                {
+				    double sotien = (double)account.SoTien;
+				    firebaseHelper.NapTien(sotien, (long)account.SoTaiKhoan);
+				    return RedirectToAction("NapTien");
+			    }
+             return View("NapTien", account);
         }
     }
 }

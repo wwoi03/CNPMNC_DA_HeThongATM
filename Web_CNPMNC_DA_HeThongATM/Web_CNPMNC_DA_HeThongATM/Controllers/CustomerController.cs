@@ -121,5 +121,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewBag.IteamSeach = ViewThes;
             return PartialView("SearchCustomer");
         }
+        //public IActionResult EditCustomer(string CCCD)
+        //{
+        //    firebaseHelper.GetCustomerbyid(CCCD);
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public IActionResult EditCustomer(KhachHangViewModel customer)
+        //{
+        //    firebaseHelper.EditCustomer(customer.CCCD, customer);
+        //    return RedirectToAction("Index");
+        //}
     }
 }
