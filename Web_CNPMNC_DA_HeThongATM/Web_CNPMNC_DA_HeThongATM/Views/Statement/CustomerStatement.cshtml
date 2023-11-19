@@ -342,29 +342,32 @@
                             </div>
                         </div>
                         <div class="oxd-table-body" id="Card-list">
-                            @foreach (var item in listLSGD)
-                            {
-                                <div class="backgr oxd-table-row oxd-table-row--with-border">
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.name1</div>
+                            @if(listLSGD != null){
+                                @foreach (var item in listLSGD)
+                                {
+                                    <div class="backgr oxd-table-row oxd-table-row--with-border">
+                                        <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                            <div>@item.name1</div>
+                                        </div>
+                                        <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                            <div>@item.name2</div>
+                                        </div>
+                                        <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;margin-left:30px !important">
+                                            <div>@item.date</div>
+                                        </div>
+                                        <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;margin-left:100px !important">
+                                            <div>@item.LSGD.SoTienGiaoDich</div>
+                                        </div>
+                                        <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                            <div>@item.SoDu</div>
+                                        </div>
+                                        <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
+                                            <div>@item.status</div>
+                                        </div>
                                     </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.name2</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;margin-left:30px !important">
-                                        <div>@item.date</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;margin-left:100px !important">
-                                        <div>@item.LSGD.SoTienGiaoDich</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.SoDu</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.status</div>
-                                    </div>
-                                </div>
+                                }
                             }
+                          
                         </div>
                         <div class="oxd-table-body" id="CardListContainer">
                             <!-- Partial View sẽ được hiển thị ở đây -->
@@ -372,13 +375,6 @@
                     </div>
                 </div>
             </div>
-            <div class="input-group-btn" style="margin-left:90%;margin-top:30px">
-                <button class="btn btn-info" id="search-button">
-                    Xem biểu đồ
-                </button>
-            </div>
-            <div class="orangehrm-bottom-container"><!----></div>
-        </div>
 
     </div>
     @*<script src="/js/ListCard.js"></script>*@

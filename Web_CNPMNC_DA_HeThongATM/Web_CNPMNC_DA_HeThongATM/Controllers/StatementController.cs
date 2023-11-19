@@ -32,7 +32,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             if (ModelState.IsValid)
             {
 
-                if (firebaseHelper.GetCustomerbyid(cus.cccd) != null)
+                if (firebaseHelper.GetCustomerbyid(cus.cccd) != null )
                 {
                     string cusKey = firebaseHelper.GetKeysBycccd(cus.cccd);
                     long stk = firebaseHelper.getAccountbyCusKey(cusKey).SoTaiKhoan;
@@ -45,9 +45,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     List<GiaoDichViewModel> LSDG = new List<GiaoDichViewModel>();
                     ViewBag.LSDG = LSDG;
                     ViewBag.check = "undefined";
-                    return View(cus);
+                    
                 }
-                return View(cus);
+                
             }
             return View(cus);
         }
