@@ -6,207 +6,132 @@
 }
 @model CustomerStatementViewModel
 
+
 <body>
-
-    <div class="card">
-        <div class="card-header">
-            <strong class="card-title">SAO KÊ GIAO DỊCH KHÁCH HÀNG</strong>
+    <div class="content col-lg-12">
+        <div class="orangehrm-paper-container">
         </div>
-        @****************************************************************@
-        <div id="ViewDetails" style="position: absolute;
-    margin-left: 25%;
-    background-color:aliceblue;
-    z-index: 1;
-    display:none;">
-                <div class="form-group">
-                    <label for="cc-exp" class="control-label mb-1">Người gửi </label>
-                    <input style="opacity:0.5; color:black" id="name1" name="cc-exp" type="text" class="form-control cc-exp" data-val="true"  readonly>
-                </div>
-            
-                <div class="form-group">
-                    <label for="cc-exp" class="control-label mb-1">Người nhận</label>
-                    <input style="opacity:0.5; color:black" id="name2" name="cc-exp" type="text" class="form-control cc-exp" data-val="true" readonly>
-                </div>
-            <div class="form-group">
-                <label for="cc-number" class="control-label mb-1">Thời gian giao dịch</label>
-                <input style="opacity:0.5; color:black" id="time" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
-            </div>
-            <div class="form-group">
-                <label for="cc-number" class="control-label mb-1">Loại giao dịch</label>
-                <input style="opacity:0.5; color:black" id="kind" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
-            </div>
+        <div class="orangehrm-paper-container">
 
-            <div class="form-group">
-                <label for="cc-number" class="control-label mb-1">Nội dung</label>
-                <input style="opacity:0.5; color:black" id="note" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="cc-exp" class="control-label mb-1">Số tiền giao dịch</label>
-                        <input style="opacity:0.5; color:black" id="money" name="cc-exp" type="tel" class="form-control cc-exp" data-val="true" placeholder="DD / MM / YYYY" readonly>
+            <hr class="oxd-divider orangehrm-horizontal-margin" />
+            <form class="topform orangehrm-horizontal-padding orangehrm-vertical-padding" asp-controller="Statement" asp-action="CustomerStatement" method="post">
+                @*<div class="topform orangehrm-horizontal-padding orangehrm-vertical-padding">*@
+                <div class="card-search col col-md-4">
+                    <label for="fromDate">Từ ngày:</label>
+                    <input asp-for="fromDate" type="date" id="fromDate" name="fromDate" onchange="check()">
+
+                </div>
+                <div class="card-search col col-md-">
+                    <label for="toDate">Đến ngày:</label>
+                    <input asp-for="toDate" type="date" id="toDate" name="toDate" onchange="check()">
+                </div>
+                <div class="card-search col col-md-4">
+                    <div class="input-group">
+
+                        <input asp-for="cccd" type="text" id="search-input" class="form-control" placeholder="Vui lòng nhập căn cước công dân" onchange="check()">
+                        <div class="input-group-btn">
+                            <button class="btn btn-info" id="search-button" asp-action="CustomerStatement" asp-controller="Statement" formmethod="post">
+                                <i class="fa fa-search"></i> Truy xuất
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="cc-exp" class="control-label mb-1">Phí giao dịch</label>
-                        <input style="opacity:0.5; color:black" id="cost" name="cc-exp" type="tel" class="form-control cc-exp" data-val="true" placeholder="DD / MM / YYYY" readonly>
+                @*</div>*@
+            </form>
+            @*************************************************************************@
+            <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:25%;opacity:0.9;display:none">
+                <h4 class="alert-heading">Kiểm tra lại thông tin!</h4>
+                <p>Ngày bắt đầu không được lớn hơn ngày kết thúc, phải nhập căn cước công dân!</p>
+                <hr>
+            </div>
+            @*****************************************************************@
+            <div class="alert alert-danger" id="notfound" role="alert" style="position:absolute;margin-left:25%;opacity:0.8;display:none">
+                <h4 class="alert-heading">Không tìm thấy thông tin khách hàng!</h4>
+                <p>Thông tin khách hàng bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
+                <hr>
+                <button id="notfound-btn" class="btn btn-danger" onclick="handlerNotFound()">Đã hiểu</button>
+            </div>
+
+            @********************************************************************@
+            <div class="orangehrm-container" style="background-color:aliceblue">
+                <div row-decorator="oxd-table-decorator-card">
+                    <div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Khách hàng</th>
+                                        <th scope="col">Đồng giao dịch</th>
+                                        <th scope="col">Ngày giao dịch</th>
+                                        <th scope="col">Số tiền chuyển</th>
+                                        <th scope="col">Số dư</th>
+                                        <th scope="col">Trạng thái</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (listLSGD != null)
+                                    {
+                                        @foreach (var item in listLSGD)
+                                        {
+
+                                            <tr>
+                                                <td>@item.name1</td>
+                                                <td>@item.name2</td>
+                                                <td>@item.date</td>
+                                                <td>@item.LSGD.SoTienGiaoDich</td>
+                                                <td>@item.SoDu</td>
+                                                <td>@item.status</td>
+
+                                            </tr>
+
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-               
-            </div>
-            <div>
-                <button type="submit" class="btn btn-lg btn-info btn-block" onclick="Hide()">
-
-                    <span id="payment-button-amount" style="color:white">Thoát</span>
-                   
-                </button>
-            </div>
-        </div>
-        @********************************************************@
-        <form class="topform orangehrm-horizontal-padding orangehrm-vertical-padding" asp-controller="Statement" asp-action="CustomerStatement" method="post">
-            @*<div class="topform orangehrm-horizontal-padding orangehrm-vertical-padding">*@
-            <div class="card-search col col-md-4">
-                <label for="fromDate">Từ ngày:</label>
-                <input asp-for="fromDate" type="date" id="fromDate" name="fromDate" onchange="check()" style="background-color:antiquewhite">
 
             </div>
-            <div class="card-search col col-md-">
-                <label for="toDate">Đến ngày:</label>
-                <input asp-for="toDate" type="date" id="toDate" name="toDate" onchange="check()" style="background-color:antiquewhite">
-            </div>
-            <div class="card-search col col-md-4">
-                <div class="input-group">
-
-                    <input asp-for="cccd" type="text" id="search-input" class="form-control" placeholder="Vui lòng nhập căn cước công dân" onchange="check()">
-                    <div class="input-group-btn">
-                        <button class="btn btn-info" id="search-button" asp-action="CustomerStatement" asp-controller="Statement" formmethod="post">
-                            <i class="fa fa-search"></i> Truy xuất
-                        </button>
-                    </div>
-                </div>
-            </div>
-            @*</div>*@
-        </form>
-        @*************************************************************************@
-        <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:25%;opacity:0.9;display:none">
-            <h4 class="alert-heading">Kiểm tra lại thông tin!</h4>
-            <p>Ngày bắt đầu không được lớn hơn ngày kết thúc, phải nhập căn cước công dân!</p>
-            <hr>
-        </div>
-        @*****************************************************************@
-        <div class="alert alert-danger" id="notfound" role="alert" style="position:absolute;margin-left:25%;opacity:0.8;display:none">
-            <h4 class="alert-heading">Không tìm thấy thông tin khách hàng!</h4>
-            <p>Thông tin khách hàng bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
-            <hr>
-            <button id="notfound-btn" class="btn btn-danger" onclick="handlerNotFound()">Đã hiểu</button>
-        </div>
-
-        @********************************************************************@
-
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Khách hàng</th>
-                        <th scope="col">Đồng giao dịch</th>
-                        <th scope="col">Ngày giao dịch</th>
-                        <th scope="col">Số tiền chuyển</th>
-                        <th scope="col">Số dư</th>
-                        <th scope="col">Trạng thái</th>
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in listLSGD)
-                    {
-                       
-                        <tr>
-                            <td>@item.name1</td>
-                            <td>@item.name2</td>
-                            <td>@item.date</td>
-                            <td>@item.LSGD.SoTienGiaoDich</td>
-                            <td>@item.SoDu</td>
-                            <td>@item.status</td>
-                            
-
-                            <td>
-                                <a id="details" name="@item.Key" class="btn btn-primary" onclick="Details()">Xem thông tin</a>
-                                @*<a href="@Url.Action("DeleteStaff", "Staff", new { DeleteKey = @key})" class="btn btn-danger">Xóa</a>*@
-                            </td>
-                        </tr>
-
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    @*<script src="/js/ListCard.js"></script>*@
-    <script>
-        if ("@check" === "undefined") {
-            document.getElementById('notfound').style.display = 'block';
-            document.getElementById("search-input").value = "";
-        }
-
-        if (document.getElementById("search-input").value === "") {
-            document.getElementById("search-button").disabled = true;
-        }
-
-        if (@Model !== null) {
-            document.getElementById("fromDate").value = "@Model.fromDate";
-            document.getElementById("toDate").value = "@Model.toDate";
-        }
-
-
-        function handlerNotFound() {
-            document.getElementById('notfound').style.display = 'none';
-        }
-        function check() {
-            var from = document.getElementById("fromDate").value;
-            var to = document.getElementById("toDate").value;
-            var search = document.getElementById("search-input").value;
-
-            var fromDate = new Date(from);
-            var toDate = new Date(to);
-
-            if (fromDate > toDate) {
-                document.getElementById('khongtimthay').style.display = 'block';
-                document.getElementById("search-button").disabled = true;
-            }
-            else if (fromDate <= toDate && search !== "") {
-                document.getElementById('khongtimthay').style.display = 'none';
-                document.getElementById("search-button").disabled = false;
-            }
-        }
-
-        function Details(){
-            var key = document.getElementById("details").getAttribute("name");
-            
-            $.ajax({
-                url: "../../Statement/Details", // Đường dẫn của Controller và Action xử lý yêu cầu
-                type: "GET",
-                contentType: "application/json",
-                data: JSON.stringify(key),
-                success: function (data) {
-                    document.getElementById("name1").value = @Context.Session.GetString("nguon");
-                    document.getElementById("name2").value = @Context.Session.GetString("nhan");
-                    document.getElementById("time").value = data.NgayGiaoDich + " " + data.GioGiaoDich;
-                    document.getElementById("kind").value = @Context.Session.GetString("loai");
-                    document.getElementById("note").value = data.NoiDungChuyenKhoan;
-                    document.getElementById("money").value = data.SoTienGiaoDich;
-                    document.getElementById("cost").value = data.PhiGiaoDich;
-
-                    document.getElementById("ViewDetails").style.display = "block";
-                },
-                error: function (error) {
-                    // Xử lý lỗi khi gửi yêu cầu
-                    console.error("Lỗi khi gửi yêu cầu", error);
+            @*<script src="/js/ListCard.js"></script>*@
+            <script>
+                if ("@check" === "undefined") {
+                    document.getElementById('notfound').style.display = 'block';
+                    document.getElementById("search-input").value = "";
                 }
-            });
-        }
-        function Hide(){
-            document.getElementById("ViewDetails").style.display = "none";
-        }
 
-    </script>
+                if (document.getElementById("search-input").value === "") {
+                    document.getElementById("search-button").disabled = true;
+                }
+
+                if (@Model !== null) {
+                    document.getElementById("fromDate").value = "@Model.fromDate";
+                    document.getElementById("toDate").value = "@Model.toDate";
+                }
+
+
+                function handlerNotFound() {
+                    document.getElementById('notfound').style.display = 'none';
+                }
+                function check() {
+                    var from = document.getElementById("fromDate").value;
+                    var to = document.getElementById("toDate").value;
+                    var search = document.getElementById("search-input").value;
+
+                    var fromDate = new Date(from);
+                    var toDate = new Date(to);
+
+                    if (fromDate > toDate) {
+                        document.getElementById('khongtimthay').style.display = 'block';
+                        document.getElementById("search-button").disabled = true;
+                    }
+                    else if (fromDate <= toDate && search !== "") {
+                        document.getElementById('khongtimthay').style.display = 'none';
+                        document.getElementById("search-button").disabled = false;
+                    }
+                }
+
+            </script>
 </body>
