@@ -184,7 +184,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(checkvalid == true){
+                            if(checkvalid == true){
+                                BuildAlertDialog("Nhập đúng tên người thụ hưởng");
+                                return;
+                            }
                             if (taiKhoanNguonKey.isEmpty()) {
                                 BuildAlertDialog("Vui lòng chọn tài khoản nguồn");
                                 return;
@@ -218,7 +221,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                    }
+
                 },2000);
             }
         });
@@ -284,8 +287,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
             // Hiển thị nút quay lại
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
     }
 
     // xử lý sự kiện ấn nút quay lại
