@@ -37,11 +37,11 @@ public class ScanQRActivity extends AppCompatActivity {
                 String SoTaiKhoan = parts[0];
                 String amount = "";
                 String message = "";
-                if (parts.length > 2) {
-                    amount = parts[2];
+                if (parts.length > 1) {
+                    amount = parts[1];
                 }
-                if (parts.length > 3) {
-                    message = parts[3];
+                if (parts.length > 2) {
+                    message = parts[2];
                 }
                 Intent intent = new Intent(ScanQRActivity.this, TransferMoneyActivity.class);
                 intent.putExtra("SoTaiKhoan", SoTaiKhoan);

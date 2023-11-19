@@ -113,11 +113,11 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
                             String currentKey = dataSnapshot.getKey();
                             if (currentKey.equals(id)){
                                 Double tiengui = dataSnapshot.child("TienGui").getValue(double.class);
-                                Long taikhoannguon = dataSnapshot.child("TaiKhoanNguon").getValue(Long.class);taiKhoanLienKetRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                Long taikhoannguon = dataSnapshot.child("TaiKhoanNguon").getValue(Long.class);
+                                taiKhoanLienKetRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){
@@ -137,16 +137,15 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            Intent intent = new Intent(WithdrawSavingsActivity.this, NotificationActivity.class);
-                            startActivity(intent);
                         }
+                        Intent intent = new Intent(WithdrawSavingsActivity.this, NotificationActivity.class);
+                        startActivity(intent);
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
-
             }
         });
     }
