@@ -110,6 +110,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return View();
         }
+
         [HttpPost]
         public IActionResult SettlementOfSavings(GuiTietKiemViewModel guiTietKiemView)
         {
@@ -130,12 +131,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 string ngaygui = (string)data["guiTietKiem"]["ngayGui"];
                 //bước lấy số tiền tiết kiệm tiền lãi + tới kỳ
                 double tienrut = (double)data["guiTietKiem"]["tienGui"] + (double)data["guiTietKiem"]["tienLaiToiKy"];
+                long taikhoanng = (long)data["guiTietKiem"]["taiKhoanNguon"];
+                string taikhoantietkiem = (string)data["guiTietKiem"]["key"];
                 //kiểm tra ngày gửi đúng lấy số tiền lãi sai thì thông báo không thể tất toán đợi đến ngày .... 
                 //nếu rút thành công thì lưu lịch sử và xóa sổ tiết kiệm
                 DateTime futureDate;
                 if (CompareDate(ngaygui, kihan, out futureDate))
                 {
-
+                    firebaseHelper.TatToanTietKiem(taikhoanng, taikhoantietkiem,tienrut);
+                    TempData["Message"] = "Tất toán";
+                    return RedirectToAction("SettlementOfSavings");
                 }
                 else
                 {
@@ -154,15 +159,21 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             GuiTietKiem guiTietKiem = firebaseHelper.GetAccontSaveMoney(stk);
             LaiSuat laiSuat = firebaseHelper.GetLaiSuat(guiTietKiem.LaiSuatKey);
             TaiKhoanLienKet taiKhoanLien = firebaseHelper.GetTaiKhoanLienKetSTK(guiTietKiem.TaiKhoanNguon);
+            DateTime futureDate;
+            CompareDate(guiTietKiem.NgayGui, laiSuat.KyHan,out futureDate);
+            
             var data = new
             {
                 guiTietKiem,
                 laiSuat,
                 taiKhoanLien.TenTK,
+                ngayduocrut = futureDate.ToString(),
 
             };
             return Json(data);
         }
+
+
         [HttpGet]
         public IActionResult AdmitMoney()
         {
@@ -232,7 +243,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             futureDate = objDate.AddMonths(int.Parse(numberPart));
 
             // So sánh với ngày hiện tại
-            if (futureDate > DateTime.Now)
+            if (futureDate < DateTime.Now)
             {
                 return true;
             }

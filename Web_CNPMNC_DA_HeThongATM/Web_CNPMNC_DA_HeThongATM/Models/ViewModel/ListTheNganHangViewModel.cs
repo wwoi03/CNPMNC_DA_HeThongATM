@@ -22,5 +22,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         public long SoTaiKhoan { get; set; }
 
         public int TinhTrangThe { get; set; }
+
+      
     }
 }

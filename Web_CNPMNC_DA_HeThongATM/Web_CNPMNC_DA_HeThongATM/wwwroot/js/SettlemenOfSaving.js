@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById('NgayGui').innerHTML = data.guiTietKiem.ngayGui;
                         document.getElementById('kyhan').innerHTML = data.laiSuat.kyHan;
                         document.getElementById('tile').innerHTML = data.laiSuat.tiLe;
-                        document.getElementById('OutTien').value = "Rút " + (data.guiTietKiem.tienGui + data.guiTietKiem.tienLaiToiKy)+" VND"
+                        document.getElementById('OutTien').value = "Rút " + (data.guiTietKiem.tienGui + data.guiTietKiem.tienLaiToiKy) + " VND"
+                        $('#alertnote').css('display', 'block');
+                        $('#alertcontent').html("Khách chỉ có thể rút sau ngày " + data.ngayduocrut);
                         $("#datataikhoan").val(JSON.stringify(data));
                     }
                 }, Error: function () {
