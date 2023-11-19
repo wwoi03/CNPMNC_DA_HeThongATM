@@ -45,7 +45,7 @@ public class formUserRegister extends AppCompatActivity {
     boolean checkcccd = true;
     String sdt ;
     Pattern pattern = Pattern.compile("[!@#$%^&*()_+\\-=\\[\\]{};':\",./<>?|\\\\]");
-    Pattern password = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{6,}$");
+    Pattern password = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
     Pattern emailPattern = Pattern.compile("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}");
     // Tạo một Matcher với inputText và kiểm tra xem có ký tự đặc biệt hay không
 
@@ -84,31 +84,27 @@ public class formUserRegister extends AppCompatActivity {
             public void onClick(View v) {
                 int i = radio_group.getCheckedRadioButtonId();
                 radioButton = findViewById(i);
-                Matcher matcher4 = pattern.matcher(edt_cccd.getText().toString().trim());
                 Matcher matcher  = emailPattern.matcher(edt_email.getText().toString().trim());
-                Matcher matcher1 = password.matcher(edt_matkhau.getText().toString().trim());
-                if(TextUtils.isEmpty(edt_tenkh.getText()) &&TextUtils.isEmpty(edt_email.getText()) &&TextUtils.isEmpty(edt_cccd.getText())&&TextUtils.isEmpty(tv_ngaysinh.getText())&&TextUtils.isEmpty(edt_matkhau.getText())){
+                if(TextUtils.isEmpty(edt_tenkh.getText()) ||TextUtils.isEmpty(edt_email.getText()) ||TextUtils.isEmpty(edt_cccd.getText())||TextUtils.isEmpty(tv_ngaysinh.getText())||TextUtils.isEmpty(edt_matkhau.getText())){
                     Toast.makeText(formUserRegister.this,"Vui lòng điền đủ các trường",Toast.LENGTH_SHORT).show();
                     return;
+                }else if(edt_cccd.getText().toString().trim().length() != 12){
+                    Toast.makeText(formUserRegister.this,"CCCD phải đủ 12 số",Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                if(CheckDate == false){
+                else if (CheckDate == false) {
                     Toast.makeText(formUserRegister.this,"Vui lòng nhập ngày sinh",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(matcher4.find()){
-                    Toast.makeText(formUserRegister.this,"CCCD không được mang kí tự đặc biệt",Toast.LENGTH_SHORT).show();
+                else if (!matcher.find()) {
+                    Toast.makeText(formUserRegister.this,"Nhập đúng định dạng Email",Toast.LENGTH_SHORT).show();
                     return;
-                }
-                if(!matcher1.find()){
-                    Toast.makeText(formUserRegister.this,"Mật khẩu phải chứa ít nhất một chữ cái viết hoa, một chữ cái viết thường, một số và một ký tự đặc biệt !@#$%^&*()_+",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(checkcccd == false){
+                }else if (checkcccd == false) {
                     Toast.makeText(formUserRegister.this,"Vui lòng nhập cccd khác",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!matcher.find()){
-                    Toast.makeText(formUserRegister.this,"Nhập đúng định dạng Email",Toast.LENGTH_SHORT).show();
+                else if (edt_matkhau.getText().toString().trim().length() <6) {
+                    Toast.makeText(formUserRegister.this,"Mật khẩu phải dài hơn 6 kí tự",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {

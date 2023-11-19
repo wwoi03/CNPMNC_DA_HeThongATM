@@ -70,7 +70,7 @@ public class GetOTPActivity extends AppCompatActivity {
                                     btn_getotp.setVisibility(View.VISIBLE);
                                 }
                             }
-                        },8000);
+                        },5000);
                     }
                     else {
                         Toast.makeText(GetOTPActivity.this,"Vui lòng nhập đúng định dạng sdt",Toast.LENGTH_SHORT).show();
