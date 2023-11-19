@@ -85,6 +85,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
     Intent getDataIntent;
     Context context;
 
+    boolean checkvalid;
+
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -450,5 +452,54 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void checkThuHuong(){
+        String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
+        checkvalid = false;
+        // kiểm tra edit text rỗng?
+        if(accountBeneficiaryString.isEmpty()){
+            tvNameBeneficiary.setText("");
+            checkvalid =false;
+        }
+        if (!accountBeneficiaryString.isEmpty()) {
+            long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
+            if(taiKhoanNguon != null){
+                if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
+                    BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
+                    tvNameBeneficiary.setText("");
+                    checkvalid =false;
+                }
+                else {
+                    // truy vấn đến TaiKhoanLK theo số tài khoản
+                    DbHelper.firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(accountBeneficiary)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                            checkvalid = true;
+                                            taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
+                                            etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
+                                            tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
+                                            taiKhoanHuongKey = dataSnapshot.getKey();
+                                            Log.d("checkvalid trc khi set", "checkvalid trc khi set: "+checkvalid);
+                                            Log.d("checkvalid sau khi set", "checkvalid trc khi set: "+checkvalid);
+                                        }
+                                    }
+                                    else {
+                                        tvNameBeneficiary.setText("");
+                                        BuildAlertDialog("không tìm thấy người thụ hưởng");
+                                        checkvalid =false;
+                                    }
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    checkvalid =false;
+                                }
+                            });
+                }
+            }
+        }
     }
 }

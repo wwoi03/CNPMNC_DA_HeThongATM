@@ -410,7 +410,6 @@ public class AddEditReminderTransferMoneyActivity extends AppCompatActivity {
                         showInfoBeneficiary();
                         BENEFICIARY_EXISTS = true;
                         break;
-
                     }
                 } else { // không tồn tại
                     hiddenInfoBeneficiary();
