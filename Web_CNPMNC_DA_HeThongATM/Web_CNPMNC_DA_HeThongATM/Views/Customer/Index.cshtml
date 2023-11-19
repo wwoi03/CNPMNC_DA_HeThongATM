@@ -12,7 +12,7 @@
                 <strong class="card-title">Danh sách khách hàng</strong>
                 <div class="card-search col col-md-8" style="margin-right:100px">
                     <div class="input-group">
-                        <input type="text" id="search-input" class="form-control">
+                        <input type="text" id="search-input" class="form-control" placeholder="Tìm kiếm">
                         <div class="input-group-btn">
                             <button class="btn btn-info" id="search-button">
                                 <i class="fa fa-search"></i> Search
@@ -53,10 +53,6 @@
 
                                     <a class="btn btn-success" asp-controller="Customer" asp-action="Edit" asp-route-CCCD="@item.CCCD">
                                         <i class="fas fa-edit"></i>
-                                    </a>
-
-                                    <a class="btn btn-danger" asp-controller="Customer" asp-action="Delete" asp-route-CCCD="@item.CCCD">
-                                        <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
                             </tr>
