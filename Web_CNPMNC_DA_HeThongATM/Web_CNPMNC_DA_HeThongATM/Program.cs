@@ -28,6 +28,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Statement}/{action=BankStatement}/{id?}");
+    pattern: "{controller=Staff}/{action=Login}/{id?}");
 
 app.Run();

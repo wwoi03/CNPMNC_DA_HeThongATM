@@ -6,380 +6,140 @@
 }
 @model CustomerStatementViewModel
 
-
-<head>
-    <style>
-        .topform {
-            display: flex;
-        }
-
-        .form-control {
-            border-radius: 20px;
-            border: 1px
-        }
-        /*-------------------listcard*/
-
-
-        /* Style the container */
-        .orangehrm-container {
-            background-color: #e8eaef;
-            padding: 0.5rem;
-        }
-
-
-
-        /* Style the table */
-        .oxd-table {
-            color: var(--oxd-interface-gray-darken-1-color, #64728c);
-            font-family: Nunito Sans, sans-serif;
-            font-size: .75rem;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Style table header */
-        .oxd-table-header {
-            font-weight: 700;
-            display: flex;
-            flex-direction: column;
-        }
-
-            .oxd-table-header th {
-                text-align: left;
-            }
-
-        /* Style table rows */
-        .oxd-table-row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            align-items: center;
-            height: 100%;
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-        /* Style alternating rows */
-        .backgr {
-            background-color: #f2f2f2;
-        }
-
-        /* Style table cells */
-        .oxd-table-cell {
-            text-align: left;
-        }
-
-        .oxd-padding-cell {
-            padding: 5px;
-        }
-
-        .oxd-table-body {
-            font-weight: 400;
-            display: grid;
-            grid-gap: 5px;
-        }
-
-        .oxd-table-card {
-            min-height: 45px;
-            border-radius: 1.2rem;
-            background-color: var(--oxd-white-color, #fff);
-        }
-
-        .oxd-table-row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            align-items: center;
-            height: 100%;
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-        .oxd-table-body {
-            font-weight: 400;
-            display: grid;
-            grid-gap: 5px;
-        }
-
-        /* Style checkboxes */
-        .oxd-checkbox-wrapper {
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-
-        .oxd-checkbox-input-icon {
-            color: var(--oxd-primary-font-color, #fff);
-            font-size: 1rem;
-            position: absolute;
-            line-height: 1.5;
-            align-self: center;
-        }
-
-        /* Style icons */
-        .oxd-icon {
-            font-size: 16px;
-            vertical-align: middle;
-            margin-right: 5px;
-        }
-
-        /* Style buttons */
-
-        .oxd-icon-button {
-            font-size: 18px;
-            font-weight: 400;
-            border-radius: 50%;
-            border: 0;
-            cursor: pointer;
-            min-width: 36px;
-            min-height: 36px;
-            padding: 6px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: var(--oxd-interface-gray-darken-1-color, #64728c);
-            background-color: var(--oxd-interface-gray-darken-1-alpha-10-color, rgba(100, 114, 140, .1));
-        }
-
-        .oxd-table-row {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            align-items: center;
-            height: 100%;
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-        .orangehrm-bottom-container {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            padding: 25px;
-            background-color: #befeee;
-        }
-
-        .orangehrm-paper-container {
-            background-color: #befeee;
-            border-radius: 1.2rem;
-        }
-
-        .oxd-table-cell {
-            overflow-wrap: break-word;
-            word-break: break-word;
-        }
-
-        .oxd-padding-cell {
-            padding: 5px;
-        }
-
-        .oxd-table-card-cell-checkbox {
-            width: -moz-fit-content;
-            width: fit-content;
-        }
-
-        .oxd-checkbox-wrapper label {
-            cursor: pointer;
-            display: flex;
-            align-content: center;
-            font-family: Nunito Sans, sans-serif;
-            color: #64728c;
-            font-size: 12px;
-            font-weight: 400;
-            width: -moz-fit-content;
-            width: fit-content;
-        }
-
-        .oxd-divider {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-        .oxd-divider {
-            border: 0;
-            border-top: 1px solid var(--oxd-interface-gray-lighten-2-color, #e8eaef);
-        }
-
-        .orangehrm-horizontal-margin {
-            margin-left: 25px;
-            margin-right: 25px;
-        }
-
-        .orangehrm-vertical-padding {
-            padding-top: 25px;
-            padding-bottom: 25px;
-        }
-
-        .orangehrm-horizontal-padding {
-            padding-left: 25px;
-            padding-right: 25px;
-        }
-
-        body {
-            color: var(--oxd-interface-gray-darken-1-color, #64728c);
-            font-family: Nunito Sans, sans-serif;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-        .oxd-table-cell-actions {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 5px;
-            align-items: center;
-        }
-
-        text--span {
-            color: var(--oxd-interface-gray-darken-1-color, #64728c);
-        }
-
-        .oxd-tex {
-            font-family: Nunito Sans, sans-serif;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-        .content {
-            width: 100%;
-            text-transform: inherit;
-        }
-
-        .oxd-table-cell oxd-padding-cell {
-            padding: 5px;
-        }
-
-        .oxd-table-cell div {
-            text-align: left;
-        }
-
-    </style>
-</head>
 <body>
-    <div class="content col-lg-12">
-        <div class="orangehrm-paper-container">
+
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">SAO KÊ GIAO DỊCH KHÁCH HÀNG</strong>
         </div>
-        <div class="orangehrm-paper-container">
-
-            <hr class="oxd-divider orangehrm-horizontal-margin" />
-            <form class="topform orangehrm-horizontal-padding orangehrm-vertical-padding" asp-controller="Statement" asp-action="CustomerStatement" method="post">
-                @*<div class="topform orangehrm-horizontal-padding orangehrm-vertical-padding">*@
-                <div class="card-search col col-md-4">
-                    <label for="fromDate">Từ ngày:</label>
-                    <input asp-for="fromDate" type="date" id="fromDate" name="fromDate" onchange="check()">
-
+        @****************************************************************@
+        <div id="ViewDetails" style="position: absolute;
+    margin-left: 25%;
+    background-color:aliceblue;
+    z-index: 1;
+    display:none;">
+                <div class="form-group">
+                    <label for="cc-exp" class="control-label mb-1">Người gửi </label>
+                    <input style="opacity:0.5; color:black" id="name1" name="cc-exp" type="text" class="form-control cc-exp" data-val="true"  readonly>
                 </div>
-                <div class="card-search col col-md-">
-                    <label for="toDate">Đến ngày:</label>
-                    <input asp-for="toDate" type="date" id="toDate" name="toDate" onchange="check()">
+            
+                <div class="form-group">
+                    <label for="cc-exp" class="control-label mb-1">Người nhận</label>
+                    <input style="opacity:0.5; color:black" id="name2" name="cc-exp" type="text" class="form-control cc-exp" data-val="true" readonly>
                 </div>
-                <div class="card-search col col-md-4">
-                    <div class="input-group">
+            <div class="form-group">
+                <label for="cc-number" class="control-label mb-1">Thời gian giao dịch</label>
+                <input style="opacity:0.5; color:black" id="time" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
+            </div>
+            <div class="form-group">
+                <label for="cc-number" class="control-label mb-1">Loại giao dịch</label>
+                <input style="opacity:0.5; color:black" id="kind" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
+            </div>
 
-                        <input asp-for="cccd" type="text" id="search-input" class="form-control" placeholder="Vui lòng nhập căn cước công dân" onchange="check()">
-                        <div class="input-group-btn">
-                            <button class="btn btn-info" id="search-button" asp-action="CustomerStatement" asp-controller="Statement" formmethod="post">
-                                <i class="fa fa-search"></i> Truy xuất
-                            </button>
-                        </div>
+            <div class="form-group">
+                <label for="cc-number" class="control-label mb-1">Nội dung</label>
+                <input style="opacity:0.5; color:black" id="note" name="cc-number" type="text" class="form-control cc-number identified visa" readonly>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="cc-exp" class="control-label mb-1">Số tiền giao dịch</label>
+                        <input style="opacity:0.5; color:black" id="money" name="cc-exp" type="tel" class="form-control cc-exp" data-val="true" placeholder="DD / MM / YYYY" readonly>
                     </div>
                 </div>
-                @*</div>*@
-            </form>
-            @*************************************************************************@
-            <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:25%;opacity:0.9;display:none">
-                <h4 class="alert-heading">Kiểm tra lại thông tin!</h4>
-                <p>Ngày bắt đầu không được lớn hơn ngày kết thúc, phải nhập căn cước công dân!</p>
-                <hr>
-            </div>
-            @*****************************************************************@
-            <div class="alert alert-danger" id="notfound" role="alert" style="position:absolute;margin-left:25%;opacity:0.8;display:none">
-                <h4 class="alert-heading">Không tìm thấy thông tin khách hàng!</h4>
-                <p>Thông tin khách hàng bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
-                <hr>
-                <button id="notfound-btn" class="btn btn-danger" onclick="handlerNotFound()">Đã hiểu</button>
-            </div>
-
-            @********************************************************************@
-            <div class="orangehrm-container">
-                <div row-decorator="oxd-table-decorator-card">
-                    <div>
-                        <div class="oxd-table-row oxd-table-row--with-border">
-                            @*   <div>
-                            <div>
-                            <label class="">
-                            <!---->
-                            <input type="checkbox">
-                            <span>
-                            <i class="oxd-icon bi-dash"></i>
-                            </span>
-                            </label>
-                            </div>
-                            <!---->
-                            </div> *@
-                            <div style="flex: 1 1 3%;">
-                                <p> Khách Hàng</p>
-                            </div>
-
-                            <div style="flex: 1 1 3%;">
-                                <p> Đồng Giao Dịch</p>
-                            </div>
-
-                            <div style="flex: 1 1 2%;">
-                                <p>Ngày Giao Dịch</p>
-                            </div>
-
-                            <div style="flex: 1 1 0%;">
-                                <p> Số Tiền Chuyển</p>
-                            </div>
-                            <div style="flex: 1 1 0%;">
-                                <p> Số Dư</p>
-                            </div>
-                            <div style="flex: 1 1 0%;">
-                                <p> Trạng Thái</p>
-                            </div>
-                        </div>
-                        <div class="oxd-table-body" id="Card-list">
-                            @foreach (var item in listLSGD)
-                            {
-                                <div class="backgr oxd-table-row oxd-table-row--with-border">
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.name1</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.name2</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;margin-left:30px !important">
-                                        <div>@item.date</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;margin-left:100px !important">
-                                        <div>@item.LSGD.SoTienGiaoDich</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.SoDu</div>
-                                    </div>
-                                    <div class="oxd-table-cell oxd-padding-cell" style="flex: 1 1 0%;">
-                                        <div>@item.status</div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                        <div class="oxd-table-body" id="CardListContainer">
-                            <!-- Partial View sẽ được hiển thị ở đây -->
-                        </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="cc-exp" class="control-label mb-1">Phí giao dịch</label>
+                        <input style="opacity:0.5; color:black" id="cost" name="cc-exp" type="tel" class="form-control cc-exp" data-val="true" placeholder="DD / MM / YYYY" readonly>
                     </div>
                 </div>
+               
             </div>
-            <div class="input-group-btn" style="margin-left:90%;margin-top:30px">
-                <button class="btn btn-info" id="search-button">
-                    Xem biểu đồ
+            <div>
+                <button type="submit" class="btn btn-lg btn-info btn-block" onclick="Hide()">
+
+                    <span id="payment-button-amount" style="color:white">Thoát</span>
+                   
                 </button>
             </div>
-            <div class="orangehrm-bottom-container"><!----></div>
+        </div>
+        @********************************************************@
+        <form class="topform orangehrm-horizontal-padding orangehrm-vertical-padding" asp-controller="Statement" asp-action="CustomerStatement" method="post">
+            @*<div class="topform orangehrm-horizontal-padding orangehrm-vertical-padding">*@
+            <div class="card-search col col-md-4">
+                <label for="fromDate">Từ ngày:</label>
+                <input asp-for="fromDate" type="date" id="fromDate" name="fromDate" onchange="check()" style="background-color:antiquewhite">
+
+            </div>
+            <div class="card-search col col-md-">
+                <label for="toDate">Đến ngày:</label>
+                <input asp-for="toDate" type="date" id="toDate" name="toDate" onchange="check()" style="background-color:antiquewhite">
+            </div>
+            <div class="card-search col col-md-4">
+                <div class="input-group">
+
+                    <input asp-for="cccd" type="text" id="search-input" class="form-control" placeholder="Vui lòng nhập căn cước công dân" onchange="check()">
+                    <div class="input-group-btn">
+                        <button class="btn btn-info" id="search-button" asp-action="CustomerStatement" asp-controller="Statement" formmethod="post">
+                            <i class="fa fa-search"></i> Truy xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+            @*</div>*@
+        </form>
+        @*************************************************************************@
+        <div class="alert alert-danger" id="khongtimthay" role="alert" style="position:absolute;margin-left:25%;opacity:0.9;display:none">
+            <h4 class="alert-heading">Kiểm tra lại thông tin!</h4>
+            <p>Ngày bắt đầu không được lớn hơn ngày kết thúc, phải nhập căn cước công dân!</p>
+            <hr>
+        </div>
+        @*****************************************************************@
+        <div class="alert alert-danger" id="notfound" role="alert" style="position:absolute;margin-left:25%;opacity:0.8;display:none">
+            <h4 class="alert-heading">Không tìm thấy thông tin khách hàng!</h4>
+            <p>Thông tin khách hàng bạn cần tìm không thể tìm thấy, vui lòng kiểm tra lại giùm chúng tôi!</p>
+            <hr>
+            <button id="notfound-btn" class="btn btn-danger" onclick="handlerNotFound()">Đã hiểu</button>
         </div>
 
+        @********************************************************************@
+
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Khách hàng</th>
+                        <th scope="col">Đồng giao dịch</th>
+                        <th scope="col">Ngày giao dịch</th>
+                        <th scope="col">Số tiền chuyển</th>
+                        <th scope="col">Số dư</th>
+                        <th scope="col">Trạng thái</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in listLSGD)
+                    {
+                       
+                        <tr>
+                            <td>@item.name1</td>
+                            <td>@item.name2</td>
+                            <td>@item.date</td>
+                            <td>@item.LSGD.SoTienGiaoDich</td>
+                            <td>@item.SoDu</td>
+                            <td>@item.status</td>
+                            
+
+                            <td>
+                                <a id="details" name="@item.Key" class="btn btn-primary" onclick="Details()">Xem thông tin</a>
+                                @*<a href="@Url.Action("DeleteStaff", "Staff", new { DeleteKey = @key})" class="btn btn-danger">Xóa</a>*@
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
     @*<script src="/js/ListCard.js"></script>*@
     <script>
@@ -417,6 +177,35 @@
                 document.getElementById('khongtimthay').style.display = 'none';
                 document.getElementById("search-button").disabled = false;
             }
+        }
+
+        function Details(){
+            var key = document.getElementById("details").getAttribute("name");
+            
+            $.ajax({
+                url: "../../Statement/Details", // Đường dẫn của Controller và Action xử lý yêu cầu
+                type: "GET",
+                contentType: "application/json",
+                data: JSON.stringify(key),
+                success: function (data) {
+                    document.getElementById("name1").value = @Context.Session.GetString("nguon");
+                    document.getElementById("name2").value = @Context.Session.GetString("nhan");
+                    document.getElementById("time").value = data.NgayGiaoDich + " " + data.GioGiaoDich;
+                    document.getElementById("kind").value = @Context.Session.GetString("loai");
+                    document.getElementById("note").value = data.NoiDungChuyenKhoan;
+                    document.getElementById("money").value = data.SoTienGiaoDich;
+                    document.getElementById("cost").value = data.PhiGiaoDich;
+
+                    document.getElementById("ViewDetails").style.display = "block";
+                },
+                error: function (error) {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    console.error("Lỗi khi gửi yêu cầu", error);
+                }
+            });
+        }
+        function Hide(){
+            document.getElementById("ViewDetails").style.display = "none";
         }
 
     </script>

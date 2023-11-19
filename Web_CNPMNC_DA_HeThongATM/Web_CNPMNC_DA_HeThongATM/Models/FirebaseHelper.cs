@@ -1191,7 +1191,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                         sodu = item.SoDuLucNhan;
                     }
 
-                    GiaoDichViewModel ls = new GiaoDichViewModel(item, status, date, tenKH, tenKH2, sodu);
+                    GiaoDichViewModel ls = new GiaoDichViewModel(item, status, date, tenKH, tenKH2, sodu, item.Key);
                     LSGD.Add(ls);
                 }
             }
@@ -1421,6 +1421,31 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return Sum;
         }
-     
+        public GiaoDich getHisbyKey(string key)
+        {
+            FirebaseResponse response = client.Get("GiaoDich");
+            if (response != null)
+            {
+                Dictionary<string, GiaoDich> data = JsonConvert.DeserializeObject<Dictionary<string, GiaoDich>>(response.Body);
+                GiaoDich giaoDich = data[key];
+                if (giaoDich != null)
+                    return giaoDich;
+            }
+            return null;
+        }
+      
+        public LoaiGiaoDich getTypebyKey(string key)
+        {
+            FirebaseResponse response = client.Get("LoaiGiaoDich");
+            if (response != null)
+            {
+                Dictionary<string, LoaiGiaoDich> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiGiaoDich>>(response.Body);
+                LoaiGiaoDich giaoDich = data[key];
+                if (giaoDich != null)
+                    return giaoDich;
+            }
+            return null;
+        }
+
     }
 }

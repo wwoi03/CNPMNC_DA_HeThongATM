@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
@@ -49,6 +50,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 return RedirectToAction("CustomerStatement");
             }
             return View(cus);
+        }
+        [HttpGet]
+        public IActionResult Details([FromBody]string Key)
+        {
+            if(firebaseHelper.getHisbyKey(Key) != null)
+            {
+                TaiKhoanLienKet nhan = firebaseHelper.getAccountbyKey(firebaseHelper.getHisbyKey(Key).TaiKhoanNguon);
+                TaiKhoanLienKet nguon = firebaseHelper.getAccountbyKey(firebaseHelper.getHisbyKey(Key).TaiKhoanNhan);
+                string kh2 = firebaseHelper.getCusbyKey(nhan.MaKHKey).TenKH;
+                string kh1 = firebaseHelper.getCusbyKey(nguon.MaKHKey).TenKH;
+                string lgd = firebaseHelper.getTypebyKey(firebaseHelper.getHisbyKey(Key).LoaiGiaoDichKey).TenLoai;
+                HttpContext.Session.SetString("loai", lgd);
+                HttpContext.Session.SetString("nhan", kh2);
+                HttpContext.Session.SetString("nguon", kh1);
+                return Json(firebaseHelper.getHisbyKey(Key));
+            }
+            return View();
         }
         // bank
         public IActionResult BankStatement()
