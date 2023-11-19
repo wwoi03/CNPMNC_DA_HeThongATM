@@ -250,7 +250,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 recyclerView.setAdapter(listBeneficiaryAdapter);
 
                 listBeneficiaryAdapter.startListening();
-
                 listBeneficiaryAdapter.setOnItemClickListener(new ListBeneficiaryAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(ThuHuong model) {

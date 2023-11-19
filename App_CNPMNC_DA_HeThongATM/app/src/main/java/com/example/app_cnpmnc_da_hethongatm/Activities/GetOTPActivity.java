@@ -52,43 +52,22 @@ public class GetOTPActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!input_phone.getText().toString().trim().isEmpty()){
                     if(input_phone.getText().toString().trim().length() == 9){
+                        flag = false;
                         CheckInputnumber();
                         Log.d("check sdt trung", "onClick: "+flag);
+                        wait_otp.setVisibility(View.VISIBLE);
+                        btn_getotp.setVisibility(View.INVISIBLE);
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 if(flag == true){
-                                    wait_otp.setVisibility(View.VISIBLE);
-                                    btn_getotp.setVisibility(View.INVISIBLE);
-                                    PhoneAuthOptions options = PhoneAuthOptions.newBuilder(mauth)
-                                            .setPhoneNumber("+84"+input_phone.getText())
-                                            .setTimeout(60L,TimeUnit.SECONDS)
-                                            .setActivity(GetOTPActivity.this)
-                                            .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                                                @Override
-                                                public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                                                    wait_otp.setVisibility(View.GONE);
-                                                    btn_getotp.setVisibility(View.VISIBLE);
-                                                    Log.d("onVerificationCompleted", "onVerificationCompleted: ");
-                                                }
-                                                @Override
-                                                public void onVerificationFailed(@NonNull FirebaseException e) {
-                                                    wait_otp.setVisibility(View.GONE);
-                                                    btn_getotp.setVisibility(View.VISIBLE);
-                                                    Toast.makeText(GetOTPActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                                                }
-                                                public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                                    super.onCodeSent(s, forceResendingToken);
-                                                    wait_otp.setVisibility(View.GONE);
-                                                    btn_getotp.setVisibility(View.VISIBLE);
-                                                    Intent intent = new Intent(getApplicationContext(),VerifyOTPActivity.class);
-                                                    intent.putExtra("mobile",input_phone.getText().toString());
-                                                    intent.putExtra("OTP",s);
-                                                    Log.d("onCodeSent", "onCodeSent: "+s);
-                                                    startActivity(intent);
-                                                }
-                                            }).build();
-                                    PhoneAuthProvider.verifyPhoneNumber(options);
+                                    Intent intent = new Intent(getApplicationContext(),formUserRegister.class);
+                                    intent.putExtra("mobile","0"+input_phone.getText().toString());
+                                    startActivity(intent);
+                                }
+                                else {
+                                    wait_otp.setVisibility(View.INVISIBLE);
+                                    btn_getotp.setVisibility(View.VISIBLE);
                                 }
                             }
                         },8000);
@@ -114,6 +93,9 @@ public class GetOTPActivity extends AppCompatActivity {
                         if(snapshot.exists()){
                             Toast.makeText(GetOTPActivity.this,"SDT bị trùng",Toast.LENGTH_SHORT).show();
                             flag = false;
+                        }
+                        else {
+                            flag = true;
                         }
                     }
                     @Override

@@ -120,12 +120,27 @@
         android:drawableLeft="@drawable/card_white"
         android:padding="20dp"></EditText>
 
+    <EditText
+        android:id="@+id/edt_matkhau"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_cccd"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#30611591"
+        android:drawableLeft="@drawable/baseline_password_24"
+        android:hint="  Nhập mật khẩu"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/black"></EditText>
     <Button
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edt_cccd"
+        android:layout_below="@+id/edt_matkhau"
         android:layout_marginLeft="150dp"
         android:gravity="center"
-        android:text="Tiếp 2/3"></Button>
+        android:text="Hoàn Thành"></Button>
 </RelativeLayout>
