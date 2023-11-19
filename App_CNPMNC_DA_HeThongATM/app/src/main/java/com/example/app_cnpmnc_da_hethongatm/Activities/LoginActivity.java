@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initUI();
         initData();
         initListener();
@@ -82,6 +81,14 @@ public class LoginActivity extends AppCompatActivity {
                     String password = etPassword.getText().toString().trim();
                     checkAccount(email, password); // kiểm tra tài khoản
                 }
+            }
+        });
+        btRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,GetOTPActivity.class);
+//                Intent intent = new Intent(LoginActivity.this,formUserRegister.class);
+                startActivity(intent);
             }
         });
     }
