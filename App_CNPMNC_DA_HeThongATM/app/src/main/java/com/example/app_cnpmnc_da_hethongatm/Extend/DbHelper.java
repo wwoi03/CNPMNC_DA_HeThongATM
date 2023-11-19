@@ -519,7 +519,7 @@ public class DbHelper {
 
     // thêm nhắc chuyển tiền
     public static void addReminderTransferMoney(String maKHKey, TaiKhoanLienKet taiKhoanNhan, String content, String dateLimit, double money, FirebaseListener firebaseListener) {
-        String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
+        String newKey = firebaseDatabase.getReference("NhacChuyenTien").push().getKey(); // tạo key
 
         Map<String, Object> map = new HashMap<>();
         map.put("Key", newKey);

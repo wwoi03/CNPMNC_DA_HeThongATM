@@ -86,7 +86,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
     Context context;
 
     String moneyString;
-    boolean isCheckvalid;
+    boolean isCheckvalid = false;
+    boolean isAddHistory = false;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -344,12 +345,15 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // chuyển tiền
     private void transferMoney(double money, String noiDungChuyenKhoan,String ngaygd,double tiendaGD) {
+        if (isAddHistory == false) {
+            MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"0");
+            isAddHistory = true;
+        }
+
         DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money,ngaygd,tiendaGD); // tài khoản nguồn
         DbHelper.updateSurplus(taiKhoanHuongKey, taiKhoanHuong.getSoDu() + money); // tài khoản hưởng
-        MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"0");
         BuildAlertDialogSuccess(taiKhoanNguon.getSoDu() - money);
     }
-
     // Toast
     private void toastMessage(String text) {
         Toast.makeText(TransferMoneyActivity.this, text, Toast.LENGTH_SHORT).show();
@@ -477,7 +481,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()) {
                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                            checkvalid = true;
                                             taiKhoanHuong = dataSnapshot.getValue(TaiKhoanLienKet.class);
                                             etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
                                             tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
