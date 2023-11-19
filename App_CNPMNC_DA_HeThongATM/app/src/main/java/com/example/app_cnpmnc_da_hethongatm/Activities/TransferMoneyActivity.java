@@ -240,27 +240,20 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
                 if (taiKhoanNguonKey.isEmpty()) {
                     UtilityClass.showDialogError(context, "Lỗi", "Vui lòng chọn tài khoản nguồn!");
-                    checkvalid ++;
                 } else if (accountBeneficiaryString.isEmpty()) {
                     UtilityClass.showDialogError(context, "Lỗi", "Vui lòng nhập tài khoản hưởng!");
-                    checkvalid ++;
                 } else if (accountBeneficiaryString.isEmpty()) {
                     UtilityClass.showDialogError(context, "Lỗi", "Vui lòng nhập người nhận!");
-                    checkvalid ++;
                 } else if (moneyString.isEmpty()) { // rỗng
                     UtilityClass.showDialogError(context, "Lỗi", "Vui lòng nhập số tiền cần chuyển!");
-                    checkvalid ++;
                 } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
                     UtilityClass.showDialogError(context, "Lỗi", "Số dư không đủ giao dịch!");
-                    checkvalid++;
                 }else if (!GetDate().equals(taiKhoanNguon.getNgayGD())) {
                     taiKhoanNguon.setNgayGD(GetDate());
                     taiKhoanNguon.setTienDaGD(0);
                 } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
                     UtilityClass.showDialogError(context, "Lỗi", "Số tiền giao dịch vuợt quá hạn mức!");
-                    checkvalid ++;
-                }
-                if(checkvalid == 0){ // không rỗng
+                } else { // không rỗng
                     double money = Double.parseDouble(moneyString);
                     if (money >= 1000) {
                         transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
