@@ -1,5 +1,6 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_cnpmnc_da_hethongatm.Model.GuiTietKiem;
@@ -113,10 +115,22 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
                             String currentKey = dataSnapshot.getKey();
                             if (currentKey.equals(id)){
                                 Double tiengui = dataSnapshot.child("TienGui").getValue(double.class);
+                                // Kiểm tra nếu tiengui = 0
+                                if (tiengui == 0) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                    builder.setTitle("Không đủ tiền để rút");
+                                    builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                    return; // Thoát ra khỏi phương thức
+                                }
                                 Long taikhoannguon = dataSnapshot.child("TaiKhoanNguon").getValue(Long.class);
                                 taiKhoanLienKetRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -138,17 +152,17 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                            Intent intent = new Intent(WithdrawSavingsActivity.this, NotificationActivity.class);
-                            startActivity(intent);
                         }
+                        Intent intent = new Intent(WithdrawSavingsActivity.this, NotificationActivity.class);
+                        startActivity(intent);
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
-
             }
         });
+
     }
 }

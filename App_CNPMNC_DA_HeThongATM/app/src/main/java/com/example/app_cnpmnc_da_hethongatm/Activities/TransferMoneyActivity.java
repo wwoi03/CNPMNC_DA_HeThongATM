@@ -87,7 +87,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     String moneyString;
     boolean isCheckvalid = false;
-    boolean isAddHistory = false;
+    boolean isTransferMoney = false;
 
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -345,13 +345,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     // chuyển tiền
     private void transferMoney(double money, String noiDungChuyenKhoan,String ngaygd,double tiendaGD) {
-        if (isAddHistory == false) {
-            MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"0");
-            isAddHistory = true;
-        }
-
+        isTransferMoney = true;
         DbHelper.updateSurplus(taiKhoanNguonKey, taiKhoanNguon.getSoDu() - money,ngaygd,tiendaGD); // tài khoản nguồn
         DbHelper.updateSurplus(taiKhoanHuongKey, taiKhoanHuong.getSoDu() + money); // tài khoản hưởng
+        MaGD = DbHelper.addTransactionHistory(taiKhoanNguon, taiKhoanHuong, money, noiDungChuyenKhoan,"0");
         BuildAlertDialogSuccess(taiKhoanNguon.getSoDu() - money);
     }
     // Toast
@@ -488,7 +485,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
                                             if (isCheckvalid == true) {
                                                 double money = Double.parseDouble(moneyString);
-                                                transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
+                                                if (isTransferMoney == false) {
+                                                    transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
+                                                }
                                             }
                                         }
                                     }
