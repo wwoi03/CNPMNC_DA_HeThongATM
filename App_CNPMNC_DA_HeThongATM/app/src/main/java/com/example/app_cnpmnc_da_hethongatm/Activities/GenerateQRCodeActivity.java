@@ -2,6 +2,7 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,6 +74,9 @@ public class GenerateQRCodeActivity extends AppCompatActivity {
 
                 // Thiết lập ListAccountQRCodeAdapter cho RecyclerView
                 recyclerView.setLayoutManager(new LinearLayoutManager(GenerateQRCodeActivity.this));
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                        DividerItemDecoration.VERTICAL);
+                recyclerView.addItemDecoration(dividerItemDecoration);
                 recyclerView.setAdapter(listAccountQRCodeAdapter);
 
                 listAccountQRCodeAdapter.startListening();

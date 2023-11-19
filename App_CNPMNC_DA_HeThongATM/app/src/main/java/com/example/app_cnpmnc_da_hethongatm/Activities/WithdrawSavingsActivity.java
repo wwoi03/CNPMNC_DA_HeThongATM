@@ -117,7 +117,8 @@ public class WithdrawSavingsActivity extends AppCompatActivity {
                             String currentKey = dataSnapshot.getKey();
                             if (currentKey.equals(id)){
                                 Double tiengui = dataSnapshot.child("TienGui").getValue(double.class);
-                                Long taikhoannguon = dataSnapshot.child("TaiKhoanNguon").getValue(Long.class);taiKhoanLienKetRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                Long taikhoannguon = dataSnapshot.child("TaiKhoanNguon").getValue(Long.class);
+                                taiKhoanLienKetRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){

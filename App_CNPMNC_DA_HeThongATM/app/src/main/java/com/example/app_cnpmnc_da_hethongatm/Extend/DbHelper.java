@@ -109,45 +109,17 @@ public class DbHelper {
     }
 
     // Sửa người thụ hưởng
-    public static void updateBeneficiary(ThuHuong thuHuong, String thuHuongKey, FirebaseListener firebaseListener) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("TKThuHuong", (long) thuHuong.getTKThuHuong());
-        map.put("TenNguoiThuHuong", thuHuong.getTenNguoiThuHuong());
-
-        firebaseDatabase.getReference("ThuHuong").child(thuHuongKey).updateChildren(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        if (firebaseListener != null)
-                            firebaseListener.onSuccessListener();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if (firebaseListener != null)
-                            firebaseListener.onFailureListener(e);
-                    }
-                });
-    }
-
-    // Thêm người thụ hưởng
-    public static void addBeneficiary(ThuHuong thuHuong, Context context, FirebaseListener firebaseListener) {
+    public static void updateBeneficiary(ThuHuong thuHuong, String thuHuongKey, Context context, FirebaseListener firebaseListener) {
         firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(thuHuong.getTKThuHuong())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            // Tạo bản ghi mới nếu SoTaiKhoan tồn tại
-                            String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey();
-
                             Map<String, Object> map = new HashMap<>();
-                            map.put("Key", newKey);
                             map.put("TKThuHuong", (long) thuHuong.getTKThuHuong());
-                            map.put("MaKHKey", thuHuong.getMaKHKey());
                             map.put("TenNguoiThuHuong", thuHuong.getTenNguoiThuHuong());
 
-                            firebaseDatabase.getReference("ThuHuong").child(newKey).setValue(map)
+                            firebaseDatabase.getReference("ThuHuong").child(thuHuongKey).updateChildren(map)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
@@ -177,7 +149,82 @@ public class DbHelper {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        // Xử lý lỗi
+
+                    }
+                });
+    }
+
+
+    // Thêm người thụ hưởng
+    public static void addBeneficiary(ThuHuong thuHuong, Context context, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(thuHuong.getTKThuHuong())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // Kiểm tra xem TenNguoiThuHuong đã tồn tại chưa
+                            firebaseDatabase.getReference("ThuHuong").orderByChild("TenNguoiThuHuong").equalTo(thuHuong.getTenNguoiThuHuong())
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if (!dataSnapshot.exists()) {
+                                                // Tạo bản ghi mới nếu TenNguoiThuHuong không tồn tại
+                                                String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey();
+
+                                                Map<String, Object> map = new HashMap<>();
+                                                map.put("Key", newKey);
+                                                map.put("TKThuHuong", (long) thuHuong.getTKThuHuong());
+                                                map.put("MaKHKey", thuHuong.getMaKHKey());
+                                                map.put("TenNguoiThuHuong", thuHuong.getTenNguoiThuHuong());
+
+                                                firebaseDatabase.getReference("ThuHuong").child(newKey).setValue(map)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void unused) {
+                                                                if (firebaseListener != null)
+                                                                    firebaseListener.onSuccessListener();
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                if (firebaseListener != null)
+                                                                    firebaseListener.onFailureListener(e);
+                                                            }
+                                                        });
+                                            } else {
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                                builder.setTitle("Tên đã tồn tại");
+                                                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+                                                AlertDialog dialog = builder.create();
+                                                dialog.show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                            System.out.println("Lỗi: " + databaseError.getMessage());
+                                        }
+                                    });
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Tài khoản không tồn tại");
+                            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                         System.out.println("Lỗi: " + databaseError.getMessage());
                     }
                 });
