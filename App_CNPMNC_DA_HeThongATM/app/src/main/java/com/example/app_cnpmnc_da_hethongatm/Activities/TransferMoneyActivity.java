@@ -172,7 +172,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 launcher.launch(intent);
             }
         });
-
         // Xử lý sự kiện trên trường nhập số tài khoản hưởng
         etAccountBeneficiary.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -182,6 +181,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     // kiểm tra edit text rỗng?
                     if(accountBeneficiaryString.isEmpty()){
                         tvNameBeneficiary.setText("");
+                        return;
                     }
                     if (!accountBeneficiaryString.isEmpty()) {
                         long accountBeneficiary = Long.parseLong(etAccountBeneficiary.getText().toString().trim());
@@ -189,6 +189,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                             if(accountBeneficiary == taiKhoanNguon.getSoTaiKhoan()){
                                 BuildAlertDialog("Không thể tự chuyển khoản cho bản thân");
                                 tvNameBeneficiary.setText("");
+                                return;
                             }
                             else {
                                 // truy vấn đến TaiKhoanLK theo số tài khoản
@@ -208,9 +209,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                                 else {
                                                     tvNameBeneficiary.setText("");
                                                     BuildAlertDialog("không tìm thấy người thụ hưởng");
+                                                    return;
                                                 }
                                             }
-
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -228,37 +229,34 @@ public class TransferMoneyActivity extends AppCompatActivity {
         btTransferMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int checkvalid = 0;
                 // kiểm tra tổng
                 String moneyString = etMoney.getText().toString().trim();
                 String accountBeneficiaryString = etAccountBeneficiary.getText().toString().trim();
                 if (taiKhoanNguonKey.isEmpty()) {
                     BuildAlertDialog("Vui lòng chọn tài khoản nguồn");
-                    checkvalid ++;
+                    return;
                 } else if (accountBeneficiaryString.isEmpty()) {
                     BuildAlertDialog("Vui lòng nhập tài khoản hưởng");
-                    checkvalid ++;
+                    return;
                 } else if (accountBeneficiaryString.isEmpty()) {
                     BuildAlertDialog("Vui lòng nhập người nhận");
-                    checkvalid ++;
+                    return;
                 } else if (moneyString.isEmpty()) { // rỗng
                     BuildAlertDialog("Vui lòng nhập số tiền cần chuyển");
-                    checkvalid ++;
+                    return;
                 } else if(Double.parseDouble(moneyString) > taiKhoanNguon.getSoDu()){
                     BuildAlertDialog("Không đủ tiền để gd");
-                    checkvalid++;
+                    return;
                 }else if (!GetDate().equals(taiKhoanNguon.getNgayGD())) {
                     Log.d(String.valueOf(GetDate().equals(taiKhoanNguon.getNgayGD())), "NgayGIaoDich: ");
                     taiKhoanNguon.setNgayGD(GetDate());
                     taiKhoanNguon.setTienDaGD(0);
                 } else if (Double.parseDouble(moneyString) + taiKhoanNguon.getTienDaGD() >taiKhoanNguon.getHanMucTK()) {
                     BuildAlertDialog("Số tiền giao dịch vuợt quá hạn mức");
-                    checkvalid ++;
+                    return;
                 }
-                Log.d(String.valueOf(checkvalid), "checkvalid: ");
-                if(checkvalid == 0){ // không rỗng
+                else {
                     double money = Double.parseDouble(moneyString);
-                    // kiểm tra số tiền phải >= 1k
                     if (money >= 1000) {
                         transferMoney(money, etContent.getText().toString().trim(),taiKhoanNguon.getNgayGD(),taiKhoanNguon.getTienDaGD()+money);
                     } else {
