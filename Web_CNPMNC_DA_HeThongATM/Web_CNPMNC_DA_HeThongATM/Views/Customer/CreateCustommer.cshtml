@@ -36,15 +36,21 @@
                         <label for="company" class=" form-control-label">Mã Căn Cước Công Dân</label>
                         <input type="number" asp-for="CCCD" id="cccd" class="form-control">
                     </div>
+                   
                     <span asp-validation-for="CCCD" class="text-danger text-validation"></span>
                     <div class="row form-group">
-                        <div class="col-md-8">
+                       
+                        <div class="col-md-6">
                             <label for="vat" class="form-control-label">Tên Khách Hàng</label>
                             <input type="text" asp-for="TenKhachHang" class="form-control">
                             <span asp-validation-for="TenKhachHang" class="text-danger text-validation"></span>
                         </div>
-
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label for="vat" class="form-control-label">Ngày Sinh</label>
+                            <input type="date" asp-for="NgaySinh" class="form-control">
+                            <span asp-validation-for="NgaySinh" class="text-danger text-validation"></span>
+                        </div>
+                        <div class="col-md-3">
                             <div>
                                 <label class=" form-control-label">Giới tính</label>
 

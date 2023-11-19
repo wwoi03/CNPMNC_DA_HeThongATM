@@ -41,11 +41,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             try
             {
-                string macuabomay = "autothention";
+              
                 FirebaseResponse response =  client.Push("KhachHang", custommer);
                 if (response != null)
                 {
-
+                    var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
+                    string newKey = data["name"];
+                    FirebaseResponse updateResponse = client.Set("KhachHang/" + newKey + "/Key", newKey);
                 }
             }
             catch (Exception ex)
