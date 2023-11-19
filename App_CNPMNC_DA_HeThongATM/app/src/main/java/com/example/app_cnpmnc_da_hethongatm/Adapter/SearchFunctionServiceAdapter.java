@@ -15,19 +15,15 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 
-public class SearchFunctionServiceAdapter extends FirebaseRecyclerAdapter<ChucNang, SearchFunctionServiceAdapter.SearchFunctionServiceAdapterVH> {
+import java.util.ArrayList;
+
+public class SearchFunctionServiceAdapter extends RecyclerView.Adapter<SearchFunctionServiceAdapter.SearchFunctionServiceAdapterVH> {
     Listener listener;
+    ArrayList<ChucNang> chucNangs;
 
-    public SearchFunctionServiceAdapter(@NonNull FirebaseRecyclerOptions<ChucNang> options, Listener listener) {
-        super(options);
+    public SearchFunctionServiceAdapter(Listener listener, ArrayList<ChucNang> chucNangs) {
         this.listener = listener;
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull SearchFunctionServiceAdapterVH holder, int position, @NonNull ChucNang model) {
-        holder.tvName.setText(model.getTenChucNang());
-
-        initListener(holder, position, model);
+        this.chucNangs = chucNangs;
     }
 
     @NonNull
@@ -37,14 +33,23 @@ public class SearchFunctionServiceAdapter extends FirebaseRecyclerAdapter<ChucNa
         return new SearchFunctionServiceAdapterVH(view);
     }
 
-    // Xử lý sự kiện
-    private void initListener(SearchFunctionServiceAdapterVH holder, int position, ChucNang model) {
+    @Override
+    public void onBindViewHolder(@NonNull SearchFunctionServiceAdapterVH holder, int position) {
+        ChucNang chucNang = chucNangs.get(position);
+
+        holder.tvName.setText(chucNang.getTenChucNang());
+
         holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.setOnClickItemListener(model);
+                listener.setOnClickItemListener(chucNang);
             }
         });
+    }
+
+    @Override
+    public int getItemCount() {
+        return chucNangs.size();
     }
 
 
