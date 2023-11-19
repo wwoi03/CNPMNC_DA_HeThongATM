@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     $(document).ready(function () {
         $("#InputTaiKhoanNguon").change(function () {
-            var TaiKhoanNguon = $(this).val() ; // Assuming it's a string
+            var TaiKhoanNguon = $(this).val(); // Assuming it's a string
             $.ajax({
                 url: "/SaveMoney/GetTKNorTKTK",
                 type: "GET",
@@ -12,13 +12,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         alert('tài khoản không tồn tại');
                         $('#InputTaiKhoanNguon').val(""); // Use jQuery to set value
                     } else {
-                      
+                        console.log(data);
                         document.getElementById('tenkhachhang').innerHTML = data.tenTK;
                         document.getElementById('sotaikhoan').innerHTML = data.guiTietKiem.taiKhoanTietKiem;
                         document.getElementById('sodu').innerHTML = data.guiTietKiem.tienGui + " VND";
                         document.getElementById('NgayGui').innerHTML = data.guiTietKiem.ngayGui;
                         document.getElementById('kyhan').innerHTML = data.laiSuat.kyHan;
                         document.getElementById('tile').innerHTML = data.laiSuat.tiLe;
+                        document.getElementById('OutTien').value = "Rút " + (data.guiTietKiem.tienGui + data.guiTietKiem.tienLaiToiKy)+" VND"
                         $("#datataikhoan").val(JSON.stringify(data));
                     }
                 }, Error: function () {

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Drawing;
+using System.Globalization;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
@@ -112,7 +113,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
         public IActionResult SettlementOfSavings(GuiTietKiemViewModel guiTietKiemView)
         {
-            
+            JObject data = JObject.Parse(guiTietKiemView.TaiKhoanLienKet);
             ModelState.Remove("Key");
             ModelState.Remove("NgayGui");
             ModelState.Remove("TienLaiKyHan");
@@ -122,6 +123,15 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ModelState.Remove("TaiKhoanNguon");
             if (ModelState.IsValid)
             {
+
+                //lấy kì hạn
+                string kihan = (string)data["laiSuat"]["kyHan"];
+                //lấy ngày gửi theo số tài khoản tiết kiểm
+                string ngaygui = (string)data["guiTietKiem"]["tienGui"];              
+                //bước lấy số tiền tiết kiệm tiền lãi + tới kỳ
+
+                //kiểm tra ngày gửi đúng lấy số tiền lãi sai thì thông báo không thể tất toán đợi đến ngày .... 
+                //nếu rút thành công thì lưu lịch sử và xóa sổ tiết kiệm
 
             }
             return View(guiTietKiemView);
@@ -197,7 +207,28 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View("AdmitMoney",guiTietKiemView);
         }
 
-       
+        //check ngày để rút
+        public bool CompareDate(string dateString, string kihan)
+        {
+            DateTimeFormatInfo dtfi = new DateTimeFormatInfo();
+            dtfi.ShortDatePattern = "MM/dd/yyyy";
+            dtfi.DateSeparator = "/";
+            DateTime objDate = Convert.ToDateTime(dateString, dtfi);
+            
+            string[] parts = kihan.Split(' ');
+            string numberPart = parts[0];
+            // Thêm tháng vào ngày
+            DateTime futureDate = objDate.AddMonths(int.Parse(numberPart));
 
+            // So sánh với ngày hiện tại
+            if (futureDate > DateTime.Now)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
