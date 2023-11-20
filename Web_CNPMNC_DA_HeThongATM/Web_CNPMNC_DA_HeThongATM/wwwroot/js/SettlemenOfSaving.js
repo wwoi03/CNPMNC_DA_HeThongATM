@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById('OutTien').value = "Rút " + (data.guiTietKiem.tienGui + data.guiTietKiem.tienLaiToiKy) + " VND"
                         $('#alertnote').css('display', 'block');
                         $('#alertcontent').html("Khách chỉ có thể rút sau ngày " + data.ngayduocrut);
+                        $('#tienlai').html(data.guiTietKiem.tienLaiToiKy);
                         $("#datataikhoan").val(JSON.stringify(data));
                     }
                 }, Error: function () {

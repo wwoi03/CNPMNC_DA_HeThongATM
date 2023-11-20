@@ -138,7 +138,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                 DateTime futureDate;
                 if (CompareDate(ngaygui, kihan, out futureDate))
                 {
+
                     firebaseHelper.TatToanTietKiem(taikhoanng, taikhoantietkiem,tienrut);
+                  GiaoDich  giaoDich = new GiaoDich
+                    {
+                        Key = "",
+                        GioGiaoDich = DateTime.Now.ToString("HH:mm:ss"),
+                        NgayGiaoDich = Day(),
+                        LoaiGiaoDichKey = "1",
+                        NoiDungChuyenKhoan = "Rút hết tiền tài khoản tiết kiệm",
+                        PhiGiaoDich = (double)guiTietKiemView.TienGui * 0.001,
+                        SoDuLucGui = (double)data["guiTietKiem"]["tienGui"],
+                        SoDuLucNhan = (double)data["guiTietKiem"]["tienGui"]+tienrut,
+                        SoTienGiaoDich = tienrut,
+                        TaiKhoanNguon = (long)data["guiTietKiem"]["taiKhoanTietKiem"],
+                        TaiKhoanNhan = (long)data["guiTietKiem"]["taiKhoanNguon"],
+                    };
+                    firebaseHelper.LichSuGD("2", giaoDich);
                     TempData["Message"] = "Tất toán";
                     return RedirectToAction("SettlementOfSavings");
                 }
