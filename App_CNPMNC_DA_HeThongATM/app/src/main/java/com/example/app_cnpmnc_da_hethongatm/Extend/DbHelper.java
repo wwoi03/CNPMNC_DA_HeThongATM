@@ -3,6 +3,7 @@ package com.example.app_cnpmnc_da_hethongatm.Extend;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -11,11 +12,16 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Model.ChucNang;
 import com.example.app_cnpmnc_da_hethongatm.Model.GiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.HanMucChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.KhachHang;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiGiaoDich;
+import com.example.app_cnpmnc_da_hethongatm.Model.MauChuyenTien;
+import com.example.app_cnpmnc_da_hethongatm.Model.NhacChuyenTien;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -35,6 +41,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 public class DbHelper {
     static ProgressBar progressBar;
@@ -177,13 +185,68 @@ public class DbHelper {
 
         return options;
     }
-    //Lấy danh sách GiaoDich
 
+    // lấy danh sách hạn mức chuyển tiền
+    public static FirebaseRecyclerOptions<HanMucChuyenTien> getTransferMoneyLimit() {
+        FirebaseRecyclerOptions<HanMucChuyenTien> options = new FirebaseRecyclerOptions.Builder<HanMucChuyenTien>()
+                .setQuery(firebaseDatabase.getReference("HanMucChuyenTien").orderByChild("HanMuc"), HanMucChuyenTien.class)
+                .build();
+
+        return options;
+    }
+
+    // cập nhật hạn mức mới
+    public static void updateTransferMoneyLimit(String taiKhoanKey, double hanMucMoi, FirebaseListener firebaseListener) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("HanMucTK", hanMucMoi);
+
+        firebaseDatabase.getReference("TaiKhoanLienKet").child(taiKhoanKey).updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    //Lấy danh sách LoaiGiaoDic
+//    public static String getLoaiGiaoDich(String keygiaodich){
+//        String abc = "";
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("LoaiGiaoDich/"+keygiaodich);
+//        Log.d("LoaiGiaoDich/"+keygiaodich, "getLoaiGiaoDich: ");
+//        myRef.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+//                    LoaiGiaoDich loaiGiaoDich = dataSnapshot.getValue(LoaiGiaoDich.class);
+//                    Log.d(loaiGiaoDich.getTenLoai(), "onDataChange: ");
+//                    if (loaiGiaoDich != null) {
+//                        abc = loaiGiaoDich.getTenLoai();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        return abc;
+//    }
     // cập nhật số dư
     public static void updateSurplus(String taiKhoanKey, double soDuMoi) {
         Map<String, Object> map = new HashMap<>();
         map.put("SoDu", soDuMoi);
-
         firebaseDatabase.getReference("TaiKhoanLienKet").child(taiKhoanKey).updateChildren(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -204,7 +267,6 @@ public class DbHelper {
         map.put("SoDu", soDuMoi);
         map.put("NgayGD",NgayGD);
         map.put("TienDaGD",TienDaGD);
-
         firebaseDatabase.getReference("TaiKhoanLienKet").child(taiKhoanKey).updateChildren(map)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -219,9 +281,31 @@ public class DbHelper {
                     }
                 });
     }
-
+    public static void SaveBill(MauChuyenTien mauChuyenTien){
+        Map<String, Object> map = new HashMap<>();
+        map.put("MaKHKey",mauChuyenTien.getMaKHKey());
+        map.put("NoiDung",mauChuyenTien.getNoiDung());
+        map.put("SoTien",mauChuyenTien.getSoTien());
+        map.put("TaiKhoanNhan",mauChuyenTien.getTaiKhoanNhan());
+        map.put("TenNguoiNhan",mauChuyenTien.getTenNguoiNhan());
+        String newKey = firebaseDatabase.getReference("MauChuyenTien").push().getKey();
+        map.put("Key",newKey);
+        firebaseDatabase.getReference("MauChuyenTien").child(newKey).setValue(map);
+    }
+    public static void BuilderXinXo(Context context,String TenLoi){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Thông báo");
+        builder.setMessage(TenLoi);
+        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     // Tạo lịch sử giao dịch - Hưng
-    public static void addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan) {
+    public static String addTransactionHistory(TaiKhoanLienKet taiKhoanNguon, TaiKhoanLienKet taiKhoanNhan, double soTienGiaoDich, String noiDungChuyenKhoan,String loaigd) {
         LocalTime now = null;
         String timeString="";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -238,22 +322,24 @@ public class DbHelper {
         Map<String, Object> map = new HashMap<>();
         map.put("GioGiaoDich", timeString);
         map.put("NgayGiaoDich", GetDataForm());
-        map.put("SoTaiKhoan", taiKhoanNguon.getSoTaiKhoan());
+        map.put("TaiKhoanNguon", taiKhoanNguon.getSoTaiKhoan());
         map.put("NoiDungChuyenKhoan", noiDungChuyenKhoan);
         map.put("SoTienGiaoDich", soTienGiaoDich);
         map.put("TaiKhoanNhan", taiKhoanNhan.getSoTaiKhoan());
-        map.put("SoDuHienTai", taiKhoanNguon.getSoDu());
-
-        String newKey = firebaseDatabase.getReference("ThuHuong").push().getKey(); // tạo key
-
-        firebaseDatabase.getReference("LichSuGiaoDich").child(newKey).setValue(map);
+        map.put("SoDuLucGui", taiKhoanNguon.getSoDu()-soTienGiaoDich);
+        map.put("LoaiGiaoDichKey",loaigd);
+        String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
+        map.put("Key",newKey);
+        map.put("PhiGiaoDich",0);
+        map.put("SoDuLucNhan", taiKhoanNhan.getSoDu()+soTienGiaoDich);
+        firebaseDatabase.getReference("GiaoDich").child(newKey).setValue(map);
+        return newKey;
     }
 
     public static String GetDataForm(){
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String NgayGDHomNay = sdf.format(calendar.getTime());
-
         return NgayGDHomNay;
     }
 
@@ -300,5 +386,179 @@ public class DbHelper {
 
                     }
                 });
+    }
+
+    // lấy danh sách nhắc chuyển tiền
+    public static FirebaseRecyclerOptions<NhacChuyenTien> getReminderTransferMoneys(String maKHKey) {
+        FirebaseRecyclerOptions<NhacChuyenTien> options = new FirebaseRecyclerOptions.Builder<NhacChuyenTien>()
+                .setQuery(firebaseDatabase.getReference("NhacChuyenTien")
+                        .orderByChild("MaKHKey")
+                        .equalTo(maKHKey), NhacChuyenTien.class)
+                .build();
+
+        return options;
+    }
+
+    // cập nhật nhắc chuyển tiền
+    public static void updateReminderTransferMoney(NhacChuyenTien nhacChuyenTien, FirebaseListener firebaseListener) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("NoiDungNhac", nhacChuyenTien.getNoiDungNhac());
+        map.put("NgayHetHan", nhacChuyenTien.getNgayHetHan());
+        map.put("TaiKhoanNhan", nhacChuyenTien.getTaiKhoanNhan());
+        map.put("SoTienNhacChuyen", nhacChuyenTien.getSoTienNhacChuyen());
+        map.put("TrangThai", nhacChuyenTien.getTrangThai());
+
+        firebaseDatabase.getReference("NhacChuyenTien").child(nhacChuyenTien.getKey()).updateChildren(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    // xóa nhắc chuyển tiền
+    public static void deleteReminderTransferMoney(String nhacChuyenTienKey, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("NhacChuyenTien").child(nhacChuyenTienKey).removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null)
+                            firebaseListener.onSuccessListener();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (firebaseListener != null)
+                            firebaseListener.onFailureListener(e);
+                    }
+                });
+    }
+
+    // thêm nhắc chuyển tiền
+    public static void addReminderTransferMoney(String maKHKey, TaiKhoanLienKet taiKhoanNhan, String content, String dateLimit, double money, FirebaseListener firebaseListener) {
+        String newKey = firebaseDatabase.getReference("GiaoDich").push().getKey(); // tạo key
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("Key", newKey);
+        map.put("MaKHKey", maKHKey);
+        map.put("LoaiGiaoDichKey", "");
+        map.put("NoiDungNhac", content);
+        map.put("NgayHetHan", dateLimit);
+        map.put("TaiKhoanNhan", taiKhoanNhan.getSoTaiKhoan());
+        map.put("SoTienNhacChuyen", money);
+        map.put("TrangThai", 0);
+
+        firebaseDatabase.getReference("NhacChuyenTien").child(newKey).setValue(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onFailureListener(e);
+                        }
+                    }
+                });
+    }
+
+    // tìm kiếm tài khoản theo số tài khoản
+    public static void getAccountByAccountNumber(long soTaiKhoan, FirebaseListener firebaseListener) {
+        firebaseDatabase.getReference("TaiKhoanLienKet").orderByChild("SoTaiKhoan").equalTo(soTaiKhoan)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (firebaseListener != null) {
+                            firebaseListener.onSuccessListener(snapshot);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+    public static String generateUniqueAccountNumber() {
+        Random random = new Random();
+        String accountNumber;
+
+        int randomAccountNumber = random.nextInt(900000) + 100000;
+        accountNumber = String.valueOf(randomAccountNumber);
+
+        return accountNumber;
+    }
+
+    /*******************************************/
+    private static String soTaiKhoan;
+    public static  String getAcountIDbyCusKey(String cuskey) {
+        FirebaseDatabase firebaseDatabase =FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference=firebaseDatabase.getReference();
+        databaseReference.child("TaiKhoanLienKet")
+                .orderByChild("MaKHKey").equalTo(cuskey)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot snap : snapshot.getChildren()) {
+                            soTaiKhoan = String.valueOf( snap.child("SoTaiKhoan").getValue());
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+        return soTaiKhoan;
+    }
+    public static String RegisterNewUser(KhachHang khachHang){
+        String newKey = firebaseDatabase.getReference("KhachHang").push().getKey(); // tạo key
+        Map<String, Object> map = new HashMap<>();
+        map.put("Key", newKey);
+        map.put("DiaChi",khachHang.getDiaChi());
+        map.put("CCCD",khachHang.getCCCD());
+        map.put("Email",khachHang.getEmail());
+        map.put("GioiTinh",khachHang.getGioiTinh());
+        map.put("MaNhanVienKey",String.valueOf(0));
+        map.put("MatKhau",khachHang.getMatKhau());
+        map.put("NgaySinh",khachHang.getNgaySinh());
+        map.put("NgayTao",DbHelper.GetDataForm());
+        map.put("SoDienThoai",khachHang.getSoDienThoai());
+        map.put("TenKH",khachHang.getTenKH());
+        firebaseDatabase.getReference("KhachHang").child(newKey).setValue(map);
+        return newKey;
+    }
+    public static void NewTaiKhoanLienKet(KhachHang khachHang,String KeyKH){
+        String newKey = firebaseDatabase.getReference("TaiKhoanLienKet").push().getKey();
+        Map<String, Object> map = new HashMap<>();
+        map.put("HanMucTK", 50000000);
+        map.put("Key",newKey);
+        map.put("MaKHKey",KeyKH);
+        map.put("MaLoaiTKKey",String.valueOf(0));
+        map.put("NgayGD",DbHelper.GetDataForm());
+        map.put("SoDu",0);
+        map.put("SoTaiKhoan",Long.parseLong(khachHang.getSoDienThoai()));
+        map.put("SoTien",0);
+        map.put("TenTK",khachHang.getTenKH());
+        map.put("TienDaGD",0);
+        map.put("TienGD1Lan",0);
+        map.put("TinhTrangTaiKhoan",0);
+        firebaseDatabase.getReference("TaiKhoanLienKet").child(newKey).setValue(map);
     }
 }

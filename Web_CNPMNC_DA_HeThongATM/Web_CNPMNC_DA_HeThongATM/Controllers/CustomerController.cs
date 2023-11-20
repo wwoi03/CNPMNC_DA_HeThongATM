@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
@@ -28,24 +28,46 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     Email = i.Email,
                     GioiTinh = i.GioiTinh,
                     SoDienThoai = i.SoDienThoai,
-                    TenKhachHang = i.TenKhachHang,
+                    TenKH = i.TenKH,
                     NgayTao = i.NgayTao,
 
 
                 };
                 khachHangViewModels.Add(pro);
-
-
             }
 
             ViewData["j"] = khachHangViewModels;
 
             return View();
         }
+        [HttpGet]
+        public IActionResult DetailsCustomer(string CCCD)
+
+        {
+
+            KhachHang khachhang = firebaseHelper.GetCustomerbyid(CCCD);
+
+            ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(CCCD);
+
+            ViewBag.Details = khachhang;
+
+            return View();
+
+        }
+        [HttpPost]
+
+        public IActionResult DetailsCustomer(KhachHangViewModel khachhang)
+
+        {
+
+            return View();
+
+        }
         public IActionResult CreateCustommer()
         {
             return View();
         }
+
         //tạo khách hàng
         [HttpPost]
         public IActionResult CreateCustommer(KhachHangViewModel customer)
@@ -64,6 +86,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View("CreateCustommer", customer);
 
         }
+
         //check cccd
         [HttpGet]
         public async Task<IActionResult> CheckCanCuoc(string cccd)
@@ -82,13 +105,14 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             return Json(CheckSdt);
         }
+
         public IActionResult SearchCustomer(string searchCustomer)
         {
 
             KhachHang khachHang = firebaseHelper.SearchCustomer(searchCustomer);
             KhachHangViewModel ViewThes = new KhachHangViewModel();
             ViewThes.CCCD = khachHang.CCCD;
-            ViewThes.TenKhachHang = khachHang.TenKhachHang;
+            ViewThes.TenKH = khachHang.TenKH;
             ViewThes.NgayTao = khachHang.NgayTao;
             ViewThes.Email = khachHang.Email;
             ViewThes.SoDienThoai = khachHang.SoDienThoai;
@@ -96,7 +120,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewThes.DiaChi = khachHang.DiaChi;
             ViewBag.IteamSeach = ViewThes;
             return PartialView("SearchCustomer");
-
         }
     }
 }

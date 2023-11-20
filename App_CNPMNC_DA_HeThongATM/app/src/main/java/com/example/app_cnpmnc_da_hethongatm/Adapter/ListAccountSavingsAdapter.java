@@ -26,7 +26,6 @@ public class ListAccountSavingsAdapter extends FirebaseRecyclerAdapter<GuiTietKi
      * @param options
      */
 
-
     public ListAccountSavingsAdapter(@NonNull FirebaseRecyclerOptions<GuiTietKiem> options) {
         super(options);
     }

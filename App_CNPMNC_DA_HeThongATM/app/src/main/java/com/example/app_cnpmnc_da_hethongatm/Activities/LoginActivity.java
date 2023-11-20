@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // View
     EditText etPhone, etPassword;
-    Button btLogin;
+    Button btLogin, btRegister;
 
     String fileName = "config"; // dùng để lưu shared_preferences
     SharedPreferences sharedPreferences;
@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initUI();
         initData();
         initListener();
@@ -61,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         etPassword = findViewById(R.id.etPassword);
         btLogin = findViewById(R.id.btLogin);
+        btRegister = findViewById(R.id.btRegister);
         progressBar = findViewById(R.id.progressBar);
     }
 
@@ -81,6 +81,14 @@ public class LoginActivity extends AppCompatActivity {
                     String password = etPassword.getText().toString().trim();
                     checkAccount(email, password); // kiểm tra tài khoản
                 }
+            }
+        });
+        btRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,GetOTPActivity.class);
+//                Intent intent = new Intent(LoginActivity.this,formUserRegister.class);
+                startActivity(intent);
             }
         });
     }
@@ -111,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
             if (snapshot.exists()) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
-
                     Log.d("firebase", khachHang.getCCCD());
                     if (khachHang != null) {
                         // Kiểm tra mật khẩu
@@ -120,8 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("customerPhone", phone);
                             editor.putString("customerKey", dataSnapshot.getKey());
                             editor.putString("customerName", khachHang.getTenKH());
+                            editor.putBoolean("stateLogin",true);
                             editor.commit();
-
                             startProgressBar(1500);
                         } else {
                             toastMessage("Mật khẩu không chính xác");
@@ -169,5 +176,10 @@ public class LoginActivity extends AppCompatActivity {
     // ẩn ProgressBar
     private void hideProgressBar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

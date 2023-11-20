@@ -1,0 +1,39 @@
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+
+@model TaiKhoanLienKetViewModel
+@{
+    Layout = "_LayoutMain";
+    var accounts = ViewData["j"] as List<TaiKhoanLienKetViewModel>;
+}
+
+<body>
+	<form method="post" asp-controller="CustomerService" asp-action="NapTien" class="content" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-primary">
+					<div class="card-body">
+						<div class="form-group">
+							<label for="inputSTK" asp-for="SoTaiKhoan">Số Tài Khoản</label>
+							<input type="text" id="inputSTK" class="form-control" asp-for="SoTaiKhoan">
+							<span asp-validation-for="@Model.SoTaiKhoan" class="text-danger"></span>
+						</div>
+
+						<div class="form-group">
+							<label for="inputMoney" asp-for="SoTien">Số Tiền</label>
+							<input type="text" id="inputMoney" class="form-control" asp-for="SoTien" />
+							<span asp-validation-for="@Model.SoTien" class="text-danger"></span>
+						</div>
+					</div>
+					<!-- /.card-body -->
+				</div>
+				<!-- /.card -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<a asp-controller="CustomerService" asp-action="NapTien" class="btn btn-secondary">Cancel</a>
+				<button type="submit" class="btn btn-primary btn-sm">Nạp tiền</button>
+			</div>
+		</div>
+	</form>
+</body>

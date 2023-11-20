@@ -1,4 +1,4 @@
-﻿namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
 {
     public class NhanVien
     {

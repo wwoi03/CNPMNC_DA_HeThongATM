@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.con/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activities.NewaccountActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+
+
+    <!-- Tiêu đề -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_account_box_24"
+            android:layout_marginEnd="10dp">
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kho số đẹp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold">
+        </TextView>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="*Mô tả sản phẩm mở tài khoản thanh toán số chọn"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"></TextView>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etstk"
+        android:hint="Nhập số tài khoản yêu thích"
+        android:numeric="integer|decimal"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="Lưu ý: Quý khách có thể tìm kiếm số tài khoản có số cuối theo sở thích như ngày sinh, số yêu thích"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"></TextView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TÌM KIẾM"
+        android:id="@+id/btnThem"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_drive_file_rename_outline_24"
+            android:layout_marginEnd="10dp">
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Danh sách số tài khoản"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold">
+        </TextView>
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listTaiKhoan">
+    </ListView>
+</LinearLayout>

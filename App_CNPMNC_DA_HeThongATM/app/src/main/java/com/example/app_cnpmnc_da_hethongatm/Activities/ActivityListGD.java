@@ -24,6 +24,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ActivityListGD extends AppCompatActivity {
@@ -65,12 +67,16 @@ public class ActivityListGD extends AppCompatActivity {
                         if(stk == giaoDich.getTaiKhoanNguon()){
                             giaoDich.setSoTienGiaoDich(giaoDich.getSoTienGiaoDich()*-1);
                         }
+                        else if(stk == giaoDich.getTaiKhoanNhan()){
+                            giaoDich.setSoDuLucGui(giaoDich.getSoDuLucNhan());
+                        }
                         gd1.add(giaoDich);
                     }
                 }
                 if(!giaoDiches.equals(gd1)){
                     giaoDiches.clear();
                     giaoDiches.addAll(gd1);
+                    Collections.reverse(giaoDiches);
                     giaoDichAdapter.notifyDataSetChanged();
                 }
             }
@@ -80,6 +86,5 @@ public class ActivityListGD extends AppCompatActivity {
 
             }
         });
-
     }
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class GuiTietKiem implements Serializable {
     private String Key;
+    private String MaKHKey;
     private long TaiKhoanTietKiem; // số tài khoản tiết kiệm
     private long TaiKhoanNguon;
     private String LaiSuatKey; // mã lãi suất
@@ -11,19 +12,31 @@ public class GuiTietKiem implements Serializable {
     private double TienLaiToiKy;
     private double TienGui;
 
-    public GuiTietKiem() {
-    }
 
-    public GuiTietKiem(String key, long taiKhoanTietKiem, long taiKhoanNguon, String laiSuatKey, String ngayGui, double tienLaiToiKy, double tienGui) {
+    public GuiTietKiem(String key, String maKHKey, long taiKhoanTietKiem, long taiKhoanNguon, String laiSuatKey, String ngayGui, double tienLaiToiKy, double tienGui) {
         Key = key;
+        MaKHKey = maKHKey;
         TaiKhoanTietKiem = taiKhoanTietKiem;
         TaiKhoanNguon = taiKhoanNguon;
         LaiSuatKey = laiSuatKey;
         NgayGui = ngayGui;
         TienLaiToiKy = tienLaiToiKy;
         TienGui = tienGui;
+        MaKHKey = maKHKey;
     }
 
+    public String getMaKHKey() {
+        return MaKHKey;
+    }
+
+    public void setMaKHKey(String maKHKey) {
+        MaKHKey = maKHKey;
+    }
+
+    public GuiTietKiem(String key, long taiKhoanTietKiem){
+        this.Key = key;
+        this.TaiKhoanTietKiem = taiKhoanTietKiem;
+    }
     public String getKey() {
         return Key;
     }

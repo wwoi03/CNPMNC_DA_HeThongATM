@@ -202,7 +202,7 @@ public class TransactionFragment extends Fragment implements ServiceFuntionAdapt
     // Xử lý sự kiện khi ấn vào một chức năng bất kỳ
     @Override
     public void setOnClickItemListener(ChucNang serviceFunction, DatabaseReference databaseReference) {
-        String className = "com.example.app_cnpmnc_da_hethongatm" + serviceFunction.getMaChucNang();
+        String className = "com.example.app_cnpmnc_da_hethongatm.Activities." + serviceFunction.getMaChucNang();
 
         try {
             Class<?> myClass = Class.forName(className);
