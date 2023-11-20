@@ -22,10 +22,11 @@
             android:exported="false" />
         <activity
             android:name=".Activities.OseActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.AppointmentActivity"
             android:exported="false" />
-            android:exported="false" />
+        <activity
             android:name=".Activities.DepositMoreSavingActivity"
             android:exported="false" />
         <activity

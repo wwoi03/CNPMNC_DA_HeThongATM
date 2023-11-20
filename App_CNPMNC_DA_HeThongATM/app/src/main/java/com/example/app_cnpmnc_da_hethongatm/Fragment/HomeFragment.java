@@ -194,17 +194,7 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        cvAppointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ApoimentActivity.class);
-                startActivity(intent);
-            }
-        });
     }
-
-
-
 
     // lấy danh sách image slide
     private ArrayList<ImageSlide> getImageSlides() {
