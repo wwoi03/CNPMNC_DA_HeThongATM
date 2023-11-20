@@ -1359,8 +1359,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return null;
         }
 
-    }
-
         //------------------------------------------------------------------Gửi tiết kiệm-----------------------------------------------------
 
         public List<LaiSuat> GetNameLaiSuat()
