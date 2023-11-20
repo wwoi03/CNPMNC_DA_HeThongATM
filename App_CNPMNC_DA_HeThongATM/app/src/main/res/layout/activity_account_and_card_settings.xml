@@ -239,28 +239,35 @@
                             android:layout_marginTop="6dp">
 
                             <ImageView
-                                android:layout_width="22dp"
-                                android:layout_height="22dp"
-                                android:src="@drawable/circle_check_solid">
-                            </ImageView>
-
-                            <TextView
+                                android:id="@+id/icon_khoa"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Hoạt động"
-                                android:textSize="18dp"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/baseline_warning_24" />
+
+                            <ImageView
+                                android:id="@+id/icon_ok"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:src="@drawable/circle_check_solid"></ImageView>
+
+                            <TextView
+                                android:id="@+id/tv_tinhtrang"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="6dp"
-                                android:textColor="@color/black">
-                            </TextView>
+                                android:text="Hoạt động"
+                                android:textColor="@color/black"
+                                android:textSize="18dp"></TextView>
                         </LinearLayout>
 
                         <Switch
+                            android:id="@+id/sw_changestatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:switchMinWidth="60dp"
                             android:layout_alignParentRight="true"
-                            android:layout_centerInParent="true">
-                        </Switch>
+                            android:layout_centerInParent="true"
+                            android:switchMinWidth="60dp"></Switch>
                     </RelativeLayout>
 
                     <!-- Số tài khoản liên kết -->
