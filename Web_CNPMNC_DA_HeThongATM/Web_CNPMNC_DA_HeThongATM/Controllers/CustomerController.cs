@@ -74,6 +74,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             customer.MatKhau = firebaseHelper.PassRandom();
             ModelState.Remove("MatKhau");
+            ModelState.Remove("MaNhanVienKey");
             if (ModelState.IsValid)
             {
 
