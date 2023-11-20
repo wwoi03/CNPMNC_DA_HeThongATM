@@ -18,6 +18,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             List<DatLichHen> datLichHens = firebaseHelper.GetAppointent();
             List<DatLichHenViewModel> datLichHenViewModels = new List<DatLichHenViewModel>();
+
             foreach (var i in datLichHens)
             {
                 var pro = new DatLichHenViewModel
@@ -26,8 +27,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     SoDienThoai = i.SoDienThoai,
                     TenKhachHang = i.TenKhachHang,
                     LoaiDichVu = i.LoaiDichVu,
-                    NgayDenHen = i.NgayDenHen,
+                    NgayDenHen = i.NgayDenHen.ToString("dd/MM/yyy"),
                     TrangThai = i.TrangThai,
+
                 };
                 datLichHenViewModels.Add(pro);
             }
@@ -62,7 +64,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             DatLichHen datLichHen = firebaseHelper.GetAppointmentbyKey(Key);
 
-            //ViewBag.TenKhachHang = firebaseHelper.GetNameCustomerbyid(Key);
 
             ViewBag.Details = datLichHen;
 

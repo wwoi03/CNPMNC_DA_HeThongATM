@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using UniqueIdGenerator;
 
 
@@ -20,6 +21,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
         public string MaNhanVienKey { get; set; }
         [Required(ErrorMessage = "Vui lòng nhập ngày đến hẹn.")]
         public string NgayDenHen { get; set; }
+   //     public DatLichHenViewModel(string inputDate)
+   //     {
+   //         if (DateTime.TryParseExact(inputDate, "yyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
+   //         {
+   //             NgayDenHen = parsedDate;
+   //         }
+   //         else
+   //         {
+			//	throw new ArgumentException("Ngày không hợp lệ", nameof(inputDate));
+			//}
+   //     }
         public int TrangThai { get; set; }
     }
 }

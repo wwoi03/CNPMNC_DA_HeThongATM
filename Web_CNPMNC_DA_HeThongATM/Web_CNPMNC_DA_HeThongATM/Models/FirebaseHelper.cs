@@ -9,6 +9,8 @@ using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Controllers;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Principal;
 using System.Net;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
@@ -552,7 +554,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return null;
         }
 
-        public bool NapTien(double soTien, long value)
+        public bool NapTien(double soTien, long value,long stk)
         {
             string info = GetAccount(value);
             try
@@ -567,7 +569,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 // Cập nhật số dư trên Firebase
                 client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuHientai);
 
-                return true; // Cập nhật thành công
+                //lưu lich sử giao dịch nạp tiền
+				GiaoDich giaoDich = new GiaoDich
+				{
+					Key = "",
+					GioGiaoDich = DateTime.Now.ToString("HH:mm:ss"),
+					NgayGiaoDich = DateTime.Now.ToString("dd/MM/yyy"),
+					LoaiGiaoDichKey = "1",
+					NoiDungChuyenKhoan = "Nạp tiền vào tài khoản",
+					PhiGiaoDich = 0,
+					SoDuLucGui = accountData.SoDu,
+					SoDuLucNhan = SoDuHientai,
+					SoTienGiaoDich = soTien,
+					TaiKhoanNguon = stk,
+				};
+                double g = giaoDich.SoDuLucNhan;
+				LichSuGD(giaoDich.LoaiGiaoDichKey, giaoDich);
+				return true; // Cập nhật thành công
 
             }
             catch (Exception ex)
@@ -1527,7 +1545,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
         public bool TrangThai(int trangThai, string key)
         {
-            //string status = GetStatus(value);
             try
             {
                 FirebaseResponse response = client.Set("DatLichHen/" + key + "/TrangThai", trangThai);
@@ -1564,5 +1581,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return null;
         }
-    }
+		public bool LichSuGD(string key, GiaoDich giaoDich)
+		{
+			FirebaseResponse response = client.Push("GiaoDich", giaoDich);
+			if (response != null)
+			{
+				// Phân tích chuỗi JSON để lấy key
+				var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
+				string newKey = data["name"];
+
+
+
+				// Cập nhật đối tượng GuiTietKiem với Key mới
+				FirebaseResponse updateResponse = client.Set("GiaoDich/" + newKey + "/Key", newKey);
+				if (updateResponse != null)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 }
