@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout;
 
+import com.example.app_cnpmnc_da_hethongatm.Activities.ApoimentActivity;
+import com.example.app_cnpmnc_da_hethongatm.Activities.AppointmentActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.AddNewAccountActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.CreateSavingAccountActivity;
 import com.example.app_cnpmnc_da_hethongatm.Activities.DepositMoreSavingActivity;
@@ -191,7 +194,17 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        cvAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ApoimentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
+
 
     // lấy danh sách image slide
     private ArrayList<ImageSlide> getImageSlides() {

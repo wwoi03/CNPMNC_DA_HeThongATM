@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".Activities.AppointmentActivity">
+
+    <!-- Scroll -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Toolbar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tbToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_tool_bar"
+                android:background="@color/primary_blue_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
+
+            <!-- Form -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:text="*Thông tin sản phẩm dịch vụ"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"></TextView>
+
+                <!-- Diễn giải -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Dịch vụ đăng ký"
+                    android:textSize="20dp"></TextView>
+
+                <!-- Tài khoản nguồn -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="14dp">
+
+                    <TextView
+                        android:id="@+id/tvSourcet"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:hint="Chuyển tiền"
+                        android:inputType="text"
+                        android:textSize="20dp"></TextView>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/baseline_arrow_drop_down_24"></ImageView>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Địa điểm giao dịch"
+                    android:textSize="20dp"></TextView>
+
+                <!-- Tài khoản nguồn -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="14dp">
+
+                    <TextView
+                        android:id="@+id/tvSourcett"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:hint="Điểm giao dịch"
+                        android:inputType="text"
+                        android:textSize="20dp"></TextView>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/baseline_arrow_drop_down_24"></ImageView>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCont"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/white"
+                    android:hint="Địa chỉ"
+                    android:textSize="20dp">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+                <!-- Ngày hết hạn -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="Thời gian đặt lịch"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"></TextView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!-- Nhập ngày hết hạn -->
+
+                        <!-- Icon -->
+                        <com.google.android.material.textfield.TextInputEditText
+
+                            android:id="@+id/etDateLimit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="16dp"
+                            android:background="@color/white"
+                            android:hint="_ _ /_ _ /_ _ _ _"
+                            android:textSize="22dp">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+
+                        <ImageView
+                            android:id="@+id/ivDateLimitIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:paddingStart="12dp"
+                            android:paddingTop="12dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="12dp"
+                            android:src="@drawable/baseline_calendar_month_24"
+                            app:tint="@color/primary_blue_color"></ImageView>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Liên hệ"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"></TextView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:text=""
+                        android:textSize="20dp">
+
+                    </TextView>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMont"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="16dp"
+                        android:background="@color/white"
+                        android:hint="Số điện thoại"
+                        android:inputType="numberDecimal"
+                        android:textSize="20dp">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- Button tiếp tục -->
+                <Button
+                    android:id="@+id/btNextt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/border_radius_all"
+                    android:text="Đặt lịch hẹn"></Button>
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

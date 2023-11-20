@@ -1,6 +1,9 @@
-package com.example.app_cnpmnc_da_hethongatm.Model;
+package com.example.app_cnpmnc_da_hethongatm.Activities;
 
-public class DatLichHen {
+import java.util.HashMap;
+import java.util.Map;
+
+public class UserActivity {
     private String Key;
     private String TenKhachHang;
     private String SoDienThoai;
@@ -11,10 +14,10 @@ public class DatLichHen {
     private String NgayDenHen;
     private int TrangThai;
 
-    public DatLichHen() {
+    public UserActivity(String name, String soDienThoai, String chiNhanhKey, String ngayDenHen) {
     }
 
-    public DatLichHen(String key, String tenKhachHang, String soDienThoai, String loaiDichVu, String chiNhanhKey, String maKHKey, String maNhanVienKey, String ngayDenHen, int trangThai) {
+    public UserActivity(String key, String tenKhachHang, String soDienThoai, String loaiDichVu, String chiNhanhKey, String maKHKey, String maNhanVienKey, String ngayDenHen, int trangThai) {
         Key = key;
         TenKhachHang = tenKhachHang;
         SoDienThoai = soDienThoai;
@@ -24,7 +27,6 @@ public class DatLichHen {
         MaNhanVienKey = maNhanVienKey;
         NgayDenHen = ngayDenHen;
         TrangThai = trangThai;
-        //moi
     }
 
     public String getKey() {
@@ -98,4 +100,19 @@ public class DatLichHen {
     public void setTrangThai(int trangThai) {
         TrangThai = trangThai;
     }
+
+public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("TenKhachHang",TenKhachHang);
+    result.put("SoDienThoai",SoDienThoai);
+    result.put("LoaiDichVu",LoaiDichVu);
+    result.put("ChiNhanhKey",ChiNhanhKey);
+    result.put("MaKHKey",MaKHKey);
+    result.put("MaNhanVienKey",MaNhanVienKey);
+    result.put("NgayDenHen",NgayDenHen);
+    result.put("TrangThai",TrangThai);
+
+    return result;
 }
+}
+
