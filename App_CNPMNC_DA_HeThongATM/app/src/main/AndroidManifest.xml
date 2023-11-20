@@ -39,6 +39,9 @@
             android:name=".Activities.AdjustMoneyTransferLimitActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.AccountAndCardSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.ScanQRActivity"
             android:exported="false" />
         <activity

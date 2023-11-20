@@ -2,12 +2,14 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ListAccountQRCodeAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ListBeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
+import com.example.app_cnpmnc_da_hethongatm.Extend.UtilityClass;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
@@ -39,6 +42,8 @@ public class GenerateQRCodeActivity extends AppCompatActivity {
 
     ImageView img_select;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +56,11 @@ public class GenerateQRCodeActivity extends AppCompatActivity {
         edit_message.setCursorVisible(false);
         edit_tkqr = findViewById(R.id.edit_list);
         img_select = findViewById(R.id.img_select);
+        toolbar = findViewById(R.id.tbToolbar);
         config = new Config(this);
+
+        UtilityClass.setupToolbar(this, toolbar, "Tạo mã QR");
+
 
         img_select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,5 +126,14 @@ public class GenerateQRCodeActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();  // Kết thúc Activity hiện tại và quay lại Activity trước đó
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -193,15 +193,7 @@ public class DbHelper {
                                                             }
                                                         });
                                             } else {
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                builder.setTitle("Tên đã tồn tại");
-                                                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        dialog.dismiss();
-                                                    }
-                                                });
-                                                AlertDialog dialog = builder.create();
-                                                dialog.show();
+                                                UtilityClass.showDialogError(context, "Lỗi", "Tên người thụ hưởng đã tồn tại");
                                             }
                                         }
 
@@ -211,15 +203,7 @@ public class DbHelper {
                                         }
                                     });
                         } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setTitle("Tài khoản không tồn tại");
-                            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
+                            UtilityClass.showDialogError(context, "Lỗi", "Tài khoản đã tồn tại");
                         }
                     }
 

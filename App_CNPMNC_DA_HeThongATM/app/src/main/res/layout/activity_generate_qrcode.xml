@@ -3,32 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_tool_bar"
+        android:background="@color/primary_blue_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
 
     <EditText
         android:id="@+id/edit_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="Hãy nhập số tiền..."
         android:inputType="numberDecimal"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/tbToolbar"
+        app:layout_constraintStart_toStartOf="@+id/tbToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/tbToolbar" />
 
     <EditText
         android:id="@+id/edit_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập lời nhắn..."
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Nhập lời nhắn..."
+        app:layout_constraintEnd_toEndOf="@+id/edit_amount"
+        app:layout_constraintStart_toStartOf="@+id/edit_amount"
         app:layout_constraintTop_toBottomOf="@+id/edit_amount" />
 
     <EditText
         android:id="@+id/edit_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Lựa chọn tài khoản nguồn..."
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Lựa chọn tài khoản nguồn..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edit_message"
         app:layout_constraintTop_toBottomOf="@+id/edit_message" />
 
     <Button
