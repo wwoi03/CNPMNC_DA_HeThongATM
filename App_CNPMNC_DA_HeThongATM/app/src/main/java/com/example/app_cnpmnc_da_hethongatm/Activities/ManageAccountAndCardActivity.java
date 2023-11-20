@@ -122,6 +122,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ManageAccountAndCardActivity.this, AccountAndCardSettingsActivity.class);
+                intent.putExtra("TaiKhoanNguon",currentAccountCardInPage);
                 startActivity(intent);
                 finish();
             }

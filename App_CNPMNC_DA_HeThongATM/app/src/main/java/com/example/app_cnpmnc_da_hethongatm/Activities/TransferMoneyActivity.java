@@ -439,7 +439,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                                             etAccountBeneficiary.setText(String.valueOf(taiKhoanHuong.getSoTaiKhoan()));
                                             tvNameBeneficiary.setText(String.valueOf(taiKhoanHuong.getTenTK()));
                                             taiKhoanHuongKey = dataSnapshot.getKey();
-
                                             if (isCheckvalid == true) {
                                                 double money = Double.parseDouble(moneyString);
                                                 if (isTransferMoney == false) {
