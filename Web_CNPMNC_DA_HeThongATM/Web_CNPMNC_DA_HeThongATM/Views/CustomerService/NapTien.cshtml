@@ -7,6 +7,27 @@
 }
 
 <body>
+
+	@if (TempData["Message"] != null)
+	{
+		<div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+			<span class="badge badge-pill badge-primary">Thành Công</span>
+			@TempData["Message"]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+	}
+	else if (TempData["Fail"] != null)
+	{
+		<div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+			<span class="badge badge-pill badge-danger">Thất Bại</span>
+			@TempData["Fail"]
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+	}
 	<form method="post" asp-controller="CustomerService" asp-action="NapTien" class="content" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-md-12">

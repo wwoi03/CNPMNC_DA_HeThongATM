@@ -73,15 +73,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ModelState.Remove("TenTK");
 			if (ModelState.IsValid)
             {
-				    double sotien = (double)account.SoTien;
-                   
-				    firebaseHelper.NapTien(sotien, (long)account.SoTaiKhoan,(long)account.SoTaiKhoan);
-                
-
-				    return RedirectToAction("NapTien");
-			}
-        {
-             return View("NapTien", account);
+				double sotien = (double)account.SoTien;
+				firebaseHelper.NapTien(sotien, (long)account.SoTaiKhoan,(long)account.SoTaiKhoan);
+				TempData["Message"] = "Đặt Lịch Hẹn";
+				return RedirectToAction("NapTien");
+			}
+			TempData["Fail"] = "Đặt Lịch Hẹn";
+			return View("NapTien", account);
         }
     }
 }
