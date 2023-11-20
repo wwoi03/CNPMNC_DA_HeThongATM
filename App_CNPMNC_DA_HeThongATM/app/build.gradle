@@ -73,4 +73,7 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    // Adding Sweet Alert Library
+    implementation 'com.github.f0ris.sweetalert:library:1.6.2'
 }

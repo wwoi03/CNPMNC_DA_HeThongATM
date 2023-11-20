@@ -7,8 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".Activities.AccountSettingsActivity"
     android:orientation="vertical"
-    android:background="@color/bg_color"
-    android:layout_marginTop="16dp">
+    android:background="@color/bg_color">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_tool_bar"
+        android:background="@color/primary_blue_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="16dp"></androidx.appcompat.widget.Toolbar>
 
     <!-- Thông tin cá nhân -->
     <LinearLayout

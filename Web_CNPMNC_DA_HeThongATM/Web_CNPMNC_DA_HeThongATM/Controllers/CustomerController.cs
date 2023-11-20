@@ -30,9 +30,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
                     SoDienThoai = i.SoDienThoai,
                     TenKH = i.TenKH,
                     NgayTao = i.NgayTao,
-
-
                 };
+                
                 khachHangViewModels.Add(pro);
             }
 
@@ -75,6 +74,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             customer.MatKhau = firebaseHelper.PassRandom();
             ModelState.Remove("MatKhau");
+            ModelState.Remove("MaNhanVienKey");
             if (ModelState.IsValid)
             {
 
@@ -121,5 +121,17 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewBag.IteamSeach = ViewThes;
             return PartialView("SearchCustomer");
         }
+        //public IActionResult EditCustomer(string CCCD)
+        //{
+        //    firebaseHelper.GetCustomerbyid(CCCD);
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public IActionResult EditCustomer(KhachHangViewModel customer)
+        //{
+        //    firebaseHelper.EditCustomer(customer.CCCD, customer);
+        //    return RedirectToAction("Index");
+        //}
     }
 }

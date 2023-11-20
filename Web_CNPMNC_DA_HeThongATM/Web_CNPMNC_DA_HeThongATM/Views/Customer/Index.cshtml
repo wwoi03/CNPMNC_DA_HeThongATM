@@ -1,5 +1,6 @@
 @using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
-
+@using PagedList.Mvc;
+@using PagedList;
 @model KhachHangViewModel
 @{
     Layout = "_LayoutMain";
@@ -12,7 +13,7 @@
                 <strong class="card-title">Danh sách khách hàng</strong>
                 <div class="card-search col col-md-8" style="margin-right:100px">
                     <div class="input-group">
-                        <input type="text" id="search-input" class="form-control">
+                        <input type="text" id="search-input" class="form-control" placeholder="Tìm kiếm">
                         <div class="input-group-btn">
                             <button class="btn btn-info" id="search-button">
                                 <i class="fa fa-search"></i> Search
@@ -38,7 +39,7 @@
                         @foreach (var item in custommerList)
                         {
 
-                            <tr>
+
                             <tr>
                                 <td>@item.CCCD</td>
                                 <td>@item.TenKH</td>
@@ -50,24 +51,42 @@
                                             
                                         <i class="far fa-eye"></i>
                                     </a>
-
-                                    <a class="btn btn-success" asp-controller="Customer" asp-action="Edit" asp-route-CCCD="@item.CCCD">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-
-                                    <a class="btn btn-danger" asp-controller="Customer" asp-action="Delete" asp-route-CCCD="@item.CCCD">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
                                 </td>
                             </tr>
-                            </tr>
+
                         }
+
                     </tbody>
                 </table>
+                <div style="text-align:center">
+                    @*Trang @(custommerList.PageCount < custommerList.PageNumber ? 0 : custommerList.PageNumber) / @custommerList.PageCount
+
+                    @if (custommerList.HasPreviousPage)
+                    {
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angles-right fa-rotate-180"></i>
+                        </button>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageNumber - 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angle-right fa-rotate-180"></i>
+                        </button>
+                    }
+
+                    @if (custommerList.HasNextPage)
+                    {
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageNumber + 1, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                        <button class="btn btn-success" onclick="location.href='@Url.Action("Index", new { page = custommerList.PageCount, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter })'">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </button>
+                    }*@
+                </div>
+
             </div>
             <div class="table-stats order-table ov-h" id="SearchCustomerID">
             </div><!-- /.table-stats -->
         </div>
     </div>
     <script src="/js/ListCustomer.js"></script>
+    <script src="/js/Typescript/fromcard.js"></script>
 </body>

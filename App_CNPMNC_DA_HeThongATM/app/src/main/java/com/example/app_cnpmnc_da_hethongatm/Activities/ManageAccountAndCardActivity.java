@@ -1,9 +1,11 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -15,17 +17,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.ManageAccountAndCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
 import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -33,17 +39,20 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     // View
     ViewPager2 vp2AccountsAndCards;
     CircleIndicator3 ci3;
-    LinearLayout llSettingCard, llHistoryTransferMoney, llStatement, llSaving, llWithdrawSaving, llHistoryInterestRate;
+    LinearLayout llSettingCard, llHistoryTransferMoney, llTransferMoney, llSaving, llWithdrawSaving, llHistoryInterestRate;
     Toolbar tbToolbar;
+    ProgressBar progressBar;
 
     // Adapter
     ManageAccountAndCardAdapter manageAccountAndCardAdapter;
 
-    //
+    // var
+    FirebaseRecyclerOptions<TaiKhoanLienKet> danhSachTaiKhoanLienKet;
     TaiKhoanLienKet currentAccountCardInPage;
     String taiKhoanKey;
 
     Config config;
+    String loaiTKKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,28 +71,30 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         ci3 = findViewById(R.id.ci3);
         llSettingCard = findViewById(R.id.llSettingCard);
         llHistoryTransferMoney = findViewById(R.id.llHistoryTransferMoney);
-        llStatement = findViewById(R.id.llStatement);
+        llTransferMoney = findViewById(R.id.llTransferMoney);
         llSaving = findViewById(R.id.llSaving);
         llWithdrawSaving = findViewById(R.id.llWithdrawSaving);
         llHistoryInterestRate = findViewById(R.id.llHistoryInterestRate);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     // Khởi tạo dữ liệu
     public void initData() {
+        getAccountTypeByName("thanh toán");
+
         setupToolbar();
 
         config = new Config(this);
 
-        FirebaseRecyclerOptions<TaiKhoanLienKet> danhSachTaiKhoanLienKet = DbHelper.getAffiliateAccounts(config.getCustomerKey());
+        danhSachTaiKhoanLienKet = DbHelper.getAffiliateAccounts(config.getCustomerKey());
         manageAccountAndCardAdapter = new ManageAccountAndCardAdapter(danhSachTaiKhoanLienKet, this);
         vp2AccountsAndCards.setAdapter(manageAccountAndCardAdapter);
         ci3.setViewPager(vp2AccountsAndCards);
-
-        //Log.d("firebase", "Data First: " + manageAccountAndCardAdapter.getSnapshots().size());
     }
 
     // Xử lý sự kiện
     public void initListener() {
+        // xử lý khi đổi viewpaper
         vp2AccountsAndCards.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -99,10 +110,68 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
 
                 // Hiển thị button theo loại tài khoản
                 hideButtonAccountType(); // ẩn tất cả button cũ
-                if (currentAccountCardInPage.getMaLoaiTKKey().equals("0")) // tạm thời gắn cứng
+                if (currentAccountCardInPage.getMaLoaiTKKey().equals(loaiTKKey))
                     showButtonPaymentAccountType();
                 else
                     showButtonSavingAccountType();
+            }
+        });
+
+        // tùy chỉnh thẻ
+        llSettingCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageAccountAndCardActivity.this, AccountAndCardSettingsActivity.class);
+                intent.putExtra("TaiKhoanNguon",currentAccountCardInPage);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // lịch sử giao dịch
+        llHistoryTransferMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageAccountAndCardActivity.this, ActivityListGD.class);
+                intent.putExtra("taiKhoanNguon", currentAccountCardInPage.getSoTaiKhoan());
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // chuyển tiền
+        llTransferMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManageAccountAndCardActivity.this, TransferMoneyActivity.class);
+                intent.putExtra("flag", ResultCode.ACCOUNT_TRANSFER_MONEY);
+                intent.putExtra("soTaiKhoan", currentAccountCardInPage.getSoTaiKhoan());
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // nộp tiết kiệm
+        llSaving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // rút tiết kiệm
+        llWithdrawSaving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // Lịch sử lãi suất
+        llHistoryInterestRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -128,15 +197,13 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
             // Hiển thị nút quay lại
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
     }
 
     // xử lý sự kiện ấn nút quay lại
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();  // Kết thúc Activity hiện tại và quay lại Activity trước đó
+            finish();  // Kết thúc Activity hiện tại và quay lại  Activity trước đó
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -154,6 +221,29 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         manageAccountAndCardAdapter.stopListening();
     }
 
+    // lấy loại tài khoản
+    public void getAccountTypeByName(String accountTypeName) {
+        DbHelper.firebaseDatabase.getReference("LoaiTaiKhoan")
+                .orderByChild("TenLoaiTaiKhoan")
+                .equalTo(accountTypeName.toLowerCase().trim())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                LoaiTaiKhoan loaiTaiKhoan = dataSnapshot.getValue(LoaiTaiKhoan.class);
+                                loaiTKKey = loaiTaiKhoan.getKey();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
     // Xử lý sự kiện khi bấm vào icon hiển thị số dư
     @Override
     public void setOnClickIconSurplusListener(ImageView iconSurplus, TextView tvSurplus, TaiKhoanLienKet taiKhoanLienKet) {
@@ -167,11 +257,16 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
         }
     }
 
+    @Override
+    public void adapterOnDataChange() {
+        progressBar.setVisibility(View.GONE);
+    }
+
     // Hiển thị button theo loại thẻ thanh toán
     public void showButtonPaymentAccountType() {
         llSettingCard.setVisibility(View.VISIBLE);
         llHistoryTransferMoney.setVisibility(View.VISIBLE);
-        llStatement.setVisibility(View.VISIBLE);
+        llTransferMoney.setVisibility(View.VISIBLE);
     }
 
     // Hiển thị button theo loại thẻ tiết kiệm
@@ -185,7 +280,7 @@ public class ManageAccountAndCardActivity extends AppCompatActivity implements M
     public void hideButtonAccountType() {
         llSettingCard.setVisibility(View.GONE);
         llHistoryTransferMoney.setVisibility(View.GONE);
-        llStatement.setVisibility(View.GONE);
+        llTransferMoney.setVisibility(View.GONE);
         llSaving.setVisibility(View.GONE);
         llWithdrawSaving.setVisibility(View.GONE);
         llHistoryInterestRate.setVisibility(View.GONE);

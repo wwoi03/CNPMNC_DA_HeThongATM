@@ -7,17 +7,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.BeneficiaryAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.UtilityClass;
 import com.example.app_cnpmnc_da_hethongatm.Model.ThuHuong;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -28,6 +35,7 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
     // View
     RecyclerView rvBeneficiary;
     ImageView ivAddBeneficiary;
+    Toolbar tbToolbar;
 
     // Adapter
     BeneficiaryAdapter beneficiaryAdapter;
@@ -54,10 +62,13 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
     private void initUI() {
         rvBeneficiary = findViewById(R.id.rvBeneficiary);
         ivAddBeneficiary = findViewById(R.id.ivAddBeneficiary);
+        tbToolbar = findViewById(R.id.tbToolbar);
     }
 
     // Khởi tạo dữ liệu
     private void initData() {
+        UtilityClass.setupToolbar(this, tbToolbar, "Thụ hưởng");
+
         config = new Config(this);
 
         FirebaseRecyclerOptions<ThuHuong> beneficiaryOptions = DbHelper.getBeneficiaries(config.getCustomerKey());
@@ -77,6 +88,16 @@ public class BeneficiaryManagementActivity extends AppCompatActivity implements 
                 startActivity(intent);
             }
         });
+    }
+
+    // xử lý sự kiện ấn nút quay lại
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();  // Kết thúc Activity hiện tại và quay lại  Activity trước đó
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
