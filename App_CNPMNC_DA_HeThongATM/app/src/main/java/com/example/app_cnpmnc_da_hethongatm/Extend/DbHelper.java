@@ -412,7 +412,6 @@ public class DbHelper {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String NgayGDHomNay = sdf.format(calendar.getTime());
-
         return NgayGDHomNay;
     }
 
@@ -621,7 +620,7 @@ public class DbHelper {
                     }
                 });
     }
-    public static void RegisterNewUser(KhachHang khachHang){
+    public static String RegisterNewUser(KhachHang khachHang){
         String newKey = firebaseDatabase.getReference("KhachHang").push().getKey(); // tạo key
         Map<String, Object> map = new HashMap<>();
         map.put("Key", newKey);
@@ -629,24 +628,25 @@ public class DbHelper {
         map.put("CCCD",khachHang.getCCCD());
         map.put("Email",khachHang.getEmail());
         map.put("GioiTinh",khachHang.getGioiTinh());
-        map.put("MaNhanVienKey",0);
+        map.put("MaNhanVienKey",String.valueOf(0));
         map.put("MatKhau",khachHang.getMatKhau());
         map.put("NgaySinh",khachHang.getNgaySinh());
         map.put("NgayTao",DbHelper.GetDataForm());
         map.put("SoDienThoai",khachHang.getSoDienThoai());
         map.put("TenKH",khachHang.getTenKH());
         firebaseDatabase.getReference("KhachHang").child(newKey).setValue(map);
+        return newKey;
     }
-    public static void NewTaiKhoanLienKet(KhachHang khachHang){
+    public static void NewTaiKhoanLienKet(KhachHang khachHang,String KeyKH){
         String newKey = firebaseDatabase.getReference("TaiKhoanLienKet").push().getKey();
         Map<String, Object> map = new HashMap<>();
-        map.put("HanMucTk", 50000000);
+        map.put("HanMucTK", 50000000);
         map.put("Key",newKey);
-        map.put("MaKHKey",newKey);
-        map.put("MaLoaiTKKey",0);
+        map.put("MaKHKey",KeyKH);
+        map.put("MaLoaiTKKey",String.valueOf(0));
         map.put("NgayGD",DbHelper.GetDataForm());
         map.put("SoDu",0);
-        map.put("SoTaiKhoan",khachHang.getSoDienThoai());
+        map.put("SoTaiKhoan",Long.parseLong(khachHang.getSoDienThoai()));
         map.put("SoTien",0);
         map.put("TenTK",khachHang.getTenKH());
         map.put("TienDaGD",0);

@@ -34,7 +34,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class formUserRegister extends AppCompatActivity {
-    EditText edt_tenkh,edt_email,edt_diachi,edt_cccd;
+    EditText edt_tenkh,edt_email,edt_diachi,edt_cccd,edt_matkhau;
     Button btn_next;
     TextView tv_ngaysinh;
     RadioGroup radio_group;
@@ -43,8 +43,9 @@ public class formUserRegister extends AppCompatActivity {
     Intent intent;
     KhachHang khachHang ;
     boolean checkcccd = true;
-    String sdt,matkhau ;
+    String sdt ;
     Pattern pattern = Pattern.compile("[!@#$%^&*()_+\\-=\\[\\]{};':\",./<>?|\\\\]");
+    Pattern password = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
     Pattern emailPattern = Pattern.compile("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}");
     // Tạo một Matcher với inputText và kiểm tra xem có ký tự đặc biệt hay không
 
@@ -71,11 +72,11 @@ public class formUserRegister extends AppCompatActivity {
         edt_cccd = findViewById(R.id.edt_cccd);
         tv_ngaysinh = findViewById(R.id.tv_ngaysinh);
         radio_group = findViewById(R.id.radio_group);
+        edt_matkhau = findViewById(R.id.edt_matkhau);
     }
     private void InitData(){
         intent = getIntent();
-        matkhau = (String) intent.getSerializableExtra("MatKhau");
-        sdt = (String) intent.getStringExtra("Sdt");
+        sdt = intent.getStringExtra("mobile");
     }
     private void CheckGenDer(){
         btn_next.setOnClickListener(new View.OnClickListener() {
@@ -83,26 +84,27 @@ public class formUserRegister extends AppCompatActivity {
             public void onClick(View v) {
                 int i = radio_group.getCheckedRadioButtonId();
                 radioButton = findViewById(i);
-                Matcher matcher4 = pattern.matcher(edt_cccd.getText().toString().trim());
                 Matcher matcher  = emailPattern.matcher(edt_email.getText().toString().trim());
-                if(TextUtils.isEmpty(edt_tenkh.getText()) &&TextUtils.isEmpty(edt_email.getText()) &&TextUtils.isEmpty(edt_cccd.getText())&&TextUtils.isEmpty(tv_ngaysinh.getText())){
+                if(TextUtils.isEmpty(edt_tenkh.getText()) ||TextUtils.isEmpty(edt_email.getText()) ||TextUtils.isEmpty(edt_cccd.getText())||TextUtils.isEmpty(tv_ngaysinh.getText())||TextUtils.isEmpty(edt_matkhau.getText())){
                     Toast.makeText(formUserRegister.this,"Vui lòng điền đủ các trường",Toast.LENGTH_SHORT).show();
                     return;
+                }else if(edt_cccd.getText().toString().trim().length() != 12){
+                    Toast.makeText(formUserRegister.this,"CCCD phải đủ 12 số",Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                if(CheckDate == false){
+                else if (CheckDate == false) {
                     Toast.makeText(formUserRegister.this,"Vui lòng nhập ngày sinh",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(matcher4.find()){
-                    Toast.makeText(formUserRegister.this,"CCCD không được mang kí tự đặc biệt",Toast.LENGTH_SHORT).show();
+                else if (!matcher.find()) {
+                    Toast.makeText(formUserRegister.this,"Nhập đúng định dạng Email",Toast.LENGTH_SHORT).show();
                     return;
-                }
-                if(checkcccd == false){
+                }else if (checkcccd == false) {
                     Toast.makeText(formUserRegister.this,"Vui lòng nhập cccd khác",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!matcher.find()){
-                    Toast.makeText(formUserRegister.this,"Nhập đúng định dạng Email",Toast.LENGTH_SHORT).show();
+                else if (edt_matkhau.getText().toString().trim().length() <6) {
+                    Toast.makeText(formUserRegister.this,"Mật khẩu phải dài hơn 6 kí tự",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
@@ -112,9 +114,10 @@ public class formUserRegister extends AppCompatActivity {
                     String cccd = edt_cccd.getText().toString().trim();
                     String ngaySinh = tv_ngaysinh.getText().toString().trim();
                     String gioitinh = radioButton.getText().toString().trim();
+                    String matkhau = edt_matkhau.getText().toString().trim();
                     khachHang = new KhachHang(cccd,TenKH,ngaySinh,gioitinh,diachi,email,sdt,matkhau);
-                    DbHelper.RegisterNewUser(khachHang);
-                    DbHelper.NewTaiKhoanLienKet(khachHang);
+                    String keyKH= DbHelper.RegisterNewUser(khachHang);
+                    DbHelper.NewTaiKhoanLienKet(khachHang,keyKH);
                     Intent intent1 = new Intent(formUserRegister.this,LoginActivity.class);
                     Toast.makeText(formUserRegister.this,"Đăng ký tài khoản thành công",Toast.LENGTH_SHORT).show();
                     startActivity(intent1);
@@ -127,7 +130,6 @@ public class formUserRegister extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    Log.d("CCCD", "CCCD: "+edt_cccd.getText().toString().trim());
                     DbHelper.firebaseDatabase.getReference("KhachHang").orderByChild("CCCD").equalTo(edt_cccd.getText().toString().trim())
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
