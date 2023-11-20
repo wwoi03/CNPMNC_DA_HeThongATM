@@ -1369,9 +1369,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             }
             return stk;
-
-
-
         }
 
         //  lấy tài khoản tiết kiệm
@@ -1581,25 +1578,5 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return null;
         }
-		public bool LichSuGD(string key, GiaoDich giaoDich)
-		{
-			FirebaseResponse response = client.Push("GiaoDich", giaoDich);
-			if (response != null)
-			{
-				// Phân tích chuỗi JSON để lấy key
-				var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
-				string newKey = data["name"];
-
-
-
-				// Cập nhật đối tượng GuiTietKiem với Key mới
-				FirebaseResponse updateResponse = client.Set("GiaoDich/" + newKey + "/Key", newKey);
-				if (updateResponse != null)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
 	}
 }

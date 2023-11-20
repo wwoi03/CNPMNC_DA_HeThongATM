@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Web_CNPMNC_DA_HeThongATM.Models;
-using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
+
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
@@ -65,20 +66,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
         [HttpPost]
         public IActionResult NapTien(TaiKhoanLienKetViewModel account)
-
-
-            ModelState.Remove("Key");
-            ModelState.Remove("MaKHKey");
-            ModelState.Remove("MaLoaiTKKey");
-            ModelState.Remove("TenTK");
-			if (ModelState.IsValid)
-            {
-				double sotien = (double)account.SoTien;
-				firebaseHelper.NapTien(sotien, (long)account.SoTaiKhoan,(long)account.SoTaiKhoan);
-				TempData["Message"] = "Đặt Lịch Hẹn";
-				return RedirectToAction("NapTien");
-			}
-			TempData["Fail"] = "Đặt Lịch Hẹn";
+        { 
+            ModelState.Remove("Key");
+            ModelState.Remove("MaKHKey");
+            ModelState.Remove("MaLoaiTKKey");
+            ModelState.Remove("TenTK");
+
+			if (ModelState.IsValid)
+            {
+				double sotien = (double)account.SoTien;
+
+				firebaseHelper.NapTien(sotien, (long)account.SoTaiKhoan,(long)account.SoTaiKhoan);
+
+				TempData["Message"] = "Đặt Lịch Hẹn";
+
+				return RedirectToAction("NapTien");
+			}
+
+			TempData["Fail"] = "Đặt Lịch Hẹn";
+
 			return View("NapTien", account);
         }
     }
