@@ -31,7 +31,12 @@ else if (TempData["Fail"] != null)
     </h6>
     <div class="container col-md-7" style="display:-webkit-inline-box;">
         <form method="post" asp-controller="SaveMoney" asp-action="SettlementOfSavings" style="padding-top:0px ; background-color:#ffff">
-
+            <div style="display:none" id="alertnote" class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Lưu ý!</h4>
+                <p id="alertcontent"></p>
+               
+                
+            </div>
             <div class="flexbox">
 
                 <div class="inputBox">
@@ -75,7 +80,8 @@ else if (TempData["Fail"] != null)
             </div>
             <div class="flexbox">
                 <input id="datataikhoan" asp-for="TaiKhoanLienKet" hidden type="text" />
-                <input id="OutTien" type="submit" value="Rút Tiền" class="submit-btn">
+                <input  id="OutTien" type="submit" value="Rút Tiền" class="submit-btn">
+               
             </div>
 
         </form>
@@ -112,6 +118,12 @@ else if (TempData["Fail"] != null)
                 </li>
                 <li class="list-group-item">
                     <a href="#">
+                        Số tiền lãi: &nbsp;&nbsp;&nbsp;
+                        <span id="tienlai"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
                         Ngày Gửi: &nbsp;&nbsp;&nbsp;
                         <span id="NgayGui"></span>
                     </a>
@@ -128,6 +140,7 @@ else if (TempData["Fail"] != null)
                         <span id="tile"></span>
                     </a>
                 </li>
+              
             </ul>
         </div>
 

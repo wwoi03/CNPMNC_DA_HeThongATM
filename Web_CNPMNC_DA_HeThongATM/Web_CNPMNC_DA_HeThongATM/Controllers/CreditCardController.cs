@@ -48,8 +48,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult CreateCard(TheNganHangViewModel cardViewModel)
         {
             //lấy khách hàng
+            ModelState.Remove("Key");          
+            ModelState.Remove("MaKhachHang");
+            ModelState.Remove("MaKhachHangKey");
             KhachHang custommer = firebaseHelper.GetCustomerbyid(cardViewModel.CCCD);
-            if (cardViewModel == null || custommer == null) return RedirectToAction("Index");
+
+            if (cardViewModel == null || custommer == null && !ModelState.IsValid) return View("Index",cardViewModel);
             //đẩy lên database                 
             firebaseHelper.CreateCard(cardViewModel.TheNganHang());
             firebaseHelper.CreateCardLink(TaiKhoanLienKet.DefaultCard(cardViewModel, custommer));

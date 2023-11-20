@@ -476,6 +476,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             FirebaseResponse response = client.Push("TaiKhoanLienKet", taiKhoanLienKet);
             if (response != null)
             {
+                var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
+                string newKey = data["name"];
+
+                // Cập nhật đối tượng TheNganHang với MaKHKey mới
+                FirebaseResponse updateResponse = client.Set("TheNganHang/" + newKey + "/Key", newKey);
+
                 Console.WriteLine("thành công");
             }
             else { Console.WriteLine("thất bại"); }
@@ -1241,7 +1247,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
         }
 
-        //------------------------------------------------------------------Lãi Xuất-----------------------------------------------------
+        //------------------------------------------------------------------Gửi tiết kiệm-----------------------------------------------------
 
         public List<LaiSuat> GetNameLaiSuat()
         {
@@ -1375,7 +1381,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 double tien = (double)pss["TienGui"] + number;
                 double tienlai = TienLai((string)pss["LaiSuatKey"], tien);
                 FirebaseResponse response = client.Set("GuiTietKiem/" + key + "/TienGui", tien);
-                FirebaseResponse rptienlai = client.Set("GuiTietKiem/" + key + "/TienLaiToiKy", tienlai);
+              //  FirebaseResponse rptienlai = client.Set("GuiTietKiem/" + key + "/TienLaiToiKy", tienlai);
                 if (response != null && response.Body != "null")
                 {
 
@@ -1421,7 +1427,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return false;
         }
+        //tất toán tiết kiệm
+        public void TatToanTietKiem(long sotklk,string keytktk, double tien)
+        {
+            var data = new 
+            {
+                TienLaiToiKy = 0,
 
+                TienGui = 0,
+            };
+            FirebaseResponse response = client.Update("GuiTietKiem/"+keytktk,data);
+            if (response != null)
+            {
+                ChuyenTien(tien, sotklk);
+            }
+           
+        }
+       
         //-------------------------------------------------Đăt lịch hẹn---------------------------------------------------------------
         public List<DatLichHen> GetAppointent()
         {

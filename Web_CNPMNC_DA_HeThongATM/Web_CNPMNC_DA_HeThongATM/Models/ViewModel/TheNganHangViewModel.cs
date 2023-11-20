@@ -10,15 +10,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
 
         public string Key { get; set; }
         public string MaKHKey { get; set; }
-        public long MaSoThe { get; set; }
-        public long SoTaiKhoan { get; set; }
+        [Required(ErrorMessage = "Mã Số Thẻ là bắt buộc.")]
+        
+        public long? MaSoThe { get; set; }
+        [Required(ErrorMessage = "Số tài khoản là bắt buộc.")]
+       
+        public long? SoTaiKhoan { get; set; }
+
+        [Required(ErrorMessage = "Mã Pin là bắt buộc.")]
         public string MaPin { get; set; }
+
+        [Required(ErrorMessage = "Ngày Hết Hạn là bắt buộc.")]
         public string NgayHetHan { get; set; }
+        [Required(ErrorMessage = "Ngày Mở Thẻ là bắt buộc.")]
         public string NgayMoThe { get; set; }
         public int TinhTrangThe { get; set; }
 
+        [Required(ErrorMessage = "Căn cước công dân là bắt buộc.")]
         public string CCCD { get; set; }
         public string MaKH { get; internal set; }
+        [Required(ErrorMessage = "Tên Khách Hàng là bắt buộc.")]
         public string TenKhachHang { get; set; }
 
         public TheNganHang TheNganHang()
@@ -27,8 +38,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ViewModel
             {
                 Key = this.Key,
                 MaKHKey = firebaseHelper.GetKeysBycccd(this.CCCD),
-                MaSoThe = this.MaSoThe,
-                SoTaiKhoan = this.SoTaiKhoan,
+                MaSoThe = (long)this.MaSoThe,
+                SoTaiKhoan = (long)this.SoTaiKhoan,
                 MaPin = this.MaPin,
                 NgayHetHan = this.NgayHetHan,
                 NgayMoThe = this.NgayMoThe,

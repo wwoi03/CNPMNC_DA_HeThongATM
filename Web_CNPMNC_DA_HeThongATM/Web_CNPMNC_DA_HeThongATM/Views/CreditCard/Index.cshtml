@@ -71,16 +71,19 @@
                 <div class="inputBox">
                     <span>Căn cước công dân</span>
                     <input type="text" maxlength="16" id="makhachhang" asp-for="CCCD">
+                    <span asp-validation-for="CCCD" class="text-danger"></span>
                 </div>
                 <div class="inputBox">
                     <span>Tên Khách Hàng</span>
-                    <input type="text" maxlength="16" class="tenkhachhang">
+                    <input type="text" maxlength="16" asp-for="TenKhachHang" class="tenkhachhang">
+                    <span asp-validation-for="TenKhachHang" class="text-danger"></span>
                 </div>
             </div>
             <div class="flexbox">
                 <div class="inputBox">
                     <span>Ngày Mở Thẻ</span>
                     <input type="text" maxlength="16" id="ngaymothe" asp-for="NgayMoThe">
+                    <span asp-validation-for="NgayMoThe" class="text-danger"></span>
                 </div>
                 <div class="inputBox">
                     <span>Tháng hết hạn</span>
@@ -90,33 +93,28 @@
                     <span>Năm hết hạn</span>
                     <input type="text" id="namhethan" class="year-input">
                     <input type="hidden" id="ngayhethan" asp-for="NgayHetHan" />
+                    <span class="text-danger" asp-validation-for="NgayHetHan"></span>
                 </div>
               
             </div>
              <div class="flexbox">               
                 <div class="inputBox">
-                    <span>Mã Pin</span>
-                    <input type="text" class="card-holder-input" asp-for="MaSoThe">
+                    <span>Số tài khoản</span>
+                    <input type="text" class="card-holder-input" asp-for="SoTaiKhoan">
+                    <span class="text-danger" asp-validation-for="SoTaiKhoan"></span>
                 </div>
                 <div class="inputBox">
-                    <span>Số tài khoản</span>
-                    <input type="text" class="card-card-input" asp-for="SoTaiKhoan">
+                    <span>Mã Pin</span>
+                    <input type="text" class="card-card-input" asp-for="MaPin">
+                    <span asp-validation-for="MaPin" class="text-danger"></span>
                 </div>
                  <div class="inputBox">
                     <span>Mã Số Thẻ</span>
-                    <input type="text" maxlength="16" class="card-number-input" asp-for="MaPin">
+                    <input type="text" maxlength="16" class="card-number-input" asp-for="MaSoThe">
+                    <span class="text-danger" asp-validation-for="MaSoThe"></span>
                 </div>
             </div>      
-           @*  <div class="flexbox">             
-                <div class="inputBox">
-                    <span>Loại Thẻ</span>
-                    <select asp-for="" class="type-card">
-                        <option value="Loại" selected disabled>Loại</option>
-                        <option value="adkasdglwekb">TD</option>
-                        <option value="adkasdglwekb">GN</option>
-                    </select>
-                </div>
-            </div> *@
+          
             <input type="submit" value="submit" class="submit-btn">
         </form>
 

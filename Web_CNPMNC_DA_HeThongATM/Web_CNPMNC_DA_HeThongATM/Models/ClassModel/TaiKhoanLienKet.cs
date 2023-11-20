@@ -41,7 +41,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
             taiKhoanLienKet.MaLoaiTKKey = "adoasdlkghqw";
             taiKhoanLienKet.NgayGD = "";
             taiKhoanLienKet.SoDu = 50000;
-            taiKhoanLienKet.SoTaiKhoan = theNganHang.MaSoThe;
+            taiKhoanLienKet.SoTaiKhoan = (long)theNganHang.MaSoThe;
             taiKhoanLienKet.TienDaGD = 10;
             taiKhoanLienKet.TienGD1Lan = 0;
             taiKhoanLienKet.TenTK = khachHang.TenKH;
