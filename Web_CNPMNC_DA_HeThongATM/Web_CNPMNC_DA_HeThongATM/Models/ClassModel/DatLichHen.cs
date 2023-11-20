@@ -9,7 +9,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models.ClassModel
         public string ChiNhanhKey { get; set; }
         public string MaKHKey { get; set; }
         public string MaNhanVienKey { get; set; }
-        public string NgayDenHen { get; set; }
+        public DateTime NgayDenHen { get; set; }
         public int TrangThai { get; set; }
     }
 }
