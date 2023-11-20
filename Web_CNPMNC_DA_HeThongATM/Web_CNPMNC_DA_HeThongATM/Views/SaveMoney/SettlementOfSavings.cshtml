@@ -1,0 +1,153 @@
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@model GuiTietKiemViewModel
+@{
+    Layout = "_LayoutMain";
+  
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+        <span class="badge badge-pill badge-primary">Thành Công</span>
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+}
+else if (TempData["Fail"] != null)
+{
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+        <span class="badge badge-pill badge-danger">Thất Bại</span>
+        @TempData["Fail"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+}
+<div class="col-md-12" style=" height:100vh;">
+    <h6 class="title col-md-12">
+        Rút Tiền Tiết Kiệm
+    </h6>
+    <div class="container col-md-7" style="display:-webkit-inline-box;">
+        <form method="post" asp-controller="SaveMoney" asp-action="SettlementOfSavings" style="padding-top:0px ; background-color:#ffff">
+            <div style="display:none" id="alertnote" class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Lưu ý!</h4>
+                <p id="alertcontent"></p>
+               
+                
+            </div>
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Tài Khoản Nguồn/Tiết Kiệm
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">
+                    <input asp-for="TaiKhoanNguon" value="" type="text" maxlength="16" id="InputTaiKhoanNguon">
+                    <span asp-validation-for="TaiKhoanNguon" class="text-danger"></span>
+                </div>
+            </div>
+           @*  <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Số tiền rút
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">
+                    <input asp-for="TienGui" id="sotiengui" value="" type="text" maxlength="16">
+                    <span asp-validation-for="TienGui" class="text-danger"></span>
+                </div>
+            </div> *@
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Nhập Mật Khẩu Nhân Viên
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+
+                </div>
+                <div class="inputBox">
+                    <input value="" type="text" maxlength="16">
+                </div>
+            </div>
+            <div class="flexbox">
+                <input id="datataikhoan" asp-for="TaiKhoanLienKet" hidden type="text" />
+                <input  id="OutTien" type="submit" value="Rút Tiền" class="submit-btn">
+               
+            </div>
+
+        </form>
+        @* //card *@
+        <div class="card col-md-8 name-label">
+            <div class="twt-feed blue-bg">
+
+                <div class="media">
+                    <a href="#">
+                        <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="/images/admin.jpg">
+                    </a>
+                    <div class="media-body">
+                        <h3 class="text-white display-6"><span class="ti-user"></span> KHÁCH HÀNG</h3>
+                        <h6 class="text-light" id="tenkhachhang"></h6>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a href="#">
+                        Số tài khoản tiết kiệm:&nbsp;&nbsp;
+                        <span id="sotaikhoan"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Số tiền gửi: &nbsp;&nbsp;&nbsp;
+                        <span id="sodu"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Số tiền lãi: &nbsp;&nbsp;&nbsp;
+                        <span id="tienlai"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Ngày Gửi: &nbsp;&nbsp;&nbsp;
+                        <span id="NgayGui"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Kỳ Hạn: &nbsp;&nbsp;&nbsp;
+                        <span id="kyhan"></span>
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">
+                        Tỉ Lệ: &nbsp;&nbsp;&nbsp;
+                        <span id="tile"></span>
+                    </a>
+                </li>
+              
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/SettlemenOfSaving.js">
+
+</script>
+

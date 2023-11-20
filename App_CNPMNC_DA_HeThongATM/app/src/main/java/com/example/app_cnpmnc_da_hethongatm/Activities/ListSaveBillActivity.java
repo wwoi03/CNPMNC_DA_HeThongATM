@@ -61,7 +61,6 @@ public class ListSaveBillActivity extends AppCompatActivity {
                     }
                 }
                 if(!mauChuyenTiens.equals(mau1)){
-                    Log.d(String.valueOf(!mauChuyenTiens.equals(mau1)), "co thay doi: ");
                     mauChuyenTiens.clear();
                     mauChuyenTiens.addAll(mau1);
                     listBillAdapter.notifyDataSetChanged();

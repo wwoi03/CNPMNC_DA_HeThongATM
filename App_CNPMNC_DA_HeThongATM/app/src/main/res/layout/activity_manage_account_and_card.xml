@@ -130,9 +130,9 @@
                         app:tint="@color/normal_color"></ImageView>
                 </LinearLayout>
 
-                <!-- Sao kê -->
+                <!-- Chuyển tiền -->
                 <LinearLayout
-                    android:id="@+id/llStatement"
+                    android:id="@+id/llTransferMoney"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -153,7 +153,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Sao kê"
+                        android:text="Chuyển tiền"
                         android:textColor="@color/black"
                         android:textSize="16sp"></TextView>
 

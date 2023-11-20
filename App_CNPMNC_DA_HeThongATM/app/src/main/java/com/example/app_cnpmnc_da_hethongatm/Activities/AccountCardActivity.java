@@ -1,28 +1,39 @@
 package com.example.app_cnpmnc_da_hethongatm.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.AccountCardAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Extend.Config;
 import com.example.app_cnpmnc_da_hethongatm.Extend.DbHelper;
+import com.example.app_cnpmnc_da_hethongatm.Extend.ResultCode;
+import com.example.app_cnpmnc_da_hethongatm.Extend.UtilityClass;
 import com.example.app_cnpmnc_da_hethongatm.MainActivity;
+import com.example.app_cnpmnc_da_hethongatm.Model.LoaiTaiKhoan;
 import com.example.app_cnpmnc_da_hethongatm.Model.TaiKhoanLienKet;
 import com.example.app_cnpmnc_da_hethongatm.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class AccountCardActivity extends AppCompatActivity implements AccountCardAdapter.Listener {
     // View
@@ -32,8 +43,10 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
 
     // Adapter
     AccountCardAdapter accountCardAdapter;
+    String loaiTKKey;
 
     Config config;
+    Context context;
     int flag =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +68,11 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     // khởi tạo dữ liệu
     public void initData() {
         config = new Config(this);
+        context = AccountCardActivity.this;
 
-        setupToolbar();
+        UtilityClass.setupToolbar(this, tbToolbar, "Danh sách tài khoản");
+
+        getAccountTypeByName("tiết kiệm");
 
         Intent intent = getIntent();
         if (intent.getData() != null) {
@@ -76,31 +92,11 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
 
     }
 
-    // setup toolbar
-    private void setupToolbar() {
-        tbToolbar.setTitle("Danh sách tài khoản");
-        tbToolbar.setTitleTextColor(-1);
-        setSupportActionBar(tbToolbar);
-
-        // kích hoạt nút quay lại trên ActionBar
-        if (getSupportActionBar() != null) {
-            // Đặt màu trắng cho nút quay lại
-            final Drawable upArrow = getResources().getDrawable(R.drawable.baseline_chevron_left_24);
-            upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
-            getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-            // Hiển thị nút quay lại
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-
-    }
-
     // xử lý sự kiện ấn nút quay lại
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();  // Kết thúc Activity hiện tại và quay lại Activity trước đó
+            finish();  // Kết thúc Activity hiện tại và quay lại  Activity trước đó
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -121,16 +117,21 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
     // Xử lý sự kiện bấm vào từng thẻ
     @Override
     public void setOnClickItemListener(TaiKhoanLienKet model, DatabaseReference databaseReference) {
-        if(model.getTinhTrangTaiKhoan() != 0){
-            Toast.makeText(AccountCardActivity.this, "Thẻ khóa r thằng loz", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            if(flag ==10){
+        if (model.getMaLoaiTKKey().equals(loaiTKKey)) {
+            UtilityClass.showDialogError(context, "Lỗi", "Vui lòng chọn tài khoản thanh toán!");
+        } else {
+            if (model.getTinhTrangTaiKhoan() == 1){
+                UtilityClass.showDialogError(context, "Lỗi", "Khóa thẻ rồi thằng lol!");
+            } else if (flag == 10) {
                 Intent intent = new Intent(AccountCardActivity.this, ActivityListGD.class);
                 intent.putExtra("taiKhoanNguon", model.getSoTaiKhoan());
                 startActivity(intent);
-            }
-            else {
+            } else if (flag == ResultCode.EDIT_NICKNAME) {
+                Intent intent = getIntent();
+                intent.putExtra("taiKhoanNguon", model);
+                setResult(ResultCode.EDIT_NICKNAME, intent);
+                finish();
+            } else {
                 Intent intent = getIntent();
                 intent.putExtra("taiKhoanNguon", model);
                 intent.putExtra("taiKhoanNguonKey", databaseReference.getKey());
@@ -138,11 +139,33 @@ public class AccountCardActivity extends AppCompatActivity implements AccountCar
                 finish();
             }
         }
-
     }
 
     @Override
     public void adapterOnDataChange() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    // lấy loại tài khoản
+    public void getAccountTypeByName(String accountTypeName) {
+        DbHelper.firebaseDatabase.getReference("LoaiTaiKhoan")
+                .orderByChild("TenLoaiTaiKhoan")
+                .equalTo(accountTypeName.toLowerCase().trim())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                LoaiTaiKhoan loaiTaiKhoan = dataSnapshot.getValue(LoaiTaiKhoan.class);
+                                loaiTKKey = loaiTaiKhoan.getKey();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 }

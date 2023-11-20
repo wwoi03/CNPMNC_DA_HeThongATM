@@ -9,6 +9,9 @@ using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Controllers;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Principal;
+using System.Net;
 
 namespace Web_CNPMNC_DA_HeThongATM.Models
 {
@@ -43,7 +46,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             try
             {
                 string macuabomay = "autothention";
-                FirebaseResponse response =  client.Push("KhachHang", custommer);
+                FirebaseResponse response = client.Push("KhachHang", custommer);
                 if (response != null)
                 {
 
@@ -82,7 +85,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         {
             string Makh = GuidSystem();
 
-
             FirebaseResponse response = client.Get("KhachHang");
 
             if (response != null && response.Body != "null")
@@ -93,21 +95,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                     // Nếu ID đã tồn tại, thử tạo lại một ID mới
                     return PassRandom();
                 }
-
             }
 
             return Makh.ToString();
-
-
         }
-
 
         //check cccd
         public async Task<bool> CheckCCCDExist(string cccdToCheck)
         {
             try
             {
-
                 FirebaseResponse response = await client.GetAsync("KhachHang");
 
                 if (response == null || response.Body == "null")
@@ -132,7 +129,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
         }
 
-
         //lây dữ liệu khách hàng theo id
         public KhachHang GetCustomerbyid(string values)
         {
@@ -152,6 +148,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return null;
         }
 
+        public string CreateSotaikhoan()
+        {
+            string stk = AccountNumber("sotaikhoan");
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null && response.Body != "null")
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                if (data.ContainsKey(stk))
+                {
+                    return CreateSotaikhoan();
+                }
+            }
+            return stk;
+        }
 
         //lấy tên  khách hàng qua id
         public string GetNameCustomerbyid(string values)
@@ -159,17 +169,26 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             FirebaseResponse response = client.Get("KhachHang");
             if (response != null)
             {
-                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);        
-                if(data.TryGetValue(values, out KhachHang khachHang))
+                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
+                if (data.TryGetValue(values, out KhachHang khachHang))
                 {
                     return khachHang.TenKH;
                 }
-                //var customer = data.Values.FirstOrDefault(kh => kh.CCCD == values);
+            }
+            return "";
+        }
 
-                //if (customer != null)
-                //{
-                //    return customer.TenKhachHang;
-                //}
+        //lấy tên  khách hàng qua id
+        public async Task<string> GetNameCustomerbyid2(string values)
+        {
+            FirebaseResponse response = await client.GetAsync("KhachHang");
+            if (response != null)
+            {
+                Dictionary<string, KhachHang> data = JsonConvert.DeserializeObject<Dictionary<string, KhachHang>>(response.Body);
+                if (data.TryGetValue(values, out KhachHang khachHang))
+                {
+                    return khachHang.TenKH;
+                }
             }
             return "";
         }
@@ -177,9 +196,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         //Kiểm tra Sdt nhập vào form
         public bool CheckSdt(string values)
         {
-
-
-
             FirebaseResponse response = client.Get("KhachHang");
             if (response != null && response.Body != null)
             {
@@ -188,12 +204,37 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 if (data.Values.Any(c => c.SoDienThoai == values))
                     return true;
                 return false;
-
-
-
             }
 
             return false;
+        }
+
+        //tìm kiếm thẻ theo cccd/ id thẻ/số điện thoại
+        public TheNganHang SearchCard(string searchValue)
+        {
+            FirebaseResponse response = client.Get("TheNganHang");
+            if (response != null)
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+
+                // Thử tìm theo CCCD (Căn cước công dân)
+                var card = data.Values.FirstOrDefault(c => c.Key == searchValue);
+
+                // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
+                if (card == null)
+                {
+                    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SoTaiKhoan == long.Parse(searchValue));
+                }
+
+                // Nếu tìm thấy thẻ, trả về thông tin của họ
+                if (card != null)
+                {
+                    return card;
+                }
+            }
+
+            // Trả về null nếu không tìm thấy khách hàng
+            return null;
         }
 
         public KhachHang SearchCustomer(string searchCustomer)
@@ -205,24 +246,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
                 var card = data.Values.FirstOrDefault(c => c.CCCD == searchCustomer);
 
-
-
                 return card;
-
-
-
-                //// Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-
-                //if (card == null)
-                //{
-                //    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
-                //}
-
-                //// Nếu tìm thấy thẻ, trả về thông tin của họ
-                //if (card != null)
-                //{
-                //    return card;
-                //}
             }
 
             // Trả về null nếu không tìm thấy khách hàng
@@ -241,7 +265,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             return totalAssets;
         }
-
 
         // Tính tổng giao dịch
         public long GetTotalTransaction()
@@ -263,7 +286,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 
             FirebaseResponse response = client.Get("KhachHang");
             Dictionary<string, KhachHang> data = response.ResultAs<Dictionary<string, KhachHang>>();
-
 
             // tính số lượng khách hàng theo từng tháng trong năm "year"
             for (int i = 1; i <= 12; i++)
@@ -301,8 +323,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             Dictionary<string, NhanVien> data = response.ResultAs<Dictionary<string, NhanVien>>();
             return data;
         }
-
-
 
         // TẠO TÀI KHOẢN NHÂN VIÊN
         public void CreateStaff(NhanVien nhanVien)
@@ -361,6 +381,20 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return "909090" + cif;
         }
 
+        //tự động tạo mã số thẻ
+        private string AccountNumber(string request)
+        {
+            DateTime now = DateTime.Now;
+            Random random = new Random();
+            int r = random.Next(0, 99);
+            // Tạo số CIF sử dụng thời gian và GUID ngẫu nhiên
+            string cif = $"{now:HHmmss}{r.ToString("D2")}{r.ToString("D2")}";
+            if (request.Equals("masothe"))
+                return "909090" + cif;
+            return "072" + cif;
+
+        }
+
         //tạo mã PIN
         public string CreatePin()
         {
@@ -414,102 +448,68 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         //tạo thẻ ngân hàng
-        public void CreateCard(TheNganHangViewModel card, string keys)
+        public void CreateCard(TheNganHang card)
         {
-               card.MaKH = keys;
-              // FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
-                FirebaseResponse firebaseResponse = client.Push("TheNganHang", card);
-                if (firebaseResponse != null)
+            // FirebaseResponse firebaseResponse = client.Set("TheNganHang/" + $"{GetKeysBycccd(keys)}/", card);
+            FirebaseResponse firebaseResponse = client.Push("TheNganHang", card);
+            if (firebaseResponse != null)
+            {
+                // Phân tích chuỗi JSON để lấy key
+                var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(firebaseResponse.Body);
+                string newKey = data["name"];
+
+                // Cập nhật đối tượng TheNganHang với MaKHKey mới
+                FirebaseResponse updateResponse = client.Set("TheNganHang/" + newKey + "/Key", newKey);
+
+                if (updateResponse.StatusCode == HttpStatusCode.OK)
                 {
                     Console.WriteLine("thanh công");
                 }
                 else
                 {
-                    Console.WriteLine(firebaseResponse.StatusCode);
+                    Console.WriteLine(updateResponse.StatusCode);
                 }
+            }
         }
-        
+
         //tạo thẻ liên kết
         public void CreateCardLink(TaiKhoanLienKet taiKhoanLienKet)
         {
             FirebaseResponse response = client.Push("TaiKhoanLienKet", taiKhoanLienKet);
             if (response != null)
             {
+                var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
+                string newKey = data["name"];
+
+                // Cập nhật đối tượng TheNganHang với MaKHKey mới
+                FirebaseResponse updateResponse = client.Set("TheNganHang/" + newKey + "/Key", newKey);
+
                 Console.WriteLine("thành công");
             }
             else { Console.WriteLine("thất bại"); }
         }
 
         //danh sách thẻ 
-        public List<TheNganHang> getListCard()
+        public async Task<List<TheNganHang>> getListCard()
         {
-            FirebaseResponse response = client.Get("TheNganHang");
+            FirebaseResponse response = await client.GetAsync("TheNganHang");
             if (response != null)
             {
                 Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
                 List<TheNganHang> theNganHangs = new List<TheNganHang>(data.Values);
                 return theNganHangs;
+
             }
             return null;
         }
-
-        //lấy tên loại thẻ ngân hàng
-        /*public string GetNameTypeCard(string values)
-        {
-            FirebaseResponse response = client.Get("LoaiTheNganHang");
-            if (response != null)
-            {
-                Dictionary<string, LoaiTheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiTheNganHang>>(response.Body);
-
-                var nametypes = data.Values.FirstOrDefault(kh => kh.MaLoaiTNH == values);
-                
-                if (nametypes != null)
-                {
-                    return nametypes.TenTNH;
-                }
-
-            }
-            return "";
-        }*/
-
-        /*//tìm kiếm thẻ theo cccd/ id thẻ/số điện thoại
-        public TheNganHang SearchCard(string searchValue)
-        {
-            FirebaseResponse response = client.Get("TheNganHang");
-            if (response != null)
-            {
-                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
-
-                // Thử tìm theo CCCD (Căn cước công dân)
-                var card = data.Values.FirstOrDefault(c => c. == searchValue);
-
-
-
-                // Nếu không tìm thấy theo CCCD, thử tìm theo ID thẻ)
-
-                if (card == null)
-                {
-                    card = data.Values.FirstOrDefault(c => c.MaSoThe == long.Parse(searchValue) || c.SDTDangKy == searchValue);
-                }
-
-                // Nếu tìm thấy thẻ, trả về thông tin của họ
-                if (card != null)
-                {
-                    return card;
-                }
-            }
-
-            // Trả về null nếu không tìm thấy khách hàng
-            return null;
-        }*/
 
         //lấy thẻ theo id
         public TheNganHang GetTheNganHangById(long masothe)
         {
             FirebaseResponse response = client.Get("TheNganHang");
-            if(response != null)
+            if (response != null)
             {
-                Dictionary<string,TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
                 TheNganHang thenganhang = data.Values.FirstOrDefault(p => p.MaSoThe == masothe);
                 return thenganhang;
             }
@@ -531,44 +531,30 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
         }
 
         public string GetAccount(long Value)
-
         {
-
             FirebaseResponse response = client.Get("TaiKhoanLienKet");
 
             if (response != null)
-
             {
-
                 Dictionary<string, TaiKhoanLienKetViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKetViewModel>>(response.Body);
 
                 var accountData = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
 
                 if (accountData != null)
-
                 {
-
                     return string.Join(",", accountData);
-
                 }
-
             }
 
             else
-
             {
-
                 Console.WriteLine(response.StatusCode);
-
             }
 
             return null;
-
-
-
         }
 
-        public bool NapTien(double soTien, long value)
+        public bool NapTien(double soTien, long value,long stk)
         {
             string info = GetAccount(value);
             try
@@ -583,7 +569,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 // Cập nhật số dư trên Firebase
                 client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDuHientai);
 
-                return true; // Cập nhật thành công
+                //lưu lich sử giao dịch nạp tiền
+				GiaoDich giaoDich = new GiaoDich
+				{
+					Key = "",
+					GioGiaoDich = DateTime.Now.ToString("HH:mm:ss"),
+					NgayGiaoDich = DateTime.Now.ToString("dd/MM/yyy"),
+					LoaiGiaoDichKey = "1",
+					NoiDungChuyenKhoan = "Nạp tiền vào tài khoản",
+					PhiGiaoDich = 0,
+					SoDuLucGui = accountData.SoDu,
+					SoDuLucNhan = SoDuHientai,
+					SoTienGiaoDich = soTien,
+					TaiKhoanNguon = stk,
+				};
+                double g = giaoDich.SoDuLucNhan;
+				LichSuGD(giaoDich.LoaiGiaoDichKey, giaoDich);
+				return true; // Cập nhật thành công
 
             }
             catch (Exception ex)
@@ -591,31 +593,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return false; // Cập nhật thất bại
             }
         }
-
-        //đừng xóa em đang sửa
-        //public string GetAccount(string Value)
-        //{
-        //    FirebaseResponse response = client.Get("TaiKhoanLienKet");
-        //    if (response != null)
-        //    {
-        //        Dictionary<string, AccountViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, AccountViewModel>>(response.Body);
-
-        //        // Sử dụng LINQ để lấy keys của các bản ghi có SoTaiKhoan trùng với Value
-        //        var matchingKeys = data.Where(entry => entry.Value.SoTaiKhoan == Value).Select(entry => entry.Key).ToList();
-
-        //        if (matchingKeys.Count > 0)
-        //        {
-        //            // matchingKeys là một danh sách các keys có SoTaiKhoan trùng với Value
-        //            // Ở đây, bạn có thể làm gì đó với danh sách này
-        //            return string.Join(", ", matchingKeys);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine(response.StatusCode);
-        //    }
-        //    return null;
-        //}
 
         //----------------------------------------------------- Dịch vụ khách hàng -----------------------------------------------------
         //Chức năng Rút tiền
@@ -728,32 +705,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             return dsLaiSuat;
         }
 
-        //Tìm lãi suất
-        //public LaiSuat SearchLaiSuat(string key)
-        //{
-        //    try
-        //    {
-        //        FirebaseResponse response = client.Get("LaiSuat/" + key);
-        //        if (response == null || string.IsNullOrEmpty(response.Body))
-        //        {
-        //            return null;
-        //        }
-
-        //        LaiSuat laiSuat = JsonConvert.DeserializeObject<LaiSuat>(response.Body);
-        //        return laiSuat;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        return null;
-        //    }
-        //}
-
-
         //tạo Lãi suất
         public void InsertLaiSuats(LaiSuatViewModel laiSuat)
         {
-
             try
             {
                 FirebaseResponse response = client.Set("LaiSuat/" + laiSuat.Key, laiSuat);
@@ -788,6 +742,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 return null;
             }
         }
+
         //xóa
         public void DeleteLaiSuat(string key)
         {
@@ -803,7 +758,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                 // Xử lý lỗi nếu cần
             }
         }
-        //sửa
+
         //Thêm phương thức sau vào lớp FirebaseHelper
         public void UpdateLaiSuatByKey(string key, LaiSuatViewModel updatedLaiSuat)
         {
@@ -866,49 +821,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
                     return "Trạng thái không xác định";
             }
         }
-
-        //public bool TrangThaiTk(long SoTaiKhoan, int tinhTrangTaiKhoan)
-        //{
-        //    string info = GetAccount(SoTaiKhoan);
-        //    try
-        //    {
-        //        FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
-
-        //        if (response != null && response.ResultAs<TaiKhoanLienKetViewModel>() != null)
-        //        {
-        //            var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
-
-        //            // Kiểm tra giá trị tinhTrangTaiKhoan
-        //            if (tinhTrangTaiKhoan == 1)
-        //            {
-        //                // Mở tài khoản
-        //                accountData.TinhTrangTaiKhoan = 1;
-        //            }
-        //            else if (tinhTrangTaiKhoan == 2)
-        //            {
-        //                // Khóa tài khoản
-        //                accountData.TinhTrangTaiKhoan = 2;
-        //            }
-        //            else
-        //            {
-        //                // Trạng thái không hợp lệ
-        //                return false;
-        //            }
-
-        //            // Cập nhật trạng thái tài khoản
-        //            client.Set("TaiKhoanLienKet/" + info, accountData);
-        //            return true; // Cập nhật thành công
-        //        }
-        //        else
-        //        {
-        //            return false; // Tài khoản không tồn tại
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false; // Cập nhật thất bại
-        //    }
-        //}
 
         //----------------------------------------------------- Chức năng -----------------------------------------------------
         // Lấy danh sách chức năng
@@ -1352,5 +1264,319 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
             FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
         }
-    }
+
+        //------------------------------------------------------------------Gửi tiết kiệm-----------------------------------------------------
+
+        public List<LaiSuat> GetNameLaiSuat()
+        {
+            FirebaseResponse response = client.Get("LaiSuat");
+            if (response != null)
+            {
+                Dictionary<string, LaiSuat> data = JsonConvert.DeserializeObject<Dictionary<string, LaiSuat>>(response.Body);
+                return new List<LaiSuat>(data.Values);
+            }
+            return null;
+        }
+
+        public LaiSuat GetLaiSuat(string key)
+        {
+            FirebaseResponse response = client.Get("LaiSuat");
+            if (response != null)
+            {
+                Dictionary<string, LaiSuat> data = JsonConvert.DeserializeObject<Dictionary<string, LaiSuat>>(response.Body);
+                return data.Values.FirstOrDefault(x => x.Key == key);
+            }
+            return null;
+        }
+
+        public TaiKhoanLienKet GetTaiKhoanLienKetSTK(long stk)
+        {
+            FirebaseResponse response = client.Get("TaiKhoanLienKet");
+            if (response != null)
+            {
+                Dictionary<string, TaiKhoanLienKet> data = JsonConvert.DeserializeObject<Dictionary<string, TaiKhoanLienKet>>(response.Body);
+                return data.Values.FirstOrDefault(p => p.SoTaiKhoan == stk);
+            }
+            return null;
+        }
+
+        public void GuiTietKiem(GuiTietKiem guiTietKiem, TaiKhoanLienKet taiKhoanLien)
+        {
+            guiTietKiem.TaiKhoanTietKiem = long.Parse(TaiKhoanTietKiem());
+            FirebaseResponse response = client.Push("GuiTietKiem", guiTietKiem);
+            if (response != null)
+            {
+                // Phân tích chuỗi JSON để lấy key
+                var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
+                string newKey = data["name"];
+                double laixuat = TienLai(guiTietKiem.LaiSuatKey, guiTietKiem.TienGui);
+
+
+
+                // Cập nhật đối tượng GuiTietKiem với Key mới
+                FirebaseResponse updateResponse = client.Set("GuiTietKiem/" + newKey + "/Key", newKey);
+                FirebaseResponse updatetienlai = client.Set("GuiTietKiem/" + newKey + "/TienLaiToiKy", laixuat);
+                if (updateResponse.StatusCode == HttpStatusCode.OK && updatetienlai.StatusCode == HttpStatusCode.OK)
+                {
+                    ChuyenTien(guiTietKiem.TienGui * (-1), taiKhoanLien.SoTaiKhoan);
+                    Console.WriteLine("thanh công");
+                }
+                else
+                {
+                    Console.WriteLine(updateResponse.StatusCode);
+                }
+            }
+        }
+
+        public bool ChuyenTien(double soTien, long value)
+        {
+            string info = GetAccount(value);
+            try
+            {
+                FirebaseResponse response = client.Get("TaiKhoanLienKet/" + info);
+
+                // Lấy dữ liệu tài khoản từ Firebase
+                var accountData = response.ResultAs<TaiKhoanLienKetViewModel>();
+
+                ////  Chuyển tiền xong cộng số tiền vào số dư
+                //accountData.SoDu += soTien;
+                Double SoDu = accountData.SoDu + soTien;
+
+
+                // Cập nhật số dư trên Firebase
+                client.Set("TaiKhoanLienKet/" + info + "/SoDu", SoDu);
+
+                return true; // Cập nhật thành công
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi (đưa ra thông báo hoặc ghi log)
+                return false; // Cập nhật thất bại
+            }
+        }
+
+        public string TaiKhoanTietKiem()
+        {
+            string stk = AccountNumber("sotaikhoan");
+            FirebaseResponse response = client.Get("GuiTietKiem");
+            if (response != null && response.Body != "null")
+            {
+                Dictionary<string, TheNganHang> data = JsonConvert.DeserializeObject<Dictionary<string, TheNganHang>>(response.Body);
+                if (data.ContainsKey(stk))
+                {
+                    return TaiKhoanTietKiem();
+                }
+
+            }
+            return stk;
+        }
+
+        //  lấy tài khoản tiết kiệm
+        public GuiTietKiem GetAccontSaveMoney(long stk)
+        {
+            FirebaseResponse response = client.Get("GuiTietKiem");
+
+            if (response != null && response.Body != "null")
+            {
+                Dictionary<string, GuiTietKiem> data = JsonConvert.DeserializeObject<Dictionary<string, GuiTietKiem>>(response.Body);
+
+                return data.Values.FirstOrDefault(p => p.TaiKhoanTietKiem == stk || p.TaiKhoanNguon == stk);
+
+            }
+            return null;
+        }
+
+        //nạy tiền tiết kiệm
+        public bool AdmitSaveMoney(double number, string key)
+        {
+            FirebaseResponse responsetien = client.Get("GuiTietKiem/" + key);
+            if (responsetien != null)
+            {
+                JObject pss = JObject.Parse(responsetien.Body.ToString());
+                double tien = (double)pss["TienGui"] + number;
+                double tienlai = TienLai((string)pss["LaiSuatKey"], tien);
+                FirebaseResponse response = client.Set("GuiTietKiem/" + key + "/TienGui", tien);
+              //  FirebaseResponse rptienlai = client.Set("GuiTietKiem/" + key + "/TienLaiToiKy", tienlai);
+                if (response != null && response.Body != "null")
+                {
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public double TienLai(string key, double tiengui)
+        {
+            FirebaseResponse response = client.Get("LaiSuat/" + key);
+            if (response != null && response.Body != "null")
+            {
+                JObject pss = JObject.Parse(response.Body.ToString());
+                string str = (string)pss["KyHan"];
+                string[] parts = str.Split(' ');
+                string numberPart = parts[0];
+
+                return tiengui * (double)pss["TiLe"] / 100;
+            }
+            return 0;
+        }
+
+        //lưu giao dịch
+        public bool LichSuGD(string key, GiaoDich giaoDich)
+        {
+            FirebaseResponse response = client.Push("GiaoDich", giaoDich);
+            if (response != null)
+            {
+                // Phân tích chuỗi JSON để lấy key
+                var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Body);
+                string newKey = data["name"];
+
+
+
+                // Cập nhật đối tượng GuiTietKiem với Key mới
+                FirebaseResponse updateResponse = client.Set("GiaoDich/" + newKey + "/Key", newKey);
+                if (updateResponse != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        //tất toán tiết kiệm
+        public void TatToanTietKiem(long sotklk,string keytktk, double tien)
+        {
+            var data = new 
+            {
+                TienLaiToiKy = 0,
+
+                TienGui = 0,
+            };
+            FirebaseResponse response = client.Update("GuiTietKiem/"+keytktk,data);
+            if (response != null)
+            {
+                ChuyenTien(tien, sotklk);
+            }
+           
+        }
+       
+        //-------------------------------------------------Đăt lịch hẹn---------------------------------------------------------------
+        public List<DatLichHen> GetAppointent()
+        {
+            List<DatLichHen> dslichhen = new List<DatLichHen>();
+            FirebaseResponse response = client.Get("DatLichHen");
+            Dictionary<string, DatLichHen> data = response.ResultAs<Dictionary<string, DatLichHen>>();
+            dslichhen = new List<DatLichHen>(data.Values);
+            return dslichhen;
+        }
+        public void InsertAppointment(DatLichHenViewModel datLichHen)
+        {
+            //FirebaseResponse response = client.Push("NhanVien", nhanVien);
+
+            PushResponse response = client.Push("DatLichHen", datLichHen);
+            string newKey = response.Result.name;
+
+            // Gán key vào trường Key của đối tượng NhanVien
+            datLichHen.Key = newKey;
+
+            // Cập nhật dữ liệu Nhân viên với key trong Firebase
+            SetResponse setResponse = client.Set("DatLichHen/" + newKey, datLichHen);
+        }
+
+        public DatLichHen GetLichHenByKey(string key)
+        {
+            try
+            {
+                FirebaseResponse response = client.Get("DatLichHen/" + key);
+                if (response == null || string.IsNullOrEmpty(response.Body))
+                {
+                    return null;
+                }
+
+                //DatLichHenViewModel datLichHen = JsonConvert.DeserializeObject<DatLichHenViewModel>(response.Body);
+                Dictionary<string, DatLichHen> data = JsonConvert.DeserializeObject<Dictionary<string, DatLichHen>>(response.Body);
+                return data.Values.FirstOrDefault(p => p.Key == key);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public string GetStatus(long Value)
+
+        {
+
+            FirebaseResponse response = client.Get("DatLichHen");
+
+            if (response != null)
+
+            {
+
+                Dictionary<string, DatLichHenViewModel> data = JsonConvert.DeserializeObject<Dictionary<string, DatLichHenViewModel>>(response.Body);
+
+                var statusData = data.Select(entry => entry.Key).ToList();
+
+                if (statusData != null)
+
+                {
+
+                    return string.Join(",", statusData);
+
+                }
+
+            }
+
+            else
+
+            {
+
+                Console.WriteLine(response.StatusCode);
+
+            }
+
+            return null;
+
+
+
+        }
+        public bool TrangThai(int trangThai, string key)
+        {
+            try
+            {
+                FirebaseResponse response = client.Set("DatLichHen/" + key + "/TrangThai", trangThai);
+                if (response != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false; // Cập nhật thất bại
+            }
+        }
+        public DatLichHen GetAppointmentbyKey(string values)
+        {
+
+            FirebaseResponse response = client.Get("DatLichHen");
+            if (response != null)
+            {
+                Dictionary<string, DatLichHen> data = JsonConvert.DeserializeObject<Dictionary<string, DatLichHen>>(response.Body);
+
+                var a = data.Values.FirstOrDefault(c => c.Key == values);
+                if (a != null)
+                {
+                    return a;
+                }
+
+            }
+            return null;
+        }
+	}
 }

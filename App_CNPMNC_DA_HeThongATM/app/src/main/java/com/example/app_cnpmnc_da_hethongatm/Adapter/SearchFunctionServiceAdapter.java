@@ -15,52 +15,55 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 
-public class SearchFunctionServiceAdapter extends FirebaseRecyclerAdapter<ChucNang, SearchFunctionServiceAdapter.SearchFunctionServiceAdapterVH> {
+import java.util.ArrayList;
+
+public class SearchFunctionServiceAdapter extends RecyclerView.Adapter<SearchFunctionServiceAdapter.SearchFunctionServiceAdapterVH> {
     Listener listener;
+    ArrayList<ChucNang> chucNangs;
 
-    public SearchFunctionServiceAdapter(@NonNull FirebaseRecyclerOptions<ChucNang> options, Listener listener) {
-        super(options);
+    public SearchFunctionServiceAdapter(Listener listener, ArrayList<ChucNang> chucNangs) {
         this.listener = listener;
-    }
-
-    @Override
-    protected void onBindViewHolder(@NonNull SearchFunctionServiceAdapterVH holder, int position, @NonNull ChucNang model) {
-        holder.tvServiceFunctionName.setText(model.getTenChucNang());
-
-        initListener(holder, position, model);
+        this.chucNangs = chucNangs;
     }
 
     @NonNull
     @Override
     public SearchFunctionServiceAdapterVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fragment_transaction_service_function, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, parent, false);
         return new SearchFunctionServiceAdapterVH(view);
     }
 
-    // Xử lý sự kiện
-    private void initListener(SearchFunctionServiceAdapterVH holder, int position, ChucNang model) {
-        holder.tvServiceFunctionName.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onBindViewHolder(@NonNull SearchFunctionServiceAdapterVH holder, int position) {
+        ChucNang chucNang = chucNangs.get(position);
+
+        holder.tvName.setText(chucNang.getTenChucNang());
+
+        holder.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.setOnClickItemListener(model, getRef(position));
+                listener.setOnClickItemListener(chucNang);
             }
         });
     }
 
+    @Override
+    public int getItemCount() {
+        return chucNangs.size();
+    }
+
 
     class SearchFunctionServiceAdapterVH extends RecyclerView.ViewHolder {
-        ImageView ivIcon;
-        TextView tvServiceFunctionName;
+        TextView tvName;
 
         public SearchFunctionServiceAdapterVH(@NonNull View itemView) {
             super(itemView);
 
-            ivIcon = itemView.findViewById(R.id.ivIcon);
-            tvServiceFunctionName = itemView.findViewById(R.id.tvServiceFunctionName);
+            tvName = itemView.findViewById(R.id.tvName);
         }
     }
 
     public interface Listener {
-        void setOnClickItemListener(ChucNang serviceFunction, DatabaseReference databaseReference);
+        void setOnClickItemListener(ChucNang serviceFunction);
     }
 }
