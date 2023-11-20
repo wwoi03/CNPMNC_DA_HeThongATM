@@ -1264,6 +1264,102 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
             FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
         }
+        //Danh sách đếm giao dịch****************************************************************
+        public int CountGiaoDichMonth(int year, int month)
+        {
+           
+
+
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+            int count1 = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[2]) == year && int.Parse(item.NgayGiaoDich.Split("/")[1]) == month);
+
+
+            return count1;
+        }
+        public int CountGiaoDichYear(int year)
+        {
+           
+
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
+
+            int count1 = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[2]) == year);
+
+
+            return count1;
+        }
+
+        // lấy tổng giao dịch trong ngày 
+        public Dictionary<string, int> Money(BankStatement bankStatement)
+        {
+            Dictionary<string, int> Sum = new Dictionary<string, int>();
+
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
+
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+            for (int i = 1; i <= DateTime.DaysInMonth(bankStatement.year, bankStatement.month); i++)
+            {
+                int money = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[1]) == bankStatement.month && int.Parse(item.NgayGiaoDich.Split("/")[2]) == bankStatement.year && int.Parse(item.NgayGiaoDich.Split("/")[0]) == i);
+               
+                Sum.Add(i.ToString(), money);
+            }
+
+            return Sum;
+        }
+
+        // lấy tổng giao dịch trong ngày 
+        public Dictionary<string, int> MoneyOut(BankStatement bankStatement)
+        {
+            Dictionary<string, int> Sum = new Dictionary<string, int>();
+
+            FirebaseResponse response = client.Get("GiaoDich");
+            Dictionary<string, GiaoDich> data = response.ResultAs<Dictionary<string, GiaoDich>>();
+
+
+            // tính số lượng khách hàng theo từng tháng trong năm "year"
+            for (int i = 1; i <= DateTime.DaysInMonth(bankStatement.year, bankStatement.month); i++)
+            {
+                int money = data.Values.Count(item => int.Parse(item.NgayGiaoDich.Split("/")[1]) == bankStatement.month && int.Parse(item.NgayGiaoDich.Split("/")[2]) == bankStatement.year && int.Parse(item.NgayGiaoDich.Split("/")[0]) == i
+                 && (item.LoaiGiaoDichKey == "2" || item.LoaiGiaoDichKey == "3" || item.LoaiGiaoDichKey == "5"));
+               
+                Sum.Add(i.ToString(), money);
+            }
+
+            return Sum;
+        }
+        public GiaoDich getHisbyKey(string key)
+        {
+            FirebaseResponse response = client.Get("GiaoDich");
+            if (response != null)
+            {
+                Dictionary<string, GiaoDich> data = JsonConvert.DeserializeObject<Dictionary<string, GiaoDich>>(response.Body);
+                GiaoDich giaoDich = data[key];
+                if (giaoDich != null)
+                    return giaoDich;
+            }
+            return null;
+        }
+      
+        public LoaiGiaoDich getTypebyKey(string key)
+        {
+            FirebaseResponse response = client.Get("LoaiGiaoDich");
+            if (response != null)
+            {
+                Dictionary<string, LoaiGiaoDich> data = JsonConvert.DeserializeObject<Dictionary<string, LoaiGiaoDich>>(response.Body);
+                LoaiGiaoDich giaoDich = data[key];
+                if (giaoDich != null)
+                    return giaoDich;
+            }
+            return null;
+        }
+
+    }
 
         //------------------------------------------------------------------Gửi tiết kiệm-----------------------------------------------------
 

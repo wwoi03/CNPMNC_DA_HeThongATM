@@ -1,8 +1,14 @@
+@using Microsoft.AspNetCore.Mvc;
+@{
+
+     var role = Context.Session.GetString("Role");
+}
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
+
 <html class="no-js" lang="">
 <!--<![endif]-->
 <head>
@@ -115,31 +121,36 @@
                         </ul>
                     </li>
 
-					<!-- Khách hàng -->
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Khách hàng</a>
-						<ul class="sub-menu children dropdown-menu">
-							<!-- Danh sách khách hàng -->
-							<li>
-								<i class="menu-icon fa fa-list-alt"></i>
-								<a asp-controller="Customer" asp-action="Index">Danh sách khách hàng</a>
-							</li>
+                    @*kiểm tra role*@
+                    @if (role == "AD")
+                    {
+					    <!-- Khách hàng -->
+					    <li class="menu-item-has-children dropdown">
+						    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Khách hàng</a>
+						    <ul class="sub-menu children dropdown-menu">
+							    <!-- Danh sách khách hàng -->
+                          
 
-							<!-- Tạo khách hàng -->
-							<li>
-								<i class="fa fa-puzzle-piece"></i>
-								<a asp-controller="CusTomer" asp-action="CreateCustommer">Tạo khách hàng</a>
-							</li>
+                                    <li>
+                                        <i class="menu-icon fa fa-list-alt"></i>
+                                        <a asp-controller="Customer" asp-action="Index">Danh sách khách hàng</a>
+                                    </li>
 
-                            <!-- Sửa khách hàng -->
-                            <li>
-                                <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="ReditCard" asp-action="Index">Sửa khách hàng</a>
-                            </li>
-                        </ul>
-                    </li>
+                                    <!-- Tạo khách hàng -->
+                                    <li>
+                                        <i class="fa fa-puzzle-piece"></i>
+                                        <a asp-controller="CusTomer" asp-action="CreateCustommer">Tạo khách hàng</a>
+                                    </li>
 
-                    <!-- Thẻ/tài khoản -->
+                                    <!-- Sửa khách hàng -->
+                                    <li>
+                                        <i class="fa fa-puzzle-piece"></i>
+                                        <a asp-controller="ReditCard" asp-action="Index">Sửa khách hàng</a>
+                                    </li>
+                                    </ul>
+                                    </li>
+                    }
+                            <!-- Thẻ/tài khoản -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-credit-card"></i>Thẻ/Tài khoản</a>
                         <ul class="sub-menu children dropdown-menu">
@@ -175,11 +186,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart-o"></i>Thống kê</a>
                         <ul class="sub-menu children dropdown-menu">
                             <!-- Thống kê giao dịch -->
-                            <li>
-                                <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="Statement" asp-action="BankStatement">Thống kê giao dịch</a>
-                            </li>
-
+                            @if (role == "AD")
+                            {
+                                <li>
+                                    <i class="fa fa-puzzle-piece"></i>
+                                    <a asp-controller="Statement" asp-action="BankStatement">Thống kê giao dịch</a>
+                                </li>
+                            }
                             <!-- Thống kê khách hàng -->
                             <li>
                                 <i class="fa fa-puzzle-piece"></i>
@@ -197,11 +210,14 @@
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="ManageInterestRate" asp-action="Index">Danh sách lãi suất</a>
                             </li>
-                            <!-- tạo lãi suất-->
-                            <li>
-                                <i class="fa fa-puzzle-piece"></i>
-                                <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">Tạo lãi suất</a>
-                            </li>
+                            @if (role == "AD")
+                            {
+                                <!-- tạo lãi suất-->
+                                <li>
+                                    <i class="fa fa-puzzle-piece"></i>
+                                    <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">Tạo lãi suất</a>
+                                </li>
+                            }
                         </ul>
                     </li>
 
@@ -246,43 +262,44 @@
                             </li>
                         </ul>
                     </li>
+             @if (role == "AD")
+                    {
+                        <!-- Nhân viên -->
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-md"></i>Nhân viên</a>
+                            <ul class="sub-menu children dropdown-menu">
+                                <!-- Danh sách nhân viên -->
+                                <li>
+                                    <i class="menu-icon fa fa-list-alt"></i>
+                                    <a asp-controller="Staff" asp-action="Index">Danh sách nhân viên</a>
+                                </li>
 
-					<!-- Nhân viên -->
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-md"></i>Nhân viên</a>
-						<ul class="sub-menu children dropdown-menu">
-							<!-- Danh sách nhân viên -->
-							<li>
-								<i class="menu-icon fa fa-list-alt"></i>
-								<a asp-controller="Staff" asp-action="Index">Danh sách nhân viên</a>
-							</li>
+                                <!-- Tạo tài khoản nhân viên -->
+                                <li>
+                                    <i class="menu-icon fa fa-plus-circle"></i>
+                                    <a asp-controller="Staff" asp-action="Create">Tạo tài khoản</a>
+                                </li>
 
-							<!-- Tạo tài khoản nhân viên -->
-							<li>
-								<i class="menu-icon fa fa-plus-circle"></i>
-								<a asp-controller="Staff" asp-action="Create">Tạo tài khoản</a>
-							</li>
+                                <!-- Sửa tài khoản nhân viên -->
+                                <li>
+                                    <i class="fa menu-icon fa-edit"></i>
+                                    <a asp-controller="Staff" asp-action="Index">Sửa tài khoản</a>
+                                </li>
 
-							<!-- Sửa tài khoản nhân viên -->
-							<li>
-								<i class="fa menu-icon fa-edit"></i>
-								<a asp-controller="Staff" asp-action="Index">Sửa tài khoản</a>
-							</li>
+                                <!-- Xóa tài khoản nhân viên -->
+                                <li>
+                                    <i class="fa fa-trash-o menu-icon"></i>
+                                    <a asp-controller="CreateCard" asp-action="Index">Xóa tài khoản</a>
+                                </li>
 
-							<!-- Xóa tài khoản nhân viên -->
-							<li>
-								<i class="fa fa-trash-o menu-icon"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Xóa tài khoản</a>
-							</li>
-
-                            <!-- Phân quyền nhân viên -->
-                            <li>
-                                <i class="menu-icon fa fa-list-alt"></i>
-                                <a asp-controller="Staff" asp-action="Decentralization">Quyền hạn nhân viên</a>
-                            </li>
-						</ul>
-					</li>
-
+                                <!-- Phân quyền nhân viên -->
+                                <li>
+                                    <i class="menu-icon fa fa-list-alt"></i>
+                                    <a asp-controller="Staff" asp-action="Decentralization">Quyền hạn nhân viên</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
                     <!-- Quản lý lịch hẹn -->
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i>Lịch hẹn</a>
@@ -312,50 +329,52 @@
 							</li>
 						</ul>
 					</li>
+                    @if (role == "AD")
+                    {
+                        <!-- Quản trị hệ thống -->
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gear"></i>Quản trị hệ thống</a>
+                            <ul class="sub-menu children dropdown-menu">
 
-                    <!-- Quản trị hệ thống -->
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gear"></i>Quản trị hệ thống</a>
-						<ul class="sub-menu children dropdown-menu">
+                                <!-- khách hàng -->
+                                <li>
+                                    <i class="menu-icon fa fa-users"></i>
+                                    <a asp-controller="Staff" asp-action="Index">Khách hàng</a>
+                                </li>
 
-							<!-- khách hàng -->
-							<li>
-								<i class="menu-icon fa fa-users"></i>
-								<a asp-controller="Staff" asp-action="Index">Khách hàng</a>
-							</li>
+                                <!-- Loại tài khoản -->
+                                <li>
+                                    <i class="menu-icon fa fa-credit-card"></i>
+                                    <a asp-controller="Account" asp-action="Index">Loại tài khoản</a>
+                                </li>
 
-                            <!-- Loại tài khoản -->
-							<li>
-								<i class="menu-icon fa fa-credit-card"></i>
-								<a asp-controller="Account" asp-action="Index">Loại tài khoản</a>
-							</li>
+                                <!-- Thống kê -->
+                                <li>
+                                    <i class="menu-icon fa fa-bar-chart"></i>
+                                    <a asp-controller="CreateCard" asp-action="Index">Thống kê</a>
+                                </li>
 
-                            <!-- Thống kê -->
-							<li>
-								<i class="menu-icon fa fa-bar-chart"></i>
-								<a asp-controller="CreateCard" asp-action="Index">Thống kê</a>
-							</li>
+                                <!-- Nhân viên -->
+                                <li>
+                                    <i class="menu-icon fa fa-user-md"></i>
+                                    <a asp-controller="Staff" asp-action="Create">Nhân viên</a>
+                                </li>
 
-							<!-- Nhân viên -->
-							<li>
-								<i class="menu-icon fa fa-user-md"></i>
-								<a asp-controller="Staff" asp-action="Create">Nhân viên</a>
-							</li>
+                                <!-- Chi nhánh -->
+                                <li>
+                                    <i class="fa menu-icon fa-sitemap"></i>
+                                    <a asp-controller="Staff" asp-action="Index">Chi nhánh</a>
+                                </li>
 
-							<!-- Chi nhánh -->
-							<li>
-								<i class="fa menu-icon fa-sitemap"></i>
-								<a asp-controller="Staff" asp-action="Index">Chi nhánh</a>
-							</li>
-
-                            <!-- Dịch vụ -->
-							<li>
-								<i class="menu-icon fa fa-thumbs-up"></i>
-								<a asp-controller="Service" asp-action="Index">Dịch vụ</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
+                                <!-- Dịch vụ -->
+                                <li>
+                                    <i class="menu-icon fa fa-thumbs-up"></i>
+                                    <a asp-controller="Service" asp-action="Index">Dịch vụ</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
 			</div><!-- /.navbar-collapse -->
 		</nav>
 	</aside>
