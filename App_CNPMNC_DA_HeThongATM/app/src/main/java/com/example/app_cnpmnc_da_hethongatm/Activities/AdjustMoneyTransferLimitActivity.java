@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
     Button btNext;
     RecyclerView rvListAccount, rvListTransferLimit;
     LinearLayout llInfoAccount;
+    ProgressBar progressBar;
 
     // var
     Config config;
@@ -66,6 +68,7 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
         tvTransferLimit = findViewById(R.id.tvTransferLimit);
         btNext = findViewById(R.id.btNext);
         llInfoAccount = findViewById(R.id.llInfoAccount);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     private void initData() {
@@ -234,5 +237,10 @@ public class AdjustMoneyTransferLimitActivity extends AppCompatActivity implemen
 
         tvTransferLimit.setText(hanMucChuyenTien.getNumberFormat(Double.parseDouble(transferLimitNewString)) + " VND");
         transferLimitDialogPlus.dismiss();
+    }
+
+    @Override
+    public void adapterOnDataChange() {
+        progressBar.setVisibility(View.GONE);
     }
 }

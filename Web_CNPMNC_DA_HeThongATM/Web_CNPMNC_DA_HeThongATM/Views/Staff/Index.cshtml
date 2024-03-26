@@ -5,13 +5,14 @@
 }
 @{
 	Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    var filteredData = danhSachNhanVien.Where(pair => pair.Key != "temp").ToDictionary(pair => pair.Key, pair => pair.Value);
 }
 
 
 
  <div class="card">
      <div class="card-header">
-       <strong class="card-title">Danh sách nhân viên</strong>
+       <strong class="card-title">DANH SÁCH NHÂN VIÊN</strong>
      </div>
        <div class="card-body">
             <table class="table">
@@ -28,7 +29,7 @@
                    </tr>
                  </thead>
                  <tbody>
-                   @foreach(var kvp in danhSachNhanVien)
+                   @foreach(var kvp in filteredData)
                    {
                        string key = kvp.Key;
                        NhanVien nhanVien = kvp.Value;
@@ -43,8 +44,8 @@
                            <td>@nhanVien.MatKhau</td>
 
                            <td>
-                            <a href="@Url.Action("Edit", "Staff", new { editKey = @key})" class="btn btn-primary">Sửa</a>
-                            @*<a href="@Url.Action("Delete", "Staff", new { deleteKey = @key})" class="btn btn-danger">Xóa</a>*@
+                            <a href="@Url.Action("Edit", "Staff", new { editKey = @key})" class="btn btn-primary">Sửa thông tin</a>
+                            <a href="@Url.Action("DeleteStaff", "Staff", new { DeleteKey = @key})" class="btn btn-danger">Xóa</a>
                            </td>
                        </tr> 
 

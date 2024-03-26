@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/tv_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ID: 1"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name: User 1"/>
+
+    <TextView
+        android:id="@+id/tv_sdt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="soDienThoai:000000000"/>
+
+    <TextView
+        android:id="@+id/tv_chinhanh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="chiNhanhKey:gggggggg"/>
+
+
+    <TextView
+        android:id="@+id/tv_ngaydenhen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ngayDenHen:_ _ /_ _ /_ _ _ _"/>
+</LinearLayout>

@@ -1,0 +1,34 @@
+﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+
+@model DatLichHenViewModel
+@{
+	Layout = "_LayoutMain";
+	var status = ViewData["j"] as List<DatLichHenViewModel>;
+}
+
+<body>
+	<form method="post" asp-controller="Appointment" asp-action="ChinhTrangThai" class="content" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<input asp-for="Key" class="form-control" hidden />
+					<label for="serviceType">Trạng Thái:</label>
+					<select asp-for="TrangThai" class="form-control" id="serviceType" name="TrangThai" required>
+						<option selected disabled>Chọn loại trạng thái</option>
+						<option value="0">Chưa xác nhận</option>
+						<option value="1">Đã xác nhận</option>
+						<option value="2">Đã Hủy</option>
+						<!-- Thêm các loại dịch vụ khác nếu cần -->
+					</select>
+				</div>
+				<!-- /.card -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<a asp-controller="Appointment" asp-action="Index" class="btn btn-secondary">Cancel</a>
+				<button type="submit" class="btn btn-primary btn-sm">Xác Nhận</button>
+			</div>
+		</div>
+	</form>
+</body>

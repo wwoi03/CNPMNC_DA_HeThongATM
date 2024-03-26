@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".Activities.ApoimentActivity">
+    <EditText
+        android:id="@+id/tvdvdangky"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Dịch vụ đăng ký"
+        android:inputType="text"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/tvSourcett"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Điểm giao dịch"
+        android:inputType="text"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/etDateLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Thời gian đặt lịch"
+        android:inputType="text"
+        android:textSize="20dp"/>
+    <EditText
+        android:id="@+id/edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Số điện thoại"
+        android:inputType="numberDecimal"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:id="@+id/edt_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên"/>
+<Button
+    android:id="@+id/btn_add_user"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:text="Hiển thị"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+
+</LinearLayout>

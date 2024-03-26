@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // nav menu
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Sacombank");
+        toolbar.setTitle("DCTBank");
         setSupportActionBar(toolbar);
 
         navigationView = findViewById(R.id.nav_view);
@@ -219,21 +219,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(this, BeneficiaryManagementActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.nav_khoathe:
-                /*Intent intent3 = new Intent(this, LockCardActivity.class);
-                startActivity(intent3);*/
-                break;
-            case R.id.nav_mokhoathe:
-                /*startActivity(new Intent(this, UnlockCardActivity.class));*/
             case R.id.nav_logout:
-                Log.d(String.valueOf(config.getStateLogin()), "trc khi logout: ");
                 config.ClearData();
-                Log.d(String.valueOf(config.getStateLogin()), "sau khi logout: ");
                 Intent intent1 = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent1);
                 finish();
-//                Intent intent3 = new Intent(MainActivity.this, LoginActivity.class);
-//                startActivity(intent3);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -247,13 +237,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onCreateOptionsMenu(menu);
     }
 
-
     // tương tác với các item trong menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mnuSearch:
-                Intent cart = new Intent(MainActivity.this, ListSaveBillActivity.class);
+                Intent cart = new Intent(MainActivity.this, SearchServiceFunctionActivity.class);
                 startActivity(cart);
                 break;
             case R.id.mnuNotification:

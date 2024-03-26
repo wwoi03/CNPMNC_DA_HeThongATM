@@ -5,6 +5,9 @@
     Layout = "_LayoutMain";
     var abc = ViewData["abc"] as IEnumerable<TaiKhoanLienKetViewModel>;
 }
+<header>
+
+</header>
 
 <body>
 
@@ -15,26 +18,43 @@
                 <div class="formbold-form-header">
                     <h3>Chuyển tiền</h3>
                 </div>
-                <form method="post" asp-controller="CustomerService" asp-action="ChuyenTien"
-                      class="formbold-chatbox-form">
+                <form method="post" asp-controller="CustomerService" asp-action="ChuyenTien" class="formbold-chatbox-form" enctype="multipart/form-data"
+                      onsubmit="return kiemTraDuLieuNhap();">
+               
                     <div class="formbold-mb-5">
-                        <label for="stk" class="formbold-form-label"> Số tài khoản người nhận </label>
-                        <input id="SoTaiKhoan" type="text" asp-for="SoTaiKhoan" aria-required="true" aria-invalid="false"
+                        <label for="SoTaiKhoanNguoiChuyen" class="formbold-form-label"> Số tài khoản người chuyển </label>
+                        <input id="SoTaiKhoanNguoiChuyen" type="text" asp-for="SoTaiKhoan" name="SoTaiKhoanNguoiChuyen" aria-required="true" aria-invalid="false"
                                placeholder="Nhập số tài khoản"
                                class="formbold-form-input" />
                     </div>
                     <div class="formbold-mb-5">
-                        <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản </label>
-                        <input id="tenTK" type="text" asp-for="TenTK"
+                        <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản chuyển </label>
+                        <input id="tenTKChuyen" type="text" asp-for="TenTK"
                                placeholder=""
                                class="formbold-form-input" readonly>
+                    </div>
+
+                    <div class="formbold-mb-5">
+                        <label for="SoTaiKhoanNguoiNhan" class="formbold-form-label"> Số tài khoản người nhận </label>
+                        <input id="SoTaiKhoanNguoiNhan" type="text" asp-for="SoTaiKhoan" name="SoTaiKhoanNguoiNhan" placeholder="Nhập số tài khoản"
+                               class="formbold-form-input" />
+
+                        <div class="formbold-mb-5">
+                            <label for="email" class="formbold-form-label"> Họ và tên chủ tài khoản chuyển </label>
+                            <input id="TenTKNhan" type="text" asp-for="TenTK"
+                                   placeholder=""
+                                   class="formbold-form-input" readonly>
+                        </div>
+                       
                     </div>
 
                     <div class="formbold-mb-5">
                         <label for="message" class="formbold-form-label"> Số tiền </label>
                         <input type="text" asp-for="SoTien"
                                placeholder="999.999 VNĐ"
-                               class="formbold-form-input" >
+                               class="formbold-form-input" > </input>
+                        
+                        
                     </div>
                     <div class="formbold-mb-5">
                         <label for="message" class="formbold-form-label"> Nội dung chuyển tiền </label>
@@ -52,7 +72,41 @@
                 </div>
             </div>
         </div>
+       @* form thông báo thành công*@
+    <div id="notification" class="notification">
+        <!-- Nội dung thông báo sẽ được đặt ở đây -->
+        Chuyển tiền thành công!
+        <button id="closeNotification">OK</button>
+    </div>
+
         <style>
+              .notification {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        z-index: 1;
+    }
+
+    #closeNotification {
+        background-color: #45a049;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
             .formbold-main-wrapper {
                 display: flex;
                 align-items: center;
@@ -236,7 +290,31 @@
                     display: none;
                 }
         </style>
-        <script src="/js/RutChuyenTien.js" >
-            
+        <script>
+            // Hàm để cập nhật trường tên dựa trên số tài khoản được nhập
+            function updateName(accountNumberInput, nameFieldId) {
+                const accountNumber = accountNumberInput.value;
+
+                // Thực hiện cuộc gọi API để lấy tên chủ tài khoản
+                fetch(`/CustomerService/sendAccount?SoTaiKhoan=${accountNumber}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Cập nhật động trường tên tương ứng
+                        document.getElementById(nameFieldId).value = data;
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi truy xuất tên chủ tài khoản:', error);
+                    });
+            }
+
+            // Thêm sự kiện nhận biết số tài khoản người gửi và người nhận
+            document.getElementById('SoTaiKhoanNguoiChuyen').addEventListener('input', function () {
+                updateName(this, 'tenTKChuyen');
+            });
+
+            document.getElementById('SoTaiKhoanNguoiNhan').addEventListener('input', function () {
+                updateName(this, 'TenTKNhan');
+            });
         </script>
+
 </body>

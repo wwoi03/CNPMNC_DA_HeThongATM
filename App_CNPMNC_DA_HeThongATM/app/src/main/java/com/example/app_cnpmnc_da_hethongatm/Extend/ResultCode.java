@@ -17,8 +17,9 @@ public class ResultCode {
     public static int CHUA_DEN_HAN = 0; // // chưa đến hạn
 
     // Nhắc chuyển tiền
-    public static int ADD_REMINDER_TRANSFER_MONEY = 101; // thêm nhắc chuyển tiền
-    public static int EDIT_REMINDER_TRANSFER_MONEY = 102; // sửa nhắc chuyển tiền
+    public static int ADD_REMINDER_TRANSFER_MONEY = 6000; // thêm nhắc chuyển tiền
+    public static int EDIT_REMINDER_TRANSFER_MONEY = 6001; // sửa nhắc chuyển tiền
+    public static int TRANSFER_MONEY_REMINDER = 6002; // sửa nhắc chuyển tiền
 
     // Mẫu chuyển tiền
     public static int LUU_MAU_CHUYEN_TIEN = 8123; // thêm nhắc chuyển tiền
@@ -26,4 +27,9 @@ public class ResultCode {
     // Quét QR
     public static int SCAN_QR = 5554; // thêm nhắc chuyển tiền
 
+    // Chuyển tiền từ tài khoản
+    public static int ACCOUNT_TRANSFER_MONEY = 5142;
+
+    // đổi nickname
+    public static int EDIT_NICKNAME = 7000;
 }

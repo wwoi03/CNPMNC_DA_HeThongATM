@@ -3,7 +3,12 @@ package com.example.app_cnpmnc_da_hethongatm.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.app_cnpmnc_da_hethongatm.Adapter.SpinnerLaiSuatAdapter;
 import com.example.app_cnpmnc_da_hethongatm.Adapter.SpinnerSourceAdapter;
@@ -54,6 +60,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
 
     String sodu, key,keygiaodich, loaitk,kyhan, tknguon;
     TaiKhoanLienKet taiKhoanLienKet;
+    Toolbar tbToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_saving_account);
 
         initUI();
+        setupToolbar();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         taikhoanlienketRef= firebaseDatabase.getReference("TaiKhoanLienKet");
@@ -158,7 +166,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
                 UUID uuidGTK = UUID.randomUUID();
                 String guiTietKiemKey = uuidGTK.toString();
 
-                String tkTietKiem =DbHelper.generateUniqueAccountNumber();
+                String tkTietKiem = DbHelper.generateUniqueAccountNumber();
 
                 String number = numberMoney.getText().toString();
                if(number.isEmpty()){
@@ -171,7 +179,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
                    if (Double.valueOf(number) > Double.valueOf(sodu)) {
                        Toast.makeText(CreateSavingAccountActivity.this, "So Du khong du de gui tiet kiem", Toast.LENGTH_SHORT).show();
 
-                   } else if ((Double.valueOf(number) <= 3000000.0)) {
+                   } else if ((Double.valueOf(number) < 3000000.0)) {
                        Toast.makeText(CreateSavingAccountActivity.this, "Mẹ có tiền nạp kiểu gì vậy mày", Toast.LENGTH_SHORT).show();
                        numberMoney.setText("");
                    } else {
@@ -264,6 +272,7 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
         numberMoney=findViewById(R.id.EdtNumberMoney);
         spinner=findViewById(R.id.Spiner);
         sourceSpinner = findViewById(R.id.sourceSpinner);
+        tbToolbar = findViewById(R.id.tbToolbar);
 
     }
     //xu li spiner
@@ -295,5 +304,38 @@ public class CreateSavingAccountActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    private void setupToolbar() {
+        tbToolbar.setTitle("");
+        setSupportActionBar(tbToolbar);
+
+        TextView textView = new TextView(this);
+        textView.setText("Mở sổ tiết kiệm");
+        textView.setTextSize(20);
+        textView.setTextColor(Color.WHITE);
+        textView.setLayoutParams(new androidx.appcompat.widget.Toolbar.LayoutParams(androidx.appcompat.widget.Toolbar.LayoutParams.WRAP_CONTENT, androidx.appcompat.widget.Toolbar.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        tbToolbar.addView(textView);
+
+        // kích hoạt nút quay lại trên ActionBar
+        if (getSupportActionBar() != null) {
+            // Đặt màu trắng cho nút quay lại
+            final Drawable upArrow = getResources().getDrawable(R.drawable.baseline_chevron_left_24);
+            upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+            getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+            // Hiển thị nút quay lại
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    // xử lý sự kiện ấn nút quay lại
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();  // Kết thúc Activity hiện tại và quay lại  Activity trước đó
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

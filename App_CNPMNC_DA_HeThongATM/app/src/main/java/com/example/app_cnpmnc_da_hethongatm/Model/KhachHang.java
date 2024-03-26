@@ -31,6 +31,16 @@ public class KhachHang implements Serializable {
         MatKhau = matKhau;
         MaNhanVienKey = maNhanVienKey;
     }
+    public KhachHang( String CCCD, String tenKH, String ngaySinh, String gioiTinh, String diaChi, String email, String soDienThoai, String matKhau) {
+        this.CCCD = CCCD;
+        TenKH = tenKH;
+        NgaySinh = ngaySinh;
+        GioiTinh = gioiTinh;
+        DiaChi = diaChi;
+        Email = email;
+        SoDienThoai = soDienThoai;
+        MatKhau = matKhau;
+    }
 
     public String getKey() {
         return Key;

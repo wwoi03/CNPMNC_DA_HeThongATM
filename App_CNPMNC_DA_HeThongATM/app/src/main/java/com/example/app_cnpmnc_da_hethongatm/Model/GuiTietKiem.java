@@ -12,6 +12,8 @@ public class GuiTietKiem implements Serializable {
     private double TienLaiToiKy;
     private double TienGui;
 
+    public GuiTietKiem(){}
+
 
     public GuiTietKiem(String key, String maKHKey, long taiKhoanTietKiem, long taiKhoanNguon, String laiSuatKey, String ngayGui, double tienLaiToiKy, double tienGui) {
         Key = key;

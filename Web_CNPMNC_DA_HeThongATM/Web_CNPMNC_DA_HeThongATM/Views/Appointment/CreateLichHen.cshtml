@@ -1,0 +1,280 @@
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+
+@model DatLichHenViewModel
+@{
+    Layout = "_LayoutMain";
+    var appointmentlist = ViewData["j"] as IEnumerable<DatLichHenViewModel>;
+}
+<body>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
+            <span class="badge badge-pill badge-primary">Thành Công</span>
+            @TempData["Message"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    }
+    else if (TempData["Fail"] != null)
+    {
+        <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+            <span class="badge badge-pill badge-danger">Thất Bại</span>
+            @TempData["Fail"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    }
+    <div class="formbold-main-wrapper">
+        <div class="w-full">
+            <div class="formbold-form-wrapper">
+                <div class="formbold-form-header">
+                    <h3>Đặt lịch hẹn</h3>
+                </div>
+                <form method="post" asp-controller="Appointment" asp-action="CreateLichHen"
+                      class="formbold-chatbox-form">
+                    @* <div class="formbold-mb-5">
+                        <label for="email" class="formbold-form-label"> Key </label>
+                        <input type="text" asp-for="Key"
+                               class="formbold-form-input" />
+                    </div>*@
+                    <div class="formbold-mb-5">
+                        <label for="email" class="formbold-form-label"> Tên Khách Hàng </label>
+                        <input type="text" asp-for="TenKhachHang"
+                               placeholder="Nhập Tên Khách Hàng"
+                               class="formbold-form-input" />
+                         <span asp-validation-for="TenKhachHang" class="text-danger"></span>
+                    </div>
+                    <div class="formbold-mb-5">
+                        <label for="email" class="formbold-form-label"> Mã Khách Hàng </label>
+                        <input type="number" asp-for="MaKHKey"
+                               class="formbold-form-input" />
+                    </div
+                     <div class="formbold-mb-5">
+                        <label for="email" class="formbold-form-label"> Số Điện Thoại </label>
+                        <input type="number" asp-for="SoDienThoai"
+                               class="formbold-form-input" />
+                         <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+                    </div>
+                    <div class="formbold-mb-5">
+                        <label for="message" class="formbold-form-label"> Chi Nhánh </label>
+                        <input type="number" asp-for="ChiNhanhKey"
+                               class="formbold-form-input" />
+                    </div>
+                    <div class="formbold-mb-5">
+                        <label for="message" class="formbold-form-label"> Mã Nhân Viên </label>
+                        <input type="number" asp-for="MaNhanVienKey"
+                               class="formbold-form-input" />
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceType">Loại dịch vụ:</label>                  
+                        <select asp-for="LoaiDichVu" class="form-control" id="serviceType" name="LoaiDichVu" required>
+                            <option selected disabled >Chọn loại dịch vụ</option>
+                            <option value="Nạp Tiền">Nạp Tiền</option>
+                            <option value="Rút Tiền">Rút Tiền</option>
+                            <option value="Chuyển Tiền">Chuyển tiền</option>
+                            <!-- Thêm các loại dịch vụ khác nếu cần -->
+                        </select>
+                    </div>
+                     <div class="formbold-mb-5">
+                        <label for="message" class="formbold-form-label"> Ngày Đến Hẹn </label>
+                        <input type="date" asp-for="NgayDenHen"
+                               class="formbold-form-input" />
+                         <span asp-validation-for="NgayDenHen" class="text-danger"></span>
+                    </div>
+                     <div>
+                        <input type="submit" class="formbold-btn w-full"></>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <style>
+            .formbold-main-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 48px;
+            }
+            /*  .formbold-form-wrapper {
+                            margin: 0 auto;
+                            max-width: 550px;
+                            width: 100%;
+                            background: white;
+                            border: 1px solid #e0e0e0;
+                            border-radius: 8px;
+                            display: none;
+                          }*/
+
+            .formbold-form-header {
+                background: #6a64f1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px 36px;
+                border-radius: 8px 8px 0px 0px;
+            }
+
+                .formbold-form-header h3 {
+                    font-weight: 700;
+                    font-size: 20px;
+                    color: white;
+                }
+
+            .formbold-chatbox-form {
+                padding: 32px 36px;
+            }
+
+            .formbold-mb-5 {
+                margin-bottom: 20px;
+            }
+
+            .formbold-form-label {
+                display: block;
+                font-weight: 500;
+                font-size: 16px;
+                color: #07074d;
+                margin-bottom: 12px;
+            }
+
+            .formbold-form-label-2 {
+                font-weight: 600;
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .formbold-form-input {
+                width: 100%;
+                padding: 12px 24px;
+                border-radius: 6px;
+                border: 1px solid #e0e0e0;
+                background: white;
+                font-weight: 500;
+                font-size: 16px;
+                color: #6b7280;
+                outline: none;
+                resize: none;
+            }
+
+                .formbold-form-input:focus {
+                    border-color: #6a64f1;
+                    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+                }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Inter", sans-serif;
+            }
+
+            .formbold-pt-3 {
+                padding-top: 12px;
+            }
+
+            .formbold-form-wrapper.active {
+                display: block;
+            }
+
+            .formbold-form-label {
+                display: block;
+                font-weight: 500;
+                font-size: 16px;
+                color: #07074d;
+                margin-bottom: 12px;
+            }
+
+            .formbold-form-label-2 {
+                font-weight: 600;
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .formbold-btn {
+                text-align: center;
+                font-size: 16px;
+                border-radius: 6px;
+                padding: 14px 32px;
+                border: none;
+                font-weight: 600;
+                background-color: #6a64f1;
+                color: white;
+                cursor: pointer;
+            }
+
+                .formbold-btn:hover {
+                    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+                }
+
+            .formbold--mx-3 {
+                margin-left: -12px;
+                margin-right: -12px;
+            }
+
+            .formbold-px-3 {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .flex {
+                display: flex;
+            }
+
+            .flex-wrap {
+                flex-wrap: wrap;
+            }
+
+            .w-full {
+                width: 50%;
+            }
+
+            .formbold-form-header button {
+                color: white;
+                background: transparent;
+                border: none;
+            }
+
+            .formbold-action-buttons {
+                max-width: 550px;
+                margin-left: auto;
+                margin-right: auto;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                margin-top: 48px;
+            }
+
+            .formbold-action-btn {
+                width: 70px;
+                height: 70px;
+                background: #6a64f1;
+                color: white;
+                border-radius: 50%;
+                margin-left: 20px;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+                .formbold-action-btn .formbold-cross-icon {
+                    display: none;
+                }
+
+                .formbold-action-btn.active .formbold-cross-icon {
+                    display: block;
+                }
+
+                .formbold-action-btn.active .formbold-chat-icon {
+                    display: none;
+                }
+        </style>
+
+
+
+</body>

@@ -76,9 +76,12 @@ public class SaveBillActivity extends AppCompatActivity {
         NoiDung = intent.getStringExtra("NoiDung");
         MaGd = intent.getStringExtra("MaGd");
         TienGD =intent.getStringExtra("TienGD");
+
     }
     private void SetText(){
-        rs_tien.setText(TienGD);
+        double number = Double.parseDouble(TienGD);
+        long tiengd = (long) number;
+        rs_tien.setText(String.valueOf(tiengd));
         rs_nguoigui.setText(taiKhoanNguoiGui.getTenTK());
         rs_nguoinhan.setText(taiKhoanNguoiNhan.getTenTK());
         rs_stkgui.setText(String.valueOf(taiKhoanNguoiGui.getSoTaiKhoan()));

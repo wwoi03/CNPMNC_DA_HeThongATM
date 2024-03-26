@@ -89,5 +89,34 @@ public class TheNganHang implements Serializable {
     public void setMaKHKey(String maKHKey) {
         MaKHKey = maKHKey;
     }
+
+    public String hideCardNumber(long maSoThe) {
+        return maskString(String.valueOf(maSoThe), 6, 12, '*');
+    }
+
+    public static String maskString(String s, int start, int end, char mask) {
+        if (start < 0 || start > s.length() || end < 0 || end > s.length() || start > end) {
+            return s;
+        }
+
+        StringBuilder masked = new StringBuilder(s);
+        for (int i = start; i < end; i++) {
+            masked.setCharAt(i, mask);
+        }
+
+        return formatString(masked.toString());
+    }
+
+    public static String formatString(String s) {
+        StringBuilder formatted = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (i > 0 && i % 4 == 0) {
+                formatted.append(' ');
+            }
+            formatted.append(s.charAt(i));
+        }
+
+        return formatted.toString();
+    }
 }
 

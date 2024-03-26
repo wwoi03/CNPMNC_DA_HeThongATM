@@ -1,66 +1,47 @@
-﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
-
-@model TaiKhoanLienKetViewModel
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+@model Dictionary<string, LoaiTaiKhoan>
 @{
-    Layout = "_LayoutMain";
-    var accounts = ViewData["j"] as List<TaiKhoanLienKetViewModel>;
+    Dictionary<string,LoaiTaiKhoan> danhsachloaitaikhoan = ViewBag.danhsachloaitaikhoan;
+    var filteredData = danhsachloaitaikhoan.Where(pair => pair.Key != "temp").ToDictionary(pair => pair.Key, pair => pair.Value);
+}
+
+@{
+	Layout = "~/Views/Shared/_LayoutMain.cshtml";
 }
 
 
+<div class="card">
+     <div class="card-header">
+       <a href="@Url.Action("CreateAccount", "Account")" class="btn btn-primary">Thêm loại tài khoản</a>
+     </div>
+       <div class="card-body">
+            <table class="table">
+                 <thead>
+                   <tr>
+                    <th scope="col">Tên loại tài khoản</th>
+                    <th scope="col">Thao tác</th>
+                   </tr>
+                 </thead>
 
-<body>
-    @*<form method="post" asp-controller="Account" asp-action="NapTien" style="margin-left:20%">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header"><strong>Nạp Tiền</strong></div>
-                <div class="card-body card-block">
-                    <div class="form-group">
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Số tài Khoản</label>
-                            <input type="text" asp-for="SoTaiKhoan" class="form-control">
-                            <input type="text" asp-for="SoTaiKhoan" maxlength=" 16" id="SoTaiKhoan" data-val="true" data-val-required="Số Tài Khoản Không Được Để Trống" name="SoTaiKhoan" value="">
-                        </div>
-                        <div class="col-md-8" style="margin-left">
-                            <label for="vat" class="form-control-label">Số Tiền</label>
-                            <input type="text" asp-for="SoTien" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-actions form-group" style="margin-top:4px">
-                        <button type="submit" class="btn btn-primary btn-sm">Nạp tiền</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>*@
-	<form method="post" asp-controller="Account" asp-action="NapTien" class="content" enctype="multipart/form-data">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card card-primary">
-					
-
-					<div class="card-body">
-						<div class="form-group">
-							<label for="inputSTK" asp-for="SoTaiKhoan">Số Tài Khoản</label>
-							<input type="text" id="inputSTK" class="form-control" asp-for="SoTaiKhoan">
-							<span asp-validation-for="@Model.SoTaiKhoan" class="text-danger"></span>
-						</div>
-
-						<div class="form-group">
-							<label for="inputMoney" asp-for="SoTien">Số Tiền</label>
-							<input type="text" id="inputMoney" class="form-control" asp-for="SoTien" />
-							<span asp-validation-for="@Model.SoTien" class="text-danger"></span>
-						</div>
-					</div>
-					<!-- /.card-body -->
-				</div>
-				<!-- /.card -->
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<a asp-controller="Customer" asp-action="Index" class="btn btn-secondary">Cancel</a>
-				<button type="submit" class="btn btn-primary btn-sm">Nạp tiền</button>
-			</div>
-		</div>
-	</form>
-</body>
+                 
+                 <tbody>
+                     @foreach(var kvp in filteredData )
+                     {
+                       String key = kvp.Key;
+                       LoaiTaiKhoan loaiTaiKhoan = kvp.Value;
+                       
+                       <tr> 
+                           <td>@loaiTaiKhoan.TenLoaiTaiKhoan</td>
+                         
+                           <td>
+                            <a href="@Url.Action("EditAcc", "Account", new { editKey = @key})" class="btn btn-primary">Sửa</a>
+                            <a href="@Url.Action("DeleteAcc", "Account", new { DeleteKey = @key})" class="btn btn-danger">Xóa</a>
+                            <a href="@Url.Action("DetailAcc", "Account", new { editKey = @key})" class="btn btn-info">Xem thông tin</a>
+                           </td>   
+                       </tr> 
+                     }
+                 </tbody>
+            </table>
+       </div>
+ </div>
