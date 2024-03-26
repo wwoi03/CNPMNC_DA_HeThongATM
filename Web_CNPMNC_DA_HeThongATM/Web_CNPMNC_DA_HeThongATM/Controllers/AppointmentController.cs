@@ -58,6 +58,22 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             return View("CreateLichHen", datLichHen);
 
         }
+        [HttpPost]
+        public IActionResult CreateLichHenV2(DatLichHenViewModel datLichHen)
+        {
+
+            datLichHen.TrangThai = 0;
+            ModelState.Remove("TrangThai");
+            ModelState.Remove("Key");
+            if (ModelState.IsValid)
+            {
+                FirebaseHelperV2.GetInstance().InsertAppointment(datLichHen);
+                TempData["Message"] = "Đặt Lịch Hẹn";
+                return RedirectToAction("Index");
+            }
+            TempData["Fail"] = "Đặt Lịch Hẹn";
+            return View("CreateLichHen", datLichHen);
+        }
         [HttpGet]
         public IActionResult DetailsLichHen(string Key)
         {
