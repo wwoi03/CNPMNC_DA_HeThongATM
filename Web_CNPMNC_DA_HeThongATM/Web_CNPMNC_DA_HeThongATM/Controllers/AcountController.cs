@@ -4,6 +4,7 @@ using FireSharp.Response;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Web_CNPMNC_DA_HeThongATM.Controllers.Data;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
@@ -12,99 +13,76 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IRepository<LoaiTaiKhoan> _loaiTaiKhoanRepository;
 
-        public static IFirebaseClient client;
-        FirebaseHelper firebaseHelper;
-
-        public AccountController()
+        public AccountController(IRepository<LoaiTaiKhoan> loaiTaiKhoanRepository)
         {
-            firebaseHelper = new FirebaseHelper();
+            _loaiTaiKhoanRepository = loaiTaiKhoanRepository;
         }
 
-
-
-        //--------------------------------------------------ACCOUNT------------------------------------------------------------
-
+        // Phương thức hiển thị danh sách loại tài khoản
         public IActionResult Index()
         {
-            Dictionary<String, LoaiTaiKhoan> danhsachloaitaikhoan = firebaseHelper.GetAccWithKey();
-            ViewBag.danhsachloaitaikhoan = danhsachloaitaikhoan;
-            return View(danhsachloaitaikhoan);
+            var danhSachLoaiTaiKhoan = _loaiTaiKhoanRepository.GetAll();
+            return View(danhSachLoaiTaiKhoan);
         }
 
-        //TẠO LOẠI TÀI KHOẢN
-        public IActionResult CreateAccount()
+        // Phương thức hiển thị form tạo mới loại tài khoản
+        public IActionResult Create()
         {
             return View();
         }
 
+        // Phương thức xử lý tạo mới loại tài khoản
         [HttpPost]
-        public IActionResult CreateAcc(LoaiTaiKhoanViewModel taiKhoanViewModel)
+        public IActionResult Create(LoaiTaiKhoan loaiTaiKhoan)
         {
-            LoaiTaiKhoan loaiTaiKhoan = new LoaiTaiKhoan()
-            {
-                TenLoaiTaiKhoan = taiKhoanViewModel.TenLoaiTaiKhoan,
-
-            };
-
-            firebaseHelper.CreateAccount(loaiTaiKhoan);
-            return RedirectToAction("Index", "Account");
-        }
-
-        // HIỂN THỊ THÔNG TIN LOẠI TÀI KHOẢN CẦN SỬA
-        [HttpGet]
-        public IActionResult EditAcc(String editKey)
-        {
-            Dictionary<string, LoaiTaiKhoan> danhSachLoaiTaiKhoan = firebaseHelper.GetAccWithKey();
-            ViewBag.danhSachLoaiTaiKhoan = danhSachLoaiTaiKhoan;
-
-            if (ViewBag.danhSachLoaiTaiKhoan.TryGetValue(editKey, out LoaiTaiKhoan danhsach))
-            {
-                return View(danhsach);
-            }
-            return View(danhSachLoaiTaiKhoan);
-        }
-
-        //HIỂN THỊ THÔNG TIN NHƯNG KHÔNG ĐƯỢC SỬA
-        [HttpGet]
-        public IActionResult DetailAcc(String editKey)
-        {
-            Dictionary<string, LoaiTaiKhoan> danhSachLoaiTaiKhoan = firebaseHelper.GetAccWithKey();
-            ViewBag.danhSachLoaiTaiKhoan = danhSachLoaiTaiKhoan;
-
-            if (ViewBag.danhSachLoaiTaiKhoan.TryGetValue(editKey, out LoaiTaiKhoan danhsach))
-            {
-                return View(danhsach);
-            }
-            return View(danhSachLoaiTaiKhoan);
-        }
-
-        //SỬA LOẠI TÀI KHOẢN
-        [HttpPost]
-        public IActionResult EditAcc(LoaiTaiKhoan editedAcc)
-        {
-            // Trích xuất thông tin từ biểu mẫu và cập nhật vào cơ sở dữ liệu
             if (ModelState.IsValid)
             {
-                firebaseHelper.UpdateAcc(editedAcc);
-                return RedirectToAction("Index", "Account");
+                _loaiTaiKhoanRepository.Insert(loaiTaiKhoan);
+                return RedirectToAction("Index");
+            }
+            return View(loaiTaiKhoan);
+        }
+
+        // Phương thức hiển thị form chỉnh sửa loại tài khoản
+        public IActionResult Edit(string key)
+        {
+            var loaiTaiKhoan = _loaiTaiKhoanRepository.GetById(key);
+            if (loaiTaiKhoan == null)
+            {
+                return NotFound();
+            }
+            return View(loaiTaiKhoan);
+        }
+
+        // Phương thức xử lý chỉnh sửa loại tài khoản
+        [HttpPost]
+        public IActionResult Edit(string key, LoaiTaiKhoan loaiTaiKhoan)
+        {
+            if (key != loaiTaiKhoan.Key)
+            {
+                return NotFound();
             }
 
-            // Nếu dữ liệu không hợp lệ, bạn có thể hiển thị biểu mẫu với thông báo lỗi
-            return View(editedAcc);
+            if (ModelState.IsValid)
+            {
+                _loaiTaiKhoanRepository.Update(loaiTaiKhoan);
+                return RedirectToAction("Index");
+            }
+            return View(loaiTaiKhoan);
         }
 
-        //XÓA LOẠI TÀI KHOẢN
-        [HttpGet]
-        public IActionResult DeleteAcc(string deleteKey)
+        // Phương thức xóa loại tài khoản
+        public IActionResult Delete(string key)
         {
-            // Gọi hàm xóa loại tài khoản với key được truyền vào
-            firebaseHelper.DeleteAcc(deleteKey);
-
-            // Sau khi xóa, chuyển hướng về trang danh sách loại tài khoản hoặc trang khác tùy ý
-            return RedirectToAction("Index", "Account");
+            var loaiTaiKhoan = _loaiTaiKhoanRepository.GetById(key);
+            if (loaiTaiKhoan == null)
+            {
+                return NotFound();
+            }
+            _loaiTaiKhoanRepository.Delete(key);
+            return RedirectToAction("Index");
         }
-        //------------------------------------------------------------------------------------------------------------------
-
     }
 }

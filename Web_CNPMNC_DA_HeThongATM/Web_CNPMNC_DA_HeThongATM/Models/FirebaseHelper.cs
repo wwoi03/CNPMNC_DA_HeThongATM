@@ -17,6 +17,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class FirebaseHelper
     {
+
         //-----------------------------------------------------------------------SetupFireBase-----------------------------------------------------------
         public static IFirebaseClient client;
 
@@ -1264,6 +1265,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             // Gửi yêu cầu xóa loại tài khoản từ Firebase bằng cách sử dụng key
             FirebaseResponse setResponse = client.Delete("LoaiTaiKhoan/" + accKey);
         }
+
         //Danh sách đếm giao dịch****************************************************************
         public int CountGiaoDichMonth(int year, int month)
         {
