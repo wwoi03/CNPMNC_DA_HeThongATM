@@ -3,16 +3,19 @@ using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Newtonsoft.Json;
+using Web_CNPMNC_DA_HeThongATM.Designpattern.CommandPattern;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class ServiceController : Controller
     {
         FirebaseHelper firebaseHelper;
+        private readonly FirebaseHelper _firebaseHelper;
 
-        public ServiceController()
+        public ServiceController(FirebaseHelper firebaseHelper)
         {
             firebaseHelper = new FirebaseHelper();
+            _firebaseHelper = firebaseHelper;
         }
 
         public IActionResult Index(string titleAction)
@@ -84,17 +87,18 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             if (ModelState.IsValid)
             {
-                ChucNang chucNang = chucNangViewModel.ConvertClassModel();
+                ChucNang chucNang = chucNangViewModel.ConvertClassModel(); // Chuyển đổi từ ViewModel sang Model
+                ICommand createCommand = new CreateServiceCommand(_firebaseHelper, chucNang);
+                CommandInvoker commandInvoker = new CommandInvoker(createCommand);
+                commandInvoker.ExecuteCommand();
 
-                firebaseHelper.CreateService(chucNang);
-            } 
+                return RedirectToAction("Index");
+            }
             else
             {
-                // Chuyển đổi ChucNangViewModel thành chuỗi JSON và lưu vào TempData
-                TempData["chucNangViewModel"] = JsonConvert.SerializeObject(chucNangViewModel);
+                // Xử lý khi ModelState không hợp lệ
+                return View(chucNangViewModel);
             }
-
-            return RedirectToAction("Index");
         }
 
         // Hiển thị chi tiết dịch vụ

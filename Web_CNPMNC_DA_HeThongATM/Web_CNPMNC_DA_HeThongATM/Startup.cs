@@ -3,33 +3,39 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Configuration;
+using Web_CNPMNC_DA_HeThongATM.Controllers.Factory_method;
 using Web_CNPMNC_DA_HeThongATM.Designpattern.Factorymethod;
+using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
-namespace Web_CNPMNC_DA_HeThongATM
+namespace Web_CNPMNC_DA_HeThongATM.Models
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-
-        // Được gọi bởi runtime khi môi trường đang chạy ứng dụng
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
-        // Trong phương thức ConfigureServices của lớp Startup
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Đăng ký các dịch vụ cần thiết khác
-            services.AddControllersWithViews();
+            services.AddSingleton<FirebaseHelper>();
 
-            // Đăng ký dịch vụ ILaiSuatFactory
-            services.AddScoped<ILaiSuatFactory, ILaiSuatFactory>(); // Thay MyLaiSuatFactory bằng implementation của ILaiSuatFactory của bạn
+            
+            services.AddControllersWithViews();
+            // Đăng ký lớp FirebaseHelper với dịch vụ Dependency Injection
+            services.AddSingleton<FirebaseHelper>();
+
+            // Đăng ký dịch vụ IInterestRateFactory và cài đặt của nó
+            services.AddSingleton<IInterestRateFactory, SimpleInterestRateFactory>();
+
         }
 
-
-        // Cấu hình middleware
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

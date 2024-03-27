@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Web_CNPMNC_DA_HeThongATM.Designpattern.Factorymethod;
+using Web_CNPMNC_DA_HeThongATM.Controllers.Factory_method;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
@@ -8,18 +8,23 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class ManageInterestRateController : Controller
     {
-        private ILaiSuatFactory _laiSuatFactory;
-        private FirebaseHelper firebaseHelper;
+        private readonly FirebaseHelper _firebaseHelper;
+        private readonly IInterestRateFactory _interestRateFactory;
 
-        public ManageInterestRateController(ILaiSuatFactory laiSuatFactory)
+        public ManageInterestRateController(FirebaseHelper firebaseHelper, IInterestRateFactory interestRateFactory)
         {
-            _laiSuatFactory = laiSuatFactory;
+            _firebaseHelper = firebaseHelper;
+            _interestRateFactory = interestRateFactory;
         }
+
 
         // Danh sách lãi suất
         public IActionResult Index()
         {
-            List<LaiSuat> laiSuats = firebaseHelper.GetLaiSuats();
+            // Khởi tạo firebaseHelper nếu không được khởi tạo trong constructor
+            // FirebaseHelper firebaseHelper = new FirebaseHelper();
+
+            List<LaiSuat> laiSuats = _firebaseHelper.GetLaiSuats();
             List<LaiSuatViewModel> laiSuatViewModels = new List<LaiSuatViewModel>();
             foreach (var i in laiSuats)
             {
@@ -55,21 +60,25 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         //}
 
         // Tạo lãi suất
-        
-        [HttpPost]
         public IActionResult CreateLaiSuat()
         {
-            var laiSuat = _laiSuatFactory.CreateLaiSuat();
-            // Tiếp tục xử lý tạo mới lãi suất
             return View();
         }
 
+        [HttpPost]
+        public IActionResult CreateLaiSuat(LaiSuatViewModel laiSuat)
+        {
+            // Sử dụng Factory để tạo đối tượng lãi suất
+            var laiSuatObj = _interestRateFactory.CreateInterestRate("key", "kyHan", 3.5);
 
+            // Gửi đối tượng lãi suất tới view để hiển thị form hoặc thực hiện thao tác lưu trữ
+            return View(laiSuatObj);
+        }
         // Xác nhận xóa lãi suất
         public IActionResult ConfirmDelete(string key)
         {
             // Lấy thông tin lãi suất dựa trên key.
-            LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
+            LaiSuatViewModel laiSuat = _firebaseHelper.GetLaiSuatByKey(key);
 
             if (laiSuat == null)
             {
@@ -87,13 +96,13 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult Delete(string key)
         {
             // Xóa lãi suất bằng key
-            firebaseHelper.DeleteLaiSuat(key);
+            _firebaseHelper.DeleteLaiSuat(key);
             return RedirectToAction("Index");
         }
         //sửa lãi suất
         public IActionResult EditLaiSuat(string key)
         {
-            LaiSuatViewModel laiSuat = firebaseHelper.GetLaiSuatByKey(key);
+            LaiSuatViewModel laiSuat = _firebaseHelper.GetLaiSuatByKey(key);
 
             if (laiSuat == null)
             {
@@ -108,15 +117,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         {
             if (ModelState.IsValid)
             {
-                firebaseHelper.UpdateLaiSuatByKey(updatedLaiSuat.Key, updatedLaiSuat);
+                _firebaseHelper.UpdateLaiSuatByKey(updatedLaiSuat.Key, updatedLaiSuat);
                 return RedirectToAction("Index");
             }
 
             return View("EditLaiSuat", updatedLaiSuat);
         }
-
-
-
 
     }
 }
