@@ -14,9 +14,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
     {
         public static IFirebaseClient client;
         FirebaseHelper firebaseHelper;
+	
 
-		private NhanVien originalNhanVien;
-
+		private NhanVien temporaryNhanVien = new NhanVien();
+	
 		public StaffController()
         {
             firebaseHelper = new FirebaseHelper();
@@ -103,13 +104,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpPost]
 		public IActionResult Undo()
 		{
-			if (originalNhanVien != null)
+			
+			if (temporaryNhanVien != null)
 			{
-				firebaseHelper.UpdateStaff(originalNhanVien);
-				originalNhanVien = null;
-
+				firebaseHelper.UpdateStaff(temporaryNhanVien);
 				// Sau khi hoàn tác thành công, bạn có thể cần chuyển hướng người dùng đến trang chỉnh sửa
-				return RedirectToAction("Edit", "Staff", new { key = originalNhanVien.Key });
+				return RedirectToAction("Edit", "Staff", new { key = temporaryNhanVien.Key });
 			}
 
 			// Nếu không có dữ liệu để hoàn tác, chuyển hướng người dùng đến trang chỉnh sửa
@@ -120,7 +120,8 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 		[HttpPost]
         public IActionResult Edit(NhanVien editedNhanVien)
         {
-			
+			temporaryNhanVien = editedNhanVien.Clone() as NhanVien;
+
 			// Trích xuất thông tin từ biểu mẫu và cập nhật vào cơ sở dữ liệu
 			ModelState.Remove("ChiNhanhKey");
             ModelState.Remove("GioiTinh");
@@ -135,12 +136,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             // Nếu dữ liệu không hợp lệ, bạn có thể hiển thị biểu mẫu với thông báo lỗi
             return View(editedNhanVien);
         }
-        
-
-
-
-
-        [HttpGet]
+		[HttpGet]
         public IActionResult DeleteStaff(string deleteKey)
         {
             // Gọi hàm xóa loại tài khoản với key được truyền vào
