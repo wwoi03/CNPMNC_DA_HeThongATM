@@ -1672,5 +1672,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Models
             }
             return null;
         }
+
+		internal void RegisterObserver(NhanVienViewModel? nhanVienViewModel)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

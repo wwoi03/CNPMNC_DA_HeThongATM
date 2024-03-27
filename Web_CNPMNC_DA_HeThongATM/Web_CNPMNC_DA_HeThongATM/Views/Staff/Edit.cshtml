@@ -16,7 +16,7 @@
 			</div>
 
 			<div class="card-body card-block">
-				<form method="post" action="@Url.Action("Edit", "Staff")">
+				<form method="post" asp-action="Edit" asp-controller="Staff">
 					<input type="hidden" name="Key" value="@Model.Key">
 
 					<div class="form-group">
@@ -53,12 +53,16 @@
 					</div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary">lưu Thông tin</button>
+
+						<button id="UndoStaff" class="btn btn-primary">Trả lại dữ liệu</button>
 					</div>
+					
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="/js/EditStaff.js"></script>
 
 
 

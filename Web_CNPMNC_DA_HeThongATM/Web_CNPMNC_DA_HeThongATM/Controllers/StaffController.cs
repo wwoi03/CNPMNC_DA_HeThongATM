@@ -15,9 +15,9 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public static IFirebaseClient client;
         FirebaseHelper firebaseHelper;
 
+		private NhanVien originalNhanVien;
 
-        
-        public StaffController()
+		public StaffController()
         {
             firebaseHelper = new FirebaseHelper();
         }
@@ -88,30 +88,57 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         [HttpGet]
         public IActionResult Edit(String editKey)
         {
+
             Dictionary<string, NhanVien> danhSachNhanVien = firebaseHelper.GetStaffsWithKey();
             ViewBag.danhSachNhanVien = danhSachNhanVien;
+		
 
-            if (ViewBag.danhSachNhanVien.TryGetValue(editKey, out NhanVien nhanVien))
+			if (ViewBag.danhSachNhanVien.TryGetValue(editKey, out NhanVien nhanVien))
             {
-                return View(nhanVien);
+				
+				return View(nhanVien);
             }
             return View(danhSachNhanVien);
         }
-
-        //SỬA NHÂN VIÊN
         [HttpPost]
+		public IActionResult Undo()
+		{
+			if (originalNhanVien != null)
+			{
+				firebaseHelper.UpdateStaff(originalNhanVien);
+				originalNhanVien = null;
+
+				// Sau khi hoàn tác thành công, bạn có thể cần chuyển hướng người dùng đến trang chỉnh sửa
+				return RedirectToAction("Edit", "Staff", new { key = originalNhanVien.Key });
+			}
+
+			// Nếu không có dữ liệu để hoàn tác, chuyển hướng người dùng đến trang chỉnh sửa
+			return RedirectToAction("Edit", "Staff");
+		}
+
+		//SỬA NHÂN VIÊN
+		[HttpPost]
         public IActionResult Edit(NhanVien editedNhanVien)
         {
-            // Trích xuất thông tin từ biểu mẫu và cập nhật vào cơ sở dữ liệu
+			
+			// Trích xuất thông tin từ biểu mẫu và cập nhật vào cơ sở dữ liệu
+			ModelState.Remove("ChiNhanhKey");
+            ModelState.Remove("GioiTinh");
+
             if (ModelState.IsValid)
             {
                 firebaseHelper.UpdateStaff(editedNhanVien);
+
                 return RedirectToAction("Index", "Staff");
             }
 
             // Nếu dữ liệu không hợp lệ, bạn có thể hiển thị biểu mẫu với thông báo lỗi
             return View(editedNhanVien);
         }
+        
+
+
+
 
         [HttpGet]
         public IActionResult DeleteStaff(string deleteKey)

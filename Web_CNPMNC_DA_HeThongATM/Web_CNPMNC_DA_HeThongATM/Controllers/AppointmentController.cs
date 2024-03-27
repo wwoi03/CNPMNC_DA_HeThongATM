@@ -3,23 +3,26 @@ using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Web_CNPMNC_DA_HeThongATM.Designpattern.Singleton;
+using Web_CNPMNC_DA_HeThongATM.Designpattern.Strategy;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class AppointmentController : Controller
     {
         FirebaseHelper firebaseHelper;
+        private ListAppointMentStrategy appointMentStrategy;
 
         public AppointmentController()
         {
-            firebaseHelper = new FirebaseHelper();
+            appointMentStrategy = new IAppointmentStrategy();
         }
         public IActionResult Index()
         {
-            List<DatLichHen> datLichHens = firebaseHelper.GetAppointent();
-            List<DatLichHenViewModel> datLichHenViewModels = new List<DatLichHenViewModel>();
+			var DatLichHen = appointMentStrategy.listAppointment();
+			List<DatLichHenViewModel> datLichHenViewModels = new List<DatLichHenViewModel>();
 
-            foreach (var i in datLichHens)
+            foreach (var i in DatLichHen)
             {
                 var pro = new DatLichHenViewModel
                 {
@@ -37,7 +40,32 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
             ViewData["j"] = datLichHenViewModels;
 
             return View();
+
         }
+        //public IActionResult Index()
+        //{
+        //    List<DatLichHen> datLichHens = firebaseHelper.GetAppointent();
+        //    List<DatLichHenViewModel> datLichHenViewModels = new List<DatLichHenViewModel>();
+
+        //    foreach (var i in datLichHens)
+        //    {
+        //        var pro = new DatLichHenViewModel
+        //        {
+        //            Key = i.Key,
+        //            SoDienThoai = i.SoDienThoai,
+        //            TenKhachHang = i.TenKhachHang,
+        //            LoaiDichVu = i.LoaiDichVu,
+        //           NgayDenHen = i.NgayDenHen.ToString("dd/MM/yyy"),
+        //            TrangThai = i.TrangThai,
+
+        //        };
+        //        datLichHenViewModels.Add(pro);
+        //    }
+        //    ViewBag.listStatus = TrangThaiDatLichHenViewModel.DefaultStatus();
+        //    ViewData["j"] = datLichHenViewModels;
+
+        //    return View();
+        //}
         public IActionResult CreateLichHen()
         {
             return View();
@@ -64,10 +92,10 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 
             datLichHen.TrangThai = 0;
             ModelState.Remove("TrangThai");
-            ModelState.Remove("Key");
+            ModelState.Remove("Key"); 
             if (ModelState.IsValid)
             {
-                FirebaseHelperV2.GetInstance().InsertAppointment(datLichHen);
+				FirebaseSingleton.GetInstance().InsertAppointment(datLichHen);
                 TempData["Message"] = "Đặt Lịch Hẹn";
                 return RedirectToAction("Index");
             }
@@ -78,7 +106,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         public IActionResult DetailsLichHen(string Key)
         {
 
-            DatLichHen datLichHen = firebaseHelper.GetAppointmentbyKey(Key);
+            DatLichHen datLichHen = FirebaseSingleton.GetInstance().GetAppointmentbyKey(Key);
 
 
             ViewBag.Details = datLichHen;
@@ -97,7 +125,7 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         }
         public IActionResult ChinhTrangThai(string Key)
         {
-            firebaseHelper.GetLichHenByKey(Key);
+            FirebaseSingleton.GetInstance().GetLichHenByKey(Key);
             return View();
         }
 
