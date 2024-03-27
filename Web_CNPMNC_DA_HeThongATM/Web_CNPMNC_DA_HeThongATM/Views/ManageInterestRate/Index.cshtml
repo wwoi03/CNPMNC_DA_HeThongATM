@@ -11,8 +11,8 @@
         <div class="card">
             <div class="card-header">
                 <strong style="margin-block-end:20%" class="card-title">Danh sách lãi suất</strong>
-                @if (role == "AD")
-                {
+                
+                
                 <div class="card-search col col-md-8" style="margin-right:100px">
                    
                         <div class="input-group-btn">
@@ -22,7 +22,7 @@
                             </a>
                         </div>
                     </div>
-                    }
+                    
                 </div>
             </div>
             <div class="table-stats order-table ov-h" id="CustomerList">
@@ -33,7 +33,7 @@
                             <th style="width:25%">Mã</th>
                             <th style="width:35%">kỳ hạn</th>
                             <th style="width:35%%">Tỉ lệ</th>
-                             @if (role == "AD")
+                           
                         {
                             <th style="width:10%;text-align:left">Chức Năng</th>
                         }
@@ -49,8 +49,7 @@
                                 <td>@item.KyHan</td>
                                 <td>@item.TiLe</td>
 
-                                @if (role == "AD")
-                                {
+                                
                                     <td>
 
 
@@ -64,7 +63,7 @@
                                         </a>
 
                                     </td>
-                                }
+                                
                             </tr>
                             </tr>
                         }

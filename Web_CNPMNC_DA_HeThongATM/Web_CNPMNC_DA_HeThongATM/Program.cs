@@ -1,10 +1,16 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Web_CNPMNC_DA_HeThongATM.Controllers;
+using Web_CNPMNC_DA_HeThongATM.Controllers.Factory_method;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Kích hoạt Session
 builder.Services.AddSession();
+
+// Đăng ký dịch vụ của bạn ở đây
+builder.Services.AddSingleton<IInterestRateFactory, SimpleInterestRateFactory>();
 
 var app = builder.Build();
 
