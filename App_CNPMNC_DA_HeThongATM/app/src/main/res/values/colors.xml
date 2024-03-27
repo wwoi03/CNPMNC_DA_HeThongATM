@@ -326,4 +326,11 @@
     <color name="md_blue_grey_700">#455A64</color>
     <color name="md_blue_grey_800">#37474F</color>
     <color name="md_blue_grey_900">#263238</color>
+
+    <!--Màu OTP-->
+    <color name="colortextfirst">#000000</color>
+    <color name="colortextsecond">#777474</color>
+    <color name="colortextPrimary1">#FFC107</color>
+    <color name="colorAccent1">#FF5722</color>
+    <color name="color_view">#A5A2A2</color>
 </resources>

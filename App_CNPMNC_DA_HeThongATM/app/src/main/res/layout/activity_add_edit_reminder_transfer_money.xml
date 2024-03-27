@@ -249,6 +249,17 @@
                     android:text="Tiếp tục"
                     android:layout_marginTop="12dp"></Button>
 
+                <!-- Button tiếp tục -->
+                <Button
+                    android:id="@+id/btTransferMoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_radius_all"
+                    android:text="Chuyển tiền"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone">
+                </Button>
+
                 <!-- Edit -->
                 <LinearLayout
                     android:id="@+id/llEditButtonContainer"
@@ -265,7 +276,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/border_radius_all"
-                        android:text="Xóa"></Button>
+                        android:text="Xóa"
+                        android:layout_marginEnd="16px">
+                    </Button>
 
                     <!-- Button xác nhận cập nhật -->
                     <Button
@@ -274,7 +287,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/border_radius_all"
-                        android:text="Xác nhận"></Button>
+                        android:text="Xác nhận"
+                        android:layout_marginStart="16px">
+                    </Button>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

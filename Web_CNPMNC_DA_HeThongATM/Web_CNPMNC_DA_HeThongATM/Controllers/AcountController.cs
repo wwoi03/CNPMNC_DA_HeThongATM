@@ -1,63 +1,110 @@
-﻿using FireSharp;
+﻿using FireSharp.Config;
 using FireSharp.Interfaces;
+using FireSharp.Response;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Web_CNPMNC_DA_HeThongATM.Models;
+using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
 
 namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class AccountController : Controller
     {
-        FirebaseHelper firebaseHelper = new FirebaseHelper();
+
+        public static IFirebaseClient client;
+        FirebaseHelper firebaseHelper;
+
+        public AccountController()
+        {
+            firebaseHelper = new FirebaseHelper();
+        }
+
+
+
+        //--------------------------------------------------ACCOUNT------------------------------------------------------------
+
         public IActionResult Index()
         {
+            Dictionary<String, LoaiTaiKhoan> danhsachloaitaikhoan = firebaseHelper.GetAccWithKey();
+            ViewBag.danhsachloaitaikhoan = danhsachloaitaikhoan;
+            return View(danhsachloaitaikhoan);
+        }
 
+        //TẠO LOẠI TÀI KHOẢN
+        public IActionResult CreateAccount()
+        {
             return View();
         }
+
         [HttpPost]
-        public IActionResult NapTien(TaiKhoanLienKetViewModel account)
+        public IActionResult CreateAcc(LoaiTaiKhoanViewModel taiKhoanViewModel)
         {
-            double sotien = account.SoTien;
-            firebaseHelper.NapTien(sotien, account.SoTaiKhoan);
-            return RedirectToAction("Index");
+            LoaiTaiKhoan loaiTaiKhoan = new LoaiTaiKhoan()
+            {
+                TenLoaiTaiKhoan = taiKhoanViewModel.TenLoaiTaiKhoan,
+
+            };
+
+            firebaseHelper.CreateAccount(loaiTaiKhoan);
+            return RedirectToAction("Index", "Account");
         }
-        //public Account(Account firebaseClient)
-        //{
-        //    firebaseClient = firebaseClient;
-        //}
 
-        //[HttpGet]
-        //public ActionResult<string> GetAccount(string value)
-        //{
-        //    string info = firebaseHelper.GetAccount(value);
-        //    if (info != null)
-        //    {
-        //        return Ok(info); // Trả về thông tin tài khoản nếu tìm thấy
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Không tìm thấy tài khoản"); // Trả về lỗi nếu không tìm thấy tài khoản
-        //    }
-        //}
+        // HIỂN THỊ THÔNG TIN LOẠI TÀI KHOẢN CẦN SỬA
+        [HttpGet]
+        public IActionResult EditAcc(String editKey)
+        {
+            Dictionary<string, LoaiTaiKhoan> danhSachLoaiTaiKhoan = firebaseHelper.GetAccWithKey();
+            ViewBag.danhSachLoaiTaiKhoan = danhSachLoaiTaiKhoan;
 
-        //[HttpPost]
-        //public ActionResult<string> NapTien([FromBody] NapTienRequestModel model)
-        //{
-        //    if (model == null || string.IsNullOrEmpty(model.SoTaiKhoan) || model.SoTien <= 0)
-        //    {
-        //        return BadRequest("Dữ liệu không hợp lệ");
-        //    }
+            if (ViewBag.danhSachLoaiTaiKhoan.TryGetValue(editKey, out LoaiTaiKhoan danhsach))
+            {
+                return View(danhsach);
+            }
+            return View(danhSachLoaiTaiKhoan);
+        }
 
-        //    bool napTienResult = firebaseHelper.NapTien(model.SoTien, model.SoTaiKhoan);
+        //HIỂN THỊ THÔNG TIN NHƯNG KHÔNG ĐƯỢC SỬA
+        [HttpGet]
+        public IActionResult DetailAcc(String editKey)
+        {
+            Dictionary<string, LoaiTaiKhoan> danhSachLoaiTaiKhoan = firebaseHelper.GetAccWithKey();
+            ViewBag.danhSachLoaiTaiKhoan = danhSachLoaiTaiKhoan;
 
-        //    if (napTienResult)
-        //    {
-        //        return Ok("Nạp tiền thành công");
-        //    }
-        //    else
-        //    {
-        //        return BadRequest("Nạp tiền thất bại"); // Trả về lỗi nếu nạp tiền thất bại
-        //    }
-        //}
+            if (ViewBag.danhSachLoaiTaiKhoan.TryGetValue(editKey, out LoaiTaiKhoan danhsach))
+            {
+                return View(danhsach);
+            }
+            return View(danhSachLoaiTaiKhoan);
+        }
+
+        //SỬA LOẠI TÀI KHOẢN
+        [HttpPost]
+        public IActionResult EditAcc(LoaiTaiKhoan editedAcc)
+        {
+            // Trích xuất thông tin từ biểu mẫu và cập nhật vào cơ sở dữ liệu
+            if (ModelState.IsValid)
+            {
+                firebaseHelper.UpdateAcc(editedAcc);
+                return RedirectToAction("Index", "Account");
+            }
+
+            // Nếu dữ liệu không hợp lệ, bạn có thể hiển thị biểu mẫu với thông báo lỗi
+            return View(editedAcc);
+        }
+
+        //XÓA LOẠI TÀI KHOẢN
+        [HttpGet]
+        public IActionResult DeleteAcc(string deleteKey)
+        {
+            // Gọi hàm xóa loại tài khoản với key được truyền vào
+            firebaseHelper.DeleteAcc(deleteKey);
+
+            // Sau khi xóa, chuyển hướng về trang danh sách loại tài khoản hoặc trang khác tùy ý
+            return RedirectToAction("Index", "Account");
+        }
+        //------------------------------------------------------------------------------------------------------------------
+
     }
 }

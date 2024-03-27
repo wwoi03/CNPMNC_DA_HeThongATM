@@ -57,7 +57,15 @@ public class DialogPlusAccountAdapter extends FirebaseRecyclerAdapter<TaiKhoanLi
         }
     }
 
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+
+        listener.adapterOnDataChange();
+    }
+
     public interface Listener {
         void onClickItemDialogPlusAccountListener(TaiKhoanLienKet taiKhoanLienKet);
+        void adapterOnDataChange();
     }
 }

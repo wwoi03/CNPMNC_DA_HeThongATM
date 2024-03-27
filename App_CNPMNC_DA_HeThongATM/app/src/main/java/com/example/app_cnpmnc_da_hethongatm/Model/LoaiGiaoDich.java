@@ -25,7 +25,6 @@ public class LoaiGiaoDich {
     public String getTenLoai() {
         return TenLoai;
     }
-
     public void setTenLoai(String tenLoai) {
         TenLoai = tenLoai;
     }

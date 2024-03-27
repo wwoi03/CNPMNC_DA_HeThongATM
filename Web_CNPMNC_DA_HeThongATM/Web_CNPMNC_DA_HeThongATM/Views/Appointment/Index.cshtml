@@ -31,20 +31,10 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Đặt lịch hẹn</strong>
-                <div class="card-search col col-md-8" style="margin-right:100px">
-                    <div class="input-group">
-                        <input type="text" id="search-input" class="form-control">
-                        <div class="input-group-btn">
-                            <button class="btn btn-info" id="search-button">
-                                <i class="fa fa-search"></i> Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <strong class="card-title">Đặt lịch hẹn</strong>              
             </div>
             <div class="table-stats order-table ov-h" id="CustomerList">
-                <a class="btn btn-success" asp-controller="Appointment" asp-action="Create"> Đặt lịch hẹn </a>
+                <a class="btn btn-success" asp-controller="Appointment" asp-action="CreateLichHen"> Đặt lịch hẹn </a>
                 <table class="table">
                     <thead>
                         <tr>
@@ -52,15 +42,194 @@
                             <th style="width:15%">Số Điện Thoại</th>
                             <th style="width:15%">Loại Dịch Vụ</th>
                             <th style="width:10%%">Ngày Đến Hẹn</th>
-                            <th style="width:10%">Trạng Thái</th>
-                            <th style="width:30%">Action</th>
+                            <th style="width:20%">Trạng Thái</th>
+                            <th style="width:20%">Action</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach (var item in appointmentlist)
+                        {
+
+                            <tr>
+                            <tr>
+                                <td>@item.TenKhachHang</td>
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.LoaiDichVu</td>
+                                <td>@item.NgayDenHen</td>
+                               
+                                   
+							@foreach (var item1 in ViewBag.listStatus)
+							{
+                                            if (item.TrangThai == item1.StatusID)
+                                            {
+                                                <td>@item1.StatusName</td>
+                                            }
+                                        }	
+                                
+                                <td>
+                                    <a class="btn btn-primary" asp-controller="Appointment" asp-action="DetailsLichHen" asp-route-Key="@item.Key">
+                                            
+                                        <i class="far fa-eye"></i>
+                                    </a>
+                                     <a class="btn btn-success" asp-controller="Appointment" asp-action="ChinhTrangThai" asp-route-Key="@item.Key">
+                                            
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    @*<a class="btn btn-success" onclick="editStatus('@item.Key', '@item.TrangThai', '@item.TenKhachHang', '@item.LoaiDichVu', '@item.ChiNhanhKey', '@item.SoDienThoai')">
+                                        <i class="fas fa-edit"></i>
+                                    </a>*@
+                                </td>
+                            </tr>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
             <div class="table-stats order-table ov-h" id="SearchCustomerID">
             </div><!-- /.table-stats -->
         </div>
     </div>
+    @*<div class="modal" tabindex="-1" role="dialog" id="editStatusModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chọn trạng thái</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-danger">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Appointment" asp-action="EditStatus" method="post">
+                    <input type="hidden" id="editKey" name="Key" />
+
+                    <div class="form-group">
+                        <label for="serviceType">Trạng Thái:</label>                  
+                        <select asp-for="TrangThai" class="form-control" id="serviceType" name="TrangThai" required>
+                            <option selected disabled >Chọn loại trạng thái</option>
+                            <option value="0">Chưa xác nhận</option>
+                            <option value="1">Đã xác nhận</option>
+                            <option value="2">Đã Hủy</option>
+                            <!-- Thêm các loại dịch vụ khác nếu cần -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editKyHan">Tên Khách Hàng</label>
+                        <input type="text" class="form-control" id="editTenkhachhang" name="TenKhachHang" asp-for="TenKhachHang" readonly/>
+                    </div>
+                     <div class="form-group">
+                        <label for="editKyHan">Loại dịch vụ</label>
+                        <input type="text" class="form-control" id="editLoaiDichVu" name="LoaiDichVu" asp-for="LoaiDichVu" readonly/>
+                    </div>
+                     <div class="form-group">
+                        <label for="editKyHan">Chi Nhánh Key</label>
+                        <input type="text" class="form-control" id="editChiNhanhKey" name="ChiNhanhKey" asp-for="ChiNhanhKey"/>
+                    </div>
+                     <div class="form-group">
+                        <label for="editKyHan">Mã Khách Hàng Key</label>
+                        <input type="text" class="form-control" id="editKyHan" name="MaKHKey"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="editKyHan">Mã Nhân Viên Key</label>
+                        <input type="text" class="form-control" id="editKyHan" name="MaNhanVienKey"/>
+                    </div>
+                     <div class="form-group">
+                        <label for="editKyHan">Ngày Đến Hẹn</label>
+                        <input type="date" class="form-control" id="editKyHan" name="NgayDenHen"/>
+                    </div>
+                     <div class="form-group">
+                        <label for="editKyHan">Số Điện Thoại</label>
+                        <input type="text" class="form-control" id="editSoDienThoai" name="SoDienThoai" asp-for="SoDienThoai"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <style>
+        #confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            width:50%;
+        }
+
+        .modal-content {
+            text-align: center;
+            width:100%;
+            
+        }
+
+        #editLaiSuatModal {
+            text-align: center;
+        }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .modal-content {
+            display: inline-block;
+            text-align: left;
+        }
+    </style>
+    <script>
+        function openConfirmationModal(key, TrangThai, TenKhachHang, LoaiDichVu, ChiNhanhKey, MaKHKey, MaNhanVienKey, NgayDenHen, SoDienThoai) {
+            document.getElementById('confirm-delete-key').value = key;
+            document.getElementById('confirm-delete-ky-han').innerText = TrangThai;
+            document.getElementById('confirmation-modal').style.display = 'block';
+        }
+
+        function closeConfirmationModal() {
+            document.getElementById('confirm-delete-key').value = '';
+            document.getElementById('confirm-delete-ky-han').innerText = '';
+            document.getElementById('confirm-delete-ti-le').innerText = '';
+            document.getElementById('confirmation-modal').style.display = 'none';
+        }
+        function editStatus(Key, TrangThai, TenKhachHang, LoaiDichVu, ChiNhanhKey, MaKHKey, MaNhanVienKey, NgayDenHen, SoDienThoai) {
+            // Điền thông tin lãi suất vào modal
+            $('#editKey').val(Key);
+            $('#editTrangThai').val(TrangThai);
+            $('#editTenkhachhang').val(TenKhachHang);
+            $('#editLoaiDichVu').val(LoaiDichVu);
+            $('#editChiNhanhKey').val(ChiNhanhKey);
+            $('#editMaKHKey').val(MaKHKey);
+            $('#editMaNhanVienKey').val(MaNhanVienKey);
+            $('#editNgayDenHen').val(NgayDenHen);
+            $('#editSoDienThoai').val(SoDienThoai);
+
+
+            // Hiển thị modal sửa giữa màn hình
+            $('#editStatusModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    <!-- Thư viện jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>*@
+
+
     <script src="/js/ListCustomer.js"></script>
 </body>

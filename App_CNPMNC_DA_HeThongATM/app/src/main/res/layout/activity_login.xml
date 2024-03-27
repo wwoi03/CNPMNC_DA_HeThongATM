@@ -56,9 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    app:hintEnabled="false"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true">
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPhone"
@@ -92,10 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    app:hintEnabled="false"
-                    app:passwordToggleEnabled="true"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true">
+                    app:hintEnabled="false">
 
                     <EditText
                         android:id="@+id/etPassword"

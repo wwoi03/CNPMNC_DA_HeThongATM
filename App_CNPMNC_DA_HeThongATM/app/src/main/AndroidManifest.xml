@@ -7,7 +7,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,13 +18,13 @@
         android:theme="@style/Theme.App_CNPMNC_DA_HeThongATM"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.AgreeActivity"
+            android:name=".Activities.ApoimentActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.AddNewAccountActivity"
+            android:name=".Activities.OseActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.NewaccountActivity"
+            android:name=".Activities.AppointmentActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.DepositMoreSavingActivity"
@@ -37,6 +37,9 @@
             android:exported="false" />
         <activity
             android:name=".Activities.AdjustMoneyTransferLimitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AccountAndCardSettingsActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.ScanQRActivity"
@@ -116,6 +119,9 @@
             tools:replace="android:screenOrientation" />
         <activity android:name=".Activities.SaveBillActivity" />
         <activity android:name=".Activities.ListSaveBillActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.GetOTPActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.VerifyOTPActivity" />
+        <activity android:name="com.example.app_cnpmnc_da_hethongatm.Activities.formUserRegister" />
 
         <meta-data
             android:name="preloaded_fonts"

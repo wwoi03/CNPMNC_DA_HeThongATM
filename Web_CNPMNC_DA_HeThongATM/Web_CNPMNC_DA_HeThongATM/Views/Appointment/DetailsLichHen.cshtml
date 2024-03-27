@@ -1,0 +1,107 @@
+﻿﻿﻿@using Web_CNPMNC_DA_HeThongATM.Models.ViewModel
+
+@model DatLichHenViewModel
+
+@{
+    Layout = "_LayoutMain";
+
+}
+<div class="col-md-12" style="height:100vh">
+
+    <div class="container col-md-10">
+        <form method="post" asp-controller="Appointment" asp-action="DetailsLichHen" style="padding-top:0px ; background-color:#ffff">
+            <div class="inputBox">
+                <span class="col-md-5">
+                    Chi Tiết Lịch Hẹn
+                </span>
+            </div>
+
+            <div class="flexbox">
+
+                <div class="inputBox">
+                    <span>
+                        Mã lịch hẹn
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input readonly value="@ViewBag.Details.Key" type="text" maxlength="16" id="malichhen" asp-for="Key">
+                </div>
+                <div class="inputBox">
+                    <span>
+                        Tên Khách Hàng
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input type="text" class="text-input" readonly value="@ViewBag.Details.TenKhachHang" type="text" maxlength="16" class="sdt" asp-for="TenKhachHang">
+                </div>
+            </div>
+            <div class="flexbox">
+                <div class="inputBox">
+                    <span>
+                        Số Điện Thoại
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input type="text" class="text-input" readonly value="@ViewBag.Details.SoDienThoai" type="text" maxlength="16" class="sdt" asp-for="SoDienThoai">
+                </div>
+                <div class="inputBox">
+                    <span>
+                        Loại Dịch Vụ
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input type="text" class="text-input" value="@ViewBag.Details.LoaiDichVu" type="text" class="card-holder-input" asp-for="LoaiDichVu">
+
+                </div>
+            </div>
+            <div class="flexbox">
+                <div class="inputBox">
+                    <span>
+                        Mã Khách Hàng
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input type="text" class="text-input" value="@ViewBag.Details.MaKHKey" type="text" maxlength="16" class="card-number-input" asp-for="MaKHKey">
+                </div>
+                <div class="inputBox">
+                    <span>
+                        Mã Nhân Viên
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input type="text" class="text-input" value="@ViewBag.Details.MaNhanVienKey" type="text" class="card-holder-input" asp-for="MaNhanVienKey">
+
+                </div>
+                <div class="inputBox">
+                    <span>
+                        Ngày Đến Hẹn
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input type="text" class="text-input" value="@ViewBag.Details.NgayDenHen" type="text" class="card-holder-input" asp-for="NgayDenHen">
+
+                </div>
+                <div class="inputBox">
+                    <span>
+                        Trạng Thái
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <input type="text" class="text-input" value="@ViewBag.Details.TrangThai" type="text" class="card-holder-input" asp-for="TrangThai">
+
+                </div>
+            </div>
+            <div class="flexbox">
+            </div>
+
+        </form>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".toggleButton").click(function () {
+                var input = $(this).prev();
+                if (input.attr("type") == "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
+        });
+    </script>
+
+
+</div>

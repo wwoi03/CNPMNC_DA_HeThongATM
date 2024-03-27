@@ -1,0 +1,44 @@
+﻿@using Web_CNPMNC_DA_HeThongATM.Models.ClassModel
+@{
+	Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+
+@{
+    Dictionary<string, LoaiTaiKhoan> danhSachLoaiTaiKhoan = ViewBag.danhSachLoaiTaiKhoan;
+}
+
+<div class="row justify-content-center">
+         <div class="card">
+            <div class="card-header">
+               <strong class="card-title">Quản lý loại tài khoản</strong>
+            </div>
+              <div class="card-body">
+                               
+                      <div id="pay-invoice">
+                              <div class="card-body">
+                                  <div class="card-title">
+                                     <h3 class="text-center">Chi tiết loại tài khoản</h3>
+                                  </div>
+                                  <hr>
+                                         <div class="form-group text-center">
+                                              <ul class="list-inline">
+                                                  <li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
+                                                  <li class="list-inline-item"><i class="fa fa-cc-mastercard fa-2x"></i></li>
+                                                  <li class="list-inline-item"><i class="fa fa-cc-amex fa-2x"></i></li>
+                                                  <li class="list-inline-item"><i class="fa fa-cc-discover fa-2x"></i></li>
+                                              </ul>
+                                         </div>
+                                         <div class="form-group">
+                                              <label for="cc-payment" class="control-label mb-1">Key</label>
+                                              <input type="text" name="TenLoaiTaiKhoan" placeholder="Nhâp tên loại tài khoản" class="form-control" value="@Model.Key" readonly>
+                                         </div>
+
+                                         <div class="form-group">
+                                              <label for="cc-payment" class="control-label mb-1">Loại tài khoản</label>
+                                              <input type="text" name="TenLoaiTaiKhoan" placeholder="Nhâp tên loại tài khoản" class="form-control" value="@Model.TenLoaiTaiKhoan" readonly>
+                                         </div>
+                              </div>
+                      </div>
+              </div>
+         </div> 
+</div>

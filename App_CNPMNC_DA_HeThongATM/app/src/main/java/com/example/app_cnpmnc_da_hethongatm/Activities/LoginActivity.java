@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initUI();
         initData();
         initListener();
@@ -84,6 +83,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        btRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,GetOTPActivity.class);
+//                Intent intent = new Intent(LoginActivity.this,formUserRegister.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // Kiểm tra chuỗi
@@ -112,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
             if (snapshot.exists()) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     KhachHang khachHang = dataSnapshot.getValue(KhachHang.class);
-
                     Log.d("firebase", khachHang.getCCCD());
                     if (khachHang != null) {
                         // Kiểm tra mật khẩu
