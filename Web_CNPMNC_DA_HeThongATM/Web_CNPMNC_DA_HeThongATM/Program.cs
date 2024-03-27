@@ -1,10 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Web_CNPMNC_DA_HeThongATM.Designpattern.Factorymethod;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Kích hoạt Session
 builder.Services.AddSession();
+
+// Đăng ký dịch vụ của bạn ở đây
+builder.Services.AddSingleton<ILaiSuatFactory, LaiSuatFactory>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Web_CNPMNC_DA_HeThongATM.Designpattern.Factorymethod;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
@@ -7,11 +8,12 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
 {
     public class ManageInterestRateController : Controller
     {
+        private ILaiSuatFactory _laiSuatFactory;
         private FirebaseHelper firebaseHelper;
 
-        public ManageInterestRateController()
+        public ManageInterestRateController(ILaiSuatFactory laiSuatFactory)
         {
-            firebaseHelper = new FirebaseHelper();
+            _laiSuatFactory = laiSuatFactory;
         }
 
         // Danh sách lãi suất
@@ -53,22 +55,16 @@ namespace Web_CNPMNC_DA_HeThongATM.Controllers
         //}
 
         // Tạo lãi suất
+        
+        [HttpPost]
         public IActionResult CreateLaiSuat()
         {
+            var laiSuat = _laiSuatFactory.CreateLaiSuat();
+            // Tiếp tục xử lý tạo mới lãi suất
             return View();
         }
 
-        [HttpPost]
-        public IActionResult CreateLaiSuat(LaiSuatViewModel laiSuat)
-        {
-            if (ModelState.IsValid)
-            {
-                firebaseHelper.InsertLaiSuats(laiSuat);
-                return RedirectToAction("Index");
-            }
 
-            return View("CreateLaiSuat", laiSuat);
-        }
         // Xác nhận xóa lãi suất
         public IActionResult ConfirmDelete(string key)
         {

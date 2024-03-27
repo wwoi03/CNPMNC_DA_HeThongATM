@@ -10,7 +10,6 @@ namespace Web_CNPMNC_DA_HeThongATM.Designpattern.Strategy
 		{
 			return FirebaseSingleton.GetInstance().GetAppointent();
 			
-			
 		}
 	}
 }

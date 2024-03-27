@@ -7,15 +7,20 @@ using Newtonsoft.Json;
 using Web_CNPMNC_DA_HeThongATM.Models;
 using Web_CNPMNC_DA_HeThongATM.Models.ClassModel;
 using Web_CNPMNC_DA_HeThongATM.Models.ViewModel;
+using Web_CNPMNC_DA_HeThongATM.Designpattern.Factorymethod;
+
 
 namespace Web_CNPMNC_DA_HeThongATM.Designpattern.Singleton
 {
 	public class FirebaseSingleton
 	{
-		private static readonly object _lock = new object();
+        
+        private static readonly object _lock = new object();
 		private static FirebaseSingleton _instance;
 		public static IFirebaseClient Client { get; private set; }
-		private IFirebaseConfig config = new FirebaseConfig
+        
+
+        private IFirebaseConfig config = new FirebaseConfig
 		{
 			AuthSecret = "086JcgQrRLjvg3lubA1YY9GlAvks4VrYTCeWJJy6",
 			BasePath = "https://systematm-aea2c-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -24,21 +29,22 @@ namespace Web_CNPMNC_DA_HeThongATM.Designpattern.Singleton
 
 		private FirebaseSingleton()
 		{
-			Client = new FirebaseClient(config);
+            
+            Client = new FirebaseClient(config);
 		}
 
-		public static FirebaseSingleton GetInstance()
-		{
-			lock (_lock)
-			{
-				if (_instance == null)
-				{
-					_instance = new FirebaseSingleton();
-				}
-				return _instance;
-			}
-		}
-		public void InsertAppointment(DatLichHenViewModel datLichHen)
+        public static FirebaseSingleton GetInstance()
+        {
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = new FirebaseSingleton();
+                }
+                return _instance;
+            }
+        }
+        public void InsertAppointment(DatLichHenViewModel datLichHen)
 		{
 			//FirebaseResponse response = client.Push("NhanVien", nhanVien);
 

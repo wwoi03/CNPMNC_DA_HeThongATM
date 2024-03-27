@@ -210,14 +210,14 @@
                                 <i class="fa fa-puzzle-piece"></i>
                                 <a asp-controller="ManageInterestRate" asp-action="Index">Danh sách lãi suất</a>
                             </li>
-                            @if (role == "AD")
-                            {
+                           
+                            
                                 <!-- tạo lãi suất-->
                                 <li>
                                     <i class="fa fa-puzzle-piece"></i>
                                     <a asp-controller="ManageInterestRate" asp-action="CreateLaiSuat">Tạo lãi suất</a>
                                 </li>
-                            }
+                            
                         </ul>
                     </li>
 
@@ -262,8 +262,8 @@
                             </li>
                         </ul>
                     </li>
-             @if (role == "AD")
-                    {
+            
+                    
                         <!-- Nhân viên -->
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user-md"></i>Nhân viên</a>
@@ -299,7 +299,7 @@
                                 </li>
                             </ul>
                         </li>
-                    }
+                    
                     <!-- Quản lý lịch hẹn -->
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i>Lịch hẹn</a>
@@ -329,8 +329,7 @@
 							</li>
 						</ul>
 					</li>
-                    @if (role == "AD")
-                    {
+                   
                         <!-- Quản trị hệ thống -->
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-gear"></i>Quản trị hệ thống</a>
@@ -373,7 +372,7 @@
                                 </li>
                             </ul>
                         </li>
-                    }
+                    
                 </ul>
 			</div><!-- /.navbar-collapse -->
 		</nav>
